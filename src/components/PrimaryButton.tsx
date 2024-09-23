@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
   },
   button: {
+
     backgroundColor: COLORS.primary,
     width:250,
     paddingVertical: 10,
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.background,
-    fontSize: FONTS.medium,
+    fontSize: FONTS.large,
     fontWeight: 'bold',
     textAlign: 'center',
   },
