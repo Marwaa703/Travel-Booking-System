@@ -13,7 +13,7 @@ const Login = () => {
         onPress={() => {
           router.push("/home");
         }}
-        title="This button redirect to Login screen"
+        title="This button redirect to Home screen"
       />
     </View>
   );
