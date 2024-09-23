@@ -14,7 +14,7 @@ const Home = () => {
       <Text style={{ color: COLORS.primary }}>Home Page</Text>
       {/* <PrimaryButton title="Text" onPress={()=>{}}></PrimaryButton>
       <SecondaryButton title="Text" onPress={()=>{}}></SecondaryButton> */}
-      <InputField label="Name" placeholder="Enter your name"></InputField>
+      <InputField label="Phone Number" placeholder="Enter your phone" type="phone"></InputField>
     </View>
   );
 };
