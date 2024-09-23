@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { View, Text } from "react-native";
 import React from "react";
-import { colors } from "@/constants/theme";
+import { COLORS } from "@/constants/theme";
 
 const Search = () => {
   return (
     <View>
-      <Text style={{ color: colors.primary }}>Search</Text>
+      <Text style={{ color: COLORS.primary }}>Search</Text>
     </View>
   );
 };

@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { View, Text } from "react-native";
 import React from "react";
-import { colors } from "@/constants/theme";
+import { COLORS } from "@/constants/theme";
+
 
 const Home = () => {
   return (
     <View>
-      <Text style={{ color: colors.primary }}>Home Page</Text>
+      <Text style={{ color: COLORS.primary }}>Home Page</Text>
     </View>
   );
 };
