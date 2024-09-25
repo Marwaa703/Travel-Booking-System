@@ -12,7 +12,7 @@ export const COLORS = {
   warning: "#ff9800", // Warning color
   priceTag: "#FBA834", // Color for price tags
   calendarSelected: "#CAF4FF", // Calendar selected date color
-  opacity:"rgba(25,29,43,0.2)",
+  opacity:"rgba(255, 255, 255, 0.7)",
 
 };
 

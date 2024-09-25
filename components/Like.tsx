@@ -22,7 +22,7 @@ const Like = () => {
     >
       <Ionicons
         name={liked ? "heart" : "heart-outline"}
-        size={14}
+        size={20}
         color={liked ? "red" : "white"}
       />
     </TouchableOpacity>
@@ -33,8 +33,8 @@ export default Like;
 
 const styles = StyleSheet.create({
   container: {
-    width: 24,
-    height: 24,
+    width: 30,
+    height: 30,
     borderRadius: 50,
     backgroundColor: COLORS.opacity,
     display: "flex",

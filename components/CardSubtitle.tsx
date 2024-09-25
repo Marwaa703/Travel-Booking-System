@@ -24,8 +24,9 @@ export default CardSubtitle;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop:10
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   text: {
     fontSize: 12,
