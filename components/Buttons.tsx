@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 10,
     justifyContent: 'center',
-    
+
   },
   button: {
     // width: width,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.background,
-    fontSize: FONTS.large,
+    fontSize: FONTS.small,
     fontWeight: 'bold',
     textAlign: 'center',
   },

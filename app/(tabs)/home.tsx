@@ -8,7 +8,8 @@ import { COLORS } from "@/constants/theme";
 // import Like from "@/components/Like";
 // import CardSubtitle from "@/components/CardSubtitle";
 // import icons from "@/constants/icons";
-import FavoriteCard from "@/components/FavoriteCard";
+// import FavoriteCard from "@/components/FavoriteCard";
+import Card from "@/components/Card";
 
 
 // import PrimaryButton from "@/src/components/PrimaryButton";
@@ -24,7 +25,7 @@ const Home = () => {
       {/* <InputField label="Phone Number" placeholder="Enter your phone" type="phone"></InputField>
       <Button type="primary" title="text" align="flex-start" width={"20%"} onPress={()=>{}}></Button>
       <Button type="secondary" title="text" align="flex-end" width={"60%"} onPress={()=>{}}></Button> */}
-      <FavoriteCard title="Niladri Reservoir" subtitle="Tekergat, Sunamgnj" image={require("@/assets/tree.jpg")}></FavoriteCard>
+      {/* <FavoriteCard title="Niladri Reservoir" subtitle="Tekergat, Sunamgnj" image={require("@/assets/tree.jpg")}></FavoriteCard> */}
       {/* <Rating rate={4} />
       <Like />
       <CardSubtitle
@@ -32,6 +33,9 @@ const Home = () => {
         icon={icons.location}
         iconColor={COLORS.textSecondary}
       /> */}
+      <Card image={require("@/assets/tree.jpg")} title="Casa Las Tirtugas" subtitle="Av Damero, Mexico" rating={3.5} price="$894"></Card>
+      <Card image={require("@/assets/tree.jpg")} title="Casa Las Tirtugas" subtitle="Av Damero, Mexico" rating={3.5} buttonText="Subscripe"></Card>
+
     </View>
   );
 };
