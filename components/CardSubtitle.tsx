@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { OpaqueColorValue, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -12,7 +14,7 @@ const CardSubtitle = ({ icon, text, iconColor }: CardSubtitleProps) => {
   return (
     <View style={styles.container}>
       <Ionicons name={icon} size={14} color={iconColor} />
-      <Text style={[styles.text, { color: COLORS.cardIcon }]}>{text}</Text>
+      <Text style={[styles.text, { color: COLORS.textSecondary }]}>{text}</Text>
     </View>
   );
 };

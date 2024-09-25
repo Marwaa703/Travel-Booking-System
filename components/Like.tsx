@@ -1,6 +1,10 @@
+/* eslint-disable prettier/prettier */
+
 import { StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { COLORS } from "../constants/theme";
+
 const Like = () => {
   const [liked, setLiked] = useState(false);
   const handleLike = () => {
@@ -32,7 +36,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 50,
-    backgroundColor: "rgba(25,29,43,0.2)",
+    backgroundColor: COLORS.opacity,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
