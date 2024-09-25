@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { View, Text } from "react-native";
 import React from "react";
-import { COLORS } from "@/src/constants/theme";
-import InputField from "@/src/components/InputField";
-import Button from "@/src/components/Buttons";
+import { COLORS } from "@/constants/theme";
+import InputField from "@/components/InputField";
+import Button from "@/components/Buttons";
 
 // import PrimaryButton from "@/src/components/PrimaryButton";
 // import SecondaryButton from "@/src/components/SecondaryButton";

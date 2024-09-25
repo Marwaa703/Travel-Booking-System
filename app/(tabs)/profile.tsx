@@ -2,7 +2,7 @@
 
 import { View, Text } from "react-native";
 import React from "react";
-import { COLORS } from "@/src/constants/theme";
+import { COLORS } from "@/constants/theme";
 
 
 const Profile = () => {
