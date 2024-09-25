@@ -13,7 +13,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width , align}) => {
-  
+
   return (
     <View style={[styles.container, { alignItems: align}]}>
       <TouchableOpacity onPress={onPress} style={[styles.button,type === 'secondary' ? styles.secondaryButton : styles.primaryButton, , {width} ] }>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: COLORS.primary,
-   
+
   },
   secondaryButton: {
     backgroundColor: COLORS.secondary,
