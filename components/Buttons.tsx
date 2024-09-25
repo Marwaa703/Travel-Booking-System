@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, DimensionValue } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS } from '../constants/theme';
 
 interface ButtonProps {
   title: string;
   onPress: () => void;
   type?: 'primary' | 'secondary';
-  width: string;
+  width: DimensionValue | undefined;
   align?: 'flex-start' | 'center' |'flex-end';
 }
 
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   container: {
     margin: 10,
     justifyContent: 'center',
+    
   },
   button: {
     // width: width,

@@ -12,6 +12,7 @@ export const COLORS = {
   warning: "#ff9800", // Warning color
   priceTag: "#FBA834", // Color for price tags
   calendarSelected: "#CAF4FF", // Calendar selected date color
+  cardIcon:'7D848D'
 };
 
 export const FONTS = {

@@ -1,9 +1,12 @@
-/* eslint-disable prettier/prettier */
-
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { router } from "expo-router";
+import Rating from "@/components/Rating";
+import Like from "@/components/Like";
+import CardSubtitle from "@/components/CardSubtitle";
+import icons from "@/constants/icons";
+import { COLORS } from "@/constants/theme";
 
 export default function App() {
   return (
@@ -15,6 +18,14 @@ export default function App() {
         }}
         title="This button redirect to Login screen"
       />
+      <Rating rate={3.5} />
+      <Like />
+      <CardSubtitle
+        text="Country"
+        icon={icons.location}
+        iconColor={COLORS.cardIcon}
+      />
+
       <StatusBar style="auto" />
     </View>
   );
@@ -23,7 +34,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
