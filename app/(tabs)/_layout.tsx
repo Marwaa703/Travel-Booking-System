@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from 'react-native';
 import {COLORS} from "../../constants/theme"
 
+//^when typing mode is on ,The tab bar does not disappear
 
 type RouteName = "home" | "calendar" | "search" | "blogs" | "profile";
 
