@@ -2,7 +2,8 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { COLORS } from "@/constants/theme";
-import TripProfileCard from "@/components/TripProfileCard";
+import SettingCard from "@/components/SettingContainer";
+// import TripProfileCard from "@/components/TripProfileCard";
 // import InputField from "@/components/InputField";
 // import Button from "@/components/Buttons";
 // import Rating from "@/components/Rating";
@@ -34,8 +35,8 @@ const Home = () => {
       /> */}
       {/* <Card image={require("@/assets/tree.jpg")} title="Casa Las Tirtugas" subtitle="Av Damero, Mexico" rating={3.5} price="$894"></Card>
       <Card image={require("@/assets/tree.jpg")} title="Casa Las Tirtugas" subtitle="Av Damero, Mexico" rating={3.5} buttonText="Subscripe"></Card> */}
-      <TripProfileCard title="Santorini Islnd" image={require("@/assets/tree.jpg")} date="16 July-28 July" rating={4.5} price="820" peopleJoined={42} avatars={[require("@/assets/tree.jpg"),require("@/assets/tree.jpg"),require("@/assets/tree.jpg")]}></TripProfileCard>
-
+      {/* <TripProfileCard title="Santorini Islnd" image={require("@/assets/tree.jpg")} date="16 July-28 July" rating={4.5} price="820" peopleJoined={42} avatars={[require("@/assets/tree.jpg"),require("@/assets/tree.jpg"),require("@/assets/tree.jpg")]}></TripProfileCard> */}
+      <SettingCard title="Current Trips" onPress={()=>{}} rigthIconName="chevron-right" leftIconName="bookmark-border"></SettingCard>
     </View>
   );
 };
