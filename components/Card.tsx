@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
 import Like from "@/components/Like";
-import Buttons from '@/components/Buttons'; // Import your Button component
+import Buttons from '@/components/Buttons';
 import CardSubtitle from './CardSubtitle';
 import icons from "@/constants/icons";
 import { COLORS } from '@/constants/theme';
@@ -53,7 +53,6 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
   );
 };
 
-// Define styles
 const styles = StyleSheet.create({
   cardContainer: {
     width: 220,
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: 200, // You can adjust the height if needed
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
   },

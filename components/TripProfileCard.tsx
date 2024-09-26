@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
-import Rating from './Rating';  // Assuming you have a Rating component
-import { COLORS } from '@/constants/theme'; // Import your theme colors
+import Rating from './Rating';
+import { COLORS } from '@/constants/theme';
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 
@@ -58,7 +58,7 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({ image, title, date, r
   );
 };
 
-// Styles
+
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: 'row',
