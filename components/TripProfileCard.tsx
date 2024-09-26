@@ -4,7 +4,6 @@ import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native
 import Rating from './Rating';  // Assuming you have a Rating component
 import { COLORS } from '@/constants/theme'; // Import your theme colors
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 interface TripProfileCardProps {
