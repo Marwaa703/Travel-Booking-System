@@ -14,7 +14,7 @@ const companyProfile = () => {
         onPress={() => {
           router.push("companyHome");
         }}
-        title="Go to Your Home Page"
+        title="Go to Your Home "
       />
     </View>
   );
