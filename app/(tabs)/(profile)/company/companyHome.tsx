@@ -5,12 +5,12 @@ import React from "react";
 import { COLORS } from "@/constants/theme";
 
 
-const Profile = () => {
+const companyHome = () => {
   return (
     <View>
-      <Text style={{ color: COLORS.primary }}>Profile</Text>
+      <Text style={{ color: COLORS.primary }}>Here You can see your Trips......</Text>
     </View>
   );
 };
 
-export default Profile;
+export default companyHome;

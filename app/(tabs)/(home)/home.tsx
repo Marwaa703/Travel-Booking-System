@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import React from "react";
+import { router } from "expo-router";
 // import { COLORS } from "@/constants/theme";
 // import SettingCard from "@/components/SettingContainer";
 import NotificationCard from "@/components/NotificationCard";
@@ -39,6 +40,18 @@ const Home = () => {
       {/* <TripProfileCard title="Santorini Islnd" image={require("@/assets/tree.jpg")} date="16 July-28 July" rating={4.5} price="820" peopleJoined={42} avatars={[require("@/assets/tree.jpg"),require("@/assets/tree.jpg"),require("@/assets/tree.jpg")]}></TripProfileCard> */}
       {/* <SettingCard title="Current Trips" onPress={()=>{}} rigthIconName="chevron-right" leftIconName="bookmark-border"></SettingCard> */}
       <NotificationCard avatar={require("@/assets/tree.jpg")} title="Super Offer" description="Get 60% off in our first booking" onPress={()=>{}}></NotificationCard>
+      <Button
+        onPress={() => {
+          router.push("/popularCompanies");
+        }}
+        title="See Popular Companies"
+      />
+       <Button
+        onPress={() => {
+          router.push("/popularTrips");
+        }}
+        title="See Popular Trips "
+      />
     </View>
   );
 };
