@@ -3,7 +3,7 @@ import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from 'react-native';
-import {COLORS} from "../../constants/theme"
+import {COLORS, FONTS} from "../../constants/theme"
 
 //^when typing mode is on ,The tab bar does not disappear
 
@@ -41,9 +41,9 @@ const Layout = () => {
             <View
               style={{
                 backgroundColor: isSearchIcon ? COLORS.accent : "transparent",
-                borderRadius: isSearchIcon ? 35 : 0, 
-                width: isSearchIcon ? 70 : 'auto', 
-                height: isSearchIcon ? 70 : 'auto', 
+                borderRadius: isSearchIcon ? 50 : 0, 
+                width: isSearchIcon ? 50 : 'auto', 
+                height: isSearchIcon ? 50 : 'auto', 
                 justifyContent: 'center',
                 alignItems: 'center', 
                 shadowColor: isSearchIcon ?  COLORS.accent  : "transparent", 
@@ -55,8 +55,8 @@ const Layout = () => {
               }}
             >
               <Ionicons
-                name={iconName} 
-                size={isSearchIcon ? 30 : 25} 
+                name={iconName as never} 
+                size={isSearchIcon ? 25 : 25} 
                 color={isSearchIcon ? COLORS.background : color} 
               />
             </View>
@@ -66,7 +66,7 @@ const Layout = () => {
           position: "absolute",
           bottom: 0,
           backgroundColor:"#fff",
-          height: 100,
+          height: 90,
           borderTopLeftRadius: 60,
           borderTopRightRadius: 60,
           shadowColor: "#000",
@@ -78,11 +78,11 @@ const Layout = () => {
         tabBarActiveTintColor:  COLORS.primary, 
         tabBarInactiveTintColor: COLORS.textSecondary, 
         tabBarLabelStyle: {
-          fontSize: 12,
-          paddingBottom: 25, 
+          fontSize: FONTS.small,
+          paddingBottom: 15, 
         },
         tabBarItemStyle: {
-          paddingTop: 25, 
+          paddingTop: 15, 
         },
       })}
     >
