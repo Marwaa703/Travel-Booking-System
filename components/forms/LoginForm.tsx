@@ -7,8 +7,10 @@ import Button from "../Buttons";
 import { FONTS } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import LinkButton from "../LinkButton";
+import { useNavigation } from "expo-router";
 
 const LoginForm = () => {
+  const navigate = useNavigation();
   const {
     control,
     handleSubmit,
@@ -23,7 +25,8 @@ const LoginForm = () => {
     console.log(JSON.stringify(data));
 
     // reset
-    reset();
+    // reset();
+    navigate.navigate("(tabs)");
   };
   console.log({ errors });
   return (
