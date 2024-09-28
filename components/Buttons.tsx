@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width
   return (
     <View style={[styles.container, { alignItems: align}]}>
       <TouchableOpacity onPress={onPress} style={[styles.button,type === 'secondary' ? styles.secondaryButton : styles.primaryButton, , {width} ] }>
-        <Text style={styles.buttonText}>{title}</Text>
+        <Text style={type === 'secondary' ? styles.secondaryText : styles.primaryText}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -37,18 +37,24 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: COLORS.primary,
-
+  },
+  primaryText:{
+    fontSize:FONTS.large,
+    color: COLORS.background,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   secondaryButton: {
     backgroundColor: COLORS.secondary,
     // width: 150,
   },
-  buttonText: {
+  secondaryText:{
+    fontSize:FONTS.small,
     color: COLORS.background,
-    fontSize: FONTS.small,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
 });
 
 export default Button;

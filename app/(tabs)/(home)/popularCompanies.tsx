@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import Card from '@/components/Card';
 import{companies} from "@/DummyData/companies.json"
 
@@ -29,7 +29,8 @@ const PopularCompanies = () => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    paddingHorizontal: 10,
+    width:Dimensions.get('window').width,
+    paddingHorizontal: 5,
     paddingTop: 20,
     backgroundColor: '#f5f5f5',
   },
