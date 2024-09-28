@@ -5,8 +5,8 @@ import React from "react";
 const BlogsLayout = () => {
   return (
       <Stack>
-        <Stack.Screen name="blogs" options={{ headerShown: true }} />
-        <Stack.Screen name="blogsDetails" options={{ headerShown: true }} />
+        <Stack.Screen name="blogs" options={{ headerShown: false }} />
+        <Stack.Screen name="blogDetails" options={{ headerShown: false, title:"Post" }} />
       </Stack>
  
   );

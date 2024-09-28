@@ -73,7 +73,8 @@ const Layout = () => {
           shadowOpacity: 0.1,
           shadowOffset: { width: 0, height: 10 },
           shadowRadius: 20,
-          elevation: 5, 
+          elevation:5, 
+          
         },
         tabBarActiveTintColor:  COLORS.primary, 
         tabBarInactiveTintColor: COLORS.textSecondary, 
