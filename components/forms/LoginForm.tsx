@@ -43,7 +43,7 @@ const LoginForm = () => {
         <LinkButton to={"/signup"} label="Forget Password" />
       </View>
       <Button
-        title="Logind"
+        title="Sign In"
         onPress={handleSubmit(handleLogin)}
         fontSize={FONTS.large}
       />

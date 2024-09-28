@@ -9,7 +9,9 @@ import {COLORS} from "../constants/theme";
 type SettingCardProps = {
   title: string;
   onPress: () => void;
-  leftIconName:any;
+  leftIconName: any;
+  leftIconName: any;
+
 };
 
 const SettingCard: React.FC<SettingCardProps> = ({ title, onPress,leftIconName }) => {
@@ -22,7 +24,7 @@ const SettingCard: React.FC<SettingCardProps> = ({ title, onPress,leftIconName }
       <Text style={styles.titleText}>{title}</Text>
 
       {/* Right arrow icon */}
-      <MaterialIcons name={'chevron-right'} size={20} color={COLORS.textSecondary}  />
+      <MaterialIcons name="chevron-right" size={20} color={COLORS.textSecondary}  />
     </TouchableOpacity>
   );
 };

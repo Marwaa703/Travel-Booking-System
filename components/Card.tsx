@@ -55,7 +55,7 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 220,
+    width: 190,
     borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: '#fff',

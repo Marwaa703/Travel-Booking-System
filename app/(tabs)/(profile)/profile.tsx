@@ -14,19 +14,19 @@ const Profile = () => {
       <Text style={{ color: COLORS.primary }}>Profile</Text>
       <Button
         onPress={() => {
-          router.push("/user");
+          router.push("/(user)");
         }}
         title="User Profile"
       />
-      {/* <Button
-        onPress={() => {
-          router.push("/admin");
-        }}
-        title="Admin Profile"
-      /> */}
       <Button
         onPress={() => {
-          router.push("/company");
+          router.push("/(admin)");
+        }}
+        title="Admin Profile"
+      />
+      <Button
+        onPress={() => {
+          router.push("/(company)");
         }}
         title="Company Profile"
       />

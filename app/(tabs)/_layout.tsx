@@ -7,7 +7,7 @@ import {COLORS, FONTS} from "../../constants/theme"
 
 //^when typing mode is on ,The tab bar does not disappear, Edit It in Future
 
-type RouteName  = "home" | "calendar" | "search" | "blogs" | "(profile)";
+type RouteName  = "home" | "calendar" | "search" | "(blogs)" | "(profile)";
 
 const Layout = () => {
   return (
@@ -26,7 +26,7 @@ const Layout = () => {
             case "search":
               iconName = "search-outline";
               break;
-            case "blogs":
+            case "(blogs)":
               iconName = "book-outline";
               break;
             case "(profile)":
@@ -73,7 +73,8 @@ const Layout = () => {
           shadowOpacity: 0.1,
           shadowOffset: { width: 0, height: 10 },
           shadowRadius: 20,
-          elevation: 5, 
+          elevation:5, 
+          
         },
         tabBarActiveTintColor:  COLORS.primary, 
         tabBarInactiveTintColor: COLORS.textSecondary, 
@@ -95,7 +96,7 @@ const Layout = () => {
           tabBarLabel: () => null, 
         }}
       />
-      <Tabs.Screen name="blogs" options={{ title: "Blogs" }} />
+      <Tabs.Screen name="(blogs)" options={{ headerShown: false, title: "Blogs" }} />
       <Tabs.Screen name="(profile)" options={{ headerShown: false, title: "Profile" }} />
     </Tabs>
   );

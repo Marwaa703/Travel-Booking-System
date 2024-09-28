@@ -1,59 +1,118 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, Button } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView } from "react-native";
 import React from "react";
 import { router } from "expo-router";
-// import { COLORS } from "@/constants/theme";
-// import SettingCard from "@/components/SettingContainer";
-import NotificationCard from "@/components/NotificationCard";
-// import TripProfileCard from "@/components/TripProfileCard";
-// import InputField from "@/components/InputField";
-// import Button from "@/components/Buttons";
-// import Rating from "@/components/Rating";
-// import Like from "@/components/Like";
-// import CardSubtitle from "@/components/CardSubtitle";
-// import icons from "@/constants/icons";
-// import FavoriteCard from "@/components/FavoriteCard";
-// import Card from "@/components/Card";
-// import PrimaryButton from "@/src/components/PrimaryButton";
-// import SecondaryButton from "@/src/components/SecondaryButton";
-
+import Header from "@/components/Header";
+import { COLORS } from "@/constants/theme";
+import Card from "@/components/Card";
+import TripProfileCard from "@/components/TripProfileCard";
+import { companies } from "@/DummyData/companies.json";
+import { trips, avatars } from "@/DummyData/trips.json";
+import FavoriteCard from "@/components/FavoriteCard";
 
 const Home = () => {
+  const avatarImages = avatars.map(avatar => ({
+    id: avatar.id,
+    uri: avatar.uri,
+  }));
   return (
-    <View>
-      {/* <Text style={{ color: COLORS.primary }}>Home Page</Text> */}
-      {/* <PrimaryButton title="Text" onPress={()=>{}}></PrimaryButton>
-      <SecondaryButton title="Text" onPress={()=>{}}></SecondaryButton> */}
-      {/* <InputField label="Phone Number" placeholder="Enter your phone" type="phone"></InputField>
-      <Button type="primary" title="text" align="flex-start" width={"20%"} onPress={()=>{}}></Button>
-      <Button type="secondary" title="text" align="flex-end" width={"60%"} onPress={()=>{}}></Button> */}
-      {/* <FavoriteCard title="Niladri Reservoir" subtitle="Tekergat, Sunamgnj" image={require("@/assets/tree.jpg")}></FavoriteCard> */}
-      {/* <Rating rate={4} />
-      <Like />
-      <CardSubtitle
-        text="Country"
-        icon={icons.location}
-        iconColor={COLORS.textSecondary}
-      /> */}
-      {/* <Card image={require("@/assets/tree.jpg")} title="Casa Las Tirtugas" subtitle="Av Damero, Mexico" rating={3.5} price="$894"></Card>
-      <Card image={require("@/assets/tree.jpg")} title="Casa Las Tirtugas" subtitle="Av Damero, Mexico" rating={3.5} buttonText="Subscripe"></Card> */}
-      {/* <TripProfileCard title="Santorini Islnd" image={require("@/assets/tree.jpg")} date="16 July-28 July" rating={4.5} price="820" peopleJoined={42} avatars={[require("@/assets/tree.jpg"),require("@/assets/tree.jpg"),require("@/assets/tree.jpg")]}></TripProfileCard> */}
-      {/* <SettingCard title="Current Trips" onPress={()=>{}} rigthIconName="chevron-right" leftIconName="bookmark-border"></SettingCard> */}
-      <NotificationCard avatar={require("@/assets/tree.jpg")} title="Super Offer" description="Get 60% off in our first booking" onPress={()=>{}}></NotificationCard>
-      <Button
-        onPress={() => {
-          router.push("/popularCompanies");
-        }}
-        title="See Popular Companies"
-      />
-       <Button
-        onPress={() => {
-          router.push("/popularTrips");
-        }}
-        title="See Popular Trips "
-      />
-    </View>
+    <SafeAreaView style={{ flex: 1, marginBottom: 100 }}>
+      <Header />
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
+        <Text style={styles.title}>Explore the Beautiful</Text>
+        <Text style={styles.span}>World!</Text>
+        <Image source={require('../../../assets/Vector.png')} style={styles.image} />
+
+        <View style={styles.trips}>
+          <View style={styles.subtitleContainer}>
+            <Text style={styles.subtitle}>Best Trips</Text>
+            <Text style={styles.viewAll} onPress={() => router.push("/popularTrips")}>View All</Text>
+          </View>
+
+          {/* Horizontal ScrollView for Trip Profile Cards */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+            {trips.map((trip, index) => (
+              <View key={index} style={styles.cardWrapper}>
+                <Card image={{ uri: trip.image }} title={trip.title} subtitle="kk" rating={trip.rating}></Card>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.company}>
+          <View style={styles.subtitleContainer}>
+            <Text style={styles.subtitle}>Popular Companies</Text>
+            <Text style={styles.viewAll} onPress={() => router.push("/popularCompanies")}>View All</Text>
+          </View>
+          <View style={styles.cardContainer}>
+            {companies.map((company, index) => (
+              <View key={index} style={styles.cardWrapper}>
+                <Card
+                  image={company.image}
+                  title={company.title}
+                  subtitle={company.subtitle}
+                  rating={company.rating}
+                  buttonText={company.buttonText}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
+  span: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    color: COLORS.primary,
+  },
+  image: {
+    width: 95,
+    marginBottom: 20,
+    marginLeft: 40,
+  },
+  subtitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    padding: 15,
+    flex: 1,
+  },
+  subtitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  viewAll: {
+    fontSize: 15,
+    color: COLORS.secondary,
+    padding: 15,
+  },
+  trips: {},
+  company: {
+    marginTop: 20,
+  },
+  cardContainer: {
+    // flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  cardWrapper: {
+    marginHorizontal: 5,
+  },
+  horizontalScroll: {
+    paddingVertical: 10,
+  },
+});
 
 export default Home;
