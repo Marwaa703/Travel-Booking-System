@@ -8,6 +8,7 @@ import Card from "@/components/Card";
 import TripProfileCard from "@/components/TripProfileCard";
 import { companies } from "@/DummyData/companies.json";
 import { trips, avatars } from "@/DummyData/trips.json";
+import FavoriteCard from "@/components/FavoriteCard";
 
 const Home = () => {
   const avatarImages = avatars.map(avatar => ({
@@ -27,20 +28,12 @@ const Home = () => {
             <Text style={styles.subtitle}>Best Trips</Text>
             <Text style={styles.viewAll} onPress={() => router.push("/popularTrips")}>View All</Text>
           </View>
-          
+
           {/* Horizontal ScrollView for Trip Profile Cards */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
             {trips.map((trip, index) => (
               <View key={index} style={styles.cardWrapper}>
-                <TripProfileCard
-                  image={{ uri: trip.image }}
-                  title={trip.title}
-                  date={trip.date}
-                  rating={trip.rating}
-                  price={trip.price}
-                  peopleJoined={trip.peopleJoined}
-                  avatars={avatarImages}
-                />
+                <Card image={{ uri: trip.image }} title={trip.title} subtitle="kk" rating={trip.rating}></Card>
               </View>
             ))}
           </ScrollView>
@@ -105,18 +98,20 @@ const styles = StyleSheet.create({
   },
   trips: {},
   company: {
-    marginTop: 20, 
+    marginTop: 20,
   },
   cardContainer: {
-    flex: 1, 
-    justifyContent: 'flex-start', 
+    // flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   cardWrapper: {
-    marginHorizontal: 10, 
+    marginHorizontal: 5,
   },
   horizontalScroll: {
-    paddingVertical: 10, 
+    paddingVertical: 10,
   },
 });
 
