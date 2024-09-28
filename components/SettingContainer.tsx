@@ -9,12 +9,11 @@ import {COLORS} from "../constants/theme";
 type SettingCardProps = {
   title: string;
   onPress: () => void;
-  rigthIconName:string;
-  leftIconName:string;
+  leftIconName:any;
 
 };
 
-const SettingCard: React.FC<SettingCardProps> = ({ title, onPress,rigthIconName,leftIconName }) => {
+const SettingCard: React.FC<SettingCardProps> = ({ title, onPress,leftIconName }) => {
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       {/* Icon on the left */}
@@ -24,7 +23,7 @@ const SettingCard: React.FC<SettingCardProps> = ({ title, onPress,rigthIconName,
       <Text style={styles.titleText}>{title}</Text>
 
       {/* Right arrow icon */}
-      <MaterialIcons name={rigthIconName} size={20} color={COLORS.textSecondary}  />
+      <MaterialIcons name="chevron-right" size={20} color={COLORS.textSecondary}  />
     </TouchableOpacity>
   );
 };
