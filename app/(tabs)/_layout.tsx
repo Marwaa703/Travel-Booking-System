@@ -5,9 +5,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from 'react-native';
 import {COLORS, FONTS} from "../../constants/theme"
 
-//^when typing mode is on ,The tab bar does not disappear
+//^when typing mode is on ,The tab bar does not disappear, Edit It in Future
 
-type RouteName = "home" | "calendar" | "search" | "blogs" | "profile";
+type RouteName  = "home" | "calendar" | "search" | "blogs" | "(profile)";
 
 const Layout = () => {
   return (
@@ -15,7 +15,7 @@ const Layout = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           let iconName;
-          let isSearchIcon = route.name === "search" as RouteName;
+          let isSearchIcon = route.name === "search" as RouteName ;
           switch (route.name as RouteName) {
             case "home":
               iconName = "home-outline";
@@ -29,7 +29,7 @@ const Layout = () => {
             case "blogs":
               iconName = "book-outline";
               break;
-            case "profile":
+            case "(profile)":
               iconName = "person-outline";
               break;
             default:
@@ -55,8 +55,8 @@ const Layout = () => {
               }}
             >
               <Ionicons
-                name={iconName as never} 
-                size={isSearchIcon ? 25 : 25} 
+                name ={iconName as never} 
+                size={isSearchIcon ? 30 : 25} 
                 color={isSearchIcon ? COLORS.background : color} 
               />
             </View>
@@ -86,7 +86,7 @@ const Layout = () => {
         },
       })}
     >
-      <Tabs.Screen name="home" options={{ title: "Home" }} />
+      <Tabs.Screen name="(home)" options={{ headerShown: false, title: "Home" }} />
       <Tabs.Screen name="calendar" options={{ title: "Calendar" }} />
       <Tabs.Screen
         name="search"
@@ -96,7 +96,7 @@ const Layout = () => {
         }}
       />
       <Tabs.Screen name="blogs" options={{ title: "Blogs" }} />
-      <Tabs.Screen name="profile" options={{ title: "Profile" }} />
+      <Tabs.Screen name="(profile)" options={{ headerShown: false, title: "Profile" }} />
     </Tabs>
   );
 };

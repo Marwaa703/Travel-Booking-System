@@ -7,17 +7,18 @@ import { COLORS, FONTS, BORDER_RADIUS } from '../constants/theme';
 interface ButtonProps {
   title: string;
   onPress: () => void;
+  fontSize?:number,
   type?: 'primary' | 'secondary';
-  width: DimensionValue | undefined;
+  width?: DimensionValue | undefined;
   align?: 'flex-start' | 'center' |'flex-end';
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width , align}) => {
+const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width="100%" , align,fontSize=FONTS.medium}) => {
 
   return (
     <View style={[styles.container, { alignItems: align}]}>
       <TouchableOpacity onPress={onPress} style={[styles.button,type === 'secondary' ? styles.secondaryButton : styles.primaryButton, , {width} ] }>
-        <Text style={styles.buttonText}>{title}</Text>
+        <Text style={[styles.buttonText,{fontSize}]}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -25,12 +26,12 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
     justifyContent: 'center',
+    marginVertical:10
 
   },
   button: {
-    // width: width,
+    
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: BORDER_RADIUS.large,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.background,
-    fontSize: FONTS.small,
+
     fontWeight: 'bold',
     textAlign: 'center',
   },
