@@ -14,16 +14,13 @@ import NotificationCard from "@/components/NotificationCard";
 // import icons from "@/constants/icons";
 // import FavoriteCard from "@/components/FavoriteCard";
 // import Card from "@/components/Card";
-// import PrimaryButton from "@/src/components/PrimaryButton";
-// import SecondaryButton from "@/src/components/SecondaryButton";
+
 
 
 const Home = () => {
   return (
     <View>
       {/* <Text style={{ color: COLORS.primary }}>Home Page</Text> */}
-      {/* <PrimaryButton title="Text" onPress={()=>{}}></PrimaryButton>
-      <SecondaryButton title="Text" onPress={()=>{}}></SecondaryButton> */}
       {/* <InputField label="Phone Number" placeholder="Enter your phone" type="phone"></InputField>
       <Button type="primary" title="text" align="flex-start" width={"20%"} onPress={()=>{}}></Button>
       <Button type="secondary" title="text" align="flex-end" width={"60%"} onPress={()=>{}}></Button> */}
