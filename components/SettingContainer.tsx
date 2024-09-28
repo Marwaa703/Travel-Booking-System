@@ -9,7 +9,8 @@ import {COLORS} from "../constants/theme";
 type SettingCardProps = {
   title: string;
   onPress: () => void;
-  leftIconName:any;
+  leftIconName: any;
+  leftIconName: any;
 
 };
 

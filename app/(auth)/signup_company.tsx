@@ -1,5 +1,4 @@
 import Padding from "@/components/containers/Padding";
-import LoginForm from "@/components/forms/LoginForm";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
@@ -8,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
-const Signup = () => {
+const SignupCompany = () => {
   return (
     <ScrollView>
       <Padding>
@@ -18,9 +17,7 @@ const Signup = () => {
             <View style={styles.header}>
               <Text style={styles.title}>Sign Up now</Text>
               <Spacer />
-              <Text style={styles.subTitle}>
-                Please fill the details and create account
-              </Text>
+              <Text style={styles.subTitle}>Company Signup</Text>
             </View>
             {/* headerend  */}
             {/* form  */}
@@ -35,7 +32,7 @@ const Signup = () => {
               <View style={{ marginHorizontal: "auto" }}>
                 <LinkButton
                   style={styles.company}
-                  to={"signup_company"}
+                  to={"signup"}
                   label="Are you a Company? "
                 />
               </View>
@@ -63,7 +60,7 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupCompany;
 
 const styles = StyleSheet.create({
   container: {

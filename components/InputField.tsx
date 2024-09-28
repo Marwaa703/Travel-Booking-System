@@ -50,6 +50,7 @@ const InputField: React.FC<TextFieldProps> = ({ label, type = 'text', required =
           validateInput(value);
         }}
         {...props}
+        
       />
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -59,10 +60,10 @@ const InputField: React.FC<TextFieldProps> = ({ label, type = 'text', required =
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
-    marginTop: 16,
-    marginHorizontal: 40,
-    width: 250,
+    // marginBottom: 16,
+    // marginTop: 16,
+    // marginHorizontal: 40,
+    width: '100%',
   },
   label: {
     color: COLORS.textPrimary,
