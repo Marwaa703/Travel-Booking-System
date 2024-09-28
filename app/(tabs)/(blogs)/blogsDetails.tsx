@@ -4,12 +4,12 @@ import React from "react";
 import { COLORS } from "@/constants/theme";
 
 
-const Blogs = () => {
+const BlogsDetails = () => {
   return (
     <View>
-      <Text style={{ color: COLORS.primary }}>Blogs</Text>
+      <Text style={{ color: COLORS.primary }}>Blogs Details........</Text>
     </View>
   );
 };
 
-export default Blogs;
+export default BlogsDetails;

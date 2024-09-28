@@ -1,0 +1,33 @@
+{
+    "categories": [
+      {
+        "name": "Historical Landmarks",
+        "image": "https://images.pexels.com/photos/5488756/pexels-photo-5488756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      },
+      {
+        "name": "Religious Sites",
+        "image": "https://images.pexels.com/photos/15065977/pexels-photo-15065977/free-photo-of-view-of-a-mosque.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      },
+      {
+        "name": "Natural Attractions",
+        "image": "https://media.cnn.com/api/v1/images/stellar/prod/200318181331-white-desert-10.jpg?q=w_1600,h_900,x_0,y_0,c_fill"
+      },
+      {
+        "name": "Cultural Experiences",
+        "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fblog.wego.com%2Fcairo-most-famous-bazaar-khan-el-khalili%2F&psig=AOvVaw1fU5MZfVOvNa3aDVo4khGq&ust=1727594668593000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCICNtOaN5YgDFQAAAAAdAAAAABAf"
+      },
+      {
+        "name": "Adventure and Outdoor Activities",
+        "image": "https://egypttimetravel.com/wp-content/uploads/2020/09/Hurghada-Egypt-1.jpg"
+      },
+      {
+        "name": "Modern Attractions",
+        "image": "hhttps://www.dst-eg.com/assets/images/tours/16014947939520.jpg"
+      },
+      {
+        "name": "Archaeological Sites",
+        "image": "https://www.historyhit.com/app/uploads/2021/05/shutterstock_Kom-Ombo-Temple-1.jpg"
+      }
+    ]
+  }
+  
