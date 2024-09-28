@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import Card from '@/components/Card';
 
 
@@ -72,7 +72,8 @@ const PopularCompanies = () => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    paddingHorizontal: 10,
+    width:Dimensions.get('window').width,
+    paddingHorizontal: 5,
     paddingTop: 20,
     backgroundColor: '#f5f5f5',
   },
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   cardWrapper: {
-    width: '50%', // Ensure 2 cards per row with some spacing
+    width: '50%',
     marginBottom: 5,
   },
 });
