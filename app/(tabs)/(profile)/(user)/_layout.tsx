@@ -7,6 +7,8 @@ export default function UserLayout() {
     <Stack>
       <Stack.Screen name="userProfile" options={{ headerShown: false }} />
       <Stack.Screen name="userEdit" options={{ headerShown: false }} />
+      <Stack.Screen name="favTrip" options={{ headerShown: true }} />
+      <Stack.Screen name="perviousTrip" options={{ headerShown: true }} />
     </Stack>
   );
 }

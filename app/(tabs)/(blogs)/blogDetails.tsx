@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { COLORS, SHADOWS } from "@/constants/theme"; 
-import blogsData from "@/blogs.json"; 
+import blogsData from "@/DummyData/blogs.json"; 
 import { Ionicons } from '@expo/vector-icons';
 
 interface Blog {

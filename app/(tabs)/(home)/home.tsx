@@ -7,6 +7,7 @@ import { COLORS } from "@/constants/theme";
 import Card from "@/components/Card";
 import { companies } from "@/DummyData/companies.json";
 import { trips, avatars } from "@/DummyData/trips.json";
+import Button from "@/components/Buttons";
 
 
 const Home = () => {
@@ -56,6 +57,8 @@ const Home = () => {
               </View>
             ))}
           </View>
+          <Button title={"GO TO TRIP DETAILS"} onPress={()=>{router.push("/tripDetails")}}/>
+          <Button title={"You can Access Notification From Here Temporally"} onPress={()=>{router.push("/notification")}}/>
         </View>
       </ScrollView>
     </SafeAreaView>
