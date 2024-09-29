@@ -48,10 +48,14 @@ const AppTextInput = ({
               />
               {icon && name === "password" ? (
                 <Pressable onPress={() => setShown(!shown)}>
-                  <Ionicons name={!shown ? "lock-open" : icon} size={16} />
+                  <Ionicons
+                    color={COLORS.textSecondary}
+                    name={!shown ? "lock-open" : icon}
+                    size={16}
+                  />
                 </Pressable>
               ) : (
-                <Ionicons name={icon} size={16} />
+                <Ionicons name={icon} size={16} color={COLORS.textSecondary} />
               )}
             </>
           )}

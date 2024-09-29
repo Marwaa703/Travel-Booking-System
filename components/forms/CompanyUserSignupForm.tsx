@@ -62,6 +62,7 @@ const CompanyUserSignupForm = () => {
         selectedGender={selectedGender}
       />
       <Spacer />
+      <Spacer />
       <Button
         title="Sign Up"
         onPress={handleSubmit(handleSignup)}
