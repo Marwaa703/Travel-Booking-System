@@ -26,7 +26,7 @@ const LoginForm = () => {
 
     // reset
     // reset();
-    navigate.navigate("(tabs)");
+    navigate.navigate("(tabs)" as never);
   };
   console.log({ errors });
   return (

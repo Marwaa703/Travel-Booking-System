@@ -1,10 +1,9 @@
 import Padding from "@/components/containers/Padding";
-import LoginForm from "@/components/forms/LoginForm";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
+import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -44,19 +43,7 @@ const Signup = () => {
           </View>
           {/* End form  */}
           {/* Bottom  */}
-          <View style={styles.bottom}>
-            <Text>Coming Soon ...!</Text>
-            <Spacer />
-            <View style={[styles.center, { width: "60%" }]}>
-              <Ionicons name="logo-facebook" color={COLORS.link} size={40} />
-              <Ionicons
-                name="logo-instagram"
-                color={COLORS.priceTag}
-                size={40}
-              />
-              <Ionicons name="logo-twitter" color={"dodgerblue"} size={40} />
-            </View>
-          </View>
+          <OnboardingComingSoon />
         </View>
       </Padding>
     </ScrollView>
@@ -96,12 +83,5 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: FONTS.medium,
     color: COLORS.textSubtitle,
-  },
-
-  bottom: {
-    flex: 0,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    marginTop: "4%",
   },
 });

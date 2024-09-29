@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 
 export const COLORS = {
-  // primary: "#ea7932", // New Primary color for app elements
-  primary: "#E88D67", // Primary color for app elements
+  primary: "#ea7932", // New Primary color for app elements
+  // primary: "#E88D67", // Primary color for app elements
   secondary: "#006989", // Secondary color for headers, buttons, etc.
   accent: "#005C78", // Accent color for highlights
   light: "#F7F7F9", // light color 
@@ -25,6 +25,7 @@ export const FONTS = {
   medium: 16,
   large: 20,
   xlarge: 24,
+  xxlarge: 26,
 };
 
 export const SPACING = {

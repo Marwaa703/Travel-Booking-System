@@ -11,6 +11,7 @@ export const loginSchema = Yup.object().shape({
     .required("Email is required"),
   password: Yup.string().min(8).required("Password is required"),
 });
+
 export const signupSchema = Yup.object().shape({
   fullname: Yup.string().required("Full Name Required"),
   email: Yup.string()
@@ -18,12 +19,15 @@ export const signupSchema = Yup.object().shape({
     .email("Invalid email")
     .required("Email is required"),
   password: Yup.string().min(8).required("Password is required"),
-  gender: Yup.string().required("Select your gender"),
   phone: Yup.string()
     .matches(phoneRegex, { message: "Invalid phone number format" })
     .required("Select your gender"),
 });
-
+export const companyUserSignupSchema = signupSchema.concat(
+  Yup.object().shape({
+    role: Yup.string().required("Write your role as in company"),
+  }),
+);
 export const loginInputs: InputFieldProps[] = [
   {
     name: "email",
@@ -37,11 +41,13 @@ export const loginInputs: InputFieldProps[] = [
     autoCapitalize: "none",
   },
 ];
+
 export const signupInputs: InputFieldProps[] = [
   {
     name: "fullname",
     icon: "person-sharp",
     autoCapitalize: "none",
+    keyboardType: "default",
   },
   {
     name: "email",
@@ -60,16 +66,26 @@ export const signupInputs: InputFieldProps[] = [
     icon: "lock-closed",
     autoCapitalize: "none",
   },
+];
+export const companyUserSignupInputs: InputFieldProps[] = [
+  ...signupInputs,
   {
-    name: "gender",
-    icon: "male-female",
+    name: "role",
+    icon: "briefcase",
     autoCapitalize: "none",
   },
 ];
 
 export interface InputFieldProps {
-  name: string;
+  name: SignupFormFields;
   icon: string;
   keyboardType?: KeyboardTypeOptions | undefined;
   autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
 }
+
+export type SignupFormFields =
+  | "fullname"
+  | "email"
+  | "password"
+  | "phone"
+  | "role";
