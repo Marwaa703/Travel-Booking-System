@@ -1,12 +1,16 @@
 /* eslint-disable prettier/prettier */
-import { View, Text } from "react-native";
+import { View} from "react-native";
 import React from "react";
 import { COLORS } from "@/constants/theme";
+import Header from "@/components/Header";
 
 const Search = () => {
   return (
     <View>
-      <Text style={{ color: COLORS.primary }}>Search</Text>
+      <Header/>
+      <Header leftIcon="menu-outline" rightIcon="settings-outline" title="Search" />
+      <Header rightIcon="settings-outline"/>
+      <Header leftIcon="menu-outline" />
     </View>
   );
 };
