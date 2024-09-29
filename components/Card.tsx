@@ -8,6 +8,7 @@ import CardSubtitle from './CardSubtitle';
 import icons from "@/constants/icons";
 import { COLORS } from '@/constants/theme';
 import Rating from './Rating';
+import Spacer from './Spacer';
 
 interface CardProps {
   image: ImageSourcePropType;
@@ -39,6 +40,7 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
 
       </View>
         {/* Conditionally render price or button */}
+        <Spacer />
         {price ? (
           <Text style={styles.priceText}>{price} / Person</Text>
         ) : buttonText ? (
@@ -66,6 +68,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     margin: 10,
     position: 'relative',
+    padding:10
+
   },
   imageContainer: {
     width: '100%',
@@ -74,13 +78,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: '90%', // Adjust the width of the image
-    height: '90%', // Adjust the height of the image
+    width: '100%', // Adjust the width of the image
+    height: '100%', // Adjust the height of the image
     alignSelf: 'center',
     borderRadius: 10,
   },
   textContainer: {
-    padding: 10,
+    paddingTop: 8,
 
   },
   title: {
@@ -105,7 +109,6 @@ const styles = StyleSheet.create({
     top: 15,
     right: 15,
     borderRadius: 50,
-    padding: 5,
   },
 });
 

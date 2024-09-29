@@ -25,7 +25,7 @@ const ProfileScreen: React.FC = () => {
       </View>
 
       {/* Setting Cards */}
-      <SettingCard
+      {/* <SettingCard
         title="Profile"
         onPress={() => {}}
         leftIconName="person"
@@ -34,7 +34,7 @@ const ProfileScreen: React.FC = () => {
         title="Favorites"
         onPress={() => {}}
         leftIconName="favorite"
-      />
+      /> */}
       <SettingCard
         title="Previous Trips"
         onPress={() => {}}

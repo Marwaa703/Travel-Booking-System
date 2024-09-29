@@ -3,6 +3,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, DimensionValue } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS } from '../constants/theme';
+import Spacer from './Spacer';
 
 interface ButtonProps {
   title: string;
@@ -27,11 +28,10 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginVertical:10
+    // marginVertical:10
 
   },
   button: {
-    
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: BORDER_RADIUS.large,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     backgroundColor: COLORS.secondary,
-    // width: 150,
+    width: 15,
   },
   secondaryText:{
     fontSize:FONTS.small,
