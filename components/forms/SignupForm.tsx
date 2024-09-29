@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import React, { useState } from "react";
 import { signupInputs, signupSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";

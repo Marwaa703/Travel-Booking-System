@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Padding from "@/components/containers/Padding";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
