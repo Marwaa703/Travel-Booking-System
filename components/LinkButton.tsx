@@ -19,6 +19,6 @@ export default LinkButton;
 
 const styles = StyleSheet.create({
   button: {
-    color: COLORS.link,
+    color: COLORS.accent,
   },
 });

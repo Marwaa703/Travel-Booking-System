@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
+import Spacer from "../Spacer";
 
 interface GenderPickerProps {
   setSelectedGender: React.Dispatch<React.SetStateAction<string>>;
@@ -22,9 +23,10 @@ const GenderPicker = ({
       >
         <Ionicons
           name="male"
-          size={24}
+          size={20}
           color={selectedGender === "male" ? "#fff" : "#007BFF"}
         />
+        <Spacer width={8} />
         <Text
           style={selectedGender === "male" ? styles.selectedText : styles.text}
         >
@@ -40,9 +42,10 @@ const GenderPicker = ({
       >
         <Ionicons
           name="female"
-          size={24}
+          size={20}
           color={selectedGender === "female" ? "#fff" : "#FF69B4"} // Light pink for female
         />
+        <Spacer width={8} />
         <Text
           style={
             selectedGender === "female" ? styles.selectedText : styles.text
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    padding: 10,
+    padding: 8,
 
     flexDirection: "row-reverse",
     alignItems: "center",
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   selectedButton: {
-    backgroundColor: "#007BFF", // Blue for male
+    backgroundColor: COLORS.accent, // Blue for male
   },
   text: {
     color: "#000", // Default text color
