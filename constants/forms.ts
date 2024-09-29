@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { KeyboardTypeOptions } from "react-native";
 import * as Yup from "yup";
 

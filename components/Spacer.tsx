@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { DimensionValue, StyleSheet, Text, View } from "react-native";
 import React from "react";
 interface SpacerProps {
