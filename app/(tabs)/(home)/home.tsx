@@ -107,21 +107,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 0,
     justifyContent: 'space-between',
 
-  
+
   },
   companyCardWrapper: {
-    width: '40%', 
-    marginBottom: 20, 
+    width: '40%',
+    marginBottom: 20,
   },
   horizontalScroll: {
     paddingVertical: 10,
   },
-  
+
 });
 
 export default Home;
