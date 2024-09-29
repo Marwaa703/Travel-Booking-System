@@ -32,12 +32,12 @@ const ProfileScreen: React.FC = () => {
       />
       <SettingCard
         title="Favorites"
-        onPress={() => {}}
+        onPress={() => router.push("/favTrip")}
         leftIconName="favorite"
       /> */}
       <SettingCard
         title="Previous Trips"
-        onPress={() => {}}
+        onPress={() => router.push("/perviousTrip")}
         leftIconName="history"
       />
       <SettingCard

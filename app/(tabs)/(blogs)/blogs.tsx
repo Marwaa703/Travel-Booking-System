@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS, SHADOWS } from "@/constants/theme"; 
+import { COLORS, FONTS, SHADOWS } from "@/constants/theme"; 
 import CategoryCard from "@/components/CategoryCard";
-import { categories, recent_blogs, oldest_blogs } from "@/blogs.json"; 
+import { categories, recent_blogs, oldest_blogs } from "@/DummyData/blogs.json"; 
 import BlogPostCard from "@/components/BlogPostCard";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import OldestPostCard from "@/components/OldestPostCard";
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOWS.large.shadowOpacity,
   },
   welcomeText: {
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: 'bold',
     color: COLORS.textPrimary, 
   },

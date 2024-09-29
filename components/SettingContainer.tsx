@@ -10,7 +10,7 @@ type SettingCardProps = {
   title: string;
   onPress: () => void;
   leftIconName: any;
-  leftIconName: any;
+  // leftIconName: any;
 
 };
 
