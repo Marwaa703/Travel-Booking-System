@@ -58,7 +58,7 @@ const Home = () => {
             ))}
           </View>
           <Button title={"GO TO TRIP DETAILS"} onPress={()=>{router.push("/tripDetails")}}/>
-          <Button title={"You can Access Notification From Here Temporally"} onPress={()=>{router.push("/notification")}}/>
+         
         </View>
       </ScrollView>
     </SafeAreaView>
