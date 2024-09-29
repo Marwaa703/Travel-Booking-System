@@ -60,10 +60,10 @@ const InputField: React.FC<TextFieldProps> = ({ label, type = 'text', required =
 
 const styles = StyleSheet.create({
   container: {
-    // marginBottom: 16,
-    // marginTop: 16,
-    // marginHorizontal: 40,
-    width: '100%',
+    marginBottom: 16,
+    marginTop: 16,
+    marginHorizontal: 40,
+    width: 250,
   },
   label: {
     color: COLORS.textPrimary,

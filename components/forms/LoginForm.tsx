@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { View } from "react-native";
 import React from "react";
 import { loginInputs, loginSchema } from "@/constants/forms";
@@ -22,6 +24,7 @@ const LoginForm = () => {
 
   const handleLogin = (data: any) => {
     console.log("lol");
+
     console.log(JSON.stringify(data));
 
     // reset
@@ -47,7 +50,8 @@ const LoginForm = () => {
       </View>
       <Button
         title="Sign In"
-        onPress={handleSubmit(handleLogin)}
+        // onPress={handleSubmit(handleLogin)}
+        onPress={() => navigate.navigate("(tabs)" as never)}
         fontSize={FONTS.large}
       />
     </>
