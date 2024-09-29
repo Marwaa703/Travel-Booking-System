@@ -1,10 +1,8 @@
 import Padding from "@/components/containers/Padding";
 import CompanyUserSignupForm from "@/components/forms/CompanyUserSignupForm";
-import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
