@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-
 import React from 'react';
-import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageSourcePropType, Dimensions } from 'react-native';
 import Like from "@/components/Like";
 import Buttons from '@/components/Buttons';
 import CardSubtitle from './CardSubtitle';
@@ -9,6 +8,10 @@ import icons from "@/constants/icons";
 import { COLORS } from '@/constants/theme';
 import Rating from './Rating';
 import Spacer from './Spacer';
+
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = width * 0.44;
+const CARD_HEIGHT = CARD_WIDTH * 1.58;
 
 interface CardProps {
   image: ImageSourcePropType;
@@ -39,13 +42,14 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
         </View>
 
       </View>
-        {/* Conditionally render price or button */}
-        <Spacer />
-        {price ? (
-          <Text style={styles.priceText}>{price} / Person</Text>
-        ) : buttonText ? (
-          <Buttons type='secondary' title={buttonText} onPress={()=>{}} width={"60%"} align='flex-end'/>
-        ) : null}
+
+      {/* Conditionally render price or button */}
+      <Spacer />
+      {price ? (
+        <Text style={styles.priceText}>{price} / Person</Text>
+      ) : buttonText ? (
+        <Buttons type='secondary' title={buttonText} onPress={() => {}} width={"60%"} align='flex-end'/>
+      ) : null}
 
       {/* Like icon */}
       <View style={styles.iconContainer}>
@@ -57,7 +61,8 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 190,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
     borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: '#fff',
@@ -66,26 +71,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.9,
     shadowRadius: 2,
-    margin: 10,
     position: 'relative',
-    padding:10
-
+    padding: 10,
+    marginBottom:10
   },
   imageContainer: {
     width: '100%',
-    height: 200,
+    height: '55%', // Adjust the height of the image container to keep the aspect ratio consistent
     justifyContent: 'center',
     alignItems: 'center',
   },
   image: {
-    width: '100%', // Adjust the width of the image
-    height: '100%', // Adjust the height of the image
+    width: '100%',
+    height: '100%',
     alignSelf: 'center',
     borderRadius: 10,
   },
   textContainer: {
     paddingTop: 8,
-
   },
   title: {
     fontSize: 16,
@@ -95,14 +98,14 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop:10
+    marginTop: 10,
   },
   priceText: {
     fontSize: 12,
     color: COLORS.accent,
     fontWeight: 'bold',
-    marginBottom:10,
-    marginHorizontal:10,
+    marginBottom: 10,
+    marginHorizontal: 10,
   },
   iconContainer: {
     position: 'absolute',
