@@ -1,13 +1,30 @@
 /* eslint-disable prettier/prettier */
-import { View, Text } from "react-native";
+import { Text, View} from "react-native";
 import React from "react";
-import { COLORS } from "@/constants/theme";
+import Header from "@/components/Header";
 
 const Search = () => {
   return (
     <View>
-      <Text style={{ color: COLORS.primary }}>Search</Text>
-    </View>
+      <Header/>
+      <Header leftIcon="menu-outline" rightIcon="settings-outline" title="Search" />
+      <Header rightIcon="settings-outline"/>
+      <Header leftIcon="menu-outline" />
+
+<Header 
+  leftIcon="menu-outline" 
+  rightIcon="settings-outline" 
+  title="Search" 
+  onLeftIconPress={() => console.log('Menu pressed')}
+  onRightIconPress={() => console.log('Settings pressed')}
+/>
+
+<Text> Note: Header Component has a Default parameters and Default On press ,IF you only change the icon, it will redirect to default Router {"\n"}
+  ,,,Please always remember if you change the icon , change also its on press , to avoid hours of debugging :)  
+</Text>
+
+
+  </View>
   );
 };
 

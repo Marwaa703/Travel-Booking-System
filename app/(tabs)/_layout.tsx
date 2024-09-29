@@ -92,6 +92,7 @@ const Layout = () => {
       <Tabs.Screen
         name="search"
         options={{ 
+          headerShown: false,
           title: "Search", 
           tabBarLabel: () => null, 
         }}
