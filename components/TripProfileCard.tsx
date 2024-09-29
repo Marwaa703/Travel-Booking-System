@@ -2,8 +2,9 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
 import Rating from './Rating';
-import { COLORS } from '@/constants/theme';
+import { COLORS, FONTS } from '@/constants/theme';
 import Ionicons from "@expo/vector-icons/Ionicons";
+import CardSubtitle from './CardSubtitle';
 
 
 interface TripProfileCardProps {
@@ -30,8 +31,7 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({ image, title, date, r
 
         {/* Date */}
         <View style={styles.dateContainer}>
-          <Ionicons name='calendar' style={styles.icon} color={COLORS.textSecondary}></Ionicons>
-          <Text style={styles.dateText}>{date}</Text>
+          <CardSubtitle  icon={"calendar"} iconColor={COLORS.textSecondary} text={date}/>
         </View>
 
         {/* Rating */}
@@ -66,9 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
-    marginHorizontal:15,
-    marginVertical: 10,
-    elevation: 20, // Shadow for Android
+    elevation: 3, // Shadow for Android
     shadowColor: '#000', // Shadow for iOS
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -82,11 +80,11 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    marginLeft: 20,
-    marginTop:10
+    marginLeft: 15,
+    
   },
   title: {
-    fontSize: 16,
+    fontSize: FONTS.normal,
     fontWeight: 'bold',
     color: '#000',
   },
@@ -95,15 +93,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
 
-  },
-  icon: {
-    width: 15,
-    height: 15,
-    marginRight: 5,
-  },
-  dateText: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
   },
   ratingContainer: {
     flexDirection: 'row',
@@ -126,13 +115,13 @@ const styles = StyleSheet.create({
     marginRight: -10, // Overlap avatars
   },
   peopleText: {
-    fontSize: 14,
+    fontSize: FONTS.small,
     color: COLORS.textSecondary,
   },
   priceContainer: {
     backgroundColor: COLORS.priceTag,
     paddingVertical: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 15,
     position: 'absolute',
     right: 10,
@@ -140,7 +129,7 @@ const styles = StyleSheet.create({
   },
   priceText: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
   },
 });

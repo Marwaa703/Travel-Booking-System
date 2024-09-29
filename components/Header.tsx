@@ -1,29 +1,43 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS } from "@/constants/theme"; 
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 
 interface HeaderProps {
   leftIcon?: string;
   rightIcon?: string;
   title?: string;
+  onLeftIconPress?: () => void;
+  onRightIconPress?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
   leftIcon = "person-circle-outline", 
   rightIcon = "notifications-outline", 
-  title = "" 
+  title = "",
+  onLeftIconPress, 
+  onRightIconPress, 
 }) => {
+  const defaultLeftIconPress = () => router.push("/profile");
+  const defaultRightIconPress = () => router.push('/notification');
+
   return (
     <View style={styles.header}>
 
-      <Ionicons name={leftIcon} size={30} color={COLORS.textPrimary} />
+      <TouchableOpacity onPress={onLeftIconPress || defaultLeftIconPress}>
+        <Ionicons name={leftIcon} size={30} color={COLORS.textPrimary} />
+      </TouchableOpacity>
 
+   
       {title ? <Text style={styles.title}>{title}</Text> : null}
 
-      <Ionicons name={rightIcon} size={30} color={COLORS.textPrimary} />
+
+      <TouchableOpacity onPress={onRightIconPress || defaultRightIconPress}>
+        <Ionicons name={rightIcon} size={30} color={COLORS.textPrimary} />
+      </TouchableOpacity>
     </View>
   );
 };

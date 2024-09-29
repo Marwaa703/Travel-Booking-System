@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import {
   companyUserSignupInputs,
   companyUserSignupSchema,
-  signupInputs,
-  signupSchema,
 } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
 import Button from "../Buttons";
-import { FONTS, SPACING } from "@/constants/theme";
+import { SPACING } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
@@ -63,11 +61,8 @@ const CompanyUserSignupForm = () => {
       />
       <Spacer />
       <Spacer />
-      <Button
-        title="Sign Up"
-        onPress={handleSubmit(handleSignup)}
-        fontSize={FONTS.large}
-      />
+      {/* tobe adjusted */}
+      <Button title="Sign Up" onPress={handleSubmit(handleSignup)} />
     </>
   );
 };

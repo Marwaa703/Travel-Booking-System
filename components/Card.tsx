@@ -5,13 +5,14 @@ import Like from "@/components/Like";
 import Buttons from '@/components/Buttons';
 import CardSubtitle from './CardSubtitle';
 import icons from "@/constants/icons";
-import { COLORS } from '@/constants/theme';
+import { COLORS, FONTS } from '@/constants/theme';
 import Rating from './Rating';
 import Spacer from './Spacer';
+import LinkButton from './LinkButton';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.44;
-const CARD_HEIGHT = CARD_WIDTH * 1.58;
+const CARD_HEIGHT = CARD_WIDTH * 1.68;
 
 interface CardProps {
   image: ImageSourcePropType;
@@ -61,23 +62,23 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: CARD_WIDTH,
+    width: '100%',
     height: CARD_HEIGHT,
     borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: '#fff',
-    elevation: 15,
+    elevation: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.9,
     shadowRadius: 2,
     position: 'relative',
     padding: 10,
-    marginBottom:10
+    justifyContent:'space-between'
   },
   imageContainer: {
     width: '100%',
-    height: '55%', // Adjust the height of the image container to keep the aspect ratio consistent
+    height: '50%', // Adjust the height of the image container to keep the aspect ratio consistent
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   title: {
-    fontSize: 16,
+    fontSize: FONTS.normal,
     fontWeight: 'bold',
     color: '#000',
   },

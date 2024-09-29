@@ -4,7 +4,7 @@ import { KeyboardTypeOptions } from "react-native";
 import * as Yup from "yup";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^[0-9]{11}$/;
+const phoneRegex = /^\+?\d{1,3}?\s?(?:\d{1,3})?[-.\s]?\d{1,4}[-.\s]?\d{1,4}$/;
 
 export const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -23,14 +23,15 @@ export const signupSchema = Yup.object().shape({
   password: Yup.string().min(8).required("Password is required"),
   phone: Yup.string()
     .matches(phoneRegex, { message: "Invalid phone number format" })
-    .required("Select your gender"),
+    .max(13, "Max egyptian number is 13 length, Prefixed with +20")
+    .required("Enter your phone number"),
 });
 export const companyUserSignupSchema = signupSchema.concat(
   Yup.object().shape({
     role: Yup.string().required("Write your role as in company"),
   }),
 );
-export const loginInputs: InputFieldProps[] = [
+export const loginInputs: InputFieldProps<SignupFormFields>[] = [
   {
     name: "email",
     icon: "mail",
@@ -44,7 +45,7 @@ export const loginInputs: InputFieldProps[] = [
   },
 ];
 
-export const signupInputs: InputFieldProps[] = [
+export const signupInputs: InputFieldProps<SignupFormFields>[] = [
   {
     name: "fullname",
     icon: "person-sharp",
@@ -69,25 +70,23 @@ export const signupInputs: InputFieldProps[] = [
     autoCapitalize: "none",
   },
 ];
-export const companyUserSignupInputs: InputFieldProps[] = [
-  ...signupInputs,
-  {
-    name: "role",
-    icon: "briefcase",
-    autoCapitalize: "none",
-  },
-];
+export const companyUserSignupInputs: InputFieldProps<UserCompanySignupFormFields>[] =
+  [
+    ...signupInputs,
+    {
+      name: "role",
+      icon: "briefcase",
+      autoCapitalize: "none",
+    },
+  ];
 
-export interface InputFieldProps {
-  name: SignupFormFields;
+export interface InputFieldProps<T> {
+  name: T;
   icon: string;
   keyboardType?: KeyboardTypeOptions | undefined;
   autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
 }
 
-export type SignupFormFields =
-  | "fullname"
-  | "email"
-  | "password"
-  | "phone"
-  | "role";
+export type SignupFormFields = "fullname" | "email" | "password" | "phone";
+
+export type UserCompanySignupFormFields = SignupFormFields | "role";

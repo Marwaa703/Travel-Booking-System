@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { COLORS, FONTS } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Control, Controller, FieldValues } from "react-hook-form";
-import { captalizeFirstLetter } from "@/utils";
+import { captalizeFirstLetter, trimWhitespace } from "@/utils";
 
 interface AppTextInputProps extends TextInputProps {
   icon?: any;
@@ -40,7 +40,7 @@ const AppTextInput = ({
               <TextInput
                 onChangeText={onChange}
                 onBlur={onBlur}
-                value={value}
+                value={name !== "fullname" ? trimWhitespace(value) : value}
                 placeholder={captalizeFirstLetter(name)}
                 style={styles.input}
                 secureTextEntry={shown}

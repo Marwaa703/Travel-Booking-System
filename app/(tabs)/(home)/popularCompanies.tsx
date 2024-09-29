@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { View, ScrollView, StyleSheet,  } from 'react-native';
 import Card from '@/components/Card';
 import { companies } from "@/DummyData/companies.json";
 import Padding from '@/components/containers/Padding';
 
-const { width } = Dimensions.get('screen');
-const CARD_WIDTH = width * 0.4; // Set the card width to be 45% of the screen width
 
 const PopularCompanies = () => {
   return (
@@ -14,7 +12,7 @@ const PopularCompanies = () => {
         <Padding>
       <View style={styles.gridContainer}>
         {companies.map((company, index) => (
-          <View key={index} style={[styles.cardWrapper, { width: CARD_WIDTH }]}>
+          <View key={index} style={[styles.cardWrapper, { width: "48%"}]}>
             <Card
               image={company.image}
               title={company.title}
@@ -32,7 +30,6 @@ const PopularCompanies = () => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    paddingHorizontal: 10,
     paddingVertical: 20,
     backgroundColor: '#f5f5f5',
     alignItems: 'center', // Center the content to make it look consistent across devices

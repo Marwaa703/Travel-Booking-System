@@ -25,8 +25,11 @@ const SignupForm = () => {
 
   const handleSignup = (data: any) => {
     console.log("lol");
-    console.log(JSON.stringify(data));
-
+    const userData = {...data,selectedGender}
+    console.log(userData);
+// todo: submit data to server
+// todo: handle registerartion details if preregistered mail is found??
+// todo: navigate to login
     // reset
     // reset();
   };
