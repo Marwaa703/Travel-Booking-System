@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 import Header from "@/components/Header";
-import { COLORS } from "@/constants/theme";
+import { COLORS, SPACING } from "@/constants/theme";
 import Card from "@/components/Card";
 import { companies } from "@/DummyData/companies.json";
 import { trips, avatars } from "@/DummyData/trips.json";
 import Button from "@/components/Buttons";
+import Spacer from "@/components/Spacer";
 
 
 const Home = () => {
@@ -16,7 +17,7 @@ const Home = () => {
     uri: avatar.uri,
   }));
   return (
-    <SafeAreaView style={{ flex: 1, marginBottom: 100 }}>
+    <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
       <Header />
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text style={styles.title}>Explore the Beautiful</Text>
@@ -32,18 +33,20 @@ const Home = () => {
           {/* Horizontal ScrollView for Trip Profile Cards */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
             {trips.map((trip, index) => (
-              <View key={index}>
+              <View style={{marginRight:SPACING.small + 2,width:Dimensions.get('screen').width *0.45}} key={index}>
                 <Card image={{ uri: trip.image }} title={trip.title} subtitle="kk" rating={trip.rating}></Card>
               </View>
             ))}
           </ScrollView>
         </View>
 
+          <Spacer />
         <View style={styles.company}>
           <View style={styles.subtitleContainer}>
             <Text style={styles.subtitle}>Popular Companies</Text>
             <Text style={styles.viewAll} onPress={() => router.push("/popularCompanies")}>View All</Text>
           </View>
+          <Spacer />
           <View style={styles.cardContainer}>
             {companies.map((company, index) => (
               <View key={index} style={styles.companyCardWrapper}>
@@ -57,6 +60,8 @@ const Home = () => {
               </View>
             ))}
           </View>
+          <Spacer height={SPACING.large}/>
+
           <Button title={"GO TO TRIP DETAILS"} onPress={()=>{router.push("/tripDetails")}}/>
           <Button title={"You can Access Notification From Here Temporally"} onPress={()=>{router.push("/notification")}}/>
         </View>
@@ -85,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: COLORS.textPrimary,
-    paddingTop: 15,
+    // paddingTop: 15,
     flex: 1,
   },
   subtitleContainer: {
@@ -100,26 +105,27 @@ const styles = StyleSheet.create({
   },
   trips: {},
   company: {
-    marginTop: 20,
+    // marginTop: 20,
 
   },
   cardContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 0,
     justifyContent: 'space-between',
+    rowGap:14,
+    columnGap:5
 
   
   },
   companyCardWrapper: {
-    width: '40%', 
-    marginBottom: 20, 
+    width: '48%', 
   },
   horizontalScroll: {
-    paddingVertical: 10,
+    marginVertical: 15,
+    overflow:'visible',
+    columnGap:15,
   },
   
 });

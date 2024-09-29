@@ -21,7 +21,9 @@ export const COLORS = {
 };
 
 export const FONTS = {
+  xsmall: 10,
   small: 12,
+  normal: 14,
   medium: 16,
   large: 20,
   xlarge: 24,
@@ -29,10 +31,13 @@ export const FONTS = {
 };
 
 export const SPACING = {
-  small: 8,
+  xsmall: 10,
+  small: 12,
+  normal: 14,
   medium: 16,
-  large: 24,
-  xlarge: 32,
+  large: 20,
+  xlarge: 24,
+  xxlarge: 26,
 };
 
 export const BORDER_RADIUS = {

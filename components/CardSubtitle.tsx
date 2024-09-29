@@ -3,7 +3,7 @@
 import { OpaqueColorValue, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { COLORS } from "../constants/theme";
+import { COLORS, FONTS } from "../constants/theme";
 
 interface CardSubtitleProps {
   text: string;
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginTop:10
   },
   text: {
-    fontSize: 12,
+    fontSize: FONTS.small,
     marginLeft: 5,
   },
 });
