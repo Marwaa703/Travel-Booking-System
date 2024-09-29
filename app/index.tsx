@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import Button from '@/components/Buttons';
+import { FONTS } from '@/constants/theme';
 import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     backgroundColor: '#fff',
-    padding: 20,
+    paddingHorizontal: 20,
     alignItems: 'center',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     marginTop: -30,
   },
   title: {
-    fontSize: 28,
+    fontSize: FONTS.xlarge ,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop:30
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 50,
+    bottom: '1%',
     alignSelf: 'center',
     width: '100%',
   },

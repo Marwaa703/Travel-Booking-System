@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TextInputProps } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TextInputProps, Dimensions } from 'react-native';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface TextFieldProps extends TextInputProps {
@@ -50,6 +50,7 @@ const InputField: React.FC<TextFieldProps> = ({ label, type = 'text', required =
           validateInput(value);
         }}
         {...props}
+        
       />
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -59,24 +60,25 @@ const InputField: React.FC<TextFieldProps> = ({ label, type = 'text', required =
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
-    marginTop: 16,
-    marginHorizontal: 40,
-    width: 250,
+    // marginBottom: 16,
+    // marginTop: 16,
+    // marginHorizontal: 40,
+    width: '100%',
   },
   label: {
     color: COLORS.textPrimary,
     fontSize: FONTS.medium,
-    marginBottom: 4,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: '#F5F5F7',
     borderWidth: 1,
-    borderColor: COLORS.textSecondary,
+    borderColor: COLORS.opacity,
     padding: 10,
-    borderRadius: 50,
+    borderRadius: 20,
     fontSize: FONTS.medium,
     color: COLORS.textPrimary,
+    width:Dimensions.get("screen").width *0.7
   },
   error: {
     color: 'red',

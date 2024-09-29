@@ -7,12 +7,13 @@ import { COLORS, FONTS, BORDER_RADIUS } from '../constants/theme';
 interface ButtonProps {
   title: string;
   onPress: () => void;
+  fontSize?:number,
   type?: 'primary' | 'secondary';
-  width: DimensionValue | undefined;
+  width?: DimensionValue | undefined;
   align?: 'flex-start' | 'center' |'flex-end';
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width , align}) => {
+const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width="100%" , align,fontSize=FONTS.medium}) => {
 
   return (
     <View style={[styles.container, { alignItems: align}]}>
@@ -25,12 +26,12 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
     justifyContent: 'center',
+    marginVertical:10
 
   },
   button: {
-    // width: width,
+    
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: BORDER_RADIUS.large,
