@@ -5,13 +5,15 @@ import { COLORS } from "@/constants/theme";
 import Button from "@/components/Buttons";
 import { router } from "expo-router";
 
-const CompanyHome = () => {
+
+const Calendar = () => {
   return (
     <View>
-      <Text style={{ color: COLORS.primary }}>Here You can see your Trips......</Text>
-      <Button title={"Add Trip"} onPress={()=>{router.push("/addTrip")}}/>
+      <Text style={{ color: COLORS.primary }}>Calendar</Text>
+      <Button title={" Trip Instruction"} onPress={()=>{router.push("/trip_ins")}}/>
+
     </View>
   );
 };
 
-export default CompanyHome;
+export default Calendar;

@@ -43,7 +43,7 @@ const LoginForm = () => {
         />
       ))}
       <View style={{ alignSelf: "flex-end", marginVertical: 10 }}>
-        <LinkButton to={"/signup"} label="Forget Password" />
+        <LinkButton to={"/forget_password"} label="Forget Password" />
       </View>
       <Button
         title="Sign In"

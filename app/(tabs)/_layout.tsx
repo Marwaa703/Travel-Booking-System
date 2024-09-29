@@ -7,7 +7,7 @@ import {COLORS, FONTS} from "../../constants/theme"
 
 //^when typing mode is on ,The tab bar does not disappear, Edit It in Future
 
-type RouteName  = "home" | "calendar" | "search" | "(blogs)" | "(profile)";
+type RouteName  = "home" | "(calendar)" | "search" | "(blogs)" | "(profile)";
 
 const Layout = () => {
   return (
@@ -20,7 +20,7 @@ const Layout = () => {
             case "home":
               iconName = "home-outline";
               break;
-            case "calendar":
+            case "(calendar)":
               iconName = "calendar-outline";
               break;
             case "search":
@@ -55,7 +55,7 @@ const Layout = () => {
               }}
             >
               <Ionicons
-                name ={iconName as never} 
+                name ={iconName} 
                 size={isSearchIcon ? 30 : 25} 
                 color={isSearchIcon ? COLORS.background : color} 
               />
@@ -88,7 +88,7 @@ const Layout = () => {
       })}
     >
       <Tabs.Screen name="(home)" options={{ headerShown: false, title: "Home" }} />
-      <Tabs.Screen name="calendar" options={{ title: "Calendar" }} />
+      <Tabs.Screen name="(calendar)" options={{ headerShown: false, title: "Calendar" }} />
       <Tabs.Screen
         name="search"
         options={{ 

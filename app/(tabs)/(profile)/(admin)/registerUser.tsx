@@ -4,12 +4,12 @@ import React from "react";
 import { COLORS } from "@/constants/theme";
 
 
-const Calendar = () => {
+const RegisterUser = () => {
   return (
     <View>
-      <Text style={{ color: COLORS.primary }}>Calendar</Text>
+      <Text style={{ color: COLORS.primary }}>RegisterUser</Text>
     </View>
   );
 };
 
-export default Calendar;
+export default RegisterUser;
