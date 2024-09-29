@@ -5,10 +5,9 @@ import { router } from "expo-router";
 import Header from "@/components/Header";
 import { COLORS } from "@/constants/theme";
 import Card from "@/components/Card";
-import TripProfileCard from "@/components/TripProfileCard";
 import { companies } from "@/DummyData/companies.json";
 import { trips, avatars } from "@/DummyData/trips.json";
-import FavoriteCard from "@/components/FavoriteCard";
+
 
 const Home = () => {
   const avatarImages = avatars.map(avatar => ({
@@ -32,7 +31,7 @@ const Home = () => {
           {/* Horizontal ScrollView for Trip Profile Cards */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
             {trips.map((trip, index) => (
-              <View key={index} style={styles.cardWrapper}>
+              <View key={index}>
                 <Card image={{ uri: trip.image }} title={trip.title} subtitle="kk" rating={trip.rating}></Card>
               </View>
             ))}
@@ -46,7 +45,7 @@ const Home = () => {
           </View>
           <View style={styles.cardContainer}>
             {companies.map((company, index) => (
-              <View key={index} style={styles.cardWrapper}>
+              <View key={index} style={styles.companyCardWrapper}>
                 <Card
                   image={company.image}
                   title={company.title}
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: COLORS.textPrimary,
-    padding: 15,
+    paddingTop: 15,
     flex: 1,
   },
   subtitleContainer: {
@@ -94,25 +93,32 @@ const styles = StyleSheet.create({
   viewAll: {
     fontSize: 15,
     color: COLORS.secondary,
-    padding: 15,
+    // padding: 15,
   },
   trips: {},
   company: {
     marginTop: 20,
+
   },
   cardContainer: {
-    // flex: 1,
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    paddingHorizontal: 0,
+    justifyContent: 'space-between',
+
+  
   },
-  cardWrapper: {
-    marginHorizontal: 5,
+  companyCardWrapper: {
+    width: '40%', 
+    marginBottom: 20, 
   },
   horizontalScroll: {
     paddingVertical: 10,
   },
+  
 });
 
 export default Home;

@@ -1,7 +1,10 @@
-/* eslint-disable prettier/prettier */
-
 import React, { useState } from "react";
-import { signupInputs, signupSchema } from "@/constants/forms";
+import {
+  companyUserSignupInputs,
+  companyUserSignupSchema,
+  signupInputs,
+  signupSchema,
+} from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
 import Button from "../Buttons";
@@ -11,7 +14,7 @@ import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
 import { Text } from "react-native";
 
-const SignupForm = () => {
+const CompanyUserSignupForm = () => {
   const [selectedGender, setSelectedGender] = useState("male");
 
   const {
@@ -20,33 +23,39 @@ const SignupForm = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(signupSchema),
+    resolver: yupResolver(companyUserSignupSchema),
   });
 
   const handleSignup = (data: any) => {
-    console.log("lol");
-    console.log(JSON.stringify(data));
+    const user = {
+      ...data,
+      gender: selectedGender,
+    };
+    console.log();
+    console.log(user);
 
     // reset
-    // reset();
+    reset();
   };
 
-  console.log({ errors, selectedGender });
+  //   console.log({ errors, selectedGender });
 
   return (
     <>
-      {signupInputs.map(({ icon, name, autoCapitalize, keyboardType }) => (
-        <AppTextInput
-          key={name}
-          name={name}
-          control={control as unknown as Control<FieldValues>}
-          keyboardType={keyboardType}
-          autoCapitalize={autoCapitalize}
-          icon={icon}
-          error={errors[name]?.message}
-          secureTextEntry={name === "password"}
-        />
-      ))}
+      {companyUserSignupInputs.map(
+        ({ icon, name, autoCapitalize, keyboardType }) => (
+          <AppTextInput
+            key={name}
+            name={name}
+            control={control as unknown as Control<FieldValues>}
+            keyboardType={keyboardType}
+            autoCapitalize={autoCapitalize}
+            icon={icon}
+            error={errors[name]?.message}
+            secureTextEntry={name === "password"}
+          />
+        ),
+      )}
       <Text style={{ marginVertical: SPACING.medium }}>Select your gender</Text>
       <GenderPicker
         setSelectedGender={setSelectedGender}
@@ -62,4 +71,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default CompanyUserSignupForm;

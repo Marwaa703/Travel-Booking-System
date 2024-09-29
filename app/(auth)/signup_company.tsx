@@ -1,4 +1,5 @@
 import Padding from "@/components/containers/Padding";
+import CompanyUserSignupForm from "@/components/forms/CompanyUserSignupForm";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
@@ -15,14 +16,14 @@ const SignupCompany = () => {
           {/* header */}
           <View style={styles.top}>
             <View style={styles.header}>
-              <Text style={styles.title}>Sign Up now</Text>
+              <Text style={styles.title}>Register your company now</Text>
               <Spacer />
-              <Text style={styles.subTitle}>Company Signup</Text>
+              <Text style={styles.subTitle}>Company Representitive Signup</Text>
             </View>
             {/* headerend  */}
             {/* form  */}
             <View>
-              <SignupForm />
+              <CompanyUserSignupForm />
               <Spacer />
               <View style={styles.center}>
                 <Text style={styles.subTitle}>Already have an account?</Text>
@@ -41,7 +42,7 @@ const SignupCompany = () => {
           </View>
           {/* End form  */}
           {/* Bottom  */}
-          <View style={styles.bottom}>
+          {/* <View style={styles.bottom}>
             <Text>Coming Soon ...!</Text>
             <Spacer />
             <View style={[styles.center, { width: "60%" }]}>
@@ -53,7 +54,7 @@ const SignupCompany = () => {
               />
               <Ionicons name="logo-twitter" color={"dodgerblue"} size={40} />
             </View>
-          </View>
+          </View> */}
         </View>
       </Padding>
     </ScrollView>
@@ -64,6 +65,7 @@ export default SignupCompany;
 
 const styles = StyleSheet.create({
   container: {
+    paddingVertical: 10,
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
@@ -95,10 +97,10 @@ const styles = StyleSheet.create({
     color: COLORS.textSubtitle,
   },
 
-  bottom: {
-    flex: 0,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    marginTop: "4%",
-  },
+  // bottom: {
+  //   flex: 0,
+  //   alignItems: "center",
+  //   justifyContent: "flex-end",
+  //   marginTop: "4%",
+  // },
 });
