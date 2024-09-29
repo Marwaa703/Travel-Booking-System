@@ -7,7 +7,7 @@ import {COLORS, FONTS} from "../../constants/theme"
 
 //^when typing mode is on ,The tab bar does not disappear, Edit It in Future
 
-type RouteName  = "home" | "(calendar)" | "search" | "(blogs)" | "(profile)";
+type RouteName  = "(home)" | "(calendar)" | "search" | "(blogs)" | "(profile)";
 
 const Layout = () => {
   return (
@@ -17,7 +17,7 @@ const Layout = () => {
           let iconName;
           let isSearchIcon = route.name === "search" as RouteName ;
           switch (route.name as RouteName) {
-            case "home":
+            case "(home)":
               iconName = "home-outline";
               break;
             case "(calendar)":

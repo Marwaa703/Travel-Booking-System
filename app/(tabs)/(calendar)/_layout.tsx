@@ -2,7 +2,7 @@
 import { Stack } from "expo-router";
 import React from "react";
 
-export const CalendarLayout = () => {
+ const CalendarLayout = () => {
   return (
       <Stack>
         <Stack.Screen name="calendarHome" options={{ headerShown: true }} />
@@ -11,3 +11,5 @@ export const CalendarLayout = () => {
       </Stack>
   );
 }
+
+export default CalendarLayout;

@@ -10,7 +10,7 @@ const Calendar = () => {
   return (
     <View>
       <Text style={{ color: COLORS.primary }}>Calendar</Text>
-      <Button title={" Trip Instruction"} onPress={()=>{router.push("/trip_ins")}}/>
+      <Button title={" Trip Instruction"} onPress={()=>{router.push("/tripIns")}}/>
 
     </View>
   );
