@@ -2,7 +2,7 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import React from "react";
 import { router } from "expo-router";
-import Header from "@/components/Header";
+import Header from "@/components/core/Header";
 import { COLORS, SPACING } from "@/constants/theme";
 import Card from "@/components/Card";
 import { companies } from "@/DummyData/companies.json";

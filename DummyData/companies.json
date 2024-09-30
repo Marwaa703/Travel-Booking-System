@@ -7,7 +7,8 @@
         "title": "Techify Inc",
         "subtitle": "Silicon Valley, USA",
         "rating": 4.8,
-        "buttonText": "Subscribe"
+        "buttonText": "Subscribe",
+        "trips":20
       },
       {
         "image": {
@@ -16,7 +17,8 @@
         "title": "Finsoft Solutions",
         "subtitle": "Berlin, Germany",
         "rating": 4.7,
-        "buttonText": "Subscribe"
+        "buttonText": "Subscribe",
+        "trips":10
       },
       {
         "image": {
@@ -25,7 +27,8 @@
         "title": "InnovaTech",
         "subtitle": "Tokyo, Japan",
         "rating": 4.9,
-        "buttonText": "Subscribe"
+        "buttonText": "Subscribe",
+        "trips":15
       },
       {
         "image": {
@@ -34,7 +37,8 @@
         "title": "GreenEnergy Corp",
         "subtitle": "Oslo, Norway",
         "rating": 4.6,
-        "buttonText": "Subscribe"
+        "buttonText": "Subscribe",
+        "trips":25
       },
       {
         "image": {
@@ -43,7 +47,9 @@
         "title": "BioPharma Ltd",
         "subtitle": "Basel, Switzerland",
         "rating": 4.5,
-        "buttonText": "Subscribe"
+        "buttonText": "Subscribe",
+        "trips":40
+
       },
       {
         "image": {
@@ -52,7 +58,8 @@
         "title": "AutoMech",
         "subtitle": "Detroit, USA",
         "rating": 4.3,
-        "buttonText": "Subscribe"
+        "buttonText": "Subscribe",
+        "trips":20
       }
     ]
   }

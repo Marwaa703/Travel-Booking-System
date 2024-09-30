@@ -2,7 +2,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { COLORS, FONTS } from "@/constants/theme";
-import Header from "@/components/Header";
+import Header from "@/components/core/Header";
 import SettingCard from "@/components/SettingContainer";
 import { router } from "expo-router";
 

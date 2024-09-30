@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTS, SHADOWS } from "@/constants/theme"; 
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "@/components/blogs/CategoryCard";
 import { categories, recent_blogs, oldest_blogs } from "@/DummyData/blogs.json"; 
-import BlogPostCard from "@/components/BlogPostCard";
+import BlogPostCard from "@/components/blogs/BlogPostCard";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import OldestPostCard from "@/components/OldestPostCard";
+import OldestPostCard from "@/components/blogs/OldestPostCard";
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 

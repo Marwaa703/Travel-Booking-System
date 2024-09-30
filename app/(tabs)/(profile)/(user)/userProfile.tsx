@@ -4,7 +4,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, Button } from 'react-native';
 import SettingCard from '@/components/SettingContainer'; // Assuming the file path is correct
 import { COLORS } from '@/constants/theme';
-import Header from '@/components/Header';
+import Header from '@/components/core/Header';
 import { router } from 'expo-router';
 
 const ProfileScreen: React.FC = () => {

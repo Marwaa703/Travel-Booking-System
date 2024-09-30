@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Text, View} from "react-native";
 import React from "react";
-import Header from "@/components/Header";
+import Header from "@/components/core/Header";
 
 const Search = () => {
   return (
