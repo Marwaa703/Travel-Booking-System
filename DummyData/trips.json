@@ -8,7 +8,8 @@
       "peopleJoined": 24,
       "price": "820",
       "avatarIds": [0, 1, 2],
-      "status": "Cancelled"
+      "status": "Cancelled",
+      "location":"Cairo"
     },
     {
       "image": "https://ramonfadli.com/wp-content/uploads/2020/11/D7K_5210.jpg",
@@ -18,7 +19,8 @@
       "peopleJoined": 24,
       "price": "720",
       "avatarIds": [0, 1, 2],
-      "status": "Ongoing"
+      "status": "Ongoing",
+      "location":"Aswan"
     },
     {
       "image": "https://images.adsttc.com/media/images/5d44/14fa/284d/d1fd/3a00/003d/large_jpg/eiffel-tower-in-paris-151-medium.jpg?1564742900",
@@ -28,7 +30,8 @@
       "peopleJoined": 26,
       "price": "942",
       "avatarIds": [0, 1, 2],
-      "status": "Completed"
+      "status": "Completed",
+      "location":"Cairo"
     },
     {
       "image": "https://pegah.com.bd/images/tourist-spot/1691658816163_gallary_1jpg.jpg",
@@ -38,7 +41,8 @@
       "peopleJoined": 27,
       "price": "860",
       "avatarIds": [0, 1, 2],
-      "status": "Scheduled"
+      "status": "Scheduled",
+      "location":"Alexandria"
     },
     {
       "image": "https://cdn.britannica.com/06/122506-050-C8E03A8A/Pyramid-of-Khafre-Giza-Egypt.jpg",
@@ -48,7 +52,8 @@
       "peopleJoined": 26,
       "price": "985",
       "avatarIds": [0, 1, 2],
-      "status": "Scheduled"
+      "status": "Scheduled",
+      "location":"Pyramids"
     },
     {
       "image": "https://d3rr2gvhjw0wwy.cloudfront.net/uploads/mandators/49581/file-manager/karnak-temple.jpg",
@@ -58,7 +63,8 @@
       "peopleJoined": 30,
       "price": "542",
       "avatarIds": [0, 1, 2],
-      "status": "Scheduled"
+      "status": "Scheduled",
+      "location":"Aswan"
     },
     {
       "image": "https://egyptescapes.com/wp-content/uploads/2021/04/when-will-the-grand-egyptian-museum-open-scaled.jpg",
@@ -68,7 +74,8 @@
       "peopleJoined": 30,
       "price": "542",
       "avatarIds": [0, 1, 2],
-      "status": "Completed"
+      "status": "Completed",
+      "location":"Alexandria"
     }
   ],
   "avatars": [
