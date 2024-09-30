@@ -2,9 +2,8 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Dimensions, View } from 'react-native';
-import {COLORS, FONTS} from "../../constants/theme"
-import { bottomTabsHeight } from "@/constants/dimentions";
+import { View } from 'react-native';
+import {COLORS} from "../../constants/theme"
 
 //^when typing mode is on ,The tab bar does not disappear, Edit It in Future
 
@@ -42,9 +41,9 @@ const Layout = () => {
             <View
               style={{
                 backgroundColor: isSearchIcon ? COLORS.accent : "transparent",
-                borderRadius: isSearchIcon ? 50 : 0, 
-                width: isSearchIcon ? 50 : 'auto', 
-                height: isSearchIcon ? 50 : 'auto', 
+                borderRadius: isSearchIcon ? 35 : 0, 
+                width: isSearchIcon ? 70 : 'auto', 
+                height: isSearchIcon ? 70 : 'auto', 
                 justifyContent: 'center',
                 alignItems: 'center', 
                 shadowColor: isSearchIcon ?  COLORS.accent  : "transparent", 
@@ -57,7 +56,7 @@ const Layout = () => {
             >
               <Ionicons
                 name ={iconName as never} 
-                size={isSearchIcon ? 35 : 25} 
+                size={isSearchIcon ? 30 : 25} 
                 color={isSearchIcon ? COLORS.background : color} 
               />
             </View>
@@ -67,29 +66,28 @@ const Layout = () => {
           position: "absolute",
           bottom: 0,
           backgroundColor:"#fff",
-          height: bottomTabsHeight,
+          height: 100,
           borderTopLeftRadius: 60,
           borderTopRightRadius: 60,
           shadowColor: "#000",
           shadowOpacity: 0.1,
           shadowOffset: { width: 0, height: 10 },
           shadowRadius: 20,
-          elevation:5, 
-          
+          elevation: 5, 
         },
         tabBarActiveTintColor:  COLORS.primary, 
         tabBarInactiveTintColor: COLORS.textSecondary, 
         tabBarLabelStyle: {
-          fontSize: FONTS.small,
-          paddingBottom: 15, 
+          fontSize: 12,
+          paddingBottom: 25, 
         },
         tabBarItemStyle: {
-          paddingTop: 15, 
+          paddingTop: 25, 
         },
       })}
     >
       <Tabs.Screen name="(home)" options={{ headerShown: false, title: "Home" }} />
-      <Tabs.Screen name="(calendar)" options={{ headerShown: false, title: "Calendar" }} />
+      <Tabs.Screen name="(calendar)" options={{ title: "Calendar" }} />
       <Tabs.Screen
         name="search"
         options={{ 

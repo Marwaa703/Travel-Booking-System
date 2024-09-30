@@ -10,7 +10,7 @@ const HomeLayout = () => {
         <Stack.Screen name="popularCompanies" options={{ headerShown: true }} />
         <Stack.Screen name="tripMap" options={{ headerShown: true }} />
         <Stack.Screen name="payment" options={{ headerShown: true }} />
-        <Stack.Screen name="tripDetails" options={{ headerShown: true }} />
+        <Stack.Screen name="tripDetails" options={{ headerShown: false }} />
         <Stack.Screen name="notification" options={{ headerShown: false }} />
       </Stack>
 

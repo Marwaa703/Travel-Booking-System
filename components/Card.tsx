@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, Image, StyleSheet, ImageSourcePropType, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageSourcePropType, Dimensions, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import Like from "@/components/Like";
 import Buttons from '@/components/Buttons';
 import CardSubtitle from './CardSubtitle';
@@ -8,13 +10,13 @@ import icons from "@/constants/icons";
 import { COLORS, FONTS } from '@/constants/theme';
 import Rating from './Rating';
 import Spacer from './Spacer';
-import LinkButton from './LinkButton';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.44;
 const CARD_HEIGHT = CARD_WIDTH * 1.68;
 
 interface CardProps {
+  id: number;
   image: ImageSourcePropType;
   title: string;
   subtitle: string;
@@ -23,9 +25,15 @@ interface CardProps {
   buttonText?: string; // Optional button text
 }
 
-const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, buttonText }) => {
+const Card: React.FC<CardProps> = ({ id, image, title, subtitle, rating, price, buttonText }) => {
+  const navigation = useNavigation<NavigationProp<any>>(); 
+
+  const handlePress = () => {
+    navigation.navigate('tripDetails', { tripId: id }); 
+  };
+
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
 
       {/* Image */}
       <View style={styles.imageContainer}>
@@ -41,7 +49,6 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
         <View style={styles.ratingContainer}>
           <Rating rate={rating} />
         </View>
-
       </View>
 
       {/* Conditionally render price or button */}
@@ -56,7 +63,7 @@ const Card: React.FC<CardProps> = ({ image, title, subtitle, rating, price, butt
       <View style={styles.iconContainer}>
         <Like />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     position: 'relative',
     padding: 10,
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   imageContainer: {
     width: '100%',
