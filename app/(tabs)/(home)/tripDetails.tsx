@@ -2,8 +2,7 @@
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import Button from "@/components/Buttons";
-import { router, useRouter } from "expo-router";
-import Header from "@/components/core/Header";
+import { router} from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
 import CardSubtitle from "@/components/CardSubtitle";

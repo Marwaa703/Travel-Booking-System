@@ -87,7 +87,7 @@ const Layout = () => {
       })}
     >
       <Tabs.Screen name="(home)" options={{ headerShown: false, title: "Home" }} />
-      <Tabs.Screen name="(calendar)" options={{ title: "Calendar" }} />
+      <Tabs.Screen name="(calendar)" options={{ headerShown: false,title: "Calendar" }} />
       <Tabs.Screen
         name="search"
         options={{ 

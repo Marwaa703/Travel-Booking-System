@@ -70,7 +70,7 @@ const Home = () => {
           </View>
           <Spacer height={SPACING.large}/>
 
-          <Button title={"GO TO TRIP DETAILS"} onPress={()=>{router.push("/tripDetails")}}/>
+         
 
         </View>
       </ScrollView>

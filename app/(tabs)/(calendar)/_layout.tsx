@@ -6,7 +6,7 @@ import React from "react";
   return (
       <Stack>
         <Stack.Screen name="calendarHome" options={{ headerShown: false }} />
-        <Stack.Screen name="tripIns" options={{ headerShown: true }} />
+        <Stack.Screen name="tripIns" options={{ headerShown: false }} />
 
       </Stack>
   );

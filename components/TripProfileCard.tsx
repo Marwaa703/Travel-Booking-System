@@ -1,25 +1,33 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageSourcePropType, TouchableOpacity } from 'react-native';
 import Rating from './Rating';
 import { COLORS, FONTS } from '@/constants/theme';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CardSubtitle from './CardSubtitle';
+import { useNavigation } from 'expo-router';
+import { NavigationProp } from '@react-navigation/native';
 
 
 interface TripProfileCardProps {
+  id:number
   image: ImageSourcePropType;
   title: string;
   date: string;
   rating: number;
   price: string;
   peopleJoined: number;
-  avatars: ImageSourcePropType[]; // Array of avatar images
+  avatars: ImageSourcePropType[]; 
 }
 
-const TripProfileCard: React.FC<TripProfileCardProps> = ({ image, title, date, rating, price, peopleJoined, avatars }) => {
+const TripProfileCard: React.FC<TripProfileCardProps> = ({ id,image, title, date, rating, price, peopleJoined, avatars }) => {
+  const navigation = useNavigation<NavigationProp<any>>(); 
+
+  const handlePress = () => {
+    navigation.navigate('tripIns', { tripId: id }); 
+  };
   return (
-    <View style={styles.cardContainer}>
+<TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
 
       {/* Image Section */}
       <Image source={image} style={styles.image} />
@@ -54,7 +62,7 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({ image, title, date, r
       <View style={styles.priceContainer}>
         <Text style={styles.priceText}>$ {price}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
