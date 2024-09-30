@@ -1,77 +1,140 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import Button from "../Buttons";
-import IconButton from "../IconButton";
+import TextInputField from "./TextInputField";
+import Spacer from "../Spacer";
 
 interface TripImage {
   imageUrl: string;
   caption: string;
 }
+
 interface TripImageFormProps {
   onSubmit: (data: TripImage[]) => void;
 }
+
 const TripImageForm = ({ onSubmit }: TripImageFormProps) => {
-  const [images, setImages] = useState<TripImage[]>([
-    { imageUrl: "", caption: "" },
-  ]);
+  const [imageUrl, setImageUrl] = useState("");
+  const [caption, setCaption] = useState("");
+
+  const [images, setImages] = useState<TripImage[]>([]);
 
   const handleAddImage = () => {
-    setImages([...images, { imageUrl: "", caption: "" }]);
+    if (imageUrl && caption) {
+      setImages([...images, { imageUrl, caption }]);
+      setCaption("");
+      setImageUrl("");
+    } else alert("Can't add empty values");
   };
 
   const handleSubmit = () => {
-    // Validate and submit images
     onSubmit(images);
   };
 
+  const handleDeleteImage = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
   return (
-    <View>
+    <View style={{ padding: 16 }}>
+      <TextInputField
+        name={"image"}
+        onChangeText={(text) => setImageUrl(text)}
+        icon="image-outline"
+        onBlur={undefined}
+        value={imageUrl}
+        trim={false}
+      />
+      <TextInputField
+        trim={false}
+        name={"caption"}
+        onChangeText={(text) => setCaption(text)}
+        icon="logo-closed-captioning"
+        onBlur={undefined}
+        value={caption}
+      />
+
+      <Spacer />
+      <TouchableOpacity onPress={handleAddImage} style={styles.addButton}>
+        <Text>+</Text>
+      </TouchableOpacity>
+      <Spacer />
+
       {images.map((img, index) => (
-        <View key={index}>
-          <TextInput
-            placeholder="Image URL"
-            value={img.imageUrl}
-            onChangeText={(text) => {
-              const newImages = [...images];
-              newImages[index].imageUrl = text;
-              setImages(newImages);
-            }}
-          />
-          <TextInput
-            placeholder="Caption"
-            value={img.caption}
-            onChangeText={(text) => {
-              const newImages = [...images];
-              newImages[index].caption = text;
-              setImages(newImages);
-            }}
-          />
+        <View key={index} style={styles.addedLocationRow}>
+          {img.imageUrl ? (
+            <Image
+              source={{ uri: img.imageUrl }}
+              style={styles.locationImage}
+              onError={() =>
+                setImages(
+                  images.map((img, i) =>
+                    i === index ? { ...img, imageUrl: "" } : img,
+                  ),
+                )
+              }
+            />
+          ) : null}
+          <Text style={styles.locationName}>
+            {img.caption.substring(0, 30)}
+            {img.caption.length >= 30 ? "..." : ""}
+          </Text>
+          <TouchableOpacity onPress={() => handleDeleteImage(index)}>
+            <Text style={styles.deleteButton}>🗑️</Text>
+          </TouchableOpacity>
         </View>
       ))}
-      <View style={styles.buttons}>
-        <Button
-          type="secondary"
-          width={"100%"}
-          title="Add Another Image"
-          onPress={handleAddImage}
-        />
-        {/* <Spacer /> */}
-        <Button
-          type="primary"
-          width={80}
-          title="Submit Trip"
-          onPress={handleSubmit}
-        />
-      </View>
+      <Spacer />
+      <Button
+        type="primary"
+        width={"100%"}
+        title="Submit Trip"
+        onPress={handleSubmit}
+      />
     </View>
   );
 };
 
-export default TripImageForm;
 const styles = StyleSheet.create({
-  buttons: {
-    width: "100%",
+  addButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#e0e0e0",
+    marginHorizontal: "auto",
+  },
+
+  addedLocationRow: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
+    marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 8,
+  },
+  locationImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    marginRight: 8,
+  },
+  locationName: {
+    flex: 1,
+    marginLeft: 8,
+    maxWidth: 100,
+  },
+  deleteButton: {
+    marginLeft: 8,
   },
 });
+
+export default TripImageForm;

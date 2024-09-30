@@ -52,7 +52,7 @@ const MultiStepTripForm = () => {
   };
 
   return (
-    <View style={{ width: Dimensions.get("screen").width * 0.8 }}>
+    <View>
       {currentStep === 1 && (
         <>
           {addTripInputs.map(
@@ -91,6 +91,8 @@ const MultiStepTripForm = () => {
           direction="back"
         />
       )}
+
+      <Spacer />
     </View>
   );
 };
