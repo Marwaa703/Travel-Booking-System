@@ -41,7 +41,7 @@ const AppTextInput = ({
             <TextInputField
               name={name}
               icon={icon}
-              // trim={false}
+              trim={trim}
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
