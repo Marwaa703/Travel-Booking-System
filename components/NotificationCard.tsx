@@ -34,6 +34,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({ avatar, title, desc
   };
 
   return (
+
     <Pressable onPress={handlePress} style={[styles.container, !backgroundVisible && styles.backgroundHidden]}>
       <Image source={avatar} style={styles.avatar} />
       <View style={styles.textContainer}>
@@ -53,13 +54,14 @@ const NotificationCard: React.FC<NotificationCardProps> = ({ avatar, title, desc
 
 const styles = StyleSheet.create({
   container: {
+    width:"100%",
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#E6F2FF', // Default background color
-    padding: 10,
-    borderRadius: 10,
-    marginVertical: 10,
+    padding: 25,
+    // borderRadius: 10,
+    // marginVertical: 10,
   },
   backgroundHidden: {
     backgroundColor: 'transparent', // Hide background after click
