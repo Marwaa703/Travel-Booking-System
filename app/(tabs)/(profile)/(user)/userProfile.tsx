@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView, Button, ScrollView } from 'react-native';
 import SettingCard from '@/components/SettingContainer'; // Assuming the file path is correct
 import { COLORS } from '@/constants/theme';
 import Header from '@/components/core/Header';
@@ -9,7 +9,9 @@ import { router } from 'expo-router';
 
 const ProfileScreen: React.FC = () => {
   return (
+    <ScrollView style={{marginBottom:100}}>
     <SafeAreaView style={styles.container}>
+
       {/* <Header></Header> */}
 
     <View >
@@ -25,7 +27,7 @@ const ProfileScreen: React.FC = () => {
       </View>
 
       {/* Setting Cards */}
-      {/* <SettingCard
+      <SettingCard
         title="Profile"
         onPress={() => {}}
         leftIconName="person"
@@ -34,7 +36,7 @@ const ProfileScreen: React.FC = () => {
         title="Favorites"
         onPress={() => router.push("/favTrip")}
         leftIconName="favorite"
-      /> */}
+      />
       <SettingCard
         title="Previous Trips"
         onPress={() => router.push("/perviousTrip")}
@@ -58,6 +60,7 @@ const ProfileScreen: React.FC = () => {
         title="Edit Profile"
       />
     </SafeAreaView>
+      </ScrollView>
   );
 };
 

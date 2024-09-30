@@ -2,8 +2,9 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import {COLORS, FONTS} from "../../constants/theme"
+import { bottomTabsHeight } from "@/constants/dimentions";
 
 //^when typing mode is on ,The tab bar does not disappear, Edit It in Future
 
@@ -66,7 +67,7 @@ const Layout = () => {
           position: "absolute",
           bottom: 0,
           backgroundColor:"#fff",
-          height: 90,
+          height: bottomTabsHeight,
           borderTopLeftRadius: 60,
           borderTopRightRadius: 60,
           shadowColor: "#000",

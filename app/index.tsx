@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import Button from "@/components/Buttons";
 import Spacer from "@/components/Spacer";
-import { FONTS } from "@/constants/theme";
+import { FONTS, SPACING } from "@/constants/theme";
 import { router } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
@@ -23,6 +23,7 @@ const ExploreScreen = () => {
       {/* Text Content */}
       <View style={styles.bottom}>
         <View style={styles.textContainer}>
+          <Spacer />
           <Text style={styles.title}>
             It's a big world out there, go{" "}
             <Text style={styles.exploreText}>explore</Text>
@@ -44,6 +45,7 @@ const ExploreScreen = () => {
             }}
             align="center"
           />
+          <Spacer height={SPACING.large} />
         </View>
       </View>
     </View>
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
   bottom: {
     justifyContent: "space-evenly",
     alignItems: "center",
-    // height: "100%",
+    height: height * 0.3,
     width: "100%",
   },
   textContainer: {

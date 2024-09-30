@@ -1,20 +1,24 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet,  } from "react-native";
 import { COLORS, FONTS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import SettingCard from "@/components/SettingContainer";
 import { router } from "expo-router";
+import Padding from "@/components/containers/Padding";
+import ScreenWraper from "@/components/containers/ScreenWraper";
 
 const AdminProfile: React.FC = () => {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScreenWraper  >
+    <Padding>
+
       <Header />
       <View style={styles.profileImageContainer}>
         <Image
           source={{ uri: "https://cdn-icons-png.flaticon.com/512/7816/7816916.png" }}
           style={styles.profileImage}
-        />
+          />
       </View>
       <Text style={styles.greetingText}>Hello, Admin</Text>
 
@@ -22,33 +26,31 @@ const AdminProfile: React.FC = () => {
         title="Pending Requests"
         onPress={() => {router.push("pending")}}
         leftIconName="pending-actions"
-      />
+        />
       <SettingCard
         title="Companies Approved"
         onPress={() => {router.push("approved")}}
         leftIconName="verified"
-      />
+        />
       <SettingCard
         title="Trips Analysis"
         onPress={() => { router.push("tripAnalysis")}}
         leftIconName="bar-chart"
-      />
+        />
       <SettingCard
         title="Register Users"
         onPress={() => {router.push("registerUser")}}
         leftIconName="person-add"
-      />
-    </ScrollView>
+        />
+        </Padding>
+    </ScreenWraper>
   );
 };
 
 export default AdminProfile;
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    paddingHorizontal: 20,
-  },
+  
   profileImageContainer: {
     alignItems: "center",
     marginVertical: 10,
