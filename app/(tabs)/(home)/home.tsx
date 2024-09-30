@@ -63,7 +63,7 @@ const Home = () => {
           <Spacer height={SPACING.large}/>
 
           <Button title={"GO TO TRIP DETAILS"} onPress={()=>{router.push("/tripDetails")}}/>
-         
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -117,17 +117,17 @@ const styles = StyleSheet.create({
     rowGap:14,
     columnGap:5
 
-  
+
   },
   companyCardWrapper: {
-    width: '48%', 
+    width: '48%',
   },
   horizontalScroll: {
     marginVertical: 15,
     overflow:'visible',
     columnGap:15,
   },
-  
+
 });
 
 export default Home;

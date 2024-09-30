@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Button from "@/components/Buttons";
 import Spacer from "@/components/Spacer";
 import { FONTS, SPACING } from "@/constants/theme";
