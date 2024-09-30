@@ -18,6 +18,7 @@ interface AppTextInputProps extends TextInputProps {
   error?: string;
   name: string;
   control: Control<FieldValues> | undefined;
+  trim?: boolean;
 }
 const AppTextInput = ({
   control,
@@ -25,6 +26,7 @@ const AppTextInput = ({
   icon,
   pass = false,
   error,
+  trim = true,
   ...rest
 }: AppTextInputProps) => {
   const [shown, setShown] = useState(true);
@@ -40,7 +42,7 @@ const AppTextInput = ({
               <TextInput
                 onChangeText={onChange}
                 onBlur={onBlur}
-                value={name !== "fullname" ? trimWhitespace(value) : value}
+                value={trim ? trimWhitespace(value) : value}
                 placeholder={captalizeFirstLetter(name)}
                 style={styles.input}
                 secureTextEntry={shown}

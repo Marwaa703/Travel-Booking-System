@@ -1,17 +1,29 @@
-/* eslint-disable prettier/prettier */
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-
-
+import ScreenFormContainer from "@/components/containers/ScreenFormContainer";
+import LoginForm from "@/components/forms/LoginForm";
+import Spacer from "@/components/Spacer";
+import LinkButton from "@/components/LinkButton";
+import { COLORS, FONTS, SPACING } from "@/constants/theme";
+import AddTripForm from "@/components/forms/AddTripForm";
+import ScreenWraper from "@/components/containers/ScreenWraper";
+import MultiStepTripForm from "@/components/forms/MultiStepForm";
+import Padding from "@/components/containers/Padding";
 
 const AddTrip = () => {
   return (
-    <View>
-      <Text >Company Can Add rip Here 
-        {"\n"}NOTE: You CAn Make It Multi-Steps by Adding More Routes to Company Layout ,
-        {"\n"}  Or Contact me to make A Whole new FIle Route for Adding Trip  </Text>
-    </View>
+    <ScreenWraper>
+      <Spacer />
+      <ScreenFormContainer
+        title="Add New Trip"
+        subTitle="Please fill the following details!"
+        topFlex={4}
+      >
+        <MultiStepTripForm />
+      </ScreenFormContainer>
+    </ScreenWraper>
   );
 };
 
 export default AddTrip;
+const styles = StyleSheet.create({});

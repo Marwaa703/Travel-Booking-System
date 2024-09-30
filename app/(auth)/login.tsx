@@ -3,7 +3,7 @@ import LoginForm from "@/components/forms/LoginForm";
 import LinkButton from "@/components/LinkButton";
 import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
-import { COLORS, FONTS } from "@/constants/theme";
+import { COLORS, FONTS, SPACING } from "@/constants/theme";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: SPACING.large,
   },
   top: {
     flex: 2,
