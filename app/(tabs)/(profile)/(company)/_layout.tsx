@@ -6,9 +6,9 @@ export default function CompanyLayout() {
   return (
     <Stack>
       <Stack.Screen name="companyProfile" options={{ title: 'Company Profile' }} />
-      <Stack.Screen name="companyHome" options={{ title: 'Company Home' }} />
+      <Stack.Screen name="companyHome" options={{ headerShown: false}} />
       <Stack.Screen name="addTrip" options={{ title: 'Add Trip' }} />
-    
+
     </Stack>
   );
 }

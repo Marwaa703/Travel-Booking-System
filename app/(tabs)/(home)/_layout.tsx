@@ -11,10 +11,9 @@ const HomeLayout = () => {
         <Stack.Screen name="tripMap" options={{ headerShown: true }} />
         <Stack.Screen name="payment" options={{ headerShown: true }} />
         <Stack.Screen name="tripDetails" options={{ headerShown: true }} />
-        <Stack.Screen name="notification" options={{ headerShown: true }} />
+        <Stack.Screen name="notification" options={{ headerShown: false }} />
       </Stack>
- 
+
   );
 };
 export default HomeLayout;
-
