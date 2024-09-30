@@ -1,6 +1,4 @@
 import Padding from "@/components/containers/Padding";
-
-import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS, SPACING } from "@/constants/theme";
 import React, { PropsWithChildren } from "react";
@@ -23,6 +21,7 @@ const ScreenFormContainer = ({
           <Spacer />
           <Text style={styles.subTitle}>{subTitle}</Text>
         </View>
+        <Spacer />
         <View>{children}</View>
       </View>
     </Padding>
@@ -34,7 +33,6 @@ export default ScreenFormContainer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
     alignItems: "center",
     marginBottom: SPACING.large,
   },

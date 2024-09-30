@@ -12,6 +12,7 @@ import { COLORS, FONTS } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Control, Controller, FieldValues } from "react-hook-form";
 import { captalizeFirstLetter, trimWhitespace } from "@/utils";
+import TextInputField from "./TextInputField";
 
 interface AppTextInputProps extends TextInputProps {
   icon?: any;
@@ -30,16 +31,26 @@ const AppTextInput = ({
   trim = true,
   ...rest
 }: AppTextInputProps) => {
-  const [shown, setShown] = useState(true);
-
   return (
     <View>
-      <View style={styles.container}>
-        <Controller
-          control={control}
-          name={name}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
+      <Controller
+        control={control}
+        name={name}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <>
+            <TextInputField
+              name={name}
+              icon={icon}
+              trim={trim}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+              secureTextEntry={name === "password"}
+              placeholder={captalizeFirstLetter(name)}
+              // style={styles.input}
+              {...rest}
+            />
+            {/* <View style={styles.container}>
               <TextInput
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -60,10 +71,10 @@ const AppTextInput = ({
               ) : (
                 <Ionicons name={icon} size={16} color={COLORS.textSecondary} />
               )}
-            </>
-          )}
-        />
-      </View>
+            </View> */}
+          </>
+        )}
+      />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
@@ -72,21 +83,18 @@ const AppTextInput = ({
 export default AppTextInput;
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: COLORS.light,
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
+  // container: {
+  //   alignItems: "center",
+  //   backgroundColor: COLORS.light,
+  //   borderRadius: 25,
+  //   paddingVertical: 8,
+  //   paddingHorizontal: 14,
 
-    marginVertical: 6,
-    flexDirection: "row",
-    width: "100%",
-  },
-  input: {
-    fontSize: FONTS.small,
-    width: "95%",
-  },
+  //   marginVertical: 6,
+  //   flexDirection: "row",
+  //   width: "100%",
+  // },
+
   error: {
     color: "red",
     fontSize: FONTS.small,

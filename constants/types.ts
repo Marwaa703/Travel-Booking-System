@@ -9,8 +9,8 @@ export interface TripDetails {
 
 export interface Location {
   order: number;
-  lat: number;
-  long: number;
+  lat: string;
+  long: string;
   imageUrl: string;
   name: string;
 }
