@@ -10,6 +10,7 @@ import Spacer from "@/components/Spacer";
 import TripProfileCard from "@/components/TripProfileCard";
 import { trips } from "@/DummyData/trips.json";
 import Padding from "@/components/containers/Padding";
+import WeeklyCalendar from "@/components/Calendar";
 
 
 
@@ -18,8 +19,8 @@ const Calendar = () => {
   return (
     <View style={styles.container}>
       <Header title="Schedule" leftIcon="chevron-back" onLeftIconPress={()=>router.push("home")}></Header>
-      <View>
-        <Text>Calendar</Text>
+      <View style={styles.calendar}>
+        <WeeklyCalendar></WeeklyCalendar>
       </View>
       <Spacer/>
 
@@ -60,6 +61,11 @@ const styles = StyleSheet.create({
     backgroundColor:"white",
     flex:1
   },
+  calendar:{
+    width:"100%",
+    paddingHorizontal:20,
+    marginVertical:25
+  },
   subtitle: {
     fontSize: FONTS.large,
     fontWeight: 'bold',
@@ -79,7 +85,6 @@ const styles = StyleSheet.create({
   cardWrapper: {
     marginBottom: 20,
   },
-
 });
 
 export default Calendar;
