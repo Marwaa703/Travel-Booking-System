@@ -1,8 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react"; 
 import Button from "@/components/Buttons";
-import { router} from "expo-router";
+import { router } from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
 import CardSubtitle from "@/components/CardSubtitle";
@@ -36,8 +43,11 @@ const TripDetails: React.FC = () => {
     rating = 0,
     price = "N/A",
     location = "Unknown",
-    description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
+    description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
   } = trip || {};
+
+ 
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -51,7 +61,7 @@ const TripDetails: React.FC = () => {
               width={"30%"}
               align="center"
               onPress={() => {
-                router.push("/tripMap");
+                router.push(`/tripMap?tripId=${tripId}`);
               }}
             />
           </View>
@@ -64,7 +74,6 @@ const TripDetails: React.FC = () => {
             </View>
           </View>
           <Text style={styles.companyName}>{subtitle}</Text>
-          
           <View style={styles.detailRow}>
             <CardSubtitle
               text={location}
@@ -75,14 +84,37 @@ const TripDetails: React.FC = () => {
             <Text style={styles.price}>{price}/Person</Text>
           </View>
           <Text style={styles.sectionTitle}>About Trip</Text>
-          <Text style={styles.tripDescription}>{description}</Text>
+          {/* Description container */}
+          <View style={styles.descriptionContainer}>
+            <ScrollView
+              style={styles.scrollableDescription}
+              nestedScrollEnabled
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ flexGrow: 1 }}
+            >
+              <Text
+                style={[
+                  styles.tripDescription,
+                  !isExpanded && styles.descriptionTruncated,
+                ]}
+                numberOfLines={isExpanded ? undefined : 3} 
+              >
+                {description}
+              </Text>
+              {!isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={styles.readMore}>Read More</Text>
+                </TouchableOpacity>
+              )}
+            </ScrollView>
+          </View>
           <View style={styles.buttonContainer}>
             <Button
               title={"Book Now"}
               align="center"
               width={"400%"}
               onPress={() => {
-                router.push("/payment");
+                router.push(`/payment?tripId=${tripId}`);
               }}
             />
           </View>
@@ -117,7 +149,7 @@ const styles = StyleSheet.create({
   },
   like: {
     backgroundColor: COLORS.textSubtitle,
-    borderRadius:50
+    borderRadius: 50,
   },
   infoContainer: {
     backgroundColor: "#fff",
@@ -161,10 +193,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
+  descriptionContainer: {
+    maxHeight: 120, 
+  },
+  scrollableDescription: {
+    maxHeight: 110, 
+  },
   tripDescription: {
     fontSize: FONTS.medium,
     color: COLORS.textSecondary,
-    marginBottom: 30,
+    marginBottom: 5,
+  },
+  descriptionTruncated: {
+    overflow: "hidden",
+  },
+  readMore: {
+    color: COLORS.primary,
+    marginTop: 5,
+    fontWeight: "bold",
   },
   buttonContainer: {
     alignSelf: "center",

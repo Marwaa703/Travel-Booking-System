@@ -1,23 +1,97 @@
 /* eslint-disable prettier/prettier */
 
-import { View, Text, Button } from "react-native";
-import React from "react";
-import { COLORS } from "@/constants/theme";
-import { router } from "expo-router";
+import React from 'react';
+import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView } from 'react-native';
+import SettingCard from '@/components/SettingContainer'; 
+import { COLORS } from '@/constants/theme';
+import Header from '@/components/core/Header';
+import { router } from 'expo-router';
 
-
-const companyProfile = () => {
+const CompanyProfile: React.FC = () => {
   return (
-    <View>
-      <Text style={{ color: COLORS.primary }}> Company Profile</Text>
-      <Button
-        onPress={() => {
-          router.push("companyHome");
-        }}
-        title="Go to Your Home "
+    <>
+      <Header 
+        title='Company Profile' 
+        rightIcon='create-outline' 
+        leftIcon='arrow-back' 
+        onRightIconPress={() => {  }} 
+        onLeftIconPress={() => { router.back(); }} 
       />
-    </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <SafeAreaView style={styles.container}>
+          <View>
+            <View style={styles.headerContainer}>
+              <Image
+                source={{ uri: "https://example.com/company-logo.png" }} 
+                style={styles.companyLogo}
+              />
+              <Text style={styles.companyName}>Company</Text>
+              <Text style={styles.companyEmail}>contact@company.com</Text>
+            </View>
+
+            <SettingCard
+              title="Company Profile"
+              onPress={() => {}}
+              leftIconName="business"
+            />
+              <SettingCard
+              title="Trips"
+              onPress={() => {router.push("companyHome")}}
+              leftIconName="air"
+            />
+            <SettingCard
+              title="Manage Employees"
+              onPress={() => {}}
+              leftIconName="people"
+            />
+            <SettingCard
+              title="Company Settings"
+              onPress={() => {}}
+              leftIconName="settings"
+            />
+            <SettingCard
+              title="Other Settings"
+              onPress={() => {}}
+              leftIconName="tune"
+            />
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </>
   );
 };
 
-export default companyProfile;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    marginBottom: 100,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginVertical: 30,
+  },
+  companyLogo: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: COLORS.opacity, 
+  },
+  companyName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: COLORS.textPrimary,
+  },
+  companyEmail: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+  },
+});
+
+export default CompanyProfile;

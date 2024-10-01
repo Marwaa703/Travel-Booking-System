@@ -1,7 +1,7 @@
 [
     {
       "id": 1,
-      "text": "Hello! Here the instruction will appear in time",
+      "text": "Hello! You can change instruction time, for testing",
       "timestamp": "2024-10-01T02:04:00"
     },
     {

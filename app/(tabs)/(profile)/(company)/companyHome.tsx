@@ -30,6 +30,7 @@ const CompanyHome = () => {
           {companies.map((company, index) => (
             <View key={index} style={styles.cardWrapper}>
               <Card
+               id={company.id}
                 image={company.image}
                 title={company.title}
                 subtitle={company.subtitle}
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    marginBottom:90
   },
   addButtonContainer: {
     justifyContent: "center",

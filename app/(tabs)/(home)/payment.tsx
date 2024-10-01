@@ -1,15 +1,39 @@
 /* eslint-disable prettier/prettier */
-import { View, Text } from "react-native";
+/* eslint-disable prettier/prettier */
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-
-
+import { useRoute } from "@react-navigation/native";
 
 const Payment = () => {
+  const route = useRoute();
+  const { tripId } = route.params as { tripId: string }; 
+
   return (
-    <View>
-      <Text >The User Will Pay Here  </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Payment</Text>
+  
+      <Text style={styles.tripIdText}>Trip ID: {tripId}</Text>
     </View>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  tripIdText: {
+    fontSize: 18,
+    color: "#555",
+  },
+});
 
 export default Payment;
