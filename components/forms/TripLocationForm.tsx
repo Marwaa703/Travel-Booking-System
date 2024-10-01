@@ -17,7 +17,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   const [selectedLocation, setSelectedLocation] = useState<{
     name: string;
     lat: string;
-    long: string;
+    lon: string;
   } | null>(null);
 
   const handleAddLocation = () => {
@@ -39,7 +39,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   const handleSelectLocation = (location: {
     name: string;
     lat: string;
-    long: string;
+    lon: string;
   }) => {
     setSelectedLocation(location);
   };
@@ -53,7 +53,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   };
 
   return (
-    <View style={{ padding: 16 }}>
+    <View>
       <View style={styles.locationRow}>
         <LocationSearch
           placeholder={placeholder}

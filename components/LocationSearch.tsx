@@ -1,11 +1,6 @@
 import useLocationSearch, { LocationResult } from "@/hooks/useLocationSearch";
 import React, { useState } from "react";
-import {
-  FlatList,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextInputField from "./forms/TextInputField";
 import { COLORS } from "@/constants/theme";
@@ -13,7 +8,7 @@ import { COLORS } from "@/constants/theme";
 interface Location {
   name: string;
   lat: string;
-  long: string;
+  lon: string;
 }
 
 interface LocationSearchProps {
@@ -39,8 +34,8 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
 
   const handleSelect = (location: LocationResult) => {
     console.log({ location });
-    const { lat, long, display_name } = location;
-    onSelectLocation({ name: display_name, lat, long });
+    const { lat, lon, display_name } = location;
+    onSelectLocation({ name: display_name, lat, lon });
     setQuery("");
     setResults([]);
     setPlaceholder(display_name);

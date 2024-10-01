@@ -1,17 +1,8 @@
-/* eslint-disable prettier/prettier */
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from "react-native";
-import React, { useState } from "react";
-import { COLORS, FONTS } from "@/constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, Text, TextInputProps, View } from "react-native";
+import React from "react";
+import { FONTS } from "@/constants/theme";
 import { Control, Controller, FieldValues } from "react-hook-form";
-import { captalizeFirstLetter, trimWhitespace } from "@/utils";
+import { captalizeFirstLetter } from "@/utils";
 import TextInputField from "./TextInputField";
 
 interface AppTextInputProps extends TextInputProps {
@@ -50,28 +41,6 @@ const AppTextInput = ({
               // style={styles.input}
               {...rest}
             />
-            {/* <View style={styles.container}>
-              <TextInput
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={trim ? trimWhitespace(value) : value}
-                placeholder={captalizeFirstLetter(name)}
-                style={styles.input}
-                secureTextEntry={shown}
-                {...rest}
-              />
-              {icon && name === "password" ? (
-                <Pressable onPress={() => setShown(!shown)}>
-                  <Ionicons
-                    color={COLORS.textSecondary}
-                    name={!shown ? "lock-open" : icon}
-                    size={16}
-                  />
-                </Pressable>
-              ) : (
-                <Ionicons name={icon} size={16} color={COLORS.textSecondary} />
-              )}
-            </View> */}
           </>
         )}
       />
@@ -83,18 +52,6 @@ const AppTextInput = ({
 export default AppTextInput;
 
 const styles = StyleSheet.create({
-  // container: {
-  //   alignItems: "center",
-  //   backgroundColor: COLORS.light,
-  //   borderRadius: 25,
-  //   paddingVertical: 8,
-  //   paddingHorizontal: 14,
-
-  //   marginVertical: 6,
-  //   flexDirection: "row",
-  //   width: "100%",
-  // },
-
   error: {
     color: "red",
     fontSize: FONTS.small,

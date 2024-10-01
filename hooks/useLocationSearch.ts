@@ -6,7 +6,7 @@ export interface LocationResult {
   place_id: string;
   display_name: string;
   lat: string; // LocationIQ returns lat as a string
-  long: string; // LocationIQ returns long as a string
+  lon: string; // LocationIQ returns long as a string
 }
 
 const useLocationSearch = () => {
@@ -28,7 +28,7 @@ const useLocationSearch = () => {
       );
       setResults(response.data);
     } catch (err) {
-      setError("Error fetching locations");
+      setError(`Error fetching locations: ${err && err?.message}`);
     } finally {
       setLoading(false);
     }

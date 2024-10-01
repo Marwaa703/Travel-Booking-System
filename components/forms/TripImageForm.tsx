@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Button from "../Buttons";
 import TextInputField from "./TextInputField";
 import Spacer from "../Spacer";
@@ -42,7 +35,7 @@ const TripImageForm = ({ onSubmit }: TripImageFormProps) => {
     setImages(images.filter((_, i) => i !== index));
   };
   return (
-    <View style={{ padding: 16 }}>
+    <View>
       <TextInputField
         name={"image"}
         onChangeText={(text) => setImageUrl(text)}

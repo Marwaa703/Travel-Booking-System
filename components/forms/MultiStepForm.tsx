@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View } from "react-native";
 import { addTripInputs, addTripSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
-import Button from "../Buttons";
 import AppTextInput from "./AppTextInput";
 import Spacer from "../Spacer";
 import TripImageForm from "./TripImageForm";
@@ -15,8 +14,11 @@ import {
   TripFormData,
   TripImage,
 } from "@/constants/types";
+import { useRouter } from "expo-router";
 
 const MultiStepTripForm = () => {
+  const router = useRouter();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [tripData, setTripData] = useState<TripFormData>({
     tripDetails: {} as TripDetails,
@@ -35,7 +37,7 @@ const MultiStepTripForm = () => {
   });
 
   const handleAddTrip = (data: TripDetails) => {
-    setTripData((prev) => ({ ...prev, ...data }));
+    setTripData((prev) => ({ ...prev, tripDetails: data }));
     setCurrentStep(2);
   };
 
@@ -46,13 +48,15 @@ const MultiStepTripForm = () => {
 
   const handleImageSubmit = (data: TripImage[]) => {
     const finalData = { ...tripData, images: data };
-    console.log(finalData);
+    console.log(JSON.stringify(finalData));
     // TODO: submit finalData to server
-    // reset();
+
+    reset();
+    router.back();
   };
 
   return (
-    <View>
+    <View style={{ width: "100%" }}>
       {currentStep === 1 && (
         <>
           {addTripInputs.map(
