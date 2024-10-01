@@ -1,6 +1,7 @@
 {
     "companies": [
       {
+        "id":1,
         "image": {
           "uri": "https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?cs=srgb&dl=pexels-pixabay-269077.jpg&fm=jpg"
         },
@@ -11,6 +12,7 @@
         "trips":20
       },
       {
+        "id":2,
         "image": {
           "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoDCoqKVTF_iUmibmIivrKeHCJTBnhPjG6Zw&s"
         },
@@ -21,6 +23,7 @@
         "trips":10
       },
       {
+        "id":3,
         "image": {
           "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTkt-440gMxjkJiEfMMLgshvwi0rYF0efhCA&s"
         },
@@ -31,6 +34,7 @@
         "trips":15
       },
       {
+        "id":4,
         "image": {
           "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjH4mkCsN92-376DR264NV3nlb6LnZEdbY4A&s"
         },
@@ -41,6 +45,7 @@
         "trips":25
       },
       {
+        "id":5,
         "image": {
           "uri": "https://i.insider.com/51643ba7eab8ea0538000003?width=800&format=jpeg&auto=webp"
         },
@@ -52,6 +57,7 @@
 
       },
       {
+        "id":6,
         "image": {
           "uri": "https://cdn.archilovers.com/projects/c_383_6a060802-4e1c-4f49-9fbc-826d0d83d08d.jpg"
         },

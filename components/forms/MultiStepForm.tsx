@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from "react";
 import { View } from "react-native";
 import { addTripInputs, addTripSchema } from "@/constants/forms";

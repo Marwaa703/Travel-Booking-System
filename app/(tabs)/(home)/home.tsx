@@ -16,6 +16,7 @@ const Home = () => {
     id: avatar.id,
     uri: avatar.uri,
   }));
+
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
       <Header />
@@ -32,12 +33,18 @@ const Home = () => {
 
           {/* Horizontal ScrollView for Trip Profile Cards */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-            {trips.map((trip, index) => (
-              <View style={{marginRight:SPACING.small + 2,width:Dimensions.get('screen').width *0.45}} key={index}>
-                <Card image={{ uri: trip.image }} title={trip.title} subtitle="kk" rating={trip.rating}></Card>
-              </View>
-            ))}
-          </ScrollView>
+  {trips.map((trip, index) => (
+    <View style={{marginRight: SPACING.small + 2, width: Dimensions.get('screen').width * 0.45}} key={index}>
+      <Card 
+        id={trip.id} 
+        image={{ uri: trip.image }} 
+        title={trip.title} 
+        subtitle={trip.location} 
+        rating={trip.rating} 
+      />
+    </View>
+  ))}
+</ScrollView>
         </View>
 
           <Spacer />
@@ -51,6 +58,7 @@ const Home = () => {
             {companies.map((company, index) => (
               <View key={index} style={styles.companyCardWrapper}>
                 <Card
+                  id={company.id}
                   image={company.image}
                   title={company.title}
                   subtitle={company.subtitle}
@@ -62,7 +70,7 @@ const Home = () => {
           </View>
           <Spacer height={SPACING.large}/>
 
-          <Button title={"GO TO TRIP DETAILS"} onPress={()=>{router.push("/tripDetails")}}/>
+         
 
         </View>
       </ScrollView>

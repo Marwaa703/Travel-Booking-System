@@ -7,7 +7,11 @@ import Header from '@/components/core/Header';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS, SPACING } from '@/constants/theme';
 
-const Search = () => {
+
+
+
+
+const Search: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTrips = trips.filter(trip => 
@@ -51,6 +55,7 @@ const Search = () => {
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
               <Card 
+                 id={item.id}
                 image={{ uri: item.image }} 
                 title={item.title} 
                 subtitle={item.location} 
