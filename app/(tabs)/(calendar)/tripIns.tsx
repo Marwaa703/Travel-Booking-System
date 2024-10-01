@@ -58,7 +58,7 @@ const TripInstruction: React.FC = () => {
     <>
       <Header 
         title={trip?.title}
-        rightIcon='call'
+        rightIcon='call-outline'
         leftIcon='arrow-back'
         onRightIconPress={() => {}}
         onLeftIconPress={() => { router.back(); }}

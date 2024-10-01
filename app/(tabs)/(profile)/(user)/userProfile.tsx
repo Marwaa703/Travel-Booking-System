@@ -9,11 +9,12 @@ import { router } from 'expo-router';
 
 const ProfileScreen: React.FC = () => {
   return (
+    <>
+    <Header title='User Profile' rightIcon='create-outline' leftIcon='arrow-back' onRightIconPress={()=>{
+      router.push("/userEdit")
+    }} onLeftIconPress={()=>{router.back()}}/>
     <ScrollView style={{marginBottom:100}}>
     <SafeAreaView style={styles.container}>
-
-      {/* <Header></Header> */}
-
     <View >
       {/* Profile Header */}
 
@@ -53,14 +54,15 @@ const ProfileScreen: React.FC = () => {
         leftIconName="tune"
       />
     </View>
-    <Button
+    {/* <Button
         onPress={() => {
           router.push("userEdit");
         }}
         title="Edit Profile"
-      />
+      /> */}
     </SafeAreaView>
       </ScrollView>
+      </>
   );
 };
 

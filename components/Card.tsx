@@ -29,9 +29,10 @@ const Card: React.FC<CardProps> = ({ id, image, title, subtitle, rating, price, 
   const navigation = useNavigation<NavigationProp<any>>(); 
 
   const handlePress = () => {
+    if(!buttonText){
     navigation.navigate('tripDetails', { tripId: id }); 
   };
-
+};
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
 

@@ -24,7 +24,6 @@ const Calendar = () => {
         <WeeklyCalendar></WeeklyCalendar>
       </View>
       <Spacer/>
-      <Button title={" Trip Instruction"} onPress={()=>{router.push("/tripIns")}}/> 
       <View style={styles.subtitleContainer}>
             <Text style={styles.subtitle}>My Schedule</Text>
             <Text style={styles.viewAll} onPress={() => {}}>View All</Text>
@@ -47,6 +46,7 @@ const Calendar = () => {
                   {uri:"https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg"},
                   {uri:"https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg"}]}
                 peopleJoined={trip.peopleJoined}
+               caller="calendar"
               />
             </View>
           ))}
@@ -61,7 +61,8 @@ const Calendar = () => {
 const styles = StyleSheet.create({
   container:{
     backgroundColor:"white",
-    flex:1
+    flex:1,
+    marginBottom:100
   },
   calendar:{
     width:"100%",

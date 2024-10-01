@@ -1,21 +1,24 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import InputField from '@/components/InputField';
 import { COLORS, FONTS } from '@/constants/theme';
 import { router } from 'expo-router';
+import Header from '@/components/core/Header';
 
 const EditProfileScreen: React.FC = () => {
   return (
+    <>
+    <Header title='Edit Your Profile' rightIcon='checkmark' leftIcon='close' onLeftIconPress={()=>{}} onRightIconPress={()=>{router.push("userProfile")}}/>
+      <ScrollView>
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Edit Profile</Text>
         <TouchableOpacity onPress={()=>{router.push("userProfile")}}>
           <Text style={styles.doneText}>Done</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* Profile Picture Section */}
       <View style={styles.profileContainer}>
@@ -51,6 +54,8 @@ const EditProfileScreen: React.FC = () => {
         required
       />
     </View>
+    </ScrollView>
+    </>
   );
 };
 

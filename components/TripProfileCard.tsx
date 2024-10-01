@@ -7,10 +7,10 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import CardSubtitle from './CardSubtitle';
 import { useNavigation } from 'expo-router';
 import { NavigationProp } from '@react-navigation/native';
-
+import { useRoute } from "@react-navigation/native"; 
 
 interface TripProfileCardProps {
-  id:number
+  id: number;
   image: ImageSourcePropType;
   title: string;
   date: string;
@@ -18,35 +18,39 @@ interface TripProfileCardProps {
   price: string;
   peopleJoined: number;
   avatars: ImageSourcePropType[]; 
+  caller: string;  
 }
 
-const TripProfileCard: React.FC<TripProfileCardProps> = ({ id,image, title, date, rating, price, peopleJoined, avatars }) => {
-  const navigation = useNavigation<NavigationProp<any>>(); 
+const TripProfileCard: React.FC<TripProfileCardProps> = ({ 
+  id, image, title, date, rating, price, peopleJoined, avatars, caller 
+}) => {
+  const navigation = useNavigation<NavigationProp<any>>();
+  const route = useRoute();
 
   const handlePress = () => {
-    navigation.navigate('tripIns', { tripId: id }); 
+    if (caller === 'calendar') {
+      navigation.navigate('tripIns', { tripId: id });
+    } else {
+      navigation.navigate('tripDetails', { tripId: id });
+    }
   };
-  return (
-<TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
 
+  return (
+    <TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
       {/* Image Section */}
       <Image source={image} style={styles.image} />
-
       {/* Text and Info Section */}
       <View style={styles.infoContainer}>
         {/* Title */}
         <Text style={styles.title}>{title}</Text>
-
         {/* Date */}
         <View style={styles.dateContainer}>
-          <CardSubtitle  icon={"calendar"} iconColor={COLORS.textSecondary} text={date}/>
+          <CardSubtitle icon={"calendar"} iconColor={COLORS.textSecondary} text={date} />
         </View>
-
         {/* Rating */}
         <View style={styles.ratingContainer}>
-          <Rating rate={rating} ></Rating>
+          <Rating rate={rating}></Rating>
         </View>
-
         {/* People Joined */}
         <View style={styles.peopleContainer}>
           <View style={styles.avatarsContainer}>
@@ -57,7 +61,6 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({ id,image, title, date
           <Text style={styles.peopleText}>{peopleJoined} Person Joined</Text>
         </View>
       </View>
-
       {/* Price Tag */}
       <View style={styles.priceContainer}>
         <Text style={styles.priceText}>$ {price}</Text>
@@ -65,7 +68,6 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({ id,image, title, date
     </TouchableOpacity>
   );
 };
-
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -89,7 +91,6 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
     marginLeft: 15,
-    
   },
   title: {
     fontSize: FONTS.normal,
@@ -100,12 +101,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
-
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop:10,
+    paddingTop: 10,
   },
   peopleContainer: {
     flexDirection: 'row',
