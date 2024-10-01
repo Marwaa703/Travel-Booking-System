@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useState } from "react"; 
 import Button from "@/components/Buttons";
-import { router } from "expo-router";
+import {  useRouter } from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
 import CardSubtitle from "@/components/CardSubtitle";
@@ -17,6 +17,7 @@ import icons from "@/constants/icons";
 import { trips } from "@/DummyData/trips.json";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
+import { places } from "@/constants/maps";
 
 interface Trip {
   id: number;
@@ -31,6 +32,7 @@ interface Trip {
 
 const TripDetails: React.FC = () => {
   const route = useRoute();
+  const [isExpanded, setIsExpanded] = useState(false);
   const { tripId } = route.params as { tripId: string };
 
   const tripIdNumber = Number(tripId);
@@ -45,10 +47,11 @@ const TripDetails: React.FC = () => {
     location = "Unknown",
     description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
   } = trip || {};
-
+const router = useRouter();
  
-  const [isExpanded, setIsExpanded] = useState(false);
-
+const handleSeeOnMap =() => {
+  router.push(`/tripMap?places=${encodeURIComponent(JSON.stringify(places))}`);
+}
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -60,9 +63,7 @@ const TripDetails: React.FC = () => {
               type="secondary"
               width={"30%"}
               align="center"
-              onPress={() => {
-                router.push(`/tripMap?tripId=${tripId}`);
-              }}
+              onPress={handleSeeOnMap}
             />
           </View>
         </View>

@@ -7,8 +7,8 @@ import { COLORS } from "@/constants/theme";
 
 interface Location {
   name: string;
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
 }
 
 interface LocationSearchProps {
@@ -35,7 +35,11 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
   const handleSelect = (location: LocationResult) => {
     console.log({ location });
     const { lat, lon, display_name } = location;
-    onSelectLocation({ name: display_name, lat, lon });
+    onSelectLocation({
+      name: display_name,
+      lat: Number(lat),
+      lon: Number(lon),
+    });
     setQuery("");
     setResults([]);
     setPlaceholder(display_name);
@@ -54,38 +58,20 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
       />
       {loading && <ActivityIndicator />}
       {error && <Text>{error}</Text>}
-      {
-        results.length > 0 &&
-          results.map((item) => (
-            <TouchableOpacity
-              key={item.place_id}
-              style={{
-                borderBottomColor: COLORS.accent,
-                borderBottomWidth: 1,
-                paddingVertical: 4,
-              }}
-              onPress={() => handleSelect(item)}
-            >
-              <Text>{item.display_name.slice(0, 50)}</Text>
-            </TouchableOpacity>
-          ))
-        // <FlatList
-        //   data={results}
-        //   keyExtractor={(item) => item.place_id}
-        //   renderItem={({ item }) => (
-        //     <TouchableOpacity
-        //       style={{
-        //         borderBottomColor: COLORS.accent,
-        //         borderBottomWidth: 1,
-        //         paddingVertical: 4,
-        //       }}
-        //       onPress={() => handleSelect(item)}
-        //     >
-        //       <Text>{item.display_name.slice(0, 50)}</Text>
-        //     </TouchableOpacity>
-        //   )}
-        // />
-      }
+      {results.length > 0 &&
+        results.map((item) => (
+          <TouchableOpacity
+            key={item.place_id}
+            style={{
+              borderBottomColor: COLORS.accent,
+              borderBottomWidth: 1,
+              paddingVertical: 4,
+            }}
+            onPress={() => handleSelect(item)}
+          >
+            <Text>{item.display_name.slice(0, 50)}</Text>
+          </TouchableOpacity>
+        ))}
     </SafeAreaView>
   );
 };

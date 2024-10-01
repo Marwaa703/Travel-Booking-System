@@ -16,8 +16,8 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<{
     name: string;
-    lat: string;
-    lon: string;
+    lat: number;
+    lon: number;
   } | null>(null);
 
   const handleAddLocation = () => {
@@ -38,8 +38,8 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
 
   const handleSelectLocation = (location: {
     name: string;
-    lat: string;
-    lon: string;
+    lat: number;
+    lon: number;
   }) => {
     setSelectedLocation(location);
   };

@@ -20,7 +20,7 @@ const ExploreScreen = () => {
         resizeMode="cover"
       />
 
-      {/* Text Content */}
+      {/* Bottom Section */}
       <View style={styles.bottom}>
         <View style={styles.textContainer}>
           <Spacer />
@@ -29,17 +29,16 @@ const ExploreScreen = () => {
             <Text style={styles.exploreText}>explore</Text>
           </Text>
           <Text style={styles.subtitle}>
-            To get the best of your adventure, leave and go where you like.
-            waiting for you.
+            To get the best of your adventure, leave and go where you like. waiting for you.
           </Text>
         </View>
-        <Spacer />
+        
         {/* Button positioned at the bottom */}
-        <View style={{ width: "90%" }}>
+        <View style={styles.buttonContainer}>
           <Button
             type="primary"
             title="Get Started"
-            width={"100%"}
+            width={Dimensions.get('screen').width *0.9}
             onPress={() => {
               router.push("/login");
             }}
@@ -62,10 +61,13 @@ const styles = StyleSheet.create({
     height: height * 0.7,
   },
   bottom: {
-    justifyContent: "space-evenly",
+    flex: 1,
+    justifyContent: "space-between",
     alignItems: "center",
     height: height * 0.3,
     width: "100%",
+    paddingBottom: 16
+    , // Add padding to the bottom for some spacing
   },
   textContainer: {
     paddingHorizontal: 14,
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   title: {
-    fontSize: FONTS.xlarge,
+    fontSize: FONTS.xxlarge,
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 18,
@@ -90,7 +92,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#7a7a7a",
     textAlign: "center",
-    marginVertical: 20,
+  },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center", 
   },
 });
 
