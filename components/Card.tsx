@@ -53,6 +53,7 @@ const Card: React.FC<CardProps> = ({ id, image, title, subtitle, rating, price, 
       </View>
 
       {/* Conditionally render price or button */}
+      {/* todo:  */}
       <Spacer />
       {price ? (
         <Text style={styles.priceText}>{price} / Person</Text>

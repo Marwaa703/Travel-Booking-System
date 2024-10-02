@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({
     <View style={styles.header}>
 
       <TouchableOpacity onPress={onLeftIconPress || defaultLeftIconPress}>
-        <Ionicons name={leftIcon} size={30} color={COLORS.textPrimary} />
+        <Ionicons name={leftIcon as never} size={30} color={COLORS.textPrimary} />
       </TouchableOpacity>
 
    
@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({
 
 
       <TouchableOpacity onPress={onRightIconPress || defaultRightIconPress}>
-        <Ionicons name={rightIcon} size={30} color={COLORS.textPrimary} />
+        <Ionicons name={ rightIcon as never} size={30} color={COLORS.textPrimary} />
       </TouchableOpacity>
     </View>
   );

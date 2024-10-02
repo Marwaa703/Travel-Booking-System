@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
 interface ScreenFormContainerProps {
   title: string;
   subTitle: string;
-  topFlex: number;
+  topFlex?: number;
 }
 const ScreenFormContainer = ({
   title,

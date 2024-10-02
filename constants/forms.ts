@@ -1,8 +1,9 @@
 import { KeyboardTypeOptions } from "react-native";
 import * as Yup from "yup";
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^\+?\d{1,3}?\s?(?:\d{1,3})?[-.\s]?\d{1,4}[-.\s]?\d{1,4}$/;
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const phoneRegex =
+  /^\+?\d{1,3}?\s?(?:\d{1,3})?[-.\s]?\d{1,4}[-.\s]?\d{1,4}$/;
 
 export const loginSchema = Yup.object().shape({
   email: Yup.string()

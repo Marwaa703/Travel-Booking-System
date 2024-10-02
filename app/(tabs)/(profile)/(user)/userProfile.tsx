@@ -15,7 +15,8 @@ const ProfileScreen: React.FC = () => {
         rightIcon='create-outline' 
         leftIcon='arrow-back' 
         onRightIconPress={() => { router.push("/userEdit"); }} 
-        onLeftIconPress={() => { router.back(); }} 
+        // todo :not working
+        onLeftIconPress={() => { router.push('/userProfile'); }} 
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
@@ -31,11 +32,11 @@ const ProfileScreen: React.FC = () => {
             </View>
 
             {/* Setting Cards */}
-            <SettingCard
+            {/* <SettingCard
               title="Profile"
               onPress={() => {}}
               leftIconName="person"
-            />
+            /> */}
             <SettingCard
               title="Favorites"
               onPress={() => router.push("/favTrip")}

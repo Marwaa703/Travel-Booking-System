@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: 15,
   },
   secondaryText:{
-    fontSize:FONTS.medium,
+    fontSize:FONTS.small,
     color: COLORS.background,
     fontWeight: 'bold',
     textAlign: 'center',
