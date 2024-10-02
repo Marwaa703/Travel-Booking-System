@@ -47,7 +47,6 @@ const SignupForm = () => {
           autoCapitalize={autoCapitalize}
           icon={icon}
           error={errors[name]?.message}
-          secureTextEntry={name === "password"}
         />
       ))}
       <Text style={{ marginVertical: SPACING.medium }}>Select your gender</Text>

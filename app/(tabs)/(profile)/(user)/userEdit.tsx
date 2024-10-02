@@ -1,13 +1,15 @@
 /* eslint-disable prettier/prettier */
 
-import React, { useRef } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { COLORS, FONTS } from '@/constants/theme';
+import React, { useRef, useState } from 'react';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
+import { COLORS } from '@/constants/theme';
 import Header from '@/components/core/Header';
 import UserEditForm from '@/components/forms/UserEditForm';
+import ImagePickerCropper from '@/components/forms/ImagePickerCropper';
 
 const EditProfileScreen: React.FC = () => {
   const userEditFormRef = useRef<{ submitData: () => void }>(null);
+  const [image, setImage] = useState<string >("https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg" );
   
   
   const handleUpdate = ()=>{ 
@@ -29,12 +31,13 @@ const EditProfileScreen: React.FC = () => {
           {/* Profile Picture Section */}
           <View style={styles.profileContainer}>
             <Image
-              source={{ uri: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg" }}
+              source={{ uri: image}}
               style={styles.profileImage}
             />
-            <TouchableOpacity>
+            <ImagePickerCropper onSelectImage={(uri)=>setImage(uri)} />
+            {/* <TouchableOpacity >
               <Text style={styles.changeProfileText}>Change Profile Picture</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <UserEditForm 
@@ -71,11 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: COLORS.opacity,
   },
-  changeProfileText: {
-    color: COLORS.secondary,
-    marginTop: 20,
-    fontSize: FONTS.medium,
-  },
+
 });
 
 export default EditProfileScreen;

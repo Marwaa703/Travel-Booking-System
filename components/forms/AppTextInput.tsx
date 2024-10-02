@@ -36,9 +36,7 @@ const AppTextInput = ({
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
-              secureTextEntry={name === "password"}
               placeholder={captalizeFirstLetter(name)}
-              // style={styles.input}
               {...rest}
             />
           </>

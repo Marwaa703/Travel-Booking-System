@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   NativeSyntheticEvent,
   Pressable,
   StyleSheet,
   TextInput,
-  TextInputChangeEventData,
   TextInputFocusEventData,
   TextInputProps,
   View,
@@ -34,8 +33,8 @@ const TextInputField = ({
   value,
   ...rest
 }: TextInputFieldProps) => {
-  const [shown, setShown] = useState(true);
-
+  const [shown, setShown] = useState(name === "password" ? true : false);
+  console.log({ shown });
   return (
     <View style={styles.container}>
       <TextInput
@@ -44,9 +43,8 @@ const TextInputField = ({
         value={trim ? trimWhitespace(value) : value}
         placeholder={captalizeFirstLetter(name)}
         style={styles.input}
-        // todo: fix show password
-        // secureTextEntry={shown}
-        // secureTextEntry={shown}
+        // note :show password is handled here only
+        secureTextEntry={shown}
         {...rest}
       />
       {icon && name === "password" ? (
