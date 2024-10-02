@@ -1,13 +1,20 @@
 /* eslint-disable prettier/prettier */
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import InputField from '@/components/InputField';
 import { COLORS, FONTS } from '@/constants/theme';
-import { router } from 'expo-router';
 import Header from '@/components/core/Header';
+import UserEditForm from '@/components/forms/UserEditForm';
 
 const EditProfileScreen: React.FC = () => {
+  const userEditFormRef = useRef<{ submitData: () => void }>(null);
+  
+  
+  const handleUpdate = ()=>{ 
+    if (userEditFormRef.current) {
+      userEditFormRef.current.submitData(); // Call the submit function in the child
+    }
+    }
   return (
     <>
       <Header 
@@ -15,7 +22,7 @@ const EditProfileScreen: React.FC = () => {
         rightIcon='checkmark' 
         leftIcon='close' 
         onLeftIconPress={() => {}} 
-        onRightIconPress={() => { router.push("userProfile"); }} 
+        onRightIconPress={ handleUpdate} 
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
@@ -30,28 +37,14 @@ const EditProfileScreen: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Input Fields */}
-          <InputField
-            label="First Name"
-            value="Leonardo"
-            required
-          />
-          <InputField
-            label="Last Name"
-            value="Ahmed"
-            required
-          />
-          <InputField
-            label="Location"
-            value="Sylhet, Bangladesh"
-            required
-          />
-          <InputField
-            label="Mobile Number"
-            value="+88 01758-000666"
-            type="phone"
-            required
-          />
+          <UserEditForm 
+            ref={userEditFormRef}
+        user={{
+            firstName:'Latif',
+            lastName:'essam',
+            phone:'01205175195',
+            address:'4654as54as5sda',
+          }}/>
         </View>
       </ScrollView>
     </>

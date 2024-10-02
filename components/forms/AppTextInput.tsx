@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TextInputProps, View } from "react-native";
+import { TextInputProps, View } from "react-native";
 import React from "react";
-import { FONTS } from "@/constants/theme";
 import { Control, Controller, FieldValues } from "react-hook-form";
 import { captalizeFirstLetter } from "@/utils";
 import TextInputField from "./TextInputField";
+import FieldErrorMessage from "./FieldErrorMessage";
 
 interface AppTextInputProps extends TextInputProps {
   icon?: any;
@@ -44,17 +44,9 @@ const AppTextInput = ({
           </>
         )}
       />
-      {error && <Text style={styles.error}>{error}</Text>}
+      <FieldErrorMessage error={error as string} />
     </View>
   );
 };
 
 export default AppTextInput;
-
-const styles = StyleSheet.create({
-  error: {
-    color: "red",
-    fontSize: FONTS.small,
-    marginTop: 4,
-  },
-});

@@ -24,6 +24,38 @@ export const signupSchema = Yup.object().shape({
     .max(13, "Max egyptian number is 13 length, Prefixed with +20")
     .required("Enter your phone number"),
 });
+const birthdateSchema = Yup.date()
+  .max(new Date(), "Birthdate must be in the past")
+  .optional()
+  .test("age", "You must be at least 18 years old", function (value) {
+    if (!value) return false; // If no value, validation fails
+    const today = new Date();
+    const birthDate = new Date(value);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      return age > 18; // Must be over 18
+    }
+    return age >= 18; // Allow exact 18th birthday
+  });
+
+export const userSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, "First name must be greater than one character?")
+    .required("First Name Required"),
+  lastName: Yup.string()
+    .min(2, "Last name must be greater than one character?")
+    .required("Last Name Required"),
+  address: Yup.string().min(10, "Enter the full address?").optional(),
+  phone: Yup.string()
+    .matches(phoneRegex, { message: "Invalid phone number format" })
+    .max(13, "Max Egyptian number is 13 length, prefixed with +20")
+    .required("Enter your phone number"),
+  birthdate: birthdateSchema,
+});
 
 export const companyUserSignupSchema = signupSchema.concat(
   Yup.object().shape({
@@ -57,6 +89,44 @@ export const loginInputs: InputFieldProps<SignupFormFields>[] = [
     icon: "lock-closed",
     autoCapitalize: "none",
     trim: true,
+  },
+];
+
+export const userInputs: InputFieldProps<UserFormFields>[] = [
+  {
+    name: "firstName",
+    icon: "person-sharp",
+    autoCapitalize: "words",
+    keyboardType: "default",
+    trim: true,
+  },
+  {
+    name: "lastName",
+    icon: "person-sharp",
+    autoCapitalize: "words",
+    keyboardType: "default",
+    trim: true,
+  },
+  {
+    name: "address",
+    icon: "home-outline",
+    autoCapitalize: "none",
+    keyboardType: "default",
+    trim: false, // No trimming for address
+  },
+  {
+    name: "phone",
+    icon: "phone-portrait-outline",
+    autoCapitalize: "none",
+    keyboardType: "phone-pad",
+    trim: true,
+  },
+  {
+    name: "birthdate",
+    icon: "calendar",
+    autoCapitalize: "none",
+    keyboardType: "default",
+    trim: false, // You might want to handle the format in a date picker
   },
 ];
 
@@ -145,3 +215,9 @@ export type AddTripFormFields =
   | "price"
   | "max_reservations";
 export type UserCompanySignupFormFields = SignupFormFields | "role";
+export type UserFormFields =
+  | "firstName"
+  | "lastName"
+  | "address"
+  | "phone"
+  | "birthdate";
