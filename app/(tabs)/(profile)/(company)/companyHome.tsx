@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 import React from "react";
 
@@ -12,35 +11,43 @@ import Spacer from "@/components/Spacer";
 import { FONTS } from "@/constants/theme";
 
 const CompanyHome = () => {
+  // todo: pass the companyId coming from currentCompanyUser (Company Representitive)
+  // todo: filter trips by companyId to display them here
+  // todo: handle edit, delete trip here
   return (
     <View style={styles.container}>
       <Header title="Home Page" />
-   <Padding>
-      <View style={styles.addButtonContainer}>
-        <View style={styles.addButtonWrapper}>
-          <Button title="Add new trip" onPress={() => { router.push("/addTrip"); }} />
+      <Padding>
+        <View style={styles.addButtonContainer}>
+          <View style={styles.addButtonWrapper}>
+            <Button
+              title="Add new trip"
+              onPress={() => {
+                router.push("/addTrip");
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <ScrollView>
-      <View>
-        <Text style={styles.sectionTitle}>Current trips</Text>
-      </View>
-      <Spacer></Spacer>
-        <View style={styles.cardContainer}>
-          {companies.map((company, index) => (
-            <View key={index} style={styles.cardWrapper}>
-              <Card
-               id={company.id}
-                image={company.image}
-                title={company.title}
-                subtitle={company.subtitle}
-                rating={company.rating}
-                price="$150"
-              />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+        <ScrollView>
+          <View>
+            <Text style={styles.sectionTitle}>Current trips</Text>
+          </View>
+          <Spacer></Spacer>
+          <View style={styles.cardContainer}>
+            {companies.map((company, index) => (
+              <View key={index} style={styles.cardWrapper}>
+                <Card
+                  id={company.id}
+                  image={company.image}
+                  title={company.title}
+                  subtitle={company.subtitle}
+                  rating={company.rating}
+                  price="$150"
+                />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
       </Padding>
     </View>
   );
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    marginBottom:90
+    marginBottom: 90,
   },
   addButtonContainer: {
     justifyContent: "center",

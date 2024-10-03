@@ -48,9 +48,12 @@ const MultiStepTripForm = () => {
   };
 
   const handleImageSubmit = (data: TripImage[]) => {
+    // todo: pass companyId to trip
     const finalData = { ...tripData, images: data };
     console.log(JSON.stringify(finalData));
     // TODO: submit finalData to server
+
+    // todo: update redux store with coming trip data from server
 
     reset();
     router.back();
