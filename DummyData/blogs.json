@@ -1,0 +1,108 @@
+{
+  "categories": [
+    {
+      "name": "Historical Landmarks",
+      "image": "https://images.pexels.com/photos/5488756/pexels-photo-5488756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    },
+    {
+      "name": "Religious Sites",
+      "image": "https://images.pexels.com/photos/15065977/pexels-photo-15065977/free-photo-of-view-of-a-mosque.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    },
+    {
+      "name": "Natural Attractions",
+      "image": "https://media.cnn.com/api/v1/images/stellar/prod/200318181331-white-desert-10.jpg?q=w_1600,h_900,x_0,y_0,c_fill"
+    },
+    {
+      "name": "Cultural Experiences",
+      "image": "https://i0.wp.com/khanelkhalilicairo.com/wp-content/uploads/2024/01/What-to-buy-Khan-el-Khalili.jpg?fit=2000%2C1545&ssl=1"
+    },
+    {
+      "name": "Adventure and Outdoor Activities",
+      "image": "https://egypttimetravel.com/wp-content/uploads/2020/09/Hurghada-Egypt-1.jpg"
+    },
+    {
+      "name": "Modern Attractions",
+      "image": "https://www.dst-eg.com/assets/images/tours/16014947939520.jpg"
+    },
+    {
+      "name": "Archaeological Sites",
+      "image": "https://www.historyhit.com/app/uploads/2021/05/shutterstock_Kom-Ombo-Temple-1.jpg"
+    }
+  ],
+  "recent_blogs": 
+  [
+    {
+      "id":1,
+      "title": "Exploring the Pyramids of Giza",
+      "image": "https://egymonuments.gov.eg/media/1215/pyramidsss.jpg?crop=0.26411576704545459,0.10024175153587361,0.025656960227272589,0.22526225483213388&cropmode=percentage&width=645&height=423&rnd=133547124470000000",
+      "description": "The Pyramids of Giza, standing tall for over 4,500 years, are a testament to the grandeur of ancient Egyptian civilization. These iconic structures, built as tombs for the pharaohs, offer a glimpse into the architectural brilliance of the time. The Great Pyramid, the largest of the three, was constructed for Pharaoh Khufu. Visitors today can explore the chambers within, marvel at the Sphinx nearby, and ponder the mysteries that continue to surround these ancient wonders. A visit to Giza is truly a journey through time.",
+      "author": "admin",
+      "readingTime": "5 min",
+      "publishedTime": "2024-09-20T10:00:00Z",
+      "category": "Historical Landmarks"
+    },
+    {
+      "id":2,
+      "title": "Visiting the Great Mosque of Cairo",
+      "image": "https://www.egiptoexclusivo.com/wp-content/uploads/2022/05/Mezquita-de-Mehmet-Ali-.jpg",
+      "description": "The Great Mosque of Cairo, also known as the Mosque of Muhammad Ali, is one of Egypt's most impressive religious sites. Located within the Cairo Citadel, it offers breathtaking views of the city. Built in the 19th century by Muhammad Ali Pasha, the mosque is an architectural masterpiece with its towering domes and intricate details. Visitors are drawn not only to its beauty but also to its spiritual significance, making it a must-see when exploring the rich history of Cairo.",
+      "author": "admin",
+      "readingTime": "4 min",
+      "publishedTime": "2024-09-22T09:30:00Z",
+      "category": "Religious Sites"
+    },
+    {
+      "id":3,
+      "title": "White Desert Adventures",
+      "image": "https://whitedeserthome.com/wp-content/uploads/2022/08/15085729894_ab3404a61b_o-scaled.jpg",
+      "description": "The White Desert, located in Egypt’s Farafra region, offers a surreal experience like no other. Known for its striking white limestone rock formations, sculpted by the wind into various shapes, the desert feels almost otherworldly. Adventurers can explore the bizarre landscape, camp under the stars, and experience the serenity of the desert. The contrast of the white terrain against the vast sky creates an unforgettable visual. A visit to the White Desert is a true escape into nature’s artistry.",
+      "author": "admin",
+      "readingTime": "6 min",
+      "publishedTime": "2024-09-25T11:00:00Z",
+      "category": "Natural Attractions"
+    }
+  ],
+
+  "oldest_blogs":[
+    {
+      "id":4,
+      "title": "The Culture of Khan El Khalili Bazaar",
+      "image": "https://blog.wego.com/wp-content/uploads/shutterstock_1392168755_bsd3eg.jpg",
+      "description": "Khan El Khalili Bazaar, a bustling market in the heart of Cairo, is a vibrant display of Egypt’s rich culture and history. Dating back to the 14th century, it is renowned for its traditional crafts, jewelry, spices, and antiques. Visitors can wander through the narrow alleys, bargain with local vendors, and soak in the atmosphere of this lively marketplace. With its centuries-old charm and dynamic energy, Khan El Khalili offers an authentic taste of Cairo’s cultural heritage.",
+      "author": "admin",
+      "readingTime": "7 min",
+      "publishedTime": "2024-09-23T08:45:00Z",
+      "category": "Cultural Experiences"
+    },
+    {
+      "id":5,
+      "title": "Diving in the Red Sea",
+      "image": "https://www.regal-diving.co.uk/sites/default/files/styles/slideshow_main/public/red_sea_egypt_anemone_and_clownfish_with_diver_in_background_simon_rogerson_gallery.jpg",
+      "description": "The Red Sea is a diver's paradise, offering some of the most stunning underwater experiences in the world. Known for its crystal-clear waters, vibrant coral reefs, and diverse marine life, it attracts divers from across the globe. From colorful fish to majestic shipwrecks, the Red Sea provides a unique opportunity to explore a thriving underwater ecosystem. Whether you’re a seasoned diver or a beginner, the Red Sea promises an unforgettable adventure beneath the waves.",
+      "author": "admin",
+      "readingTime": "8 min",
+      "publishedTime": "2024-09-26T14:00:00Z",
+      "category": "Adventure and Outdoor Activities"
+    },
+    {
+      "id":6,
+      "title": "Modern Cairo's Skyscrapers",
+      "image": "https://i.pinimg.com/236x/34/c3/9f/34c39f9d699d52f99f25ca2fe77df8bf.jpg",
+      "description": "Cairo Tower, a symbol of modern Egypt, stands tall at 187 meters, offering panoramic views of the city’s skyline. Located on Gezira Island, this architectural marvel was completed in 1961 and remains a must-visit for anyone exploring Cairo. The tower’s unique design, inspired by the lotus flower, reflects Egypt's blend of ancient heritage and modern progress. From the top, visitors can see the Nile winding through the city, showcasing Cairo’s dynamic fusion of history and urban development.",
+      "author": "admin",
+      "readingTime": "5 min",
+      "publishedTime": "2024-09-24T10:30:00Z",
+      "category": "Modern Attractions"
+    },
+    {
+      "id":7,
+      "title": "Exploring the Temple of Kom Ombo",
+      "image": "https://www.marsaalamtours.com/data1/images/Day-Trip-to-Edfu-Kom-Ombo-from-Hurghada/1.jpg",
+      "description": "The Temple of Kom Ombo, located along the Nile River, is unique in its dual dedication to two gods: Sobek, the crocodile god, and Horus, the falcon-headed god. Built during the Ptolemaic dynasty, the temple features symmetrical structures for each deity. Visitors can admire the intricate hieroglyphs, explore the sacred chambers, and visit the nearby Crocodile Museum. Kom Ombo offers a fascinating glimpse into Egypt’s ancient religious practices and architectural genius.",
+      "author": "admin",
+      "readingTime": "7 min",
+      "publishedTime": "2024-09-27T12:15:00Z",
+      "category": "Archaeological Sites"
+    }
+  ]
+}
