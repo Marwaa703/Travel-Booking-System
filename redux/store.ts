@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
