@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { View } from "react-native";
 import { addTripInputs, addTripSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,13 +8,9 @@ import Spacer from "../Spacer";
 import TripImageForm from "./TripImageForm";
 import TripLocationForm from "./TripLocationForm";
 import IconButton from "../IconButton";
-import {
-  Location,
-  TripDetails,
-  TripFormData,
-  TripImage,
-} from "@/types/trip";
+import { Location, TripDetails, TripFormData, TripImage } from "@/types/trip";
 import { useRouter } from "expo-router";
+import DateInputPicker from "./BirthdatePicker";
 
 const MultiStepTripForm = () => {
   const router = useRouter();
@@ -32,13 +27,17 @@ const MultiStepTripForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm({
     resolver: yupResolver(addTripSchema),
     defaultValues: {},
   });
 
   const handleAddTrip = (data: TripDetails) => {
-    setTripData((prev) => ({ ...prev, tripDetails: data }));
+    setTripData((prev) => ({
+      ...prev,
+      tripDetails: { ...data, isFavorite: false, rate: null, status: "paused" },
+    }));
     setCurrentStep(2);
   };
 
@@ -58,24 +57,34 @@ const MultiStepTripForm = () => {
     reset();
     router.back();
   };
-
+  console.log({ tripData });
   return (
     <View style={{ width: "100%" }}>
       {currentStep === 1 && (
         <>
           {addTripInputs.map(
             ({ icon, name, autoCapitalize, keyboardType, trim }) => (
-              <AppTextInput
-                key={name}
-                name={name}
-                control={control as unknown as Control<FieldValues>}
-                keyboardType={keyboardType}
-                autoCapitalize={autoCapitalize}
-                icon={icon}
-                error={errors[name]?.message}
-                secureTextEntry={false}
-                trim={trim}
-              />
+              <Fragment key={name}>
+                {name === "date" ? (
+                  <DateInputPicker
+                    name="date"
+                    onSelectDate={(date) => setValue(name, date)}
+                    error={errors.date?.message} // Make sure this accesses the correct error message
+                    icon="calendar" // Adjust as necessary
+                  />
+                ) : (
+                  <AppTextInput
+                    name={name}
+                    control={control as unknown as Control<FieldValues>}
+                    keyboardType={keyboardType}
+                    autoCapitalize={autoCapitalize}
+                    icon={icon}
+                    error={errors[name]?.message}
+                    secureTextEntry={false}
+                    trim={trim}
+                  />
+                )}
+              </Fragment>
             ),
           )}
           <Spacer />

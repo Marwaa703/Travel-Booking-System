@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import AppTextInput from "./AppTextInput";
 import Spacer from "../Spacer";
-import BirthdatePicker from "./BirthdatePicker";
+import DateInputPicker from "./BirthdatePicker";
 import { User } from "@/types/user";
 import { useRouter } from "expo-router";
 interface UserEditFormProps {
@@ -47,7 +47,7 @@ const UserEditForm = forwardRef(({ user }: UserEditFormProps, ref) => {
       {userInputs.map(({ icon, name, autoCapitalize, keyboardType, trim }) => (
         <Fragment key={name}>
           {name === "birthdate" ? (
-            <BirthdatePicker
+            <DateInputPicker
               name="birthdate"
               onSelectDate={(date) => setValue(name, date)}
               error={errors.birthdate?.message} // Make sure this accesses the correct error message

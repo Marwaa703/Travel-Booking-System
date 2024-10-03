@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import TextInputField from "./TextInputField";
-import { UserFormFields } from "@/constants/forms";
 import FieldErrorMessage from "./FieldErrorMessage";
 
-interface BirthdatePickerProps {
+interface DateInputPickerProps {
   onSelectDate: (date: Date) => void;
-  name: UserFormFields;
+  name: string;
   error?: string;
   autoCapitalize?: "none" | "words" | "sentences" | "characters";
   keyboardType?: string;
   icon?: any; // Adjust based on your icon type
 }
 
-const BirthdatePicker: React.FC<BirthdatePickerProps> = ({
+const DateInputPicker: React.FC<DateInputPickerProps> = ({
   onSelectDate,
   name,
   error,
@@ -60,4 +59,4 @@ const BirthdatePicker: React.FC<BirthdatePickerProps> = ({
   );
 };
 
-export default BirthdatePicker;
+export default DateInputPicker;

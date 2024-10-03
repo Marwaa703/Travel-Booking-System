@@ -63,10 +63,16 @@ export const companyUserSignupSchema = signupSchema.concat(
     role: Yup.string().required("Write your role as in company"),
   }),
 );
+const tripDateSchema = Yup.date()
+  .min(
+    new Date(new Date().setDate(new Date().getDate() + 3)),
+    "Trip date must be at least 3 days in the future",
+  )
+  .required("Trip date is required");
 
 export const addTripSchema = Yup.object().shape({
   name: Yup.string().required("Trip Name is required"),
-  details: Yup.string().required("Trip details are required"),
+  description: Yup.string().required("Trip details are required"),
   price: Yup.number()
     .required("Price is required")
     .positive("Price must be a positive number"),
@@ -74,6 +80,7 @@ export const addTripSchema = Yup.object().shape({
     .required("Max Reservations are required")
     .integer("Must be an integer")
     .min(1, "At least 1 reservation is required"),
+  date: tripDateSchema,
 });
 
 // inputs
@@ -157,7 +164,7 @@ export const signupInputs: InputFieldProps<SignupFormFields>[] = [
     name: "password",
     icon: "lock-closed",
     autoCapitalize: "none",
-    trim: true,
+    trim: false,
   },
 ];
 
@@ -170,7 +177,7 @@ export const addTripInputs: InputFieldProps<AddTripFormFields>[] = [
     trim: false, // No trimming for name
   },
   {
-    name: "details",
+    name: "description",
     icon: "information-circle-outline",
     autoCapitalize: "none",
     trim: false, // No trimming for details
@@ -186,6 +193,12 @@ export const addTripInputs: InputFieldProps<AddTripFormFields>[] = [
     name: "max_reservations",
     icon: "bookmarks-outline",
     keyboardType: "phone-pad",
+    trim: true,
+  },
+  {
+    name: "date",
+    icon: "time-outline",
+    keyboardType: "default",
     trim: true,
   },
 ];
@@ -212,9 +225,11 @@ export interface InputFieldProps<T> {
 export type SignupFormFields = "fullname" | "email" | "password" | "phone";
 export type AddTripFormFields =
   | "name"
-  | "details"
+  | "description"
   | "price"
-  | "max_reservations";
+  | "max_reservations"
+  | "date";
+
 export type UserCompanySignupFormFields = SignupFormFields | "role";
 export type UserFormFields =
   | "firstName"
