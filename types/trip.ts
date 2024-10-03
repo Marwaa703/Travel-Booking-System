@@ -1,23 +1,38 @@
-/* eslint-disable prettier/prettier */
+export interface TripDetails {
+  name: string;
+  description: string;
+  price: number;
+  max_reservations: number;
+  id?: string;
+  date: string;
+  status?: string;
+  rate?: number;
+  isFavorite?: boolean; // New
+  // Add other trip details fields as needed
+}
+
+export interface Location {
+  tripId?: string;
+  order: number;
+  lat: number;
+  lon: number;
+  imageUrl: string;
+  name: string;
+}
+
+export interface TripImage {
+  imageUrl: string;
+  caption: string;
+}
+
+export interface TripFormData {
+  tripDetails: TripDetails;
+  locations: Location[];
+  images: TripImage[];
+}
 
 export interface Trip {
-  tripDetailes:{
-    id?:string;
-    date: string;
-    status: string;
-    name: string;
-    description: string;
-    price: number;
-    rate:number;
-    max_reservations: number;
-    isFavorite?: boolean; // New field for favorite functionality
-  },
-  images: string[]; // Array of image URLs
-  locations: {
-    tripId: string;
-    order: number;
-    name: string;
-    lat: string;
-    lon: string;
-  }[];
+  tripDetailes: TripDetails;
+  images: TripImage[]; // Array of image URLs
+  locations: Location[];
 }

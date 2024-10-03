@@ -40,7 +40,7 @@ import { approveCompany } from "@/redux/slices/companiesSlice";
 const Pending = () => {
 
 const dispatch = useAppDispatch();
-  const pendingCompanies = useAppSelector(state=>state.companies.list.filter((c:Company)=>!c.approved)) as Company[];
+  const pendingCompanies = useAppSelector(state=>state.companies.companies.filter((c:Company)=>!c.approved)) as Company[];
 console.log({pendingCompanies})
 const handleApprove = (companyId: string) => {
 // update server

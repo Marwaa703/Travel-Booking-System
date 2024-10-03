@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CustomMarker from "@/components/maps/CustomMarker";
-import { Location } from "@/constants/types";
 import {
   calculateInitialRegion,
   adjustLocations,

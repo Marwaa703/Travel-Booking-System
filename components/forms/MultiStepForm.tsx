@@ -14,7 +14,7 @@ import {
   TripDetails,
   TripFormData,
   TripImage,
-} from "@/constants/types";
+} from "@/types/trip";
 import { useRouter } from "expo-router";
 
 const MultiStepTripForm = () => {

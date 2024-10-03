@@ -7,7 +7,7 @@ export interface Company {
   approved: boolean;
 }
 
-export interface CompanyPapers {
+export interface CompanyPaper {
   companyId?: string;
   paperId: string;
   imageUrl: string;

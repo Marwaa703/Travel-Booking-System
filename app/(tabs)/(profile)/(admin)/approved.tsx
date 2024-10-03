@@ -20,7 +20,7 @@ import { editCompany, removeCompany } from "@/redux/slices/companiesSlice";
 const ApprovedCompaniesScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const approvedCompanies = useAppSelector((state) =>
-    state.companies.list.filter((c: Company) => c.approved),
+    state.companies.companies.filter((c: Company) => c.approved),
   ) as Company[];
   console.log({ approvedCompanies });
 
