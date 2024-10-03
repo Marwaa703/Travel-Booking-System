@@ -19,6 +19,25 @@ export const COLORS = {
   link:'#0D6EFD'
 
 };
+export const DARK_COLORS = {
+  primary: "#E88D67", // Keeping the primary color consistent
+  
+  secondary: "#00A1C1", // Lighter secondary color to stand out on dark background
+  accent: "#008FB3", // Accent color for highlights
+  light: "#3A3A3C", // Darker "light" color for contrast
+  background: "#1C1C1E", // Dark background color for screens
+  textPrimary: "#EAEAEA", // Light color for primary text
+  textSubtitle: "#A0A3A8", // Slightly dimmed text for subtitles
+  textSecondary: "#B0B0B0", // Lighter secondary text color
+  error: "#FF6B6B", // Bright error color for dark backgrounds
+  success: "#4CAF50", // Same success color to retain consistency
+  warning: "#FF9800", // Same warning color
+  priceTag: "#FBA834", // Same price tag color
+  calendarSelected: "#1E90FF", // Bright selected date color to pop on dark background
+  opacity: "rgba(255, 255, 255, 0.3)", // Adjusted opacity for overlays
+  link: '#3A8DFF' // Lighter link color for better contrast
+};
+
 
 export const FONTS = {
   xsmall: 10,

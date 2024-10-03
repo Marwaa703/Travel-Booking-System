@@ -1,0 +1,43 @@
+{
+    "trip": {
+      "data": {
+        "tripDetails": {
+            "companyId":123,
+          "max_reservations": 22,
+          "price": 22,
+          "details": "sadassad",
+          "name": "Giza tour",
+          "date": "2 Jul 2024"
+        },
+        "locations": [
+          {
+            "order": 1,
+            "tripId":"121",
+            "name": "Giza, Giza, Giza, Egypt",
+            "lat": 30.00808,
+            "lon": 31.21093,
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdus6AGfiWU_zwv-_aQ9BGZ0r6Xy7bJfoULA&s"
+          },
+          {
+            "order": 2,
+            "tripId":"121",
+            "name": "Cairo, Egypt",
+            "lat": 30.0332516,
+            "lon": 31.562165102291935,
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdus6AGfiWU_zwv-_aQ9BGZ0r6Xy7bJfoULA&s"
+          }
+        ],
+        "images": [
+          {
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdus6AGfiWU_zwv-_aQ9BGZ0r6Xy7bJfoULA&s",
+            "caption": "Asas",
+            "tripId":"121"
+          },
+          {
+            "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdus6AGfiWU_zwv-_aQ9BGZ0r6Xy7bJfoULA&s",
+            "caption": "Assaas"
+          }
+        ]
+      }
+    }
+  }

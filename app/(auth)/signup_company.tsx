@@ -38,21 +38,6 @@ const SignupCompany = () => {
               <Spacer />
             </View>
           </View>
-          {/* End form  */}
-          {/* Bottom  */}
-          {/* <View style={styles.bottom}>
-            <Text>Coming Soon ...!</Text>
-            <Spacer />
-            <View style={[styles.center, { width: "60%" }]}>
-              <Ionicons name="logo-facebook" color={COLORS.link} size={40} />
-              <Ionicons
-                name="logo-instagram"
-                color={COLORS.priceTag}
-                size={40}
-              />
-              <Ionicons name="logo-twitter" color={"dodgerblue"} size={40} />
-            </View>
-          </View> */}
         </View>
       </Padding>
     </ScrollView>
