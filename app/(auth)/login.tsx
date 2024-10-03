@@ -12,7 +12,6 @@ import { StyleSheet, Text, View } from "react-native";
 
 const Login = () => {
   const state = useAppSelector(state=>state.user);
-  console.log({state:state.userData});
 
   return (
     <Padding>

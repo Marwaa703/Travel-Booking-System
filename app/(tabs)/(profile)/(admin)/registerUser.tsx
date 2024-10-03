@@ -19,6 +19,7 @@ const RegisterUsersScreen: React.FC = () => {
     { id: '2', name: 'User Two', email: 'user2@user.com', birthdate: '1985-05-15', gender: 'Female', phone: '987-654-3210' },
     { id: '3', name: 'User Three', email: 'user3@user.com', birthdate: '1999-09-20', gender: 'Male', phone: '456-654-3210' },
   ]);
+  
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');

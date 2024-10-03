@@ -1,32 +1,54 @@
-/* eslint-disable prettier/prettier */
-
-import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView } from 'react-native';
-import SettingCard from '@/components/SettingContainer'; 
-import { COLORS } from '@/constants/theme';
-import Header from '@/components/core/Header';
-import { router } from 'expo-router';
-
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import SettingCard from "@/components/SettingContainer";
+import { COLORS } from "@/constants/theme";
+import Header from "@/components/core/Header";
+import { router } from "expo-router";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { selectCompanyById, setCompanies } from "@/redux/slices/companiesSlice";
+import companies from "@/DummyData/companiesUpdated.json";
+import { Company } from "@/types/company";
 const CompanyProfile: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  // todo: set the current company id current CompanyUser
+
+  const currentCompany = useAppSelector((state) =>
+    selectCompanyById(state, "1"),
+  ) as Company;
+
+  useEffect(() => {
+    dispatch(setCompanies(companies.companies));
+  }, [dispatch]);
+
   return (
     <>
-      <Header 
-        title='Company Profile' 
-        rightIcon='create-outline' 
-        leftIcon='arrow-back' 
-        onRightIconPress={() => {  }} 
-        onLeftIconPress={() => { router.back(); }} 
+      <Header
+        title="Company Profile"
+        rightIcon="create-outline"
+        leftIcon="arrow-back"
+        onRightIconPress={() => {}}
+        onLeftIconPress={() => {
+          router.back();
+        }}
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
           <View>
             <View style={styles.headerContainer}>
               <Image
-                source={{ uri: "https://example.com/company-logo.png" }} 
+                source={{ uri: currentCompany.logo }}
                 style={styles.companyLogo}
               />
-              <Text style={styles.companyName}>Company</Text>
-              <Text style={styles.companyEmail}>contact@company.com</Text>
+              <Text style={styles.companyName}>{currentCompany.name}</Text>
+              <Text style={styles.companyEmail}>{currentCompany.address}</Text>
             </View>
 
             <SettingCard
@@ -34,9 +56,11 @@ const CompanyProfile: React.FC = () => {
               onPress={() => {}}
               leftIconName="business"
             />
-              <SettingCard
+            <SettingCard
               title="Trips"
-              onPress={() => {router.push("companyHome")}}
+              onPress={() => {
+                router.push("companyHome");
+              }}
               leftIconName="air"
             />
             <SettingCard
@@ -70,21 +94,21 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   headerContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 30,
   },
   companyLogo: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: COLORS.opacity, 
+    backgroundColor: COLORS.opacity,
   },
   companyName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
     color: COLORS.textPrimary,
   },

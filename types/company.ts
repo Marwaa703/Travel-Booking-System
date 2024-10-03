@@ -4,6 +4,7 @@ export interface Company {
   address: string;
   logo: string;
   wallet?: string;
+  approved: boolean;
 }
 
 export interface CompanyPapers {

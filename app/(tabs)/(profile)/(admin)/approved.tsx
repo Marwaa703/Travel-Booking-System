@@ -1,92 +1,135 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { View, Text, Image, TextInput, FlatList, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'; 
-import companiesData from "@/DummyData/companies.json";
-import { COLORS } from '@/constants/theme';
-import Header from '@/components/core/Header';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  FlatList,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-interface Company {
-  title: string;
-  subtitle: string;
-  rating: number;
-  trips: number;
-  image: { uri: string };
-}
+import { COLORS } from "@/constants/theme";
+import Header from "@/components/core/Header";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { Company } from "@/types/company";
+import { editCompany, removeCompany } from "@/redux/slices/companiesSlice";
 
 const ApprovedCompaniesScreen: React.FC = () => {
-  const [companies, setCompanies] = useState<Company[]>(companiesData.companies);
+  const dispatch = useAppDispatch();
+  const approvedCompanies = useAppSelector((state) =>
+    state.companies.list.filter((c: Company) => c.approved),
+  ) as Company[];
+  console.log({ approvedCompanies });
+
+  // const [companies, setCompanies] = useState<Company[]>(companiesData.companies);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
-  const [editData, setEditData] = useState<{ title: string; subtitle: string }>({
-    title: '',
-    subtitle: ''
+  const [editData, setEditData] = useState<{ name: string; address: string }>({
+    name: "",
+    address: "",
   });
 
-  // Handle Update company data for selected company
-  const updateCompany = (companyTitle: string) => {
-    if (editData.title === '' || editData.subtitle === '') {
-      Alert.alert('Please enter valid data');
+  const deleteCompany = (companyId: string) => {
+    dispatch(removeCompany(companyId));
+  };
+  const updateCompany = (companyId: string) => {
+    if (!editData.name && !editData.address) {
+      Alert.alert("Please enter valid data");
       return;
     }
-    setCompanies(companies.map(company =>
-      company.title === companyTitle ? { ...company, title: editData.title, subtitle: editData.subtitle } : company
-    ));
+    dispatch(
+      editCompany({
+        id: companyId,
+        name: editData.name,
+        address: editData.address,
+      }),
+    );
     setSelectedCompany(null);
-    setEditData({ title: '', subtitle: '' });
-  };
-
-  // Handle Delete Company
-  const deleteCompany = (companyTitle: string) => {
-    setCompanies(companies.filter(company => company.title !== companyTitle));
+    setEditData({ name: "", address: "" });
   };
 
   return (
     <>
       <Header title={"Approved Companies"} />
       <View style={styles.container}>
-      <Text style={styles.title}>Manage Companies</Text>
+        <Text style={styles.title}>Manage Companies</Text>
         {/* List of Companies */}
         <FlatList
-          data={companies}
-          keyExtractor={item => item.title}
+          data={approvedCompanies}
+          keyExtractor={(item) => item.id as string}
           renderItem={({ item }) => (
             <View style={styles.companyContainer}>
-              <Image source={{ uri: item.image.uri }} style={styles.companyImage} />
-              <View style={styles.companyDetails}>
-                <View style={styles.companyHeader}>
-                  <Text style={styles.companyTitle}>{item.title}</Text>
-                  <View style={styles.iconGroup}>
-                    <TouchableOpacity onPress={() => {
-                      setSelectedCompany(item.title);
-                      setEditData({ title: item.title, subtitle: item.subtitle });
-                    }}>
-                      <Ionicons name="pencil-outline" size={20} color={COLORS.link} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => deleteCompany(item.title)} style={styles.iconButton}>
-                      <Ionicons name="trash-outline" size={20} color={COLORS.error} />
-                    </TouchableOpacity>
+              <View style={styles.companyStaticContainer}>
+                <Image
+                  source={{ uri: item.logo }}
+                  style={styles.companyImage}
+                />
+                <View style={styles.companyDetails}>
+                  <View style={styles.companyHeader}>
+                    <Text style={styles.companyId}>{item.name}</Text>
+                    <View style={styles.iconGroup}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setSelectedCompany(item.id as string);
+                          setEditData({
+                            name: item.name,
+                            address: item.address,
+                          });
+                        }}
+                      >
+                        <Ionicons
+                          name="pencil-outline"
+                          size={20}
+                          color={COLORS.link}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => deleteCompany(item.name)}
+                        style={styles.iconButton}
+                      >
+                        <Ionicons
+                          name="trash-outline"
+                          size={20}
+                          color={COLORS.error}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
+                  <Text style={styles.companySubtitle}>{item.address}</Text>
+                  <Text>Rating: {0}</Text>
+                  <Text>Trips: {0}</Text>
                 </View>
-                <Text style={styles.companySubtitle}>{item.subtitle}</Text>
-                <Text>Rating: {item.rating}</Text>
-                <Text>Trips: {item.trips}</Text>
-
-                {selectedCompany === item.title && (
+              </View>
+              <View>
+                {selectedCompany === item.id && (
                   <View style={styles.inputContainer}>
                     <TextInput
                       placeholder="Enter title"
-                      value={editData.title}
-                      onChangeText={(text) => setEditData(prev => ({ ...prev, title: text }))}
+                      value={editData.name}
+                      onChangeText={(text) =>
+                        setEditData((prev) => ({ ...prev, name: text }))
+                      }
                       style={styles.input}
                     />
                     <TextInput
                       placeholder="Enter subtitle"
-                      value={editData.subtitle}
-                      onChangeText={(text) => setEditData(prev => ({ ...prev, subtitle: text }))}
+                      value={editData.address}
+                      onChangeText={(text) =>
+                        setEditData((prev) => ({ ...prev, address: text }))
+                      }
                       style={styles.input}
                     />
-                    <TouchableOpacity onPress={() => updateCompany(item.title)} style={styles.iconButton}>
-                      <Ionicons name="checkmark" size={24} color={COLORS.success} />
+                    <TouchableOpacity
+                      onPress={() => updateCompany(item.id as string)}
+                      style={styles.iconButton}
+                    >
+                      <Ionicons
+                        name="checkmark"
+                        size={24}
+                        color={COLORS.success}
+                      />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -109,21 +152,26 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
     color: COLORS.textPrimary,
   },
   companyContainer: {
-    flexDirection: 'row',
+    flexDirection: "column",
+    // flexDirection: "row",
     marginBottom: 20,
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+  },
+  companyStaticContainer: {
+    flexDirection: "row",
+    marginBottom: 10,
   },
   companyImage: {
     width: 100,
@@ -133,18 +181,18 @@ const styles = StyleSheet.create({
   },
   companyDetails: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   companyHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-  companyTitle: {
+  companyId: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   iconGroup: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   companySubtitle: {
     fontSize: 14,
@@ -153,8 +201,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginVertical: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   input: {
     borderWidth: 1,
@@ -166,6 +214,6 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     marginLeft: 10,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 });
