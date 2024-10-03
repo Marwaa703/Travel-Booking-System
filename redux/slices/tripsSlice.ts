@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Trip } from "@/types/trip";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
