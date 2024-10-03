@@ -5,3 +5,5 @@ export interface User {
   phone: string;
   birthdate?: Date;
 }
+
+export type UserTypes = "Admin" | "Company" | "Anonymous" | "User";

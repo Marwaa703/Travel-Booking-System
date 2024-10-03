@@ -6,10 +6,14 @@ import LinkButton from "@/components/LinkButton";
 import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS, SPACING } from "@/constants/theme";
+import { useAppSelector } from "@/redux/store";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const Login = () => {
+  const state = useAppSelector(state=>state.user);
+  console.log({state:state.userData});
+
   return (
     <Padding>
       <View style={styles.container}>

@@ -10,6 +10,8 @@ import { FONTS } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import LinkButton from "../LinkButton";
 import { useNavigation } from "expo-router";
+import { useAppDispatch } from "@/redux/store";
+import { setUser } from "@/redux/slices/userSlice";
 
 const LoginForm = () => {
   const navigate = useNavigation();
@@ -21,14 +23,16 @@ const LoginForm = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
+const dispatch = useAppDispatch();
 
   const handleLogin = (data: any) => {
     console.log("lol");
-
+// update redux
+dispatch(setUser({role:"User",userData:{data}}))
     console.log(JSON.stringify(data));
 
     // reset
-    // reset();
+    reset();
     navigate.navigate("(tabs)" as never);
   };
   console.log({ errors });
@@ -50,8 +54,8 @@ const LoginForm = () => {
       </View>
       <Button
         title="Sign In"
-        // onPress={handleSubmit(handleLogin)}
-        onPress={() => navigate.navigate("(tabs)" as never)}
+        onPress={handleSubmit(handleLogin)}
+        // onPress={() => navigate.navigate("(tabs)" as never)}
         fontSize={FONTS.large}
       />
     </>
