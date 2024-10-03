@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import ReduxProvider from "@/redux/RootProvider";
 import { Stack } from "expo-router";
 import React from "react";
