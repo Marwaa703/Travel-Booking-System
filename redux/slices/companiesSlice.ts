@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Company, CompanyPaper, CompanyUser } from "@/types/company";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
