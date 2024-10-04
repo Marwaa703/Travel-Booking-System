@@ -12,7 +12,7 @@ import { Location, TripDetails, TripFormData, TripImage } from "@/types/trip";
 import { useRouter } from "expo-router";
 import DateInputPicker from "./BirthdatePicker";
 
-const MultiStepTripForm = () => {
+const MultiStepAddTripForm = () => {
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -114,4 +114,4 @@ const MultiStepTripForm = () => {
   );
 };
 
-export default MultiStepTripForm;
+export default MultiStepAddTripForm;

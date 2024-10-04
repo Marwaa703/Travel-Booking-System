@@ -4,7 +4,7 @@ import React from "react";
 import ScreenFormContainer from "@/components/containers/ScreenFormContainer";
 import Spacer from "@/components/Spacer";
 import ScreenWraper from "@/components/containers/ScreenWraper";
-import MultiStepTripForm from "@/components/forms/MultiStepForm";
+import MultiStepAddTripForm from "@/components/forms/MultiStepAddTripForm";
 
 const AddTrip = () => {
   return (
@@ -15,7 +15,7 @@ const AddTrip = () => {
         subTitle="Please fill the following details!"
         topFlex={4}
       >
-        <MultiStepTripForm />
+        <MultiStepAddTripForm />
       </ScreenFormContainer>
     </ScreenWraper>
   );

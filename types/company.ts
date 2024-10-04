@@ -4,26 +4,27 @@ export interface Company {
   address: string;
   logo: string;
   wallet?: string;
-  approved: boolean;
+  approved?: boolean;
 }
 
 export interface CompanyPaper {
   companyId?: string;
-  paperId: string;
+  paperId?: string;
   imageUrl: string;
+  title: string;
 }
 
 export interface CompanyUser {
   id?: string;
+  companyId?: string;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
-  gender: Gender;
-  birthdate: string;
   phone: string;
+  password: string;
+  birthdate?: string;
   role: CompanyUserRoles;
-  companyId?: string;
+  gender?: Gender;
 }
 
 export type CompanyUserRoles = "Representative" | "Support" | "TourGuide";

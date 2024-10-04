@@ -12,7 +12,7 @@ import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
 import { Text } from "react-native";
 
-const CompanyUserSignupForm = () => {
+const RegisterCompanyForm = () => {
   const [selectedGender, setSelectedGender] = useState("male");
 
   const {
@@ -67,4 +67,4 @@ const CompanyUserSignupForm = () => {
   );
 };
 
-export default CompanyUserSignupForm;
+export default RegisterCompanyForm;

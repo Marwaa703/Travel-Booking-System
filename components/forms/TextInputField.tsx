@@ -34,7 +34,6 @@ const TextInputField = ({
   ...rest
 }: TextInputFieldProps) => {
   const [shown, setShown] = useState(name === "password" ? true : false);
-  console.log({ shown });
   return (
     <View style={styles.container}>
       <TextInput

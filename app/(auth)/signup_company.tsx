@@ -1,5 +1,6 @@
 import Padding from "@/components/containers/Padding";
-import CompanyUserSignupForm from "@/components/forms/CompanyUserSignupForm";
+import MultiStepRegisterCompanyForm from "@/components/forms/MultiStepRegisterCompanyForm";
+import RegisterCompanyForm from "@/components/forms/RegisterCompanyForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -21,19 +22,12 @@ const SignupCompany = () => {
             {/* headerend  */}
             {/* form  */}
             <View>
-              <CompanyUserSignupForm />
+              <MultiStepRegisterCompanyForm />
+              <Spacer />
               <Spacer />
               <View style={styles.center}>
                 <Text style={styles.subTitle}>Already have an account?</Text>
                 <LinkButton to={"login"} label="Sign In" />
-              </View>
-              <Spacer />
-              <View style={{ marginHorizontal: "auto" }}>
-                <LinkButton
-                  style={styles.company}
-                  to={"signup"}
-                  label="Are you a Company? "
-                />
               </View>
               <Spacer />
             </View>
@@ -63,10 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  company: {
-    color: COLORS.accent,
-    fontSize: FONTS.medium,
-  },
   header: {
     textAlign: "center",
     alignItems: "center",
@@ -79,11 +69,4 @@ const styles = StyleSheet.create({
     fontSize: FONTS.medium,
     color: COLORS.textSubtitle,
   },
-
-  // bottom: {
-  //   flex: 0,
-  //   alignItems: "center",
-  //   justifyContent: "flex-end",
-  //   marginTop: "4%",
-  // },
 });

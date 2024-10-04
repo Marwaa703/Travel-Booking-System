@@ -3,10 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
 import Spacer from "../Spacer";
+import { Gender } from "@/types/company";
 
 interface GenderPickerProps {
-  setSelectedGender: React.Dispatch<React.SetStateAction<string>>;
-  selectedGender: string;
+  setSelectedGender: React.Dispatch<React.SetStateAction<Gender>>;
+  selectedGender: Gender;
 }
 const GenderPicker = ({
   setSelectedGender,
