@@ -23,12 +23,12 @@ const LoginForm = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-const dispatch = useAppDispatch();
+// const dispatch = useAppDispatch();
 
   const handleLogin = (data: any) => {
     console.log("lol");
 // update redux
-dispatch(setUser({role:"User",userData:{data}}))
+// dispatch(setUser({role:"User",userData:{data}}))
     console.log(JSON.stringify(data));
 
     // reset

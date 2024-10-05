@@ -11,12 +11,13 @@ interface ButtonProps {
   type?: 'primary' | 'secondary';
   width?: DimensionValue | undefined;
   align?: 'flex-start' | 'center' |'flex-end';
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width="100%" , align,fontSize=FONTS.medium}) => {
+const Button: React.FC<ButtonProps> = ({ title, onPress, type = 'primary', width="100%" , align,fontSize=FONTS.medium},disabled) => {
 
   return (
-    <View style={[styles.container, { alignItems: align}]}>
+    <View style={[styles.container, { alignItems: align}, disabled]}>
       <TouchableOpacity onPress={onPress} style={[styles.button,type === 'secondary' ? styles.secondaryButton : styles.primaryButton, , {width} ] }>
         <Text style={type === 'secondary' ? styles.secondaryText : styles.primaryText}>{title}</Text>
       </TouchableOpacity>

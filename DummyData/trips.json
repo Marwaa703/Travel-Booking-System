@@ -10,7 +10,8 @@
       "price": "820",
       "avatarIds": [0, 1, 2],
       "status": "Cancelled",
-      "location":"Cairo"
+      "location":"Cairo",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     },
     {
       "id":2,
@@ -22,7 +23,8 @@
       "price": "720",
       "avatarIds": [0, 1, 2],
       "status": "Ongoing",
-      "location":"Aswan"
+      "location":"Aswan",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     },
     {
       "id":3,
@@ -34,7 +36,8 @@
       "price": "942",
       "avatarIds": [0, 1, 2],
       "status": "Completed",
-      "location":"Cairo"
+      "location":"Cairo",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     },
     {
       "id":4,
@@ -46,7 +49,8 @@
       "price": "860",
       "avatarIds": [0, 1, 2],
       "status": "Scheduled",
-      "location":"Alexandria"
+      "location":"Alexandria",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     },
     {
       "id":5,
@@ -58,7 +62,8 @@
       "price": "985",
       "avatarIds": [0, 1, 2],
       "status": "Scheduled",
-      "location":"Pyramids"
+      "location":"Pyramids",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     },
     {
       "id":6,
@@ -70,7 +75,8 @@
       "price": "542",
       "avatarIds": [0, 1, 2],
       "status": "Scheduled",
-      "location":"Aswan"
+      "location":"Aswan",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     },
     {
       "id":7,
@@ -82,7 +88,8 @@
       "price": "542",
       "avatarIds": [0, 1, 2],
       "status": "Completed",
-      "location":"Alexandria"
+      "location":"Alexandria",
+      "description" : "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress."
     }
   ],
   "avatars": [
