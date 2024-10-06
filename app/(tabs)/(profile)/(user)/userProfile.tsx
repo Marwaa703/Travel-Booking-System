@@ -6,8 +6,10 @@ import SettingCard from '@/components/SettingContainer';
 import { COLORS } from '@/constants/theme';
 import Header from '@/components/core/Header';
 import { router } from 'expo-router';
+import useLogout from '@/hooks/useLogout';
 
 const ProfileScreen: React.FC = () => {
+  const handleLogout =useLogout();
   return (
     <>
       <Header 
@@ -15,8 +17,7 @@ const ProfileScreen: React.FC = () => {
         rightIcon='create-outline' 
         leftIcon='arrow-back' 
         onRightIconPress={() => { router.push("/userEdit"); }} 
-        // todo :not working
-        onLeftIconPress={() => { router.push('/userProfile'); }} 
+        onLeftIconPress={() => { router.back(); }} 
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
@@ -56,6 +57,11 @@ const ProfileScreen: React.FC = () => {
               title="Other Setting"
               onPress={() => {}}
               leftIconName="tune"
+            />
+             <SettingCard
+              title="Log Out"
+              onPress={handleLogout}
+              leftIconName="logout"
             />
           </View>
         </SafeAreaView>

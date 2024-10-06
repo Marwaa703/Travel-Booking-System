@@ -9,3 +9,7 @@ export interface User {
 }
 
 export type UserTypes = "Admin" | "Company" | "Anonymous" | "User";
+export interface UserWithId extends User {
+  id: string; 
+  role: UserTypes; 
+}

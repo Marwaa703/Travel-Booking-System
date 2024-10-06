@@ -10,9 +10,14 @@ import AppTextInput from "./AppTextInput";
 import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
 import { Text } from "react-native";
+import { useDispatch } from "react-redux";
+import { signup } from "@/api/auth"; 
+import { signupSuccess, signupFailure } from "@/redux/slices/authSlice"; 
+import { router } from "expo-router";
 
 const SignupForm = () => {
   const [selectedGender, setSelectedGender] = useState("male");
+  const dispatch = useDispatch(); 
 
   const {
     control,
@@ -23,15 +28,16 @@ const SignupForm = () => {
     resolver: yupResolver(signupSchema),
   });
 
-  const handleSignup = (data: any) => {
-    console.log("lol");
-    const userData = {...data,selectedGender}
-    console.log(userData);
-// todo: submit data to server
-// todo: handle registerartion details if preregistered mail is found??
-// todo: navigate to login
-    // reset
-    // reset();
+  const handleSignup = async (data: any) => {
+    const userData = { ...data, selectedGender, role: "User" }; 
+    try {
+      const response = await signup(userData); 
+      dispatch(signupSuccess({ token: response.token, user: response.user, role: "User" })); 
+      router.push("/(tabs)/(profile)/(user)/userProfile");
+      reset(); 
+    } catch (error: any) {
+      dispatch(signupFailure(error.message || "Signup failed. Please try again.")); 
+    }
   };
 
   console.log({ errors, selectedGender });
@@ -57,7 +63,7 @@ const SignupForm = () => {
       <Spacer />
       <Button
         title="Sign Up"
-        onPress={handleSubmit(handleSignup)}
+        onPress={handleSubmit(handleSignup)} // Call handleSignup on form submission
         fontSize={FONTS.large}
       />
     </>

@@ -9,12 +9,14 @@ import Button from "../Buttons";
 import { FONTS } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import LinkButton from "../LinkButton";
-import { useNavigation } from "expo-router";
+import { router} from "expo-router";
 import { useAppDispatch } from "@/redux/store";
-import { setUser } from "@/redux/slices/userSlice";
+import  { addUser}  from "@/redux/slices/userSlice";
+import { login } from "@/api/auth"; 
+import { UserTypes,UserWithId } from "@/types/user"; 
 
 const LoginForm = () => {
-  const navigate = useNavigation();
+  const dispatch = useAppDispatch();
   const {
     control,
     handleSubmit,
@@ -23,19 +25,42 @@ const LoginForm = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-// const dispatch = useAppDispatch();
 
-  const handleLogin = (data: any) => {
-    console.log("lol");
-// update redux
-// dispatch(setUser({role:"User",userData:{data}}))
-    console.log(JSON.stringify(data));
+  const handleLogin = async (data: any) => {
+    try {
+      const response = await login(data.email, data.password);
+      const { user } = response; 
+  
+      const userWithId: UserWithId = {
+        id: user.id, 
+        firstName: user.first_name, 
+        lastName: user.last_name, 
+        email: user.email, 
+        phone: user.phone, 
+        role: user.role as UserTypes, 
+      };
+  
+      dispatch(addUser(userWithId));
+  
+      if (user.role === "User") {
+        router.push("/(tabs)/(profile)/(user)/userProfile");
+      } else if (user.role === "Admin") {
+        router.push("/(tabs)/(profile)/(admin)/adminProfile");
+      } else if (user.role === "Company") {
+        router.push("/(tabs)/(profile)/(company)/companyProfile");
+      }
 
-    // reset
-    reset();
-    navigate.navigate("(tabs)" as never);
+      reset();
+  
+      console.log(userWithId);
+    } catch (error: any) {
+      console.error("Login failed:", error.message);
+    }
   };
+  
+  
   console.log({ errors });
+
   return (
     <>
       {loginInputs.map(({ icon, name, autoCapitalize, keyboardType }) => (
@@ -54,8 +79,7 @@ const LoginForm = () => {
       </View>
       <Button
         title="Sign In"
-        onPress={handleSubmit(handleLogin)}
-        // onPress={() => navigate.navigate("(tabs)" as never)}
+        onPress={handleSubmit(handleLogin)} 
         fontSize={FONTS.large}
       />
     </>

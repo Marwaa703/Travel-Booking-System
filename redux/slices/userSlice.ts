@@ -19,7 +19,7 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    // Create a new user with role
+   
     createUser: (
       state,
       action: PayloadAction<{ id: string; userData: User; role: UserTypes }>
@@ -27,7 +27,7 @@ const userSlice = createSlice({
       const newUser: UserWithId = {
         id: action.payload.id,
         ...action.payload.userData,
-        role: action.payload.role,
+        role: action.payload.role, 
       };
       state.users.push(newUser);
     },
@@ -35,7 +35,7 @@ const userSlice = createSlice({
     // Update an existing user by ID
     updateUser: (
       state,
-      action: PayloadAction<{ id: string; updatedData: Partial<User> }>
+      action: PayloadAction<{ id: string; updatedData: Partial<Omit<User, 'role'>> }>
     ) => {
       const index = state.users.findIndex(user => user.id === action.payload.id);
       if (index !== -1) {
@@ -51,10 +51,22 @@ const userSlice = createSlice({
       state.users = state.users.filter(user => user.id !== action.payload.id);
     },
 
+  
+
     // Set users (when loading from API)
-    setUsers: (state, action: PayloadAction<UserWithId[]>) => {
-      state.users = action.payload;
-    },
+setUsers: (state, action: PayloadAction<UserWithId[]>) => {
+  state.users = action.payload;
+},
+
+// Add a single user (for login)
+addUser: (state, action: PayloadAction<UserWithId>) => {
+  const existingUserIndex = state.users.findIndex(user => user.id === action.payload.id);
+  if (existingUserIndex === -1) {
+    state.users.push(action.payload); 
+  } else {
+    state.users[existingUserIndex] = action.payload; 
+  }
+},
 
     // Update a specific user's role by ID
     setUserRole: (
@@ -63,13 +75,12 @@ const userSlice = createSlice({
     ) => {
       const user = state.users.find(user => user.id === action.payload.id);
       if (user) {
-        user.role = action.payload.role;
+        user.role = action.payload.role; 
       }
     },
   },
 });
 
-
-export const { createUser, updateUser, deleteUser, setUsers, setUserRole } = userSlice.actions;
+export const { createUser, updateUser, deleteUser, setUsers,addUser, setUserRole } = userSlice.actions;
 
 export default userSlice.reducer;

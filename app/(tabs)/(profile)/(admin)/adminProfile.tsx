@@ -7,13 +7,16 @@ import SettingCard from "@/components/SettingContainer";
 import { router } from "expo-router";
 import Padding from "@/components/containers/Padding";
 import ScreenWraper from "@/components/containers/ScreenWraper";
+import useLogout from "@/hooks/useLogout";
 
 const AdminProfile: React.FC = () => {
+  const handleLogout = useLogout();
   return (
     <ScreenWraper  >
     <Padding>
 
-      <Header />
+      <Header  rightIcon="exit-outline"
+      onRightIconPress={handleLogout}/>
       <View style={styles.profileImageContainer}>
         <Image
           source={{ uri: "https://cdn-icons-png.flaticon.com/512/7816/7816916.png" }}
