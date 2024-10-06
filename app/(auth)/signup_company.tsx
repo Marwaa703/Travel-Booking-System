@@ -1,6 +1,5 @@
 import Padding from "@/components/containers/Padding";
 import MultiStepRegisterCompanyForm from "@/components/forms/MultiStepRegisterCompanyForm";
-import RegisterCompanyForm from "@/components/forms/RegisterCompanyForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";

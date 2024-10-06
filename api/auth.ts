@@ -1,8 +1,11 @@
-/* eslint-disable prettier/prettier */
-import axios from "axios";
 import { UserTypes } from "@/types/user";
-
-const API_URL = "http://192.168.1.4:3002/voyage/signup"; 
+import api from "./axiosApi";
+import {
+  Company,
+  CompanyData,
+  CompanyPaper,
+  CompanyUser,
+} from "@/types/company";
 
 export const signup = async (userData: {
   firstName: string;
@@ -10,20 +13,75 @@ export const signup = async (userData: {
   email: string;
   phone: string;
   password: string;
-  role: UserTypes; 
+  role: UserTypes;
 }) => {
+  console.log("user fn ");
   if (userData.role !== "User") {
     throw new Error("Only users of type 'User' can sign up.");
   }
+  let res;
+  try {
+    res = await api.post(`/signup`, userData);
+  } catch (error) {
+    console.log("error on signup ", error);
+  }
 
-  const response = await axios.post(API_URL, userData);
-  return response.data; 
+  return res.data;
 };
 
-export const login = async (email: string, password: string) => {
-  const response = await axios.post("http://192.168.1.4:3002/voyage/login", {
+export const signupCompany = async (
+  companyData: CompanyData,
+): Promise<{ user: CompanyUser; details: Company; papers: CompanyPaper[] }> => {
+  const { details, papers, user } = companyData;
+
+  if (user.role !== "Representative") {
+    throw new Error(
+      "Only users of type 'Representative' can sign up for a company.",
+    );
+  }
+
+  try {
+    // Step 1: Create Company
+    const companyResponse = await api.post<Company>("/companies", details);
+    const companyId = companyResponse.data.id; // Assuming the company ID is in the response data
+
+    // Step 2: Create User with companyId
+    const userResponse = await api.post<CompanyUser>("/company/signup", {
+      ...user,
+      companyId,
+    });
+
+    // Step 3: Create Company Papers with companyId
+    const papersResponse = await Promise.all(
+      papers.map((paper) =>
+        api.post<CompanyPaper>("/companyPapers", {
+          ...paper,
+          companyId,
+        }),
+      ),
+    );
+
+    // Prepare the updated company data
+    return {
+      user: userResponse.data,
+      details: companyResponse.data,
+      papers: papersResponse.map((response) => response.data), // Extract data from each response
+    };
+  } catch (error) {
+    console.error("Error during signupCompany:", error);
+    throw new Error("Failed to sign up company."); // You can handle the error as needed
+  }
+};
+
+export const login = async (
+  email: string,
+  password: string,
+  userType: UserTypes,
+) => {
+  const loginEndpoint = userType === "Company" ? "/company/login" : "/login";
+  const response = await api.post(loginEndpoint, {
     email,
     password,
   });
-  return response.data; 
+  return response.data;
 };

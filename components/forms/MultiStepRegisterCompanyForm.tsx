@@ -3,19 +3,23 @@ import { View } from "react-native";
 import CompanyUserForm from "./CompanyUserForm";
 import CompanyDetailsForm from "./CompanyDetailsForm";
 import CompanyPapersForm from "./CompanyPapersForm";
-import { Company, CompanyPaper, CompanyUser, Gender } from "@/types/company";
+import {
+  Company,
+  CompanyData,
+  CompanyPaper,
+  CompanyUser,
+  Gender,
+} from "@/types/company";
 import Button from "../Buttons";
 import Spacer from "../Spacer";
 import { useRouter } from "expo-router";
-interface CompanyData {
-  user: CompanyUser;
-  details: Company;
-  papers: CompanyPaper[];
-}
+import { signupCompany } from "@/api/auth";
+import { useAppDispatch } from "@/redux/store";
+import { addCompany, addPapers, addUser } from "@/redux/slices/companiesSlice";
 
 const MultiStepRegisterCompanyForm = () => {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const [companyData, setCompanyData] = useState<CompanyData>({
     user: {} as CompanyUser,
@@ -33,15 +37,22 @@ const MultiStepRegisterCompanyForm = () => {
     setCurrentStep(3);
   };
 
-  const handlePapersSubmit = (data: CompanyPaper[]) => {
+  const handlePapersSubmit = async (data: CompanyPaper[]) => {
     setCompanyData((prev) => ({ ...prev, papers: data }));
     console.log("Final Company Data:", companyData);
 
     // todo:send to server
     // todo:get updated data from server
+    const updatedCompanyData = await signupCompany(companyData);
+    console.log({ updatedCompanyData });
+
+    dispatch(addCompany(updatedCompanyData.details));
+    dispatch(addPapers(updatedCompanyData.papers));
+    dispatch(addUser(updatedCompanyData.user));
+
     // todo: update redux with new data
 
-    router.push("/login");
+    router.replace("/(tabs)/(profile)/(company)/companyProfile");
   };
 
   return (

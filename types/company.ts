@@ -26,6 +26,10 @@ export interface CompanyUser {
   role: CompanyUserRoles;
   gender?: Gender;
 }
-
+export interface CompanyData {
+  user: CompanyUser;
+  details: Company;
+  papers: CompanyPaper[];
+}
 export type CompanyUserRoles = "Representative" | "Support" | "TourGuide";
 export type Gender = "male" | "female";

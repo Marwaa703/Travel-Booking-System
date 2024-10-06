@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
 import { Marker } from "react-native-maps";
-import { Location } from "@/constants/types";
+import { Location } from "@/types/trip";
 
 interface CustomMarkerProps {
   location: Location;

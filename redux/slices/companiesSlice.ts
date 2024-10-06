@@ -67,6 +67,9 @@ const companiesSlice = createSlice({
     addPaper: (state, action: PayloadAction<CompanyPaper>) => {
       state.papers.push(action.payload);
     },
+    addPapers: (state, action: PayloadAction<CompanyPaper[]>) => {
+      state.papers.concat(action.payload);
+    },
 
     // Update a paper
     updatePaper: (
@@ -126,6 +129,7 @@ export const {
   editCompany,
   approveCompany,
   addPaper,
+  addPapers,
   updatePaper,
   removePaper,
   addUser,

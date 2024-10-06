@@ -1,5 +1,8 @@
 // utils/mapUtils.ts
-import { Location } from "@/constants/types"; // Adjust the import as necessary
+
+import { Location } from "@/types/trip";
+
+// Adjust the import as necessary
 export const OFFSET_DISTANCE = 0.5; // Adjust this value as needed
 
 //  calculate the midpoint between two coordinates.

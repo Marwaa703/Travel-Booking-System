@@ -21,7 +21,6 @@ export const COLORS = {
 };
 export const DARK_COLORS = {
   primary: "#E88D67", // Keeping the primary color consistent
-  
   secondary: "#00A1C1", // Lighter secondary color to stand out on dark background
   accent: "#008FB3", // Accent color for highlights
   light: "#3A3A3C", // Darker "light" color for contrast

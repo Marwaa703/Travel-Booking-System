@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import { View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { loginInputs, loginSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
@@ -14,8 +14,11 @@ import { useAppDispatch } from "@/redux/store";
 import  { addUser}  from "@/redux/slices/userSlice";
 import { login } from "@/api/auth"; 
 import { UserTypes,UserWithId } from "@/types/user"; 
+import ToggleSwitch from "../ToggleSwitch";
+import Spacer from "../Spacer";
 
 const LoginForm = () => {
+  const [userType, setUserType] = useState<UserTypes>("User")
   const dispatch = useAppDispatch();
   const {
     control,
@@ -26,11 +29,16 @@ const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
 
+
   const handleLogin = async (data: any) => {
+
+
+
+    // console.log("login start")
     try {
-      const response = await login(data.email, data.password);
+      const response = await login(data.email, data.password,userType);
       const { user } = response; 
-  
+      
       const userWithId: UserWithId = {
         id: user.id, 
         firstName: user.first_name, 
@@ -39,8 +47,9 @@ const LoginForm = () => {
         phone: user.phone, 
         role: user.role as UserTypes, 
       };
-  
+      
       dispatch(addUser(userWithId));
+      console.log("login start")
   
       if (user.role === "User") {
         router.push("/(tabs)/(profile)/(user)/userProfile");
@@ -58,11 +67,13 @@ const LoginForm = () => {
     }
   };
   
-  
-  console.log({ errors });
+  console.log({ errors ,userType:userType});
 
   return (
     <>
+    <Spacer />
+    <ToggleSwitch  onToggle={(user)=>setUserType(user)} />
+    <Spacer />
       {loginInputs.map(({ icon, name, autoCapitalize, keyboardType }) => (
         <AppTextInput
           key={name}

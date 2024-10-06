@@ -14,9 +14,10 @@ import { useDispatch } from "react-redux";
 import { signup } from "@/api/auth"; 
 import { signupSuccess, signupFailure } from "@/redux/slices/authSlice"; 
 import { router } from "expo-router";
+import { Gender } from "@/types/company";
 
 const SignupForm = () => {
-  const [selectedGender, setSelectedGender] = useState("male");
+  const [selectedGender, setSelectedGender] = useState<Gender>("male");
   const dispatch = useDispatch(); 
 
   const {
@@ -29,7 +30,8 @@ const SignupForm = () => {
   });
 
   const handleSignup = async (data: any) => {
-    const userData = { ...data, selectedGender, role: "User" }; 
+    console.log("start signup")
+    const userData = { ...data, gender:selectedGender, role: "User" }; 
     try {
       const response = await signup(userData); 
       dispatch(signupSuccess({ token: response.token, user: response.user, role: "User" })); 

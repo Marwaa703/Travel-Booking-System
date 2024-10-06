@@ -23,7 +23,7 @@ const Signup = () => {
                 Please fill the details and create account
               </Text>
             </View>
-            {/* headerend  */}
+            {/* header_end  */}
             {/* form  */}
             <View>
               <SignupForm />
