@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,6 +6,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import companiesSlice from "@/redux/slices/companiesSlice";
 import userSlice from "@/redux/slices/userSlice";
 import tripsSlice from "@/redux/slices/tripsSlice";
+import authSlice from "@/redux/slices/authSlice"; 
+
 // Persist configurations for each slice
 const tripsPersistConfig = {
   key: "trips",
@@ -23,6 +24,12 @@ const companiesPersistConfig = {
   storage: AsyncStorage,
 };
 
+const authPersistConfig = {
+  key: "auth",
+  storage: AsyncStorage, 
+};
+
+
 // Create persisted reducers
 const persistedTripsReducer = persistReducer(tripsPersistConfig, tripsSlice);
 const persistedUserReducer = persistReducer(userPersistConfig, userSlice);
@@ -30,6 +37,7 @@ const persistedCompaniesReducer = persistReducer(
   companiesPersistConfig,
   companiesSlice,
 );
+const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 
 // Configure the store
 export const store = configureStore({
@@ -37,6 +45,7 @@ export const store = configureStore({
     trips: persistedTripsReducer,
     user: persistedUserReducer,
     companies: persistedCompaniesReducer,
+    auth: persistedAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
