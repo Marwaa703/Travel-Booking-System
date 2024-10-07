@@ -24,12 +24,7 @@ export interface TripImage {
   imageUrl: string;
   caption: string;
 }
-export interface TripInstruction {
-  id: number;
-  trip_id: number;
-  instruction: string;
-  display_time: Date;
-}
+
 export interface TripFormData {
   tripDetails: TripDetails;
   locations: Location[];
