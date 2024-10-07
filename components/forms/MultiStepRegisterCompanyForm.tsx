@@ -16,8 +16,11 @@ import { useRouter } from "expo-router";
 import { signupCompany } from "@/api/auth";
 import { useAppDispatch } from "@/redux/store";
 import { addCompany, addPapers, addUser } from "@/redux/slices/companiesSlice";
+import useLoadingState from "@/hooks/useLoadingSatte";
 
 const MultiStepRegisterCompanyForm = () => {
+  const { loading, msg, setLoading, setMsg } = useLoadingState();
+
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [currentStep, setCurrentStep] = useState(1);
@@ -38,21 +41,29 @@ const MultiStepRegisterCompanyForm = () => {
   };
 
   const handlePapersSubmit = async (data: CompanyPaper[]) => {
-    setCompanyData((prev) => ({ ...prev, papers: data }));
-    console.log("Final Company Data:", companyData);
+    try {
+      setLoading(true);
+      setMsg("Registerinig Company...");
+      setCompanyData((prev) => ({ ...prev, papers: data }));
+      console.log("Final Company Data:", companyData);
 
-    // todo:send to server
-    // todo:get updated data from server
-    const updatedCompanyData = await signupCompany(companyData);
-    console.log({ updatedCompanyData });
+      // todo:send to server
+      // todo:get updated data from server
+      const updatedCompanyData = await signupCompany(companyData);
+      console.log({ updatedCompanyData });
+      setMsg("adding company papers...");
+      dispatch(addCompany(updatedCompanyData.details));
+      dispatch(addPapers(updatedCompanyData.papers));
+      dispatch(addUser(updatedCompanyData.user));
 
-    dispatch(addCompany(updatedCompanyData.details));
-    dispatch(addPapers(updatedCompanyData.papers));
-    dispatch(addUser(updatedCompanyData.user));
-
-    // todo: update redux with new data
-
-    router.replace("/(tabs)/(profile)/(company)/companyProfile");
+      // todo: update redux with new data
+      router.replace("/login");
+    } catch (error) {
+      setMsg("error registering company...");
+      console.log({ error });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

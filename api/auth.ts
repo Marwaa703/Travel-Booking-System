@@ -45,10 +45,12 @@ export const login = async (
 ) => {
   try {
     const loginEndpoint = userType === "Company" ? "/company/login" : "/login";
+    console.log({ loginEndpoint });
     const response = await api.post(loginEndpoint, {
       email,
       password,
     });
+    console.log({ response });
     return response.data;
   } catch (error: any) {
     if (error.response) {
@@ -56,10 +58,12 @@ export const login = async (
         error.response.data?.message ||
         error.response.statusText ||
         "Login failed";
-      console.error("Login failed with server response:", errorMessage);
+      console.error("Login failed with server response:", errorMessage, {
+        error,
+      });
       throw new Error(errorMessage);
     } else {
-      console.error("Login failed with error:", error.message);
+      console.error("Login failed with error:", error.message, { error });
       throw new Error(error.message || "Login failed");
     }
   }

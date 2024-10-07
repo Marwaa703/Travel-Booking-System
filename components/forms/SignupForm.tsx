@@ -15,8 +15,10 @@ import { signup } from "@/api/auth";
 import { signupSuccess, signupFailure } from "@/redux/slices/authSlice"; 
 import { router } from "expo-router";
 import { Gender } from "@/types/company";
+import useLoadingState from "@/hooks/useLoadingSatte";
 
 const SignupForm = () => {
+  const {loading,msg,setLoading,setMsg}= useLoadingState();
   const [selectedGender, setSelectedGender] = useState<Gender>("male");
   const dispatch = useDispatch(); 
 
@@ -31,8 +33,10 @@ const SignupForm = () => {
 
   const handleSignup = async (data: any) => {
     console.log("start signup");
+    setLoading(true);
+    setMsg("Registering your information")
     const userData = { ...data, gender: selectedGender, role: "User" };
-    console.log(userData);
+    // console.log(userData);
     try {
       const response = await signup(userData);
       dispatch(signupSuccess({
@@ -40,10 +44,14 @@ const SignupForm = () => {
         user: response.user, 
         role: response.user.role, 
       }));
-      router.push("/(tabs)/(profile)/(user)/userProfile");
+      console.log({response})
+      router.replace("/login");
       reset();
     } catch (error: any) {
       dispatch(signupFailure(error.message || "Signup failed. Please try again."));
+    }finally{
+      setLoading(false);
+      setMsg("")
     }
   };
   
@@ -72,8 +80,7 @@ const SignupForm = () => {
       <Button
         title="Sign Up"
         onPress={handleSubmit(handleSignup)} // Call handleSignup on form submission
-        fontSize={FONTS.large}
-      />
+        fontSize={FONTS.large} loadingMessage={msg} loading={loading}      />
     </>
   );
 };

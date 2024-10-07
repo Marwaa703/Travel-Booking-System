@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { View } from "react-native";
 import React, { useState } from "react";
 import { loginInputs, loginSchema } from "@/constants/forms";
@@ -9,16 +7,19 @@ import Button from "../Buttons";
 import { FONTS } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import LinkButton from "../LinkButton";
-import { router} from "expo-router";
+import { router } from "expo-router";
 import { useAppDispatch } from "@/redux/store";
-import  { addUser}  from "@/redux/slices/userSlice";
-import { login } from "@/api/auth"; 
-import { UserTypes,UserWithId } from "@/types/user"; 
+import { addUser } from "@/redux/slices/userSlice";
+import { login } from "@/api/auth";
+import { UserTypes, UserWithId } from "@/types/user";
 import ToggleSwitch from "../ToggleSwitch";
 import Spacer from "../Spacer";
+import useLoadingState from "@/hooks/useLoadingSatte";
+import { isCompanyUserRole } from "@/utils";
 
 const LoginForm = () => {
-  const [userType, setUserType] = useState<UserTypes>("User")
+  const { loading, msg, setLoading, setMsg } = useLoadingState();
+  const [userType, setUserType] = useState<UserTypes>("User");
   const dispatch = useAppDispatch();
   const {
     control,
@@ -29,49 +30,52 @@ const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
 
-
   const handleLogin = async (data: any) => {
+    setLoading(true);
+    setMsg("checking user info...");
+    console.log({ data });
     try {
-      const response = await login(data.email, data.password,userType);
+      console.log({ userType });
+      const response = await login(data.email, data.password, userType);
       const { user } = response || {};
       if (!user) {
         throw new Error("Invalid response from server");
       }
       const userWithId: UserWithId = {
-        id: user.id, 
-        firstName: user.first_name, 
-        lastName: user.last_name, 
-        email: user.email, 
-        phone: user.phone, 
-        role: user.role as UserTypes, 
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role as UserTypes,
       };
-      
       dispatch(addUser(userWithId));
-      console.log("login start")
-  
+      // add token to user
+      console.log({ user });
       if (user.role === "User") {
         router.push("/(tabs)/(profile)/(user)/userProfile");
       } else if (user.role === "Admin") {
         router.push("/(tabs)/(profile)/(admin)/adminProfile");
-      } else if (user.role === "Company") {
+      } else if (isCompanyUserRole(user.role)) {
         router.push("/(tabs)/(profile)/(company)/companyProfile");
       }
-
       reset();
-  
-      console.log(userWithId);
+
+      // console.log(userWithId);
     } catch (error: any) {
-      console.error("Login failed:", error.message);
+      console.error({ error: error.message });
+      setMsg("falied to login, try again");
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
-  
-  console.log({ errors ,userType:userType});
 
   return (
     <>
-    <Spacer />
-    <ToggleSwitch  onToggle={(user)=>setUserType(user)} />
-    <Spacer />
+      <Spacer />
+      <ToggleSwitch onToggle={(user) => setUserType(user)} />
+      <Spacer />
       {loginInputs.map(({ icon, name, autoCapitalize, keyboardType }) => (
         <AppTextInput
           key={name}
@@ -88,8 +92,10 @@ const LoginForm = () => {
       </View>
       <Button
         title="Sign In"
-        onPress={handleSubmit(handleLogin)} 
+        onPress={handleSubmit(handleLogin)}
         fontSize={FONTS.large}
+        loadingMessage={msg}
+        loading={loading}
       />
     </>
   );

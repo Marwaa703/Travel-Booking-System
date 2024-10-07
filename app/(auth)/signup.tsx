@@ -3,7 +3,6 @@
 import Padding from "@/components/containers/Padding";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
-import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
 import React from "react";
@@ -32,12 +31,12 @@ const Signup = () => {
                 <Text style={styles.subTitle}>Already have an account?</Text>
                 <LinkButton to={"login"} label="Sign In" />
               </View>
-              <Spacer />
+              <Spacer height={26}/>
               <View style={{ marginHorizontal: "auto" }}>
                 <LinkButton
                   style={styles.company}
                   to={"signup_company"}
-                  label="Are you a Company? "
+                  label="Are you a Company?"
                 />
               </View>
               <Spacer />
@@ -45,7 +44,6 @@ const Signup = () => {
           </View>
           {/* End form  */}
           {/* Bottom  */}
-          <OnboardingComingSoon />
         </View>
       </Padding>
     </ScrollView>
