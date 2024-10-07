@@ -7,6 +7,9 @@ import companiesSlice from "@/redux/slices/companiesSlice";
 import userSlice from "@/redux/slices/userSlice";
 import tripsSlice from "@/redux/slices/tripsSlice";
 import authSlice from "@/redux/slices/authSlice"; 
+import locationsSlice from "@/redux/slices/tripLocationSlice";
+import imagesSlice from "@/redux/slices/tripImageSlice";
+import instructionsSlice from "@/redux/slices/tripInstructionSlice";
 
 // Persist configurations for each slice
 const tripsPersistConfig = {
@@ -30,14 +33,29 @@ const authPersistConfig = {
 };
 
 
+const locationsPersistConfig = {
+  key: "locations",
+  storage: AsyncStorage,
+};
+
+const imagesPersistConfig = {
+  key: "images",
+  storage: AsyncStorage,
+};
+
+const instructionsPersistConfig = {
+  key: "instructions",
+  storage: AsyncStorage,
+};
+
 // Create persisted reducers
 const persistedTripsReducer = persistReducer(tripsPersistConfig, tripsSlice);
 const persistedUserReducer = persistReducer(userPersistConfig, userSlice);
-const persistedCompaniesReducer = persistReducer(
-  companiesPersistConfig,
-  companiesSlice,
-);
+const persistedCompaniesReducer = persistReducer(companiesPersistConfig, companiesSlice);
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
+const persistedLocationsReducer = persistReducer(locationsPersistConfig, locationsSlice);
+const persistedImagesReducer = persistReducer(imagesPersistConfig, imagesSlice);
+const persistedInstructionsReducer = persistReducer(instructionsPersistConfig, instructionsSlice);
 
 // Configure the store
 export const store = configureStore({
@@ -46,6 +64,9 @@ export const store = configureStore({
     user: persistedUserReducer,
     companies: persistedCompaniesReducer,
     auth: persistedAuthReducer,
+    locations: persistedLocationsReducer,
+    images: persistedImagesReducer,
+    instructions: persistedInstructionsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -61,5 +82,5 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 // Create typed hooks for dispatch and selector
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch: () => AppDispatch = useDispatch; 
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector; 

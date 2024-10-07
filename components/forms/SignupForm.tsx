@@ -30,19 +30,27 @@ const SignupForm = () => {
   });
 
   const handleSignup = async (data: any) => {
-    console.log("start signup");
+    console.log("Start signup");
     const userData = { ...data, gender: selectedGender, role: "User" };
-    console.log(userData);
+    console.log("User Data:", userData);
+  
     try {
       const response = await signup(userData);
+
+      if (!response || !response.token || !response.user) {
+        throw new Error("Invalid response from server");
+      }
+
       dispatch(signupSuccess({
         token: response.token,
-        user: response.user, 
-        role: response.user.role, 
+        user: response.user,
+        role: response.user.role,
       }));
+  
       router.push("/(tabs)/(profile)/(user)/userProfile");
       reset();
     } catch (error: any) {
+      console.error("Signup failed:", error.message);
       dispatch(signupFailure(error.message || "Signup failed. Please try again."));
     }
   };
