@@ -31,14 +31,12 @@ const LoginForm = () => {
 
 
   const handleLogin = async (data: any) => {
-
-
-
-    // console.log("login start")
     try {
       const response = await login(data.email, data.password,userType);
-      const { user } = response; 
-      
+      const { user } = response || {};
+      if (!user) {
+        throw new Error("Invalid response from server");
+      }
       const userWithId: UserWithId = {
         id: user.id, 
         firstName: user.first_name, 

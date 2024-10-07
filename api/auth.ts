@@ -7,6 +7,7 @@ import {
   CompanyUser,
 } from "@/types/company";
 
+// Sign up for Normal users
 export const signup = async (userData: {
   firstName: string;
   lastName: string;
@@ -15,20 +16,56 @@ export const signup = async (userData: {
   password: string;
   role: UserTypes;
 }) => {
-  console.log("user fn ");
-  if (userData.role !== "User") {
-    throw new Error("Only users of type 'User' can sign up.");
-  }
-  let res;
   try {
-    res = await api.post(`/signup`, userData);
-  } catch (error) {
-    console.log("error on signup ", error);
+    if (userData.role !== "User") {
+      throw new Error("Only users of type 'User' can sign up.");
+    }
+    const res = await api.post("/signup", userData);
+    return res.data;
+  } catch (error: any) {
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message ||
+        error.response.statusText ||
+        "Signup failed";
+      console.error("Signup failed with server response:", errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      console.error("Signup failed with error:", error.message);
+      throw new Error(error.message || "Signup failed");
+    }
   }
-
-  return res.data;
 };
 
+// Login for Normal users
+export const login = async (
+  email: string,
+  password: string,
+  userType: UserTypes,
+) => {
+  try {
+    const loginEndpoint = userType === "Company" ? "/company/login" : "/login";
+    const response = await api.post(loginEndpoint, {
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message ||
+        error.response.statusText ||
+        "Login failed";
+      console.error("Login failed with server response:", errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      console.error("Login failed with error:", error.message);
+      throw new Error(error.message || "Login failed");
+    }
+  }
+};
+
+//Sign up for companies and companies users
 export const signupCompany = async (
   companyData: CompanyData,
 ): Promise<{ user: CompanyUser; details: Company; papers: CompanyPaper[] }> => {
@@ -71,17 +108,4 @@ export const signupCompany = async (
     console.error("Error during signupCompany:", error);
     throw new Error("Failed to sign up company."); // You can handle the error as needed
   }
-};
-
-export const login = async (
-  email: string,
-  password: string,
-  userType: UserTypes,
-) => {
-  const loginEndpoint = userType === "Company" ? "/company/login" : "/login";
-  const response = await api.post(loginEndpoint, {
-    email,
-    password,
-  });
-  return response.data;
 };
