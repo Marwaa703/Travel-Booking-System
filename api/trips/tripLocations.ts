@@ -92,7 +92,7 @@ export const updateLocation = async (
 export const deleteLocation = async (locationId: string) => {
   try {
     const res = await api.delete(`/tripLocations/${locationId}`);
-    return res.data; // Return confirmation message or data
+    return res.data;
   } catch (error: any) {
     if (error.response) {
       const errorMessage =

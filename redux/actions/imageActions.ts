@@ -50,8 +50,8 @@ export const updateTripImage =
     dispatch(setLoading(true));
     try {
       const updatedImage = await apiUpdateTripImage(imageId, updates);
-      // Find the index of the updated image in the state
-      const index = 0; // Replace with logic to find the index based on the updated image ID
+
+      const index = 0;
       dispatch(updateImageDetails({ index, details: updatedImage }));
     } catch (error) {
       dispatch(setError(true));
@@ -66,7 +66,7 @@ export const deleteTripImage =
     dispatch(setLoading(true));
     try {
       await apiDeleteTripImage(imageId);
-      const index = 0; // Replace with logic to find the index based on the image ID
+      const index = 0;
       dispatch(removeImage(index));
     } catch (error) {
       dispatch(setError(true));
