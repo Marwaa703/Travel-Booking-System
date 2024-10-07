@@ -3,7 +3,7 @@
 import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "../redux/store"; // Import the store and persistor from your Redux setup
+import { store, persistor } from "../redux/store"; 
 import { Text } from "react-native";
 
 export default function ReduxProvider({ children }: PropsWithChildren) {

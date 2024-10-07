@@ -39,15 +39,21 @@ const SignupForm = () => {
     // console.log(userData);
     try {
       const response = await signup(userData);
+
+      if (!response || !response.token || !response.user) {
+        throw new Error("Invalid response from server");
+      }
+
       dispatch(signupSuccess({
         token: response.token,
-        user: response.user, 
-        role: response.user.role, 
+        user: response.user,
+        role: response.user.role,
       }));
       console.log({response})
       router.replace("/login");
       reset();
     } catch (error: any) {
+      console.error("Signup failed:", error.message);
       dispatch(signupFailure(error.message || "Signup failed. Please try again."));
     }finally{
       setLoading(false);

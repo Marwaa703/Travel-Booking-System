@@ -37,7 +37,7 @@ export const signup = async (userData: {
   }
 };
 
-// Login for Normal users
+// Login for users
 export const login = async (
   email: string,
   password: string,
@@ -50,7 +50,7 @@ export const login = async (
       email,
       password,
     });
-    console.log({ response });
+    console.log(response.data);
     return response.data;
   } catch (error: any) {
     if (error.response) {

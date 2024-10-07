@@ -35,6 +35,12 @@ export interface TripFormData {
   locations: Location[];
   images: TripImage[];
 }
+export interface TripInstruction {
+  instruction_id: string;
+  display_time: string;
+  instruction: string;
+  trip_id: string;
+}
 
 export interface Trip {
   tripDetailes: TripDetails;
@@ -42,4 +48,4 @@ export interface Trip {
   locations: Location[];
 }
 
-export type TripStatus = "paused" | "active" | "compeleted" | "canceled";
+export type TripStatus = "paused" | "active" | "completed" | "canceled";
