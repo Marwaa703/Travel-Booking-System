@@ -1,53 +1,53 @@
-/* eslint-disable prettier/prettier */
-
-import React, { useRef, useState } from 'react';
-import { View, StyleSheet, Image, ScrollView } from 'react-native';
-import { COLORS } from '@/constants/theme';
-import Header from '@/components/core/Header';
-import UserEditForm from '@/components/forms/UserEditForm';
-import ImagePickerCropper from '@/components/forms/ImagePickerCropper';
+import React, { useRef, useState } from "react";
+import { View, StyleSheet, Image, ScrollView } from "react-native";
+import { COLORS } from "@/constants/theme";
+import Header from "@/components/core/Header";
+import UserEditForm from "@/components/forms/UserEditForm";
+import ImagePickerCropper from "@/components/forms/ImagePickerCropper";
+import { User } from "@/types/user";
 
 const EditProfileScreen: React.FC = () => {
   const userEditFormRef = useRef<{ submitData: () => void }>(null);
-  const [image, setImage] = useState<string >("https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg" );
-  
-  
-  const handleUpdate = ()=>{ 
+  const [image, setImage] = useState<string>(
+    "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+  );
+
+  const handleUpdate = () => {
     if (userEditFormRef.current) {
       userEditFormRef.current.submitData(); // Call the submit function in the child
     }
-    }
+  };
   return (
     <>
-      <Header 
-        title='Edit Your Profile' 
-        rightIcon='checkmark' 
-        leftIcon='close' 
-        onLeftIconPress={() => {}} 
-        onRightIconPress={ handleUpdate} 
+      <Header
+        title="Edit Your Profile"
+        rightIcon="checkmark"
+        leftIcon="close"
+        onLeftIconPress={() => {}}
+        onRightIconPress={handleUpdate}
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           {/* Profile Picture Section */}
           <View style={styles.profileContainer}>
-            <Image
-              source={{ uri: image}}
-              style={styles.profileImage}
-            />
-            <ImagePickerCropper onSelectImage={(uri)=>setImage(uri)} />
+            <Image source={{ uri: image }} style={styles.profileImage} />
+            <ImagePickerCropper onSelectImage={(uri) => setImage(uri)} />
             {/* <TouchableOpacity >
               <Text style={styles.changeProfileText}>Change Profile Picture</Text>
             </TouchableOpacity> */}
           </View>
 
-          <UserEditForm 
+          <UserEditForm
             ref={userEditFormRef}
-        user={{
-            firstName:'Latif',
-            lastName:'essam',
-            phone:'01205175195',
-            address:'4654as54as5sda',
-          }}/>
+            user={
+              {
+                firstName: "Latif",
+                lastName: "essam",
+                phone: "01205175195",
+                address: "4654as54as5sda",
+              } as User
+            }
+          />
         </View>
       </ScrollView>
     </>
@@ -57,15 +57,15 @@ const EditProfileScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    marginTop: 20, 
-    marginBottom: 100, 
+    marginTop: 20,
+    marginBottom: 100,
   },
   scrollContainer: {
-    flexGrow: 1, 
-    justifyContent: 'center', 
+    flexGrow: 1,
+    justifyContent: "center",
   },
   profileContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 20,
   },
   profileImage: {
@@ -74,11 +74,9 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: COLORS.opacity,
   },
-
 });
 
 export default EditProfileScreen;
-
 
 // /* eslint-disable prettier/prettier */
 

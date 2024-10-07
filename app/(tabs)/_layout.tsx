@@ -75,7 +75,7 @@ const Layout = () => {
               <Ionicons
                 name={iconName as never}
                 size={isSearchIcon ? 30 : 25}
-                color={isSearchIcon ? COLORS.background : color}
+                color={isSearchIcon ? COLORS.bg : color}
               />
             </View>
           );

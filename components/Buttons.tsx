@@ -21,21 +21,18 @@ interface ButtonProps {
   loadingMessage?: string;
 }
 
-const Button: React.FC<ButtonProps> = (
-  {
-    title,
-    onPress,
-    type = "primary",
-    width = "100%",
-    align,
-    fontSize = FONTS.medium,
-    loadingMessage,
-    loading,
-  },
-  disabled,
-) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  onPress,
+  type = "primary",
+  width = "100%",
+  align,
+  fontSize = FONTS.medium,
+  loadingMessage,
+  loading,
+}) => {
   return (
-    <View style={[styles.container, { alignItems: align }, disabled]}>
+    <View style={[styles.container, { alignItems: align }]}>
       <TouchableOpacity
         onPress={onPress}
         style={[
@@ -48,7 +45,7 @@ const Button: React.FC<ButtonProps> = (
       >
         {loading ? (
           <>
-            <ActivityIndicator color={COLORS.background} />
+            <ActivityIndicator color={COLORS.bg} />
             <Text style={styles.loadingText}>{loadingMessage}</Text>
           </>
         ) : (
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: FONTS.large,
-    color: COLORS.background,
+    color: COLORS.bg,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -91,13 +88,13 @@ const styles = StyleSheet.create({
   },
   secondaryText: {
     fontSize: FONTS.small,
-    color: COLORS.background,
+    color: COLORS.bg,
     fontWeight: "bold",
     textAlign: "center",
   },
   loadingText: {
     marginLeft: 10, // Space between spinner and text
-    color: COLORS.background,
+    color: COLORS.bg,
     textAlign: "center",
   },
 });

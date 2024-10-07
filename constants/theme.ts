@@ -6,7 +6,7 @@ export const COLORS = {
   secondary: "#006989", // Secondary color for headers, buttons, etc.
   accent: "#005C78", // Accent color for highlights
   light: "#F7F7F9", // light color 
-  background: "#F3F7EC", // Background color for screens
+  bg: "#F3F7EC", // Background color for screens
   textPrimary: "#333333", // Primary text color
   textSubtitle: "#7D848D", // Primary text color
   textSecondary: "#777777", // Secondary text color
