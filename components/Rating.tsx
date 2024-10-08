@@ -11,7 +11,7 @@ interface RatingProps {
 const Rating = ({ rate }: RatingProps) => {
   const fullStars = Math.floor(rate);
   const hasHalfStar = rate % 1 !== 0;
-
+if(rate ===0 ) return <Text>0</Text>
   return (
     <View style={styles.container}>
       {[...Array(fullStars)].map((_, index) => (

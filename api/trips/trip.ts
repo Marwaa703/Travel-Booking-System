@@ -1,8 +1,8 @@
-import { TripDetails, TripFormData } from "@/types/trip";
+import { TripDetailes, Trip } from "@/types/trip";
 import api from "../axiosApi";
 
 // Add Trip
-export const addTrip = async (tripData: TripFormData) => {
+export const addTrip = async (tripData: TripDetailes) => {
   try {
     const res = await api.post("/trips", tripData);
     return res.data;
@@ -67,7 +67,7 @@ export const getTripById = async (tripId: string) => {
 // Update a trip
 export const updateTrip = async (
   tripId: string,
-  updates: Partial<TripDetails>,
+  updates: Partial<TripDetailes>,
 ) => {
   try {
     const res = await api.put(`/trips/${tripId}`, updates);

@@ -23,7 +23,7 @@ const CompanyHome = () => {
 
   useEffect(() => {
     if (companyId) {
-      dispatch(fetchTripsByCompanyId(companyId));
+      fetchTripsByCompanyId(companyId);
     }
   }, [companyId, dispatch]);
 
@@ -58,11 +58,11 @@ const CompanyHome = () => {
               {trips.map((trip) => (
                 <View key={trip.id} style={styles.cardWrapper}>
                   <Card
-                    id={trip.id} 
+                    id={trip.id as string} 
                     image={trip.image ? trip.image.uri : 'default_image_uri'}
                     title={trip.name}
-                    subtitle={trip.title} 
-                    rating={trip.rate}
+                    subtitle={trip.name} 
+                    rating={0}
                     price={`$${trip.price}`}
                   />
                 </View>

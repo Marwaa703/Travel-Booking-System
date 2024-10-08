@@ -14,7 +14,7 @@ import {
   deleteTrip as apiDeleteTrip,
   getTripsByCompanyId as apiGetTripsByCompanyId,
 } from "@/api/trips/trip";
-import { TripDetails, TripFormData } from "@/types/trip";
+import { TripDetailes, Trip } from "@/types/trip";
 
 // Fetch all trips
 export const fetchTrips = () => async (dispatch: AppDispatch) => {
@@ -45,7 +45,7 @@ export const fetchTripsByCompanyId =
 
 // Add a new trip
 export const createTrip =
-  (tripData: TripFormData) => async (dispatch: AppDispatch) => {
+  (tripData: TripDetailes) => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {
       const newTrip = await apiAddTrip(tripData);
@@ -59,7 +59,7 @@ export const createTrip =
 
 // Update an existing trip
 export const updateTrip =
-  (tripId: string, updates: Partial<TripDetails>) =>
+  (tripId: string, updates: Partial<TripDetailes>) =>
   async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {

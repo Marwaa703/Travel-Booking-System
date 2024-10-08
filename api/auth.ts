@@ -6,6 +6,7 @@ import {
   CompanyPaper,
   CompanyUser,
 } from "@/types/company";
+import { Location, Trip, TripDetailes, TripImage } from "@/types/trip";
 
 // Sign up for Normal users
 export const signup = async (userData: {
@@ -111,5 +112,60 @@ export const signupCompany = async (
   } catch (error) {
     console.error("Error during signupCompany:", error);
     throw new Error("Failed to sign up company."); // You can handle the error as needed
+  }
+};
+export const createTrip = async (
+  trip: Trip,
+  companyId: string,
+): Promise<{
+  details: TripDetailes;
+  locations: Location[];
+  images: TripImage[];
+}> => {
+  const { images, locations, details } = trip;
+
+  // if (user.role !== "Representative") {
+  //   throw new Error(
+  //     "Only users of type 'Representative' can sign up for a company.",
+  //   );
+  // }
+
+  try {
+    // Step 1: Create the trip details
+    const tripDetailes = (await api.post<TripDetailes>(
+      "/trips",
+      details,
+    )) as unknown as TripDetailes;
+
+    // Step 2: Create User with companyId
+    const tripLocations = await Promise.all(
+      locations.map((loc) =>
+        api.post<Location>("/tripLocations", {
+          ...loc,
+          company_id: companyId,
+        }),
+      ),
+    );
+
+    console.log("step 2");
+    // Step 3: Create Company Papers with companyId
+    const tripImages = await Promise.all(
+      images.map((img) =>
+        api.post<TripImage>("/tripImages", {
+          ...img,
+          trip_id: tripDetailes?.id,
+        }),
+      ),
+    );
+
+    // Prepare the updated company data
+    return {
+      locations: tripLocations.map((response) => response.data), // Extract data from each response
+      details: tripDetailes,
+      images: tripImages.map((response) => response.data), // Extract data from each response
+    };
+  } catch (error) {
+    console.error("Error during create:", error);
+    throw new Error("Failed to create trip"); // You can handle the error as needed
   }
 };

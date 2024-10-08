@@ -1,4 +1,4 @@
-import { TripImage, TripFormData } from "@/types/trip";
+import { TripImage, Trip } from "@/types/trip";
 import api from "../axiosApi";
 
 // Add Trip Image

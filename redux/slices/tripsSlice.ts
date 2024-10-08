@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Trip } from "@/types/trip";
+import { Trip, TripDetailes } from "@/types/trip";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TripsState {
-  trips: Trip[];
-  favoriteTrips: Trip[];
+  trips: TripDetailes[];
+  favoriteTrips: TripDetailes[];
   isLoading: boolean;
   isError: boolean;
 }
@@ -20,30 +20,30 @@ const tripsSlice = createSlice({
   name: "trips",
   initialState,
   reducers: {
-    setTrips: (state, action: PayloadAction<Trip[]>) => {
+    setTrips: (state, action: PayloadAction<TripDetailes[]>) => {
       state.trips = action.payload;
     },
 
-    addTrip: (state, action: PayloadAction<Trip>) => {
+    addTrip: (state, action: PayloadAction<TripDetailes>) => {
       state.trips.push(action.payload);
     },
 
     removeTrip: (state, action: PayloadAction<string>) => {
-      state.trips = state.trips.filter((trip) => trip.tripDetailes.id !== action.payload);
-      state.favoriteTrips = state.favoriteTrips.filter((trip) => trip.tripDetailes.id !== action.payload);
+      state.trips = state.trips.filter((trip) => trip.id !== action.payload);
+      state.favoriteTrips = state.favoriteTrips.filter((trip) => trip.id !== action.payload);
     },
 
-    updateTripDetails: (state, action: PayloadAction<{ id: string; details: Partial<Trip['tripDetailes']> }>) => {
-      const index = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.id);
+    updateTripDetails: (state, action: PayloadAction<{ id: string; details: Partial<TripDetailes> }>) => {
+      const index = state.trips.findIndex((trip) => trip.id === action.payload.id);
       if (index !== -1) {
-        state.trips[index].tripDetailes = { ...state.trips[index].tripDetailes, ...action.payload.details };
+        state.trips[index] = { ...state.trips[index], ...action.payload.details };
       }
     },
 
     toggleFavorite: (state, action: PayloadAction<string>) => {
-      const index = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload);
+      const index = state.trips.findIndex((trip) => trip.id === action.payload);
       if (index !== -1) {
-        state.trips[index].tripDetailes.isFavorite = !state.trips[index].tripDetailes.isFavorite;
+        state.trips[index].isFavorite = !state.trips[index].isFavorite;
       }
     },
 
@@ -61,20 +61,20 @@ const tripsSlice = createSlice({
     //   }
     // },
 
-    addLocation: (state, action: PayloadAction<{ tripId: string; location: Omit<Trip['locations'][0], 'tripId'> }>) => {
-      const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
-      if (tripIndex !== -1) {
-        const newLocation = { ...action.payload.location, tripId: action.payload.tripId };
-        state.trips[tripIndex].locations.push(newLocation);
-      }
-    },
+    // addLocation: (state, action: PayloadAction<{ tripId: string; location: Omit<TripDetailes> }>) => {
+    //   const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
+    //   if (tripIndex !== -1) {
+    //     const newLocation = { ...action.payload.location, tripId: action.payload.tripId };
+    //     state.trips[tripIndex].locations.push(newLocation);
+    //   }
+    // },
 
-    removeLocation: (state, action: PayloadAction<{ tripId: string; order: number }>) => {
-      const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
-      if (tripIndex !== -1) {
-        state.trips[tripIndex].locations = state.trips[tripIndex].locations.filter(location => location.location_order !== action.payload.order);
-      }
-    },
+    // removeLocation: (state, action: PayloadAction<{ tripId: string; order: number }>) => {
+    //   const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
+    //   if (tripIndex !== -1) {
+    //     state.trips[tripIndex].locations = state.trips[tripIndex].locations.filter(location => location.location_order !== action.payload.order);
+    //   }
+    // },
 
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
@@ -96,8 +96,6 @@ export const {
   removeTrip,
   updateTripDetails,
   toggleFavorite,
-  addLocation,
-  removeLocation,
   setLoading,
   setError,
 } = tripsSlice.actions;
