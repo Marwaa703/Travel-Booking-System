@@ -1,14 +1,21 @@
-/* eslint-disable prettier/prettier */
 import Button from "@/components/Buttons";
 import Spacer from "@/components/Spacer";
 import { FONTS, SPACING } from "@/constants/theme";
-import { router } from "expo-router";
-import React from "react";
+import {
+  fetchCompanies,
+  fetchCompanyUsers,
+} from "@/redux/actions/companiesActions";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { isCompanyUserRole } from "@/utils";
+import { router, useRouter } from "expo-router";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 
 const { height } = Dimensions.get("window");
 
 const ExploreScreen = () => {
+  // get initial data from server;
+
   return (
     <View style={styles.container}>
       {/* Top Image */}
@@ -29,16 +36,17 @@ const ExploreScreen = () => {
             <Text style={styles.exploreText}>explore</Text>
           </Text>
           <Text style={styles.subtitle}>
-            To get the best of your adventure, leave and go where you like. waiting for you.
+            To get the best of your adventure, leave and go where you like.
+            waiting for you.
           </Text>
         </View>
-        
+
         {/* Button positioned at the bottom */}
         <View style={styles.buttonContainer}>
           <Button
             type="primary"
             title="Get Started"
-            width={Dimensions.get('screen').width *0.9}
+            width={Dimensions.get("screen").width * 0.9}
             onPress={() => {
               router.push("/login");
             }}
@@ -66,8 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: height * 0.3,
     width: "100%",
-    paddingBottom: 16
-    , // Add padding to the bottom for some spacing
+    paddingBottom: 16, // Add padding to the bottom for some spacing
   },
   textContainer: {
     paddingHorizontal: 14,
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
   },
 });
 

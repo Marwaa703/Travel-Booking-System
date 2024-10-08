@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -12,23 +12,20 @@ import { COLORS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { selectCompanyById, setCompanies } from "@/redux/slices/companiesSlice";
-import companies from "@/DummyData/companiesUpdated.json";
+import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { Company, CompanyUser } from "@/types/company";
 import useLogout from "@/hooks/useLogout";
 const CompanyProfile: React.FC = () => {
-  const dispatch = useAppDispatch();
   const logout = useLogout();
   // todo: set the current company id current CompanyUser
   const user = useAppSelector((state) => state.auth.currentUser) as CompanyUser;
-  const currentCompany = useAppSelector((state) =>
-    selectCompanyById(state, "1"),
-  ) as Company;
-  console.log({ currentCompany, user });
+  const companies = useAppSelector((state) => state.companies.companies);
+  console.log({ cid: user.company_id, companies });
 
-  useEffect(() => {
-    dispatch(setCompanies(companies.companies));
-  }, [dispatch]);
+  const currentCompany = useAppSelector((state) =>
+    selectCompanyById(state, user.company_id as string),
+  ) as Company;
+  console.log({ currentCompany });
 
   return (
     <>
@@ -41,48 +38,52 @@ const CompanyProfile: React.FC = () => {
           router.back();
         }}
       />
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <SafeAreaView style={styles.container}>
-          <View>
-            <View style={styles.headerContainer}>
-              <Image
-                source={{ uri: currentCompany.logo }}
-                style={styles.companyLogo}
-              />
-              <Text style={styles.companyName}>{currentCompany.name}</Text>
-              <Text style={styles.companyEmail}>{currentCompany.address}</Text>
-            </View>
+      {currentCompany && (
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <SafeAreaView style={styles.container}>
+            <View>
+              <View style={styles.headerContainer}>
+                <Image
+                  source={{ uri: currentCompany.logo }}
+                  style={styles.companyLogo}
+                />
+                <Text style={styles.companyName}>{currentCompany.name}</Text>
+                <Text style={styles.companyEmail}>
+                  {currentCompany.address}
+                </Text>
+              </View>
 
-            <SettingCard
-              title="Company Profile"
-              onPress={() => {}}
-              leftIconName="business"
-            />
-            <SettingCard
-              title="Trips"
-              onPress={() => {
-                router.push("companyHome");
-              }}
-              leftIconName="air"
-            />
-            <SettingCard
-              title="Manage Employees"
-              onPress={() => {}}
-              leftIconName="people"
-            />
-            <SettingCard
-              title="Company Settings"
-              onPress={() => {}}
-              leftIconName="settings"
-            />
-            <SettingCard
-              title="Other Settings"
-              onPress={() => {}}
-              leftIconName="tune"
-            />
-          </View>
-        </SafeAreaView>
-      </ScrollView>
+              <SettingCard
+                title="Company Profile"
+                onPress={() => router.push("companyDetails")}
+                leftIconName="business"
+              />
+              <SettingCard
+                title="Trips"
+                onPress={() => {
+                  router.push("companyHome");
+                }}
+                leftIconName="air"
+              />
+              <SettingCard
+                title="Manage Employees"
+                onPress={() => {}}
+                leftIconName="people"
+              />
+              <SettingCard
+                title="Company Settings"
+                onPress={() => {}}
+                leftIconName="settings"
+              />
+              <SettingCard
+                title="Other Settings"
+                onPress={() => {}}
+                leftIconName="tune"
+              />
+            </View>
+          </SafeAreaView>
+        </ScrollView>
+      )}
     </>
   );
 };

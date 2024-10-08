@@ -14,7 +14,7 @@ import { addUser } from "@/redux/slices/userSlice";
 import ToggleSwitch from "../ToggleSwitch";
 import Spacer from "../Spacer";
 import { loginFailure, loginSuccess } from "@/redux/slices/authSlice";
-import useLoadingState from "@/hooks/useLoadingSatte";
+import useLoadingState from "@/hooks/useLoadingSate";
 import { isCompanyUserRole } from "@/utils";
 import { UserTypes, UserWithId } from "@/types/user";
 import { login } from "@/api/auth";
@@ -41,22 +41,23 @@ const LoginForm = () => {
       console.log({ userType });
       const response = await login(data.email, data.password, userType);
 
+      console.log({ response });
       if (!response || !response.token || !response.user) {
         throw new Error("Invalid response from server");
       }
       const { token, user } = response;
-      const userWithId: UserWithId = {
-        id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-      };
+      // const userWithId: UserWithId = {
+      //   id: user.id,
+      //   firstName: user.first_name,
+      //   lastName: user.last_name,
+      //   email: user.email,
+      //   phone: user.phone,
+      //   role: user.role,
+      // };
 
-      dispatch(loginSuccess({ token, user: userWithId, role: user.role }));
+      dispatch(loginSuccess({ token, user, role: user.role }));
       console.log("Login response:", response);
-      dispatch(addUser(userWithId));
+      dispatch(addUser(user));
       // add token to user
       console.log({ user });
       if (user.role === "User") {
@@ -69,7 +70,7 @@ const LoginForm = () => {
       }
 
       reset();
-      console.log(userWithId);
+      console.log(user);
 
       // console.log(userWithId);
     } catch (error: any) {

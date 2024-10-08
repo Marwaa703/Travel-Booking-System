@@ -15,7 +15,7 @@ import { signup } from "@/api/auth";
 import { signupSuccess, signupFailure } from "@/redux/slices/authSlice"; 
 import { router } from "expo-router";
 import { Gender } from "@/types/company";
-import useLoadingState from "@/hooks/useLoadingSatte";
+import useLoadingState from "@/hooks/useLoadingSate";
 
 const SignupForm = () => {
   const {loading,msg,setLoading,setMsg}= useLoadingState();

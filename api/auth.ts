@@ -89,9 +89,9 @@ export const signupCompany = async (
     // Step 2: Create User with companyId
     const userResponse = await api.post<CompanyUser>("/company/signup", {
       ...user,
-      companyId,
+      companyId: companyId as string,
     });
-
+    console.log("step 2");
     // Step 3: Create Company Papers with companyId
     const papersResponse = await Promise.all(
       papers.map((paper) =>

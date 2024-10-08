@@ -37,8 +37,8 @@ const CompanyHome = () => {
             {companies.map((company, index) => (
               <View key={index} style={styles.cardWrapper}>
                 <Card
-                  id={company.id}
-                  image={company.image}
+                  id={company.id as unknown as string}
+                  image={company.image.uri}
                   title={company.title}
                   subtitle={company.subtitle}
                   rating={company.rating}

@@ -13,14 +13,13 @@ import {
 import Button from "../Buttons";
 import Spacer from "../Spacer";
 import { useRouter } from "expo-router";
-import { signupCompany } from "@/api/auth";
 import { useAppDispatch } from "@/redux/store";
-import { addCompany, addPapers, addUser } from "@/redux/slices/companiesSlice";
-import useLoadingState from "@/hooks/useLoadingSatte";
+import { addCompany } from "@/redux/slices/companiesSlice";
+import useLoadingState from "@/hooks/useLoadingSate";
+import { signupCompany } from "@/api/auth";
 
 const MultiStepRegisterCompanyForm = () => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
-
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [currentStep, setCurrentStep] = useState(1);
@@ -51,26 +50,28 @@ const MultiStepRegisterCompanyForm = () => {
       // todo:get updated data from server
       const updatedCompanyData = await signupCompany(companyData);
       console.log({ updatedCompanyData });
-      setMsg("adding company papers...");
       dispatch(addCompany(updatedCompanyData.details));
-      dispatch(addPapers(updatedCompanyData.papers));
-      dispatch(addUser(updatedCompanyData.user));
-
       // todo: update redux with new data
       router.replace("/login");
     } catch (error) {
       setMsg("error registering company...");
+      setLoading(false);
       console.log({ error });
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <View style={{ width: "100%" }}>
       {currentStep === 1 && <CompanyUserForm onNext={handleUserNext} />}
       {currentStep === 2 && <CompanyDetailsForm onNext={handleDetailsNext} />}
-      {currentStep === 3 && <CompanyPapersForm onSubmit={handlePapersSubmit} />}
+      {currentStep === 3 && (
+        <CompanyPapersForm
+          loading={loading}
+          msg={msg}
+          onSubmit={handlePapersSubmit}
+        />
+      )}
       <Spacer />
       {currentStep > 1 && (
         <Button title="Back" onPress={() => setCurrentStep(currentStep - 1)} />

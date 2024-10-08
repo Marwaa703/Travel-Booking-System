@@ -7,20 +7,29 @@ import TextInputField from "./TextInputField";
 
 interface CompanyPapersFormProps {
   onSubmit: (data: CompanyPaper[]) => void;
+  loading?: boolean;
+  msg?: string;
 }
 
-const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({ onSubmit }) => {
+const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
+  onSubmit,
+  loading,
+  msg,
+}) => {
   const [papers, setPapers] = useState<CompanyPaper[]>([]);
-  const [paper, setPaper] = useState<CompanyPaper>({ title: "", imageUrl: "" });
+  const [paper, setPaper] = useState<CompanyPaper>({
+    title: "",
+    image_url: "",
+  });
 
   const handlePapersSubmit = () => {
     onSubmit(papers);
   };
   const handleAddImage = () => {
-    if (paper.title && paper.imageUrl) {
+    if (paper.title && paper.image_url) {
       // inject companyId from currentCompanyUser SignedIn
       setPapers((pre) => [...pre, paper]);
-      setPaper({ title: "", imageUrl: "" });
+      setPaper({ title: "", image_url: "" });
     } else alert("Can't add empty values");
   };
 
@@ -40,10 +49,12 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({ onSubmit }) => {
         />
         <TextInputField
           name={"image"}
-          onChangeText={(imageUrl) => setPaper((pre) => ({ ...pre, imageUrl }))}
+          onChangeText={(imageUrl) =>
+            setPaper((pre) => ({ ...pre, image_url: imageUrl }))
+          }
           icon="image-outline"
           onBlur={undefined}
-          value={paper.imageUrl}
+          value={paper.image_url}
           trim={false}
         />
         <Spacer />
@@ -53,14 +64,14 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({ onSubmit }) => {
         <Spacer />
         {papers.map((paper, index) => (
           <View key={index} style={styles.addedLocationRow}>
-            {paper.imageUrl ? (
+            {paper.image_url ? (
               <Image
-                source={{ uri: paper.imageUrl }}
+                source={{ uri: paper.image_url }}
                 style={styles.locationImage}
                 onError={() =>
                   setPapers(
                     papers.map((paper, i) =>
-                      i === index ? { ...paper, imageUrl: "" } : paper,
+                      i === index ? { ...paper, image_url: "" } : paper,
                     ),
                   )
                 }
@@ -77,7 +88,12 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({ onSubmit }) => {
         ))}
         <Spacer />
       </Fragment>
-      <Button title="Submit" onPress={handlePapersSubmit} />
+      <Button
+        title="Submit"
+        onPress={handlePapersSubmit}
+        loadingMessage={msg}
+        loading={loading}
+      />
     </>
   );
 };
