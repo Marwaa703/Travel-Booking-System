@@ -46,20 +46,11 @@ const LoginForm = () => {
         throw new Error("Invalid response from server");
       }
       const { token, user } = response;
-      // const userWithId: UserWithId = {
-      //   id: user.id,
-      //   firstName: user.first_name,
-      //   lastName: user.last_name,
-      //   email: user.email,
-      //   phone: user.phone,
-      //   role: user.role,
-      // };
 
       dispatch(loginSuccess({ token, user, role: user.role }));
       console.log("Login response:", response);
       dispatch(addUser(user));
-      // add token to user
-      console.log({ user });
+
       if (user.role === "User") {
         router.push("/(tabs)/(profile)/(user)/userProfile");
       } else if (user.role === "Admin") {
@@ -70,11 +61,7 @@ const LoginForm = () => {
       }
 
       reset();
-      console.log(user);
-
-      // console.log(userWithId);
     } catch (error: any) {
-      console.error("Login failed:", error.message);
       dispatch(loginFailure("Login failed: " + error.message));
       console.error({ error: error.message });
       setMsg("falied to login, try again");

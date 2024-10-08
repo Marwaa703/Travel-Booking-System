@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import IconButton from "../IconButton";
-import { Location } from "@/constants/types";
 import LocationSearch from "../LocationSearch";
 import TextInputField from "./TextInputField";
+import { Location } from "@/types/trip";
 
 interface TripLocationFormProps {
   onNext: (locations: Location[]) => void;
@@ -25,9 +25,9 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
       setLocations([
         ...locations,
         {
-          order: locations.length + 1,
+          location_order: locations.length + 1,
           ...selectedLocation,
-          imageUrl: imageUrl,
+          image_url: imageUrl,
         },
       ]);
       setImageUrl(""); // Clear the image URL input after adding
@@ -79,9 +79,9 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
         )}
         {locations.map((loc, index) => (
           <View key={index} style={styles.addedLocationRow}>
-            {loc.imageUrl ? (
+            {loc.image_url ? (
               <Image
-                source={{ uri: loc.imageUrl }}
+                source={{ uri: loc.image_url }}
                 style={styles.locationImage}
                 onError={() =>
                   setLocations(

@@ -1,17 +1,11 @@
-import {
-  Location,
-  Trip,
-  TripDetails,
-  TripFormData,
-  TripImage,
-} from "@/types/trip";
+import { Location, Trip, TripDetailes, Trip, TripImage } from "@/types/trip";
 import api from "./axiosApi";
 
 // get all trips
 export const createTrip = async (
-  tripData: TripFormData,
+  tripData: Trip,
 ): Promise<{
-  tripDetails: TripDetails;
+  tripDetails: TripDetailes;
   locations: Location[];
   images: TripImage[];
 }> => {
@@ -20,7 +14,7 @@ export const createTrip = async (
   try {
     // Step 1: Create Trip
     const tripResponse = await api.post<Trip>("/trips", tripDetails);
-    const tripId = tripResponse.data.tripDetailes.id; // Assuming the trip ID is in the response data
+    const tripId = tripResponse.data.details.id; // Assuming the trip ID is in the response data
 
     // Step 2: Create Trip Locations with tripId
     const locationsResponse = await Promise.all(
@@ -44,7 +38,7 @@ export const createTrip = async (
 
     // Prepare the updated trip data
     return {
-      tripDetails: tripResponse.data.tripDetailes,
+      tripDetails: tripResponse.data.details,
       locations: locationsResponse.map((response) => response.data), // Extract data from each response
       images: imagesResponse.map((response) => response.data), // Extract data from each response
     };
@@ -55,9 +49,9 @@ export const createTrip = async (
 };
 
 // Get all trips
-export const getAllTrips = async (): Promise<TripDetails[]> => {
+export const getAllTrips = async (): Promise<TripDetailes[]> => {
   try {
-    const response = await api.get<TripDetails[]>("/trips");
+    const response = await api.get<TripDetailes[]>("/trips");
     return response.data;
   } catch (error) {
     console.log(error, "Failed to fetch trips");
@@ -79,7 +73,7 @@ export const getTripById = async (tripId: string): Promise<Trip> => {
 // Update a trip
 export const updateTrip = async (
   tripId: string,
-  tripData: TripFormData,
+  tripData: Trip,
 ): Promise<Trip> => {
   try {
     const response = await api.put<Trip>(`/trips/${tripId}`, tripData);

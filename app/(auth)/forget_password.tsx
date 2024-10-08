@@ -5,9 +5,9 @@ import Padding from "@/components/containers/Padding";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { SPACING, FONTS, COLORS } from "@/constants/theme";
 import Button from "@/components/Buttons";
-import { emailRegex } from "@/constants/forms";
 import FieldErrorMessage from "@/components/forms/FieldErrorMessage";
 import { useRouter } from "expo-router";
+import { emailRegex } from "@/constants/regext";
 
 const ForgetPass = () => {
   const router = useRouter();

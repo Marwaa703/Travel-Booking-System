@@ -8,19 +8,27 @@ import Spacer from "../Spacer";
 import TripImageForm from "./TripImageForm";
 import TripLocationForm from "./TripLocationForm";
 import IconButton from "../IconButton";
-import { Location, TripDetails, TripFormData, TripImage } from "@/types/trip";
+import { Location, TripDetailes, Trip, TripImage } from "@/types/trip";
 import { useRouter } from "expo-router";
 import DateInputPicker from "./BirthdatePicker";
 import { useDispatch } from "react-redux";
 import { createFullTrip } from "@/redux/actions/createCompleteTrip";
+import useLoadingState from "@/hooks/useLoadingSate";
+import { createTrip } from "@/api/auth";
+import { useAppSelector } from "@/redux/store";
+import { CompanyUser } from "@/types/company";
 
 const MultiStepAddTripForm = () => {
+  const { loading, msg, setLoading, setMsg } = useLoadingState();
+  const auth = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as CompanyUser;
   const router = useRouter();
   const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [tripData, setTripData] = useState<TripFormData>({
-    tripDetails: {} as TripDetails,
+  const [tripData, setTripData] = useState<Trip>({
+    details: {} as TripDetailes,
     locations: [] as Location[],
     images: [],
   });
@@ -36,10 +44,10 @@ const MultiStepAddTripForm = () => {
     defaultValues: {},
   });
 
-  const handleAddTrip = (data: TripDetails) => {
+  const handleAddTrip = (data: TripDetailes) => {
     setTripData((prev) => ({
       ...prev,
-      tripDetails: { ...data, isFavorite: false, rate: null, status: "paused" },
+      details: { ...data, rate: null, status: "paused" },
     }));
     setCurrentStep(2);
   };
@@ -49,15 +57,34 @@ const MultiStepAddTripForm = () => {
     setCurrentStep(3);
   };
 
-  const handleImageSubmit = (data: TripImage[]) => {
+  const handleImageSubmit = async (data: TripImage[]) => {
+    console.log("start adding trip");
     const finalData = { ...tripData, images: data };
+    try {
+      setLoading(true);
+      setMsg("Registerinig Company...");
 
-    dispatch(createFullTrip(finalData));
+      // todo:send to server
+      // todo:get updated data from server
+      const updatedTripData = await createTrip(
+        finalData,
+        auth.company_id as string,
+      );
+      console.log({ updatedTripData });
+      // todo: update redux with new data
+      router.replace("/login");
+    } catch (error) {
+      setMsg("error creating trip...");
+      setLoading(false);
+      console.log({ error });
+    } finally {
+      setLoading(false);
+    }
 
-    reset();
-    router.back();
+    // reset();
+    // router.back();
   };
-
+  console.log("lol");
   return (
     <View style={{ width: "100%" }}>
       {currentStep === 1 && (
@@ -98,7 +125,13 @@ const MultiStepAddTripForm = () => {
 
       {currentStep === 2 && <TripLocationForm onNext={handleNextStep} />}
 
-      {currentStep === 3 && <TripImageForm onSubmit={handleImageSubmit} />}
+      {currentStep === 3 && (
+        <TripImageForm
+          loading={loading}
+          msg={msg}
+          onSubmit={handleImageSubmit}
+        />
+      )}
 
       <Spacer />
       {currentStep > 1 && (

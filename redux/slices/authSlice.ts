@@ -4,7 +4,7 @@ import { User, UserTypes } from "@/types/user";
 interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
-  currentUser: User | null;
+  currentUser: UserTypes | null;
   role: UserTypes | null;
   loading: boolean;
   error: string | null;
@@ -29,7 +29,11 @@ const authSlice = createSlice({
     },
     signupSuccess: (
       state,
-      action: PayloadAction<{ token: string; user: User; role: UserTypes }>,
+      action: PayloadAction<{
+        token: string;
+        user: UserTypes;
+        role: UserTypes;
+      }>,
     ) => {
       state.isAuthenticated = true;
       state.token = action.payload.token;
@@ -52,7 +56,11 @@ const authSlice = createSlice({
     },
     loginSuccess: (
       state,
-      action: PayloadAction<{ token: string; user: User; role: UserTypes }>,
+      action: PayloadAction<{
+        token: string;
+        user: UserTypes;
+        role: UserTypes;
+      }>,
     ) => {
       state.isAuthenticated = true;
       state.token = action.payload.token;

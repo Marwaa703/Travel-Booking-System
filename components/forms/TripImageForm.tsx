@@ -3,17 +3,15 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Button from "../Buttons";
 import TextInputField from "./TextInputField";
 import Spacer from "../Spacer";
-
-interface TripImage {
-  imageUrl: string;
-  caption: string;
-}
+import { TripImage } from "@/types/trip";
 
 interface TripImageFormProps {
   onSubmit: (data: TripImage[]) => void;
+  loading: boolean;
+  msg: string;
 }
 
-const TripImageForm = ({ onSubmit }: TripImageFormProps) => {
+const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
 
@@ -21,7 +19,7 @@ const TripImageForm = ({ onSubmit }: TripImageFormProps) => {
 
   const handleAddImage = () => {
     if (imageUrl && caption) {
-      setImages([...images, { imageUrl, caption }]);
+      setImages([...images, { image_url: imageUrl, caption }]);
       setCaption("");
       setImageUrl("");
     } else alert("Can't add empty values");
@@ -61,9 +59,9 @@ const TripImageForm = ({ onSubmit }: TripImageFormProps) => {
 
       {images.map((img, index) => (
         <View key={index} style={styles.addedLocationRow}>
-          {img.imageUrl ? (
+          {img.image_url ? (
             <Image
-              source={{ uri: img.imageUrl }}
+              source={{ uri: img.image_url }}
               style={styles.locationImage}
               onError={() =>
                 setImages(
@@ -88,6 +86,8 @@ const TripImageForm = ({ onSubmit }: TripImageFormProps) => {
         type="primary"
         width={"100%"}
         title="Submit Trip"
+        loading={loading}
+        loadingMessage={msg}
         onPress={handleSubmit}
       />
     </View>
