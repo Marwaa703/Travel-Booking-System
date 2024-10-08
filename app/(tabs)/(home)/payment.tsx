@@ -2,12 +2,13 @@
 import { View, TextInput, Alert, StyleSheet, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useRoute } from "@react-navigation/native";
-import axios from 'axios';
-import { trips } from "@/DummyData/trips.json";
 import Button from '@/components/Buttons';
 import { COLORS } from '@/constants/theme';
+import { fetchTripDetails, makePayment, bookTrip } from '@/api/payment'; 
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
-
+const defaultImage = require('../../../assets/imgDefault.png');
 
 const Payment: React.FC = () => {
   const route = useRoute();
@@ -15,26 +16,18 @@ const Payment: React.FC = () => {
   const [userWalletAddress, setUserWalletAddress] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [tripDetails, setTripDetails] = useState<any>(null);
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   useEffect(() => {
-    const fetchTripDetails = async () => {
+    const loadTripDetails = async () => {
       try {
-
-         // const response = await axios.get(`http://localhost:3000/trips/${tripId}`); 
-          // setTripPriceInWei(response.data.price); 
-          
-        const trip = trips.find(trip => trip.id === parseInt(tripId)); 
-        if (trip) {
-          setTripDetails(trip);
-        } else {
-          Alert.alert('Error', 'Trip not found');
-        }
-      } catch (error) {
-        console.error('Error fetching trip details:', error);
-        Alert.alert('Error', 'Could not fetch trip details');
+        const data = await fetchTripDetails(tripId);
+        setTripDetails(data);
+      } catch (error: any) {
+        Alert.alert('Error', error.message || 'Could not fetch trip details');
       }
     };
-    fetchTripDetails();
+    loadTripDetails();
   }, [tripId]);
 
   const handlePayment = async () => {
@@ -45,98 +38,74 @@ const Payment: React.FC = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('http://192.168.1.4:3000/payment', {
-        companyId: 1, //!Will Change to be Dynamic  
-        tripId,
-        userWalletAddress,
-        amountInWei: tripDetails.price
-      });
+      const paymentResponse = await makePayment(tripDetails.company_id, tripId, userWalletAddress, tripDetails?.price);
+      const { transactionHash } = paymentResponse;
 
-      setLoading(false);
+      Alert.alert('Payment Successful', `Transaction hash: ${transactionHash}`);
 
-      if (response.status === 200) {
-        Alert.alert('Payment Successful', 'Transaction hash: ' + response.data.transactionHash);
-
-        const bookingResponse = await axios.post('http://localhost:3000/booked_trip', {
-          tripId: tripId,
-          userId: 1, //!Will Change to be Dynamic  
-          transactionHash: response.data.transactionHash
-        });
-
-        if (bookingResponse.status === 201) {
-          Alert.alert('Booking Successful', 'Your trip has been successfully booked!');
-        } else {
-          Alert.alert('Booking Failed', 'Could not book the trip. Please try again.');
-        }
+      const bookingResponse = await bookTrip(tripId, currentUser.id, transactionHash);
+      if (bookingResponse) {
+        Alert.alert('Booking Successful', 'Your trip has been successfully booked!');
       } else {
-        Alert.alert('Payment Failed', response.data.message);
+        Alert.alert('Booking Failed', 'Could not book the trip. Please try again.');
       }
-    } catch (error) {
+
+    } catch (error: any) {
+      Alert.alert('Error', error.message || 'Something went wrong during payment.');
+    } finally {
       setLoading(false);
-      console.error('Payment error:', error);
-      Alert.alert('Payment Error', 'Something went wrong during the payment.');
     }
   };
 
   if (!tripDetails) {
     return (
-      <View >
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#ff5b00" />
         <Text>Loading Trip Details...</Text>
       </View>
     );
   }
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
-   
-    <View style={styles.logoContainer}>
-      <Image source={require('../../../assets/eth_logo.png')} style={styles.ethLogo} />
-    </View>
-  
-   <View style={styles.section}>
-    <View style={styles.infoSection}>
-      <View style={styles.tripDetailsColumn}>
-        <Text style={styles.tripText}>Title: {tripDetails.title}</Text>
-        <Text style={styles.tripText}>Date: {tripDetails.date}</Text>
-        <Text style={styles.tripText}>Location: {tripDetails.location}</Text>
-        <Text style={styles.tripText}>Rating: {tripDetails.rating}</Text>
-        <Text style={styles.tripText}>People Joined: {tripDetails.peopleJoined}</Text>
-        <Text style={styles.tripText}>Price: {tripDetails.price} Wei</Text>
+      <View style={styles.logoContainer}>
+        <Image source={require('../../../assets/eth_logo.png')} style={styles.ethLogo} />
       </View>
-  
-     
-      <View style={styles.imageColumn}>
-        <Image 
-          source={{ uri: tripDetails.image }} 
-          style={styles.tripImage} 
+
+      <View style={styles.section}>
+        <View style={styles.infoSection}>
+          <View style={styles.tripDetailsColumn}>
+            <Text style={styles.tripText}>Title: {tripDetails.name}</Text>
+            <Text style={styles.tripText}>Date: {tripDetails.date}</Text>
+            <Text style={styles.tripText}>Rating: {4}</Text>
+            <Text style={styles.tripText}>People Joined: {tripDetails.max_reservations}</Text>
+            <Text style={styles.tripText}>Price: {tripDetails.price} Wei</Text>
+          </View>
+
+          <View style={styles.imageColumn}>
+            <Image source={defaultImage} style={styles.tripImage} />
+          </View>
+        </View>
+
+        <View style={styles.inputSection}>
+          <Text style={styles.label}>Enter your Wallet Address:</Text>
+          <TextInput
+            style={styles.input}
+            value={userWalletAddress}
+            onChangeText={setUserWalletAddress}
+            placeholder="0x..."
+            placeholderTextColor="#aaa"
+          />
+        </View>
+
+        <Button
+          title={loading ? 'Processing...' : 'Book Now'}
+          onPress={handlePayment}
+          align='center'
+          disabled={loading}
+          width={"100%"}
         />
       </View>
-    </View>
-  
-    <View style={styles.inputSection}>
-      <Text style={styles.label}>Enter your Wallet Address:</Text>
-      <TextInput
-        style={styles.input}
-        value={userWalletAddress}
-        onChangeText={setUserWalletAddress}
-        placeholder="0x..."
-        placeholderTextColor="#aaa"
-      />
-     
-    </View>
-    <Button 
-        title={loading ? 'Processing...' : `Book Now`} 
-        onPress={handlePayment} 
-        align='center' 
-        disabled={loading} 
-        width={"100%"}
-      />
-    </View>
-  </ScrollView>
-  
-  
-
+    </ScrollView>
   );
 };
 
@@ -146,34 +115,35 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   logoContainer: {
     alignItems: 'center',
     marginBottom: 20,
   },
   ethLogo: {
-    width: 200, 
+    width: 200,
     height: 200,
     resizeMode: 'contain',
   },
-  section:{
+  section: {
     backgroundColor: "#fff",
-    borderTopLeftRadius: 60,
-    borderTopRightRadius: 60,
-    borderBottomRightRadius: 60,
-    borderBottomLeftRadius: 60,
+    borderRadius: 60,
     paddingHorizontal: 20,
     paddingVertical: 40,
     flexGrow: 1,
     justifyContent: "space-between",
   },
-
   infoSection: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   tripDetailsColumn: {
-    flex: 1, 
-    paddingRight: 20, 
+    flex: 1,
+    paddingRight: 20,
   },
   tripText: {
     fontSize: 16,
@@ -190,11 +160,10 @@ const styles = StyleSheet.create({
     height: 120,
     resizeMode: 'cover',
     borderRadius: 10,
-    marginBottom: 20, 
+    marginBottom: 20,
   },
   inputSection: {
     marginTop: 20,
-    // alignItems: 'center',
   },
   label: {
     fontSize: 18,
@@ -204,7 +173,7 @@ const styles = StyleSheet.create({
   input: {
     height: 45,
     borderWidth: 2,
-    width: '95%', 
+    width: '95%',
     paddingHorizontal: 10,
     borderRadius: 10,
     backgroundColor: '#f9f9f9',

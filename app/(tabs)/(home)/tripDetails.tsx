@@ -46,18 +46,18 @@ const TripDetails: React.FC = () => {
   const trip = trips.find((t) => t.id === tripIdNumber) as Trip | undefined;
 
   useEffect(() => {
-    dispatch(fetchTrips());
+  fetchTrips();
   }, [dispatch]);
 
   useEffect(() => {
     trips.forEach((trip) => {
-      dispatch(fetchImagesByTripId(trip.id));
-      dispatch(fetchLocationsByTripId(trip.id));
+      fetchImagesByTripId(trip.id);
+      fetchLocationsByTripId(trip.id);
     });
   }, [trips, dispatch]);
 
   const {
-    image_url = "",
+    image_url = "../../../assets/imgDefault.png",
     name = "Default Trip Title",
     subtitle = "Default Company",
     rate = 0,

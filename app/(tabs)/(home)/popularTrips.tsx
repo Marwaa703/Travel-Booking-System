@@ -67,7 +67,7 @@ const PopularTrips: React.FC = () => {
       ) : (
         <FlatList
           data={trips}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             const tripImages = images.filter(
               (image) => image.trip_id === item.id,
@@ -87,7 +87,7 @@ const PopularTrips: React.FC = () => {
                 image={tripImages.length > 0 ? tripImages[0].image_url : null}
                 title={item.name}
                 date={formattedDate}
-                rating={item.rate}
+                rating={0}
                 price={item.price}
                 peopleJoined={item.max_reservations}
                 avatars={[]}

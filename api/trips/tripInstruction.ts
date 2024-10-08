@@ -1,4 +1,4 @@
-// api/instructions.ts
+
 
 import { TripInstruction } from "@/types/trip";
 import api from "../axiosApi";

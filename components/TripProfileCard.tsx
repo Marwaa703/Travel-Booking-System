@@ -8,7 +8,7 @@ import CardSubtitle from './CardSubtitle';
 import { useNavigation } from 'expo-router';
 import { NavigationProp } from '@react-navigation/native';
 import { useRoute } from "@react-navigation/native"; 
-
+const defaultImage = require('../assets/imgDefault.png');
 interface TripProfileCardProps {
   id: number;
   image: string;
@@ -34,11 +34,11 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
       navigation.navigate('tripDetails', { tripId: id });
     }
   };
-
+  const imageSource = image ? { uri: image } : defaultImage;
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
       {/* Image Section */}
-      <Image source={{ uri: image }} style={styles.image} />
+      <Image source={imageSource} style={styles.image} />
       {/* Text and Info Section */}
       <View style={styles.infoContainer}>
         {/* Title */}

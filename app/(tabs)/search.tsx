@@ -55,7 +55,7 @@ const Search: React.FC = () => {
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
               <Card 
-                 id={item.id}
+                id={item.id}
                 image={{ uri: item.image }} 
                 title={item.title} 
                 subtitle={item.location} 
