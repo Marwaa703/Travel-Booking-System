@@ -7,30 +7,37 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import Button from "@/components/Buttons";
-import {  useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
 import CardSubtitle from "@/components/CardSubtitle";
 import icons from "@/constants/icons";
-import { trips } from "@/DummyData/trips.json";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
-import { places } from "@/constants/maps";
+import { fetchTrips } from "@/redux/actions/tripActions";
+import { fetchImagesByTripId } from "@/redux/actions/imageActions";
+import { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLocationsByTripId } from "@/redux/actions/locationActions";
 
 interface Trip {
   id: number;
-  title: string;
+  name: string;
   subtitle: string;
-  rating: number;
+  rate: number;
   price: string;
   location: string;
   description: string;
-  image: string;
+  image_url: string;
 }
 
 const TripDetails: React.FC = () => {
+  const dispatch = useDispatch();
+  const { trips } = useSelector((state: RootState) => state.trips);
+  const { images = [] } = useSelector((state: RootState) => state.images) || {};
+  const { locations = [] } = useSelector((state: RootState) => state.locations) || {};
   const route = useRoute();
   const [isExpanded, setIsExpanded] = useState(false);
   const { tripId } = route.params as { tripId: string };
@@ -38,25 +45,42 @@ const TripDetails: React.FC = () => {
   const tripIdNumber = Number(tripId);
   const trip = trips.find((t) => t.id === tripIdNumber) as Trip | undefined;
 
+  useEffect(() => {
+    dispatch(fetchTrips());
+  }, [dispatch]);
+
+  useEffect(() => {
+    trips.forEach((trip) => {
+      dispatch(fetchImagesByTripId(trip.id));
+      dispatch(fetchLocationsByTripId(trip.id));
+    });
+  }, [trips, dispatch]);
+
   const {
-    image = "",
-    title = "Default Trip Title",
+    image_url = "",
+    name = "Default Trip Title",
     subtitle = "Default Company",
-    rating = 0,
+    rate = 0,
     price = "N/A",
-    location = "Unknown",
-    description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress. Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
+    description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
   } = trip || {};
-const router = useRouter();
+
  
-const handleSeeOnMap =() => {
-  router.push(`/tripMap?places=${encodeURIComponent(JSON.stringify(places))}`);
-}
+  const locationNames = locations.map((location) => location.name).join(", ");
+  const imageUrl = images.length > 0 && images[0].image_url ? images[0].image_url : "image_url"; 
+
+
+  const router = useRouter();
+ 
+  const handleSeeOnMap = () => {
+    router.push(`/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`);
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: image }} style={styles.image} />
+          <Image source={{ uri: imageUrl }} style={styles.image} />
           <View style={styles.mapButtonContainer}>
             <Button
               title={"See on Map"}
@@ -69,7 +93,7 @@ const handleSeeOnMap =() => {
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.titleRow}>
-            <Text style={styles.tripTitle}>{title}</Text>
+            <Text style={styles.tripTitle}>{name}</Text>
             <View style={styles.like}>
               <Like />
             </View>
@@ -77,11 +101,11 @@ const handleSeeOnMap =() => {
           <Text style={styles.companyName}>{subtitle}</Text>
           <View style={styles.detailRow}>
             <CardSubtitle
-              text={location}
+              text={locationNames}
               icon={icons.location}
               iconColor={COLORS.textSecondary}
             />
-            <Rating rate={rating} />
+            <Rating rate={rate} />
             <Text style={styles.price}>{price}/Person</Text>
           </View>
           <Text style={styles.sectionTitle}>About Trip</Text>
@@ -113,7 +137,7 @@ const handleSeeOnMap =() => {
             <Button
               title={"Book Now"}
               align="center"
-              width={"400%"}
+              width={"120%"}
               onPress={() => {
                 router.push(`/payment?tripId=${tripId}`);
               }}

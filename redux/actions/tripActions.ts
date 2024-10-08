@@ -12,6 +12,7 @@ import {
   addTrip as apiAddTrip,
   updateTrip as apiUpdateTrip,
   deleteTrip as apiDeleteTrip,
+  getTripsByCompanyId as apiGetTripsByCompanyId,
 } from "@/api/trips/trip";
 import { TripDetails, TripFormData } from "@/types/trip";
 
@@ -27,6 +28,20 @@ export const fetchTrips = () => async (dispatch: AppDispatch) => {
     dispatch(setLoading(false));
   }
 };
+
+// Fetch trips by company ID
+export const fetchTripsByCompanyId =
+  (companyId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const trips = await apiGetTripsByCompanyId(companyId);
+      dispatch(setTrips(trips));
+    } catch (error) {
+      dispatch(setError(true));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
 // Add a new trip
 export const createTrip =

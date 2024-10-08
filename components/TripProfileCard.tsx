@@ -11,7 +11,7 @@ import { useRoute } from "@react-navigation/native";
 
 interface TripProfileCardProps {
   id: number;
-  image: ImageSourcePropType;
+  image: string;
   title: string;
   date: string;
   rating: number;
@@ -38,7 +38,7 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
       {/* Image Section */}
-      <Image source={image} style={styles.image} />
+      <Image source={{ uri: image }} style={styles.image} />
       {/* Text and Info Section */}
       <View style={styles.infoContainer}>
         {/* Title */}

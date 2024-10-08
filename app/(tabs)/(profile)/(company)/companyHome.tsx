@@ -1,19 +1,33 @@
+/* eslint-disable prettier/prettier */
 import { ScrollView, Text, View, StyleSheet } from "react-native";
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "@/components/Buttons";
-import { router } from "expo-router";
 import Header from "@/components/core/Header";
 import Card from "@/components/Card";
-import { companies } from "@/DummyData/companies.json";
 import Padding from "@/components/containers/Padding";
 import Spacer from "@/components/Spacer";
 import { FONTS } from "@/constants/theme";
+import { useRoute } from "@react-navigation/native";
+import { router } from "expo-router";
+import { fetchTripsByCompanyId } from "@/redux/actions/tripActions";
+import { RootState } from "@/redux/store";
 
+// todo: pass the companyId coming from currentCompanyUser (Company Representative)
+// todo: handle edit, delete trip here
 const CompanyHome = () => {
-  // todo: pass the companyId coming from currentCompanyUser (Company Representitive)
-  // todo: filter trips by companyId to display them here
-  // todo: handle edit, delete trip here
+  const route = useRoute();
+  const { companyId } = route.params as { companyId: string };
+  console.log(companyId);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(fetchTripsByCompanyId(companyId));
+    }
+  }, [companyId, dispatch]);
+
+  const { trips, isLoading: loading } = useSelector((state: RootState) => state.trips);
   return (
     <View style={styles.container}>
       <Header title="Home Page" />
@@ -23,30 +37,38 @@ const CompanyHome = () => {
             <Button
               title="Add new trip"
               onPress={() => {
-                router.push("/addTrip");
+                router.push(`/addTrip/?companyId=${companyId}`);
               }}
             />
           </View>
         </View>
+
         <ScrollView>
           <View>
             <Text style={styles.sectionTitle}>Current trips</Text>
           </View>
-          <Spacer></Spacer>
-          <View style={styles.cardContainer}>
-            {companies.map((company, index) => (
-              <View key={index} style={styles.cardWrapper}>
-                <Card
-                  id={company.id as unknown as string}
-                  image={company.image.uri}
-                  title={company.title}
-                  subtitle={company.subtitle}
-                  rating={company.rating}
-                  price="$150"
-                />
-              </View>
-            ))}
-          </View>
+          <Spacer />
+
+          {loading ? (
+            <Text>Loading trips...</Text>
+          ) : trips.length === 0 ? (
+            <Text>No trips to display. Add one!</Text>
+          ) : (
+            <View style={styles.cardContainer}>
+              {trips.map((trip) => (
+                <View key={trip.id} style={styles.cardWrapper}>
+                  <Card
+                    id={trip.id} 
+                    image={trip.image ? trip.image.uri : 'default_image_uri'}
+                    title={trip.name}
+                    subtitle={trip.title} 
+                    rating={trip.rate}
+                    price={`$${trip.price}`}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
         </ScrollView>
       </Padding>
     </View>
