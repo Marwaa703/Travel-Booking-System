@@ -18,7 +18,9 @@ import useLogout from "@/hooks/useLogout";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   // todo: set the current company id current CompanyUser
-  const user = useAppSelector((state) => state.auth.currentUser) as CompanyUser;
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as CompanyUser;
   const companies = useAppSelector((state) => state.companies.companies);
   console.log({ cid: user.company_id, companies });
 
