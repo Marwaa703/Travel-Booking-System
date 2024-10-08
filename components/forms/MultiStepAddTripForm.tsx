@@ -11,9 +11,12 @@ import IconButton from "../IconButton";
 import { Location, TripDetails, TripFormData, TripImage } from "@/types/trip";
 import { useRouter } from "expo-router";
 import DateInputPicker from "./BirthdatePicker";
+import { useDispatch } from "react-redux";
+import { createFullTrip } from "@/redux/actions/createCompleteTrip";
 
 const MultiStepAddTripForm = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
   const [tripData, setTripData] = useState<TripFormData>({
@@ -47,17 +50,14 @@ const MultiStepAddTripForm = () => {
   };
 
   const handleImageSubmit = (data: TripImage[]) => {
-    // todo: pass companyId to trip
     const finalData = { ...tripData, images: data };
-    console.log(JSON.stringify(finalData));
-    // TODO: submit finalData to server
 
-    // todo: update redux store with coming trip data from server
+    dispatch(createFullTrip(finalData));
 
     reset();
     router.back();
   };
-  console.log({ tripData });
+
   return (
     <View style={{ width: "100%" }}>
       {currentStep === 1 && (
@@ -69,8 +69,8 @@ const MultiStepAddTripForm = () => {
                   <DateInputPicker
                     name="date"
                     onSelectDate={(date) => setValue(name, date)}
-                    error={errors.date?.message} // Make sure this accesses the correct error message
-                    icon="calendar" // Adjust as necessary
+                    error={errors.date?.message}
+                    icon="calendar"
                   />
                 ) : (
                   <AppTextInput
@@ -108,7 +108,6 @@ const MultiStepAddTripForm = () => {
           direction="back"
         />
       )}
-
       <Spacer />
     </View>
   );

@@ -7,41 +7,96 @@ import {
   StyleSheet,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTrips } from "@/redux/actions/tripActions"; // Adjust the import based on your folder structure
-import { RootState } from "@/redux/store"; // Import your RootState type
+import { fetchTrips } from "@/redux/actions/tripActions";
+import { fetchImagesByTripId } from "@/redux/actions/imageActions";
+import { COLORS } from "@/constants/theme";
+import TripProfileCard from "@/components/TripProfileCard";
+import { RootState } from "@/redux/store";
 
-const TripsScreen = () => {
+const PopularTrips: React.FC = () => {
   const dispatch = useDispatch();
-  const { trips, loading, error } = useSelector(
-    (state: RootState) => state.trips,
-  );
+
+  const {
+    trips,
+    isLoading: loading,
+    isError: error,
+  } = useSelector((state: RootState) => state.trips);
+  const {
+    images = [],
+    loading: imageLoading,
+    error: imageError,
+  } = useSelector((state: RootState) => state.images) || {};
 
   useEffect(() => {
     dispatch(fetchTrips());
   }, [dispatch]);
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
+  useEffect(() => {
+    trips.forEach((trip) => {
+      dispatch(fetchImagesByTripId(trip.id));
+    });
+  }, [trips, dispatch]);
+  // if (loading || imageLoading) {
+  //   return (
+  //     <View style={styles.loadingContainer}>
+  //       <ActivityIndicator size="large" color={COLORS.primary} />
+  //     </View>
+  //   );
+  // }
 
-  if (error) {
-    return <Text>Error fetching trips. Please try again later.</Text>;
-  }
+  // if (error) {
+  //   return (
+  //     <View style={styles.errorContainer}>
+  //       <Text>Error fetching trips</Text>
+  //     </View>
+  //   );
+  // }
+
+  // if (imageError) {
+  //   return (
+  //     <View style={styles.errorContainer}>
+  //       <Text>Error fetching images</Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={trips}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.tripItem}>
-            <Text style={styles.tripTitle}>{item.name}</Text>
-            <Text>Description: {item.description}</Text>
-            <Text>Price: ${item.price}</Text>
-            <Text>Date: {new Date(item.date).toLocaleDateString()}</Text>
-          </View>
-        )}
-      />
+      {trips.length === 0 ? (
+        <Text>No trips available</Text>
+      ) : (
+        <FlatList
+          data={trips}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => {
+            const tripImages = images.filter(
+              (image) => image.trip_id === item.id,
+            );
+            const formattedDate = new Date(item.date).toLocaleDateString(
+              "en-US",
+              {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              },
+            );
+
+            return (
+              <TripProfileCard
+                id={item.id}
+                image={tripImages.length > 0 ? tripImages[0].image_url : null}
+                title={item.name}
+                date={formattedDate}
+                rating={item.rate}
+                price={item.price}
+                peopleJoined={item.max_reservations}
+                avatars={[]}
+                caller={"Home"}
+              />
+            );
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -49,20 +104,19 @@ const TripsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
     backgroundColor: "#fff",
   },
-  tripItem: {
-    marginBottom: 16,
-    padding: 16,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  tripTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
+  // loadingContainer: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // errorContainer: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
 });
 
-export default TripsScreen;
+export default PopularTrips;

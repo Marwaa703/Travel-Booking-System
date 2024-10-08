@@ -13,6 +13,7 @@ import {
   updateLocation as apiUpdateLocation,
   deleteLocation as apiDeleteLocation,
 } from "@/api/trips/tripLocations";
+import { Location } from "@/types/trip";
 
 // Fetch all locations for a specific trip
 export const fetchLocationsByTripId =
@@ -49,7 +50,6 @@ export const updateLocation =
     dispatch(setLoading(true));
     try {
       const updatedLocation = await apiUpdateLocation(locationId, updates);
-      // Assuming locationId corresponds to tripId
       dispatch(
         updateLocationDetails({ tripId: locationId, details: updatedLocation }),
       );

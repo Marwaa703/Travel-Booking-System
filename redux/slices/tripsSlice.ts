@@ -4,12 +4,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TripsState {
   trips: Trip[];
+  favoriteTrips: Trip[];
   isLoading: boolean;
   isError: boolean;
 }
 
 const initialState: TripsState = {
   trips: [],
+  favoriteTrips: [],
   isLoading: false,
   isError: false,
 };
@@ -28,18 +30,16 @@ const tripsSlice = createSlice({
 
     removeTrip: (state, action: PayloadAction<string>) => {
       state.trips = state.trips.filter((trip) => trip.tripDetailes.id !== action.payload);
+      state.favoriteTrips = state.favoriteTrips.filter((trip) => trip.tripDetailes.id !== action.payload);
     },
 
-    // Update trip details
     updateTripDetails: (state, action: PayloadAction<{ id: string; details: Partial<Trip['tripDetailes']> }>) => {
       const index = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.id);
       if (index !== -1) {
-        // Update the trip details by merging existing details with the new payload
         state.trips[index].tripDetailes = { ...state.trips[index].tripDetailes, ...action.payload.details };
       }
     },
 
-    // Toggle favorite status for a trip
     toggleFavorite: (state, action: PayloadAction<string>) => {
       const index = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload);
       if (index !== -1) {
@@ -47,7 +47,20 @@ const tripsSlice = createSlice({
       }
     },
 
-    // Add a new location to a trip
+    // toggleFavorite: (state, action: PayloadAction<string>) => {
+    //   const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload);
+    //   if (tripIndex !== -1) {
+    //     const trip = state.trips[tripIndex];
+
+    //     const favoriteIndex = state.favoriteTrips.findIndex((favTrip) => favTrip.tripDetailes.id === action.payload);
+    //     if (favoriteIndex === -1) {
+    //       state.favoriteTrips.push(trip);
+    //     } else {
+    //       state.favoriteTrips.splice(favoriteIndex, 1);
+    //     }
+    //   }
+    // },
+
     addLocation: (state, action: PayloadAction<{ tripId: string; location: Omit<Trip['locations'][0], 'tripId'> }>) => {
       const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
       if (tripIndex !== -1) {
@@ -56,15 +69,13 @@ const tripsSlice = createSlice({
       }
     },
 
-    // Remove a location from a trip
     removeLocation: (state, action: PayloadAction<{ tripId: string; order: number }>) => {
       const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
       if (tripIndex !== -1) {
-        state.trips[tripIndex].locations = state.trips[tripIndex].locations.filter(location => location.order !== action.payload.order);
+        state.trips[tripIndex].locations = state.trips[tripIndex].locations.filter(location => location.location_order !== action.payload.order);
       }
     },
 
-    // todo: add loading and error handling actions
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
@@ -75,7 +86,10 @@ const tripsSlice = createSlice({
   },
 });
 
+// Selector to get favorite trips
+export const selectFavoriteTrips = (state: { trips: TripsState }) => state.trips.favoriteTrips;
 
+// Export actions
 export const {
   setTrips,
   addTrip,
@@ -88,5 +102,5 @@ export const {
   setError,
 } = tripsSlice.actions;
 
-
+// Export reducer
 export default tripsSlice.reducer;

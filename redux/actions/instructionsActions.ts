@@ -13,6 +13,7 @@ import {
   updateInstruction as apiUpdateInstruction,
   deleteInstruction as apiDeleteInstruction,
 } from "@/api/trips/tripInstruction";
+import { TripInstruction } from "@/types/trip";
 
 export const fetchInstructionsByTripId =
   (tripId: string) => async (dispatch: AppDispatch) => {
@@ -28,8 +29,7 @@ export const fetchInstructionsByTripId =
   };
 
 export const createInstruction =
-  (instructionData: TripInstructionFormData) =>
-  async (dispatch: AppDispatch) => {
+  (instructionData: TripInstruction) => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {
       const newInstruction = await apiAddInstruction(instructionData);

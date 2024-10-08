@@ -10,19 +10,18 @@ import {
   getBearing,
   OFFSET_DISTANCE,
 } from "@/utils/maps";
-import { useRouter } from "expo-router";
-import { places } from "@/constants/maps";
+// import { useRouter } from "expo-router";
+// import { places } from "@/constants/maps";
+import { useRoute } from "@react-navigation/native";
 
 const Map: React.FC = () => {
   const mapRef = useRef<MapView>(null);
-  // const router = useRouter();
-  // const { places } = router.query;
-
+  const route = useRoute();
+  const { places } = route.params;
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  const locations = places ? JSON.parse(decodeURIComponent(places)) : [];
 
-  // const locations = places ? JSON.parse(decodeURIComponent(places)) : [];
-
-  const locations = places;
+  // const locations = places;
   const initialRegion = useMemo(
     () => calculateInitialRegion(locations),
     [locations],
@@ -47,7 +46,7 @@ const Map: React.FC = () => {
     <View style={styles.container}>
       <MapView ref={mapRef} style={styles.map} initialRegion={initialRegion}>
         {adjustedLocations.map((location) => (
-          <CustomMarker location={location} key={location.order} />
+          <CustomMarker location={location} key={location.location_order} />
         ))}
         <Polyline
           coordinates={coordinates}

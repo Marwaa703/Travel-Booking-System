@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import {
   View,
@@ -28,6 +29,7 @@ const CompanyProfile: React.FC = () => {
     selectCompanyById(state, user.company_id as string),
   ) as Company;
   console.log({ currentCompany });
+  
 
   return (
     <>
@@ -60,10 +62,10 @@ const CompanyProfile: React.FC = () => {
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
-              <SettingCard
+               <SettingCard
                 title="Trips"
                 onPress={() => {
-                  router.push("companyHome");
+                  router.push(`companyHome/?companyId=${user.company_id}`);
                 }}
                 leftIconName="air"
               />

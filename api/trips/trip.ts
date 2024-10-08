@@ -30,7 +30,7 @@ export const getAllTrips = async () => {
   } catch (error: any) {
     console.error("Get all trips failed with error:", error);
     if (error.response) {
-      console.error("Response data:", error.response.data); // Log the response data
+      console.error("Response data:", error.response.data);
       const errorMessage =
         error.response.data.error || "Failed to retrieve trips";
       throw new Error(errorMessage);
@@ -103,6 +103,33 @@ export const deleteTrip = async (tripId: string) => {
     } else {
       console.error("Delete trip failed with error:", error.message);
       throw new Error(error.message || "Failed to delete trip");
+    }
+  }
+};
+
+// Get trips by company ID
+export const getTripsByCompanyId = async (companyId: string) => {
+  try {
+    const res = await api.get(`/trips/company/${companyId}`);
+    console.log("Fetched trips for company:", res.data);
+    return res.data;
+  } catch (error: any) {
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message ||
+        error.response.statusText ||
+        "Failed to retrieve trips for company";
+      console.error(
+        "Get trips by company ID failed with server response:",
+        errorMessage,
+      );
+      throw new Error(errorMessage);
+    } else {
+      console.error(
+        "Get trips by company ID failed with error:",
+        error.message,
+      );
+      throw new Error(error.message || "Failed to retrieve trips for company");
     }
   }
 };
