@@ -14,6 +14,7 @@ import {
   deleteTrip as apiDeleteTrip,
   getCompanyTrips as apiGetTripsByCompanyId,
   getFullTrips,
+  getCompanyTrips,
 } from "@/api/trips/trip";
 import { TripDetailes, Trip } from "@/types/trip";
 
@@ -23,6 +24,7 @@ export const fetchTrips = () => async (dispatch: AppDispatch) => {
   try {
     // will be adjusted for some trips
     const trips = await getFullTrips();
+    console.log({ tripsFromAs: trips });
     dispatch(setTrips(trips));
   } catch (error) {
     dispatch(setError(true));
@@ -30,6 +32,19 @@ export const fetchTrips = () => async (dispatch: AppDispatch) => {
     dispatch(setLoading(false));
   }
 };
+export const fetchCompanyTrips =
+  (companyId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      // will be adjusted for some trips
+      const res = await getCompanyTrips(companyId);
+      dispatch(setTrips(res));
+    } catch (error) {
+      dispatch(setError(true));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
 // Add a new trip
 export const createTrip = (tripData: Trip) => async (dispatch: AppDispatch) => {

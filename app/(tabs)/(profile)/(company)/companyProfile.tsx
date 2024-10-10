@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { Company, CompanyUser } from "@/types/company";
 import useLogout from "@/hooks/useLogout";
+import { fetchTrips } from "@/redux/actions/tripActions";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   // todo: set the current company id current CompanyUser
@@ -29,6 +30,13 @@ const CompanyProfile: React.FC = () => {
   ) as Company;
   // console.log({ currentCompany });
 
+  const dispatch = useAppDispatch();
+
+  // console.log({ trips, loading });
+  useEffect(() => {
+    // admin from company
+    dispatch(fetchTrips()); //select companyTrips only from trips
+  }, [dispatch]);
   return (
     <>
       <Header
@@ -63,7 +71,7 @@ const CompanyProfile: React.FC = () => {
               <SettingCard
                 title="Trips"
                 onPress={() => {
-                  router.push(`companyHome/?companyId=${user.company_id}`);
+                  router.push(`companyHome/?companyId=${user?.company_id}`);
                 }}
                 leftIconName="air"
               />

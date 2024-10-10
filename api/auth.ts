@@ -165,8 +165,8 @@ export const createTrip = async (
     // Prepare the updated trip data
     return {
       success: true,
-      locations: tripLocations.map((response) => response.data), // Extract data from each response
       details: tripDetailes,
+      locations: tripLocations.map((response) => response.data), // Extract data from each response
       images: tripImages.map((response) => response.data), // Extract data from each response
     };
   } catch (error) {

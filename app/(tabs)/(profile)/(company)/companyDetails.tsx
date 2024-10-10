@@ -2,16 +2,10 @@ import papersApi from "@/api/companyPapers";
 import Button from "@/components/Buttons";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import useLoadingState from "@/hooks/useLoadingSate";
-import { fetchCompanyPapers } from "@/redux/actions/companiesActions";
 import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import {
-  Company,
-  CompanyData,
-  CompanyPaper,
-  CompanyUser,
-} from "@/types/company";
-import React, { useEffect, useState } from "react";
+import { Company, CompanyPaper, CompanyUser } from "@/types/company";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
 const CompanyProfileScreen = () => {
@@ -23,7 +17,6 @@ const CompanyProfileScreen = () => {
   const auth: CompanyUser = useAppSelector(
     (state) => state.auth.currentUser,
   ) as unknown as CompanyUser;
-
   const company: Company = useAppSelector((state) =>
     selectCompanyById(state, auth.company_id as string),
   ) as Company; // Adjust selector according to your state management
@@ -69,9 +62,14 @@ const CompanyProfileScreen = () => {
           </Text>
         </View>
 
-        <Button title={"Get company papers"} onPress={getCompanyPapers} />
+        <Button
+          title={"Get company papers"}
+          onPress={getCompanyPapers}
+          loading={loading}
+          loadingMessage={msg}
+        />
 
-        {papers.length > 0 && (
+        {papers?.length > 0 && (
           <View style={styles.papersSection}>
             <Text style={styles.sectionTitle}>Company Papers</Text>
             {papers.map((paper) => (

@@ -4,8 +4,13 @@ import ScreenFormContainer from "@/components/containers/ScreenFormContainer";
 import Spacer from "@/components/Spacer";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import MultiStepAddTripForm from "@/components/forms/MultiStepAddTripForm";
+import { useRoute } from "@react-navigation/native";
 
 const AddTrip = () => {
+  const route = useRoute();
+
+  const { companyId } = route.params as { companyId: string };
+  console.log({ companyIds: companyId });
   return (
     <ScreenWraper>
       <Spacer />

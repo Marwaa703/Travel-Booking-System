@@ -10,27 +10,32 @@ import { FONTS } from "@/constants/theme";
 import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 
-import { RootState, useAppSelector } from "@/redux/store";
-import { selectCompanyTrips } from "@/redux/slices/tripsSlice";
+import { RootState, useAppDispatch, useAppSelector } from "@/redux/store";
+import { selectCompanyTrips, setTrips } from "@/redux/slices/tripsSlice";
+import { fetchCompanyTrips, fetchTrips } from "@/redux/actions/tripActions";
+import { getCompanyTrips } from "@/api/trips/trip";
 
 // todo: pass the companyId coming from currentCompanyUser (Company Representative)
 // todo: handle edit, delete trip here
 const CompanyHome = () => {
   const route = useRoute();
   const { companyId } = route.params as { companyId: string };
-  const tripsState = useAppSelector((state) => state.trips);
-  const trips = selectCompanyTrips(tripsState, companyId);
-  const dispatch = useDispatch();
+  // const trips = selectCompanyTrips(tripsState, companyId);
+
+  // console.log({ trips });
+
+  const alltrips = useAppSelector((state) => state.trips.trips);
+  const trips = alltrips.filter((t) => t.company_id == companyId);
+  // companyId type is diff
 
   // useEffect(() => {
-  //   if (companyId) {
-
-  //   }
-  // }, [companyId, dispatch]);
-  // console.log({ trips, loading });
-  useEffect(() => {}, [trips]);
-  console.log({ companyId, trips });
-
+  //   console.log({
+  //     trips,
+  //     companyId,
+  //     alltrips: alltrips.filter((t) => t.company_id == companyId),
+  //   });
+  // }, [companyId, trips]);
+  console.log({ trips });
   return (
     <View style={styles.container}>
       <Header title="Home Page" />
@@ -51,27 +56,36 @@ const CompanyHome = () => {
             <Text style={styles.sectionTitle}>Current trips</Text>
           </View>
           <Spacer />
-
-          {/* {loading ? (
-            <Text>Loading trips...</Text>
-          ) : trips.length === 0 ? (
+          {trips?.length === 0 && (
+            <Text>No trips here , add the first one</Text>
+          )}
+          {trips.length === 0 ? (
             <Text>No trips to display. Add one!</Text>
           ) : (
             <View style={styles.cardContainer}>
-              {trips.map((trip) => (
-                <View key={trip.id} style={styles.cardWrapper}>
-                  <Card
-                    id={trip.id as string}
-                    image={trip.image ? trip.image.uri : "default_image_uri"}
-                    title={trip.name}
-                    subtitle={trip.name}
-                    rating={0}
-                    price={`$${trip.price}`}
-                  />
-                </View>
-              ))}
+              {trips.map((trip) => {
+                const images = trip?.images;
+                console.log({ images: images[0] });
+                return (
+                  <View key={trip.id} style={styles.cardWrapper}>
+                    <Card
+                      id={trip.id as string}
+                      image={
+                        // images[0].image_url
+                        //   ? images[0].image_url
+                        //   :
+                        "default_image_uri"
+                      }
+                      title={trip.name}
+                      subtitle={trip.name}
+                      rating={0}
+                      price={`$${trip.price}`}
+                    />
+                  </View>
+                );
+              })}
             </View>
-          )} */}
+          )}
         </ScrollView>
       </Padding>
     </View>

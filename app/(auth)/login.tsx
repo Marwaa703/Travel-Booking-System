@@ -38,7 +38,7 @@ const Login = () => {
         dispatch(fetchUsers());
       }
     }
-  }, [auth, role]);
+  }, [auth, dispatch, role]);
 
   return (
     <Padding>
