@@ -1,11 +1,10 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import {
   Text,
   ImageBackground,
   StyleSheet,
   Dimensions,
-  TouchableOpacity, 
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -14,10 +13,14 @@ const screenWidth = Dimensions.get("window").width;
 type CategoryCardProps = {
   title: string;
   image: string;
-  onPress: () => void; 
+  onPress: () => void;
 };
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ title, image, onPress }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({
+  title,
+  image,
+  onPress,
+}) => {
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       <ImageBackground source={{ uri: image }} style={styles.imageBackground}>
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 10,
     overflow: "hidden",
-    marginBottom:5
+    marginBottom: 5,
   },
   imageBackground: {
     flex: 1,

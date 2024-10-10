@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { StyleSheet, View } from "react-native";
 import React, { PropsWithChildren } from "react";
 

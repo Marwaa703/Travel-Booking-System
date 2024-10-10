@@ -1,16 +1,14 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import dayjs from 'dayjs'; 
+import React, { useState } from "react";
+import { View, ScrollView, Text, StyleSheet } from "react-native";
+import dayjs from "dayjs";
 import companiesData from "@/DummyData/companies.json";
 import tripsData from "@/DummyData/trips.json";
-import PieChartComponent from '@/components/charts/PieChart';
-import BarChartComponent from '@/components/charts/BarChart';
-import Header from '@/components/core/Header';
-import Buttons from '@/components/Buttons';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { COLORS } from '@/constants/theme';
-
+import PieChartComponent from "@/components/charts/PieChart";
+import BarChartComponent from "@/components/charts/BarChart";
+import Header from "@/components/core/Header";
+import Buttons from "@/components/Buttons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { COLORS } from "@/constants/theme";
 
 const TripAnalysisScreen: React.FC = () => {
   const trips = tripsData.trips;
@@ -21,11 +19,11 @@ const TripAnalysisScreen: React.FC = () => {
   // Helper methods to group trips and retrieve chart data
   const groupTripsByMonth = (trips: any[]) => {
     const groupedTrips: { [key: string]: any[] } = {};
-    trips.forEach(trip => {
-      const [startDateString] = trip.date.split(' to ');
+    trips.forEach((trip) => {
+      const [startDateString] = trip.date.split(" to ");
       const startDate = dayjs(startDateString);
       if (!startDate.isValid()) return;
-      const monthYear = startDate.format('MMMM YYYY');
+      const monthYear = startDate.format("MMMM YYYY");
       if (!groupedTrips[monthYear]) groupedTrips[monthYear] = [];
       groupedTrips[monthYear].push(trip);
     });
@@ -44,25 +42,25 @@ const TripAnalysisScreen: React.FC = () => {
   };
 
   const getCompanyData = () => {
-    return companies.map(company => ({
+    return companies.map((company) => ({
       name: company.title,
       population: company.trips,
       color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
-      legendFontColor: '#7F7F7F',
+      legendFontColor: "#7F7F7F",
       legendFontSize: 12,
     }));
   };
 
   const getMonthlyData = (monthlyTrips: any[]) => {
     return {
-      labels: ['Scheduled', 'Completed', 'Ongoing', 'Cancelled'],
+      labels: ["Scheduled", "Completed", "Ongoing", "Cancelled"],
       datasets: [
         {
           data: [
-            monthlyTrips.filter(trip => trip.status === 'Scheduled').length,
-            monthlyTrips.filter(trip => trip.status === 'Completed').length,
-            monthlyTrips.filter(trip => trip.status === 'Ongoing').length,
-            monthlyTrips.filter(trip => trip.status === 'Cancelled').length,
+            monthlyTrips.filter((trip) => trip.status === "Scheduled").length,
+            monthlyTrips.filter((trip) => trip.status === "Completed").length,
+            monthlyTrips.filter((trip) => trip.status === "Ongoing").length,
+            monthlyTrips.filter((trip) => trip.status === "Cancelled").length,
           ],
         },
       ],
@@ -77,7 +75,7 @@ const TripAnalysisScreen: React.FC = () => {
   const groupedTrips = groupTripsByMonth(trips);
   const overallData = getOverallData();
   const companyData = getCompanyData();
-  const selectedMonthYear = dayjs(selectedDate).format('MMMM YYYY');
+  const selectedMonthYear = dayjs(selectedDate).format("MMMM YYYY");
   const monthlyTrips = groupedTrips[selectedMonthYear] || [];
 
   return (
@@ -103,7 +101,6 @@ const TripAnalysisScreen: React.FC = () => {
             title="Pick Date"
             onPress={() => setShowDatePicker(true)}
             width="120%"
-           
           />
           {showDatePicker && (
             <DateTimePicker
@@ -129,20 +126,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
     marginBottom: 90,
   },
 
   datePickerText: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: COLORS.textPrimary,
   },
 
   datePickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 20,
     paddingHorizontal: 20,
   },

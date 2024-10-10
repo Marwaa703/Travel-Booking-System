@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { View, Text, Dimensions, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -8,7 +7,6 @@ import { COLORS, SPACING } from "@/constants/theme";
 import { selectFavoriteTrips } from "@/redux/slices/tripsSlice";
 
 const FavTrip = () => {
-
   const trips = useSelector(selectFavoriteTrips);
 
   if (trips.length === 0) {
@@ -16,7 +14,9 @@ const FavTrip = () => {
       <>
         <Header title="Favorite Trips" />
         <View style={styles.container}>
-          <Text style={styles.noTripsText}>You Do Not Like Our Trips Yet :(</Text>
+          <Text style={styles.noTripsText}>
+            You Do Not Like Our Trips Yet :(
+          </Text>
         </View>
       </>
     );
@@ -30,18 +30,18 @@ const FavTrip = () => {
           data={trips}
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
-              <Card 
+              <Card
                 id={item.tripDetailes.id}
-                image={{ uri: item.tripDetailes.image }} 
-                title={item.tripDetailes.name} 
-                subtitle={item.tripDetailes.location} 
+                image={{ uri: item.tripDetailes.image }}
+                title={item.tripDetailes.name}
+                subtitle={item.tripDetailes.location}
                 rating={item.tripDetailes.rating}
               />
             </View>
           )}
           keyExtractor={(item) => item.tripDetailes.id.toString()}
-          numColumns={2} 
-          columnWrapperStyle={styles.columnWrapper} 
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.scrollContainer}
         />
       </View>
@@ -54,19 +54,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SPACING.medium,
-    justifyContent: "center",  
-    alignItems: "center",    
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 80,
   },
   noTripsText: {
     textAlign: "center",
     marginTop: SPACING.xlarge,
     fontSize: 24,
-    color: COLORS.primary, 
+    color: COLORS.primary,
   },
   cardContainer: {
     marginRight: SPACING.small,
-    width: Dimensions.get('screen').width * 0.44, 
+    width: Dimensions.get("screen").width * 0.44,
   },
   columnWrapper: {
     justifyContent: "space-between",
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FavTrip; 
+export default FavTrip;

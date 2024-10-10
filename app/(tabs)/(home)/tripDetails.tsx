@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   View,
   Text,
@@ -7,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import Button from "@/components/Buttons";
 import { useRouter } from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -16,11 +15,10 @@ import CardSubtitle from "@/components/CardSubtitle";
 import icons from "@/constants/icons";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
-import { fetchTrips } from "@/redux/actions/tripActions";
-import { fetchImagesByTripId } from "@/redux/actions/imageActions";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLocationsByTripId } from "@/redux/actions/locationActions";
+import { getTripLocationById } from "@/api/tripLocations";
+import { Location } from "@/types/trip";
 
 interface Trip {
   id: number;
@@ -34,27 +32,26 @@ interface Trip {
 }
 
 const TripDetails: React.FC = () => {
+  const [locations, setLocations] = useState<Location[] | null>(null);
+
+  // fetch trip details, locations, instructions in case of booked
   const dispatch = useDispatch();
   const { trips } = useSelector((state: RootState) => state.trips);
   const { images = [] } = useSelector((state: RootState) => state.images) || {};
-  const { locations = [] } = useSelector((state: RootState) => state.locations) || {};
+
   const route = useRoute();
   const [isExpanded, setIsExpanded] = useState(false);
   const { tripId } = route.params as { tripId: string };
 
   const tripIdNumber = Number(tripId);
-  const trip = trips.find((t) => t.id === tripIdNumber) as Trip | undefined;
 
   useEffect(() => {
-  fetchTrips();
-  }, [dispatch]);
-
-  useEffect(() => {
-    trips.forEach((trip) => {
-      fetchImagesByTripId(trip.id);
-      fetchLocationsByTripId(trip.id);
-    });
-  }, [trips, dispatch]);
+    // fetch trip locations
+    (async () => {
+      const locations = await getTripLocationById(tripId);
+      setLocations(locations as unknown as Location[]);
+    })();
+  }, [tripId]);
 
   const {
     image_url = "../../../assets/imgDefault.png",
@@ -63,18 +60,21 @@ const TripDetails: React.FC = () => {
     rate = 0,
     price = "N/A",
     description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
-  } = trip || {};
+  } = {};
 
- 
-  const locationNames = locations.map((location) => location.name).join(", ");
-  const imageUrl = images.length > 0 && images[0].image_url ? images[0].image_url : "image_url"; 
-
+  const imageUrl =
+    images.length > 0 && images[0].image_url
+      ? images[0].image_url
+      : "image_url";
 
   const router = useRouter();
- 
+
   const handleSeeOnMap = () => {
-    router.push(`/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`);
-  }
+    // will be handled
+    router.push(
+      `/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`,
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -100,8 +100,9 @@ const TripDetails: React.FC = () => {
           </View>
           <Text style={styles.companyName}>{subtitle}</Text>
           <View style={styles.detailRow}>
+            {/* update todo */}
             <CardSubtitle
-              text={locationNames}
+              text={"locationNames"}
               icon={icons.location}
               iconColor={COLORS.textSecondary}
             />
@@ -122,7 +123,7 @@ const TripDetails: React.FC = () => {
                   styles.tripDescription,
                   !isExpanded && styles.descriptionTruncated,
                 ]}
-                numberOfLines={isExpanded ? undefined : 3} 
+                numberOfLines={isExpanded ? undefined : 3}
               >
                 {description}
               </Text>
@@ -219,10 +220,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   descriptionContainer: {
-    maxHeight: 120, 
+    maxHeight: 120,
   },
   scrollableDescription: {
-    maxHeight: 110, 
+    maxHeight: 110,
   },
   tripDescription: {
     fontSize: FONTS.medium,

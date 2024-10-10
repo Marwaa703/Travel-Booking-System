@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import React, { useState } from "react";
 import { signupInputs, signupSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,16 +9,16 @@ import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
 import { Text } from "react-native";
 import { useDispatch } from "react-redux";
-import { signup } from "@/api/auth"; 
-import { signupSuccess, signupFailure } from "@/redux/slices/authSlice"; 
+import { signup } from "@/api/auth";
+import { signupSuccess, signupFailure } from "@/redux/slices/authSlice";
 import { router } from "expo-router";
 import { Gender } from "@/types/company";
 import useLoadingState from "@/hooks/useLoadingSate";
 
 const SignupForm = () => {
-  const {loading,msg,setLoading,setMsg}= useLoadingState();
+  const { loading, msg, setLoading, setMsg } = useLoadingState();
   const [selectedGender, setSelectedGender] = useState<Gender>("male");
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const {
     control,
@@ -34,35 +32,38 @@ const SignupForm = () => {
   const handleSignup = async (data: any) => {
     console.log("start signup");
     setLoading(true);
-    setMsg("Registering your information")
+    setMsg("Registering your information");
     const userData = { ...data, gender: selectedGender, role: "User" };
     // console.log(userData);
     try {
       const response = await signup(userData);
-
-      if (!response || !response.token || !response.user) {
-        throw new Error("Invalid response from server");
+      console.log({ response });
+      if (!response.success) {
+        setMsg("Invalid response from server");
+        console.log("error not comp");
+        return;
       }
 
-      dispatch(signupSuccess({
-        token: response.token,
-        user: response.user,
-        role: response.user.role,
-      }));
-      console.log({response})
+      dispatch(
+        signupSuccess({
+          token: response?.data?.token,
+          user: response?.data?.user,
+          role: response?.data?.user?.role,
+        }),
+      );
+      console.log("end");
       router.replace("/login");
       reset();
     } catch (error: any) {
-      console.error("Signup failed:", error.message);
-      dispatch(signupFailure(error.message || "Signup failed. Please try again."));
-    }finally{
+      console.error("Signup failed:", error);
+      // dispatch(
+      //   signupFailure(error.message || "Signup failed. Please try again."),
+      // );
+    } finally {
       setLoading(false);
-      setMsg("")
+      setMsg("");
     }
   };
-  
-
-  console.log({ errors, selectedGender });
 
   return (
     <>
@@ -86,7 +87,10 @@ const SignupForm = () => {
       <Button
         title="Sign Up"
         onPress={handleSubmit(handleSignup)} // Call handleSignup on form submission
-        fontSize={FONTS.large} loadingMessage={msg} loading={loading}      />
+        fontSize={FONTS.large}
+        loadingMessage={msg}
+        loading={loading}
+      />
     </>
   );
 };

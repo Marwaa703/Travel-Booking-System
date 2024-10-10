@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -6,8 +5,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import companiesSlice from "@/redux/slices/companiesSlice";
 import userSlice from "@/redux/slices/userSlice";
 import tripsSlice from "@/redux/slices/tripsSlice";
-import authSlice from "@/redux/slices/authSlice"; 
-import locationsSlice from "@/redux/slices/tripLocationSlice";
+import authSlice from "@/redux/slices/authSlice";
 import imagesSlice from "@/redux/slices/tripImageSlice";
 import instructionsSlice from "@/redux/slices/tripInstructionSlice";
 
@@ -29,12 +27,6 @@ const companiesPersistConfig = {
 
 const authPersistConfig = {
   key: "auth",
-  storage: AsyncStorage, 
-};
-
-
-const locationsPersistConfig = {
-  key: "locations",
   storage: AsyncStorage,
 };
 
@@ -51,11 +43,16 @@ const instructionsPersistConfig = {
 // Create persisted reducers
 const persistedTripsReducer = persistReducer(tripsPersistConfig, tripsSlice);
 const persistedUserReducer = persistReducer(userPersistConfig, userSlice);
-const persistedCompaniesReducer = persistReducer(companiesPersistConfig, companiesSlice);
+const persistedCompaniesReducer = persistReducer(
+  companiesPersistConfig,
+  companiesSlice,
+);
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
-const persistedLocationsReducer = persistReducer(locationsPersistConfig, locationsSlice);
 const persistedImagesReducer = persistReducer(imagesPersistConfig, imagesSlice);
-const persistedInstructionsReducer = persistReducer(instructionsPersistConfig, instructionsSlice);
+const persistedInstructionsReducer = persistReducer(
+  instructionsPersistConfig,
+  instructionsSlice,
+);
 
 // Configure the store
 export const store = configureStore({
@@ -64,7 +61,6 @@ export const store = configureStore({
     user: persistedUserReducer,
     companies: persistedCompaniesReducer,
     auth: persistedAuthReducer,
-    locations: persistedLocationsReducer,
     images: persistedImagesReducer,
     instructions: persistedInstructionsReducer,
   },
@@ -82,5 +78,5 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 // Create typed hooks for dispatch and selector
-export const useAppDispatch: () => AppDispatch = useDispatch; 
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector; 
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

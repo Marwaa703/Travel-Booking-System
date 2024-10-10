@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import {
   View,
@@ -17,7 +16,7 @@ import icons from "@/constants/icons";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "./Rating";
 import Spacer from "./Spacer";
-const defaultImage = require('../assets/imgDefault.png');
+const defaultImage = require("../assets/imgDefault.png");
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.44;
 const CARD_HEIGHT = CARD_WIDTH * 1.68;

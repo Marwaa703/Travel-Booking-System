@@ -1,23 +1,39 @@
-/* eslint-disable prettier/prettier */
-
-import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView } from 'react-native';
-import SettingCard from '@/components/SettingContainer'; 
-import { COLORS } from '@/constants/theme';
-import Header from '@/components/core/Header';
-import { router } from 'expo-router';
-import useLogout from '@/hooks/useLogout';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import SettingCard from "@/components/SettingContainer";
+import { COLORS } from "@/constants/theme";
+import Header from "@/components/core/Header";
+import { router } from "expo-router";
+import useLogout from "@/hooks/useLogout";
+import { useAppSelector } from "@/redux/store";
+import { User } from "@/types/user";
 
 const ProfileScreen: React.FC = () => {
-  const handleLogout =useLogout();
+  const auth = useAppSelector((state) => state.auth.currentUser);
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
+  const logout = useLogout();
+  console.log({ auth });
   return (
     <>
-      <Header 
-        title='User Profile' 
-        rightIcon='create-outline' 
-        leftIcon='arrow-back' 
-        onRightIconPress={() => { router.push("/userEdit"); }} 
-        onLeftIconPress={() => { router.back(); }} 
+      <Header
+        title="User Profile"
+        rightIcon="create-outline"
+        leftIcon="arrow-back"
+        onRightIconPress={() => {
+          router.push("/userEdit");
+        }}
+        onLeftIconPress={() => {
+          router.back();
+        }}
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
@@ -25,11 +41,13 @@ const ProfileScreen: React.FC = () => {
             {/* Profile Header */}
             <View style={styles.headerContainer}>
               <Image
-                source={{ uri: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg" }}
+                source={{
+                  uri: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+                }}
                 style={styles.profileImage}
               />
-              <Text style={styles.profileName}>Leonardo</Text>
-              <Text style={styles.profileEmail}>leonardo@gmail.com</Text>
+              <Text style={styles.profileName}>{user?.first_name}</Text>
+              <Text style={styles.profileEmail}>{user?.email}</Text>
             </View>
 
             {/* Setting Cards */}
@@ -58,9 +76,9 @@ const ProfileScreen: React.FC = () => {
               onPress={() => {}}
               leftIconName="tune"
             />
-             <SettingCard
+            <SettingCard
               title="Log Out"
-              onPress={handleLogout}
+              onPress={() => logout()}
               leftIconName="logout"
             />
           </View>
@@ -74,26 +92,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20, 
-    marginBottom: 100, 
+    paddingTop: 20,
+    marginBottom: 100,
   },
   scrollContainer: {
-    flexGrow: 1, 
-    justifyContent: 'center', 
+    flexGrow: 1,
+    justifyContent: "center",
   },
   headerContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 30,
   },
   profileImage: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: COLORS.opacity, 
+    backgroundColor: COLORS.opacity,
   },
   profileName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
     color: COLORS.textPrimary,
   },

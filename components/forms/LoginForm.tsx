@@ -10,17 +10,18 @@ import LinkButton from "../LinkButton";
 import { router } from "expo-router";
 import { useAppDispatch } from "@/redux/store";
 import { addUser } from "@/redux/slices/userSlice";
-
 import ToggleSwitch from "../ToggleSwitch";
 import Spacer from "../Spacer";
 import { loginFailure, loginSuccess } from "@/redux/slices/authSlice";
 import useLoadingState from "@/hooks/useLoadingSate";
 import { isCompanyUserRole } from "@/utils";
-import { UserTypes, UserWithId } from "@/types/user";
+import { UserTypes } from "@/types/user";
 import { login } from "@/api/auth";
+import FieldErrorMessage from "./FieldErrorMessage";
 
 const LoginForm = () => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
+  const [error, setError] = useState("");
   const [userType, setUserType] = useState<UserTypes>("User");
   const dispatch = useAppDispatch();
   const {
@@ -32,23 +33,23 @@ const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const companyRoles = ["Representative | Support | TourGuide"];
+  const companyRoles = ["Representative", "Support", "TourGuide"];
+
   const handleLogin = async (data: any) => {
+    setError("");
     setLoading(true);
-    setMsg("checking user info...");
-    console.log({ data });
+    setMsg("Checking user info...");
+
     try {
-      console.log({ userType });
       const response = await login(data.email, data.password, userType);
 
-      console.log({ response });
-      if (!response || !response.token || !response.user) {
-        throw new Error("Invalid response from server");
+      if (!response.success) {
+        setError("Wrong email or password");
       }
-      const { token, user } = response;
+
+      const { token, user } = response.data;
 
       dispatch(loginSuccess({ token, user, role: user.role }));
-      console.log("Login response:", response);
       dispatch(addUser(user));
 
       if (user.role === "User") {
@@ -56,16 +57,18 @@ const LoginForm = () => {
       } else if (user.role === "Admin") {
         router.push("/(tabs)/(profile)/(admin)/adminProfile");
       } else if (companyRoles.includes(user.role)) {
+        // Handle company roles as needed
       } else if (isCompanyUserRole(user.role)) {
         router.push("/(tabs)/(profile)/(company)/companyProfile");
       }
 
       reset();
     } catch (error: any) {
-      dispatch(loginFailure("Login failed: " + error.message));
-      console.error({ error: error.message });
-      setMsg("falied to login, try again");
-      setLoading(false);
+      dispatch(
+        loginFailure("Login failed: " + (error.message || "Unknown error")),
+      );
+      setMsg("Failed to login, try again");
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -84,11 +87,12 @@ const LoginForm = () => {
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
           icon={icon}
-          error={errors["email"]?.message?.toString()}
+          error={errors[name]?.message?.toString()}
         />
       ))}
+      <FieldErrorMessage error={error} />
       <View style={{ alignSelf: "flex-end", marginVertical: 10 }}>
-        <LinkButton to={"/forget_password"} label="Forget Password" />
+        <LinkButton to="/forget_password" label="Forget Password" />
       </View>
       <Button
         title="Sign In"

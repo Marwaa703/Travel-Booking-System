@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
-
 export const COLORS = {
   // primary: "#ea7932", // New Primary color for app elements
   primary: "#E88D67", // Primary color for app elements
   secondary: "#006989", // Secondary color for headers, buttons, etc.
   accent: "#005C78", // Accent color for highlights
-  light: "#F7F7F9", // light color 
+  light: "#F7F7F9", // light color
   bg: "#F3F7EC", // Background color for screens
   textPrimary: "#333333", // Primary text color
   textSubtitle: "#7D848D", // Primary text color
@@ -15,9 +13,8 @@ export const COLORS = {
   warning: "#ff9800", // Warning color
   priceTag: "#FBA834", // Color for price tags
   calendarSelected: "#CAF4FF", // Calendar selected date color
-  opacity:"rgba(255, 255, 255, 0.7)",
-  link:'#0D6EFD'
-
+  opacity: "rgba(255, 255, 255, 0.7)",
+  link: "#0D6EFD",
 };
 export const DARK_COLORS = {
   primary: "#E88D67", // Keeping the primary color consistent
@@ -34,9 +31,8 @@ export const DARK_COLORS = {
   priceTag: "#FBA834", // Same price tag color
   calendarSelected: "#1E90FF", // Bright selected date color to pop on dark background
   opacity: "rgba(255, 255, 255, 0.3)", // Adjusted opacity for overlays
-  link: '#3A8DFF' // Lighter link color for better contrast
+  link: "#3A8DFF", // Lighter link color for better contrast
 };
-
 
 export const FONTS = {
   xsmall: 10,

@@ -25,8 +25,8 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
       setLocations([
         ...locations,
         {
-          location_order: locations.length + 1,
           ...selectedLocation,
+          location_order: locations.length + 1,
           image_url: imageUrl,
         },
       ]);

@@ -7,7 +7,9 @@ export interface TripDetailes {
   date: Date;
   status?: TripStatus;
   rate?: number | null;
-  isFavorite?: boolean; // New
+  isFavorite?: boolean;
+  company_id?: string;
+  // New
   // Add other trip details fields as needed
 }
 
@@ -21,6 +23,7 @@ export interface Location {
 }
 
 export interface TripImage {
+  image_id?: string;
   image_url: string;
   caption: string;
   trip_id?: string;
@@ -33,10 +36,15 @@ export interface TripInstruction {
   trip_id: string;
 }
 
-export interface Trip {
-  details: TripDetailes;
+export interface Trip extends TripDetailes {
+  images: TripImage[]; // Array of image URLs
+  locations?: Location[];
+  details?: TripDetailes;
+}
+export interface TripFormData {
   images: TripImage[]; // Array of image URLs
   locations: Location[];
+  details: TripDetailes;
 }
 
 export type TripStatus = "paused" | "active" | "completed" | "canceled";

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import {
   Text,
@@ -17,7 +16,7 @@ interface BlogPost {
 
 interface OldestPostCardProps {
   post: BlogPost;
-  onPress: () => void; 
+  onPress: () => void;
 }
 
 const { width } = Dimensions.get("window");
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: "hidden",
     backgroundColor: COLORS.bg,
-    marginRight: 10
+    marginRight: 10,
   },
   image: {
     width: "100%",

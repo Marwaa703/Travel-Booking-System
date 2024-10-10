@@ -22,7 +22,7 @@ export interface CompanyUser {
   email: string;
   phone: string;
   password: string;
-  birthdate?: string;
+  birth_date?: string;
   role: CompanyUserRoles;
   gender?: Gender;
 }

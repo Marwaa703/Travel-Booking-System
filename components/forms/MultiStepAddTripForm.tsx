@@ -8,7 +8,13 @@ import Spacer from "../Spacer";
 import TripImageForm from "./TripImageForm";
 import TripLocationForm from "./TripLocationForm";
 import IconButton from "../IconButton";
-import { Location, TripDetailes, Trip, TripImage } from "@/types/trip";
+import {
+  Location,
+  TripDetailes,
+  Trip,
+  TripImage,
+  TripFormData,
+} from "@/types/trip";
 import { useRouter } from "expo-router";
 import DateInputPicker from "./BirthdatePicker";
 import { useDispatch } from "react-redux";
@@ -27,7 +33,7 @@ const MultiStepAddTripForm = () => {
   const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [tripData, setTripData] = useState<Trip>({
+  const [tripData, setTripData] = useState<TripFormData>({
     details: {} as TripDetailes,
     locations: [] as Location[],
     images: [],
@@ -60,6 +66,7 @@ const MultiStepAddTripForm = () => {
   const handleImageSubmit = async (data: TripImage[]) => {
     console.log("start adding trip");
     const finalData = { ...tripData, images: data };
+    console.log({ finalData });
     try {
       setLoading(true);
       setMsg("Registerinig Company...");

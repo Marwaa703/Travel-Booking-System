@@ -1,10 +1,9 @@
-/* eslint-disable prettier/prettier */
-import { COLORS } from '@/constants/theme';
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { PieChart } from 'react-native-chart-kit';
+import { COLORS } from "@/constants/theme";
+import React from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { PieChart } from "react-native-chart-kit";
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = Dimensions.get("window").width;
 
 interface PieChartData {
   name: string;
@@ -39,8 +38,8 @@ const PieChartComponent: React.FC<PieChartProps> = ({ title, data }) => {
 };
 
 const chartConfig = {
-  backgroundGradientFrom: '#f8f8f8',
-  backgroundGradientTo: '#fff',
+  backgroundGradientFrom: "#f8f8f8",
+  backgroundGradientTo: "#fff",
   decimalPlaces: 0,
   color: (opacity = 1) => `rgba(34, 150, 243, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -49,20 +48,20 @@ const chartConfig = {
 const styles = StyleSheet.create({
   pieContainer: {
     marginBottom: 30,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     elevation: 3,
     padding: 5,
   },
   chartTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 20,
     color: COLORS.textPrimary,
     paddingLeft: 20,
   },
   chartContainer: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 });
 

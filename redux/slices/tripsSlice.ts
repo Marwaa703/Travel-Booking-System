@@ -1,17 +1,14 @@
-/* eslint-disable prettier/prettier */
 import { Trip, TripDetailes } from "@/types/trip";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TripsState {
-  trips: TripDetailes[];
-  favoriteTrips: TripDetailes[];
+  trips: Trip[];
   isLoading: boolean;
   isError: boolean;
 }
 
 const initialState: TripsState = {
   trips: [],
-  favoriteTrips: [],
   isLoading: false,
   isError: false,
 };
@@ -20,23 +17,30 @@ const tripsSlice = createSlice({
   name: "trips",
   initialState,
   reducers: {
-    setTrips: (state, action: PayloadAction<TripDetailes[]>) => {
+    setTrips: (state, action: PayloadAction<Trip[]>) => {
       state.trips = action.payload;
     },
 
-    addTrip: (state, action: PayloadAction<TripDetailes>) => {
+    addTrip: (state, action: PayloadAction<Trip>) => {
       state.trips.push(action.payload);
     },
 
     removeTrip: (state, action: PayloadAction<string>) => {
       state.trips = state.trips.filter((trip) => trip.id !== action.payload);
-      state.favoriteTrips = state.favoriteTrips.filter((trip) => trip.id !== action.payload);
     },
 
-    updateTripDetails: (state, action: PayloadAction<{ id: string; details: Partial<TripDetailes> }>) => {
-      const index = state.trips.findIndex((trip) => trip.id === action.payload.id);
+    updateTripDetails: (
+      state,
+      action: PayloadAction<{ id: string; details: Partial<Trip> }>,
+    ) => {
+      const index = state.trips.findIndex(
+        (trip) => trip.id === action.payload.id,
+      );
       if (index !== -1) {
-        state.trips[index] = { ...state.trips[index], ...action.payload.details };
+        state.trips[index] = {
+          ...state.trips[index],
+          ...action.payload.details,
+        };
       }
     },
 
@@ -44,6 +48,7 @@ const tripsSlice = createSlice({
       const index = state.trips.findIndex((trip) => trip.id === action.payload);
       if (index !== -1) {
         state.trips[index].isFavorite = !state.trips[index].isFavorite;
+        // then select all fav trips locally
       }
     },
 
@@ -61,21 +66,6 @@ const tripsSlice = createSlice({
     //   }
     // },
 
-    // addLocation: (state, action: PayloadAction<{ tripId: string; location: Omit<TripDetailes> }>) => {
-    //   const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
-    //   if (tripIndex !== -1) {
-    //     const newLocation = { ...action.payload.location, tripId: action.payload.tripId };
-    //     state.trips[tripIndex].locations.push(newLocation);
-    //   }
-    // },
-
-    // removeLocation: (state, action: PayloadAction<{ tripId: string; order: number }>) => {
-    //   const tripIndex = state.trips.findIndex((trip) => trip.tripDetailes.id === action.payload.tripId);
-    //   if (tripIndex !== -1) {
-    //     state.trips[tripIndex].locations = state.trips[tripIndex].locations.filter(location => location.location_order !== action.payload.order);
-    //   }
-    // },
-
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
@@ -87,7 +77,10 @@ const tripsSlice = createSlice({
 });
 
 // Selector to get favorite trips
-export const selectFavoriteTrips = (state: { trips: TripsState }) => state.trips.favoriteTrips;
+export const selectFavoriteTrips = (state: { trips: TripsState }) =>
+  state.trips.trips.filter((t) => t.isFavorite);
+export const selectCompanyTrips = (state: TripsState, companyId: string) =>
+  state.trips.filter((t) => t.company_id === companyId);
 
 // Export actions
 export const {

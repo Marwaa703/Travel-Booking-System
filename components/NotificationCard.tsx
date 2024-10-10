@@ -1,7 +1,13 @@
-/* eslint-disable prettier/prettier */
-import { COLORS } from '@/constants/theme';
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ImageSourcePropType, Pressable } from 'react-native';
+import { COLORS } from "@/constants/theme";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageSourcePropType,
+  Pressable,
+} from "react-native";
 
 type NotificationCardProps = {
   avatar: ImageSourcePropType;
@@ -10,18 +16,23 @@ type NotificationCardProps = {
   onPress: () => void;
 };
 
-const NotificationCard: React.FC<NotificationCardProps> = ({ avatar, title, description, onPress }) => {
-  const [currentTime, setCurrentTime] = useState('');
+const NotificationCard: React.FC<NotificationCardProps> = ({
+  avatar,
+  title,
+  description,
+  onPress,
+}) => {
+  const [currentTime, setCurrentTime] = useState("");
   const [backgroundVisible, setBackgroundVisible] = useState(true); // State to manage background visibility
 
   const getCurrentTime = () => {
     const date = new Date();
     const options: Intl.DateTimeFormatOptions = {
-      weekday: 'short',
-      hour: 'numeric',
-      minute: 'numeric',
+      weekday: "short",
+      hour: "numeric",
+      minute: "numeric",
     };
-    return date.toLocaleString('en-US', options);
+    return date.toLocaleString("en-US", options);
   };
 
   useEffect(() => {
@@ -34,16 +45,14 @@ const NotificationCard: React.FC<NotificationCardProps> = ({ avatar, title, desc
   };
 
   return (
-
-    <Pressable onPress={handlePress} style={[styles.container, !backgroundVisible && styles.backgroundHidden]}>
+    <Pressable
+      onPress={handlePress}
+      style={[styles.container, !backgroundVisible && styles.backgroundHidden]}
+    >
       <Image source={avatar} style={styles.avatar} />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text
-          style={styles.description}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
+        <Text style={styles.description} numberOfLines={1} ellipsizeMode="tail">
           {description}
         </Text>
       </View>
@@ -54,17 +63,17 @@ const NotificationCard: React.FC<NotificationCardProps> = ({ avatar, title, desc
 
 const styles = StyleSheet.create({
   container: {
-    width:"100%",
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#E6F2FF', // Default background color
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#E6F2FF", // Default background color
     padding: 25,
     // borderRadius: 10,
     // marginVertical: 10,
   },
   backgroundHidden: {
-    backgroundColor: 'transparent', // Hide background after click
+    backgroundColor: "transparent", // Hide background after click
   },
   avatar: {
     width: 50,
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 18,
     marginBottom: 5,
   },

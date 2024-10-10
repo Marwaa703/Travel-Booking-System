@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import api from "./axiosApi";
 
 // Get all booked trips by user ID
@@ -15,11 +14,14 @@ export const getBookedTripsByUserId = async (userId: string) => {
         "Failed to retrieve booked trips";
       console.error(
         "Get booked trips by user ID failed with server response:",
-        errorMessage
+        errorMessage,
       );
       throw new Error(errorMessage);
     } else {
-      console.error("Get booked trips by user ID failed with error:", error.message);
+      console.error(
+        "Get booked trips by user ID failed with error:",
+        error.message,
+      );
       throw new Error(error.message || "Failed to retrieve booked trips");
     }
   }

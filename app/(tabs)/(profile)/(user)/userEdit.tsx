@@ -1,29 +1,38 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Image, ScrollView } from "react-native";
 import { COLORS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import UserEditForm from "@/components/forms/UserEditForm";
 import ImagePickerCropper from "@/components/forms/ImagePickerCropper";
 import { User } from "@/types/user";
+import { useAppSelector } from "@/redux/store";
+import { useRouter } from "expo-router";
+import useLogout from "@/hooks/useLogout";
 
 const EditProfileScreen: React.FC = () => {
   const userEditFormRef = useRef<{ submitData: () => void }>(null);
+  const router = useRouter();
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
   const [image, setImage] = useState<string>(
     "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
   );
 
+  useEffect(() => {}, [userEditFormRef, user]);
   const handleUpdate = () => {
     if (userEditFormRef.current) {
       userEditFormRef.current.submitData(); // Call the submit function in the child
     }
   };
+  console.log({ user });
   return (
     <>
       <Header
         title="Edit Your Profile"
         rightIcon="checkmark"
         leftIcon="close"
-        onLeftIconPress={() => {}}
+        onLeftIconPress={() => router.back()}
         onRightIconPress={handleUpdate}
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -37,17 +46,7 @@ const EditProfileScreen: React.FC = () => {
             </TouchableOpacity> */}
           </View>
 
-          <UserEditForm
-            ref={userEditFormRef}
-            user={
-              {
-                firstName: "Latif",
-                lastName: "essam",
-                phone: "01205175195",
-                address: "4654as54as5sda",
-              } as User
-            }
-          />
+          <UserEditForm ref={userEditFormRef} user={user} />
         </View>
       </ScrollView>
     </>
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
 
 export default EditProfileScreen;
 
-// /* eslint-disable prettier/prettier */
+//
 
 // import React from 'react';
 // import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';

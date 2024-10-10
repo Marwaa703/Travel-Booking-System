@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import Padding from "@/components/containers/Padding";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
@@ -31,7 +29,7 @@ const Signup = () => {
                 <Text style={styles.subTitle}>Already have an account?</Text>
                 <LinkButton to={"login"} label="Sign In" />
               </View>
-              <Spacer height={26}/>
+              <Spacer height={26} />
               <View style={{ marginHorizontal: "auto" }}>
                 <LinkButton
                   style={styles.company}

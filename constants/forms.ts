@@ -12,10 +12,10 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const signupSchema = Yup.object().shape({
-  firstName: Yup.string()
+  first_name: Yup.string()
     .min(2, "First name must be greater than one character?")
     .required("First Name Required"),
-  lastName: Yup.string()
+  last_name: Yup.string()
     .min(2, "Last name must be greater than one character?")
     .required("Last Name Required"),
   email: Yup.string()
@@ -30,18 +30,18 @@ export const signupSchema = Yup.object().shape({
 });
 
 export const userSchema = Yup.object().shape({
-  firstName: Yup.string()
+  first_name: Yup.string()
     .min(2, "First name must be greater than one character?")
     .required("First Name Required"),
-  lastName: Yup.string()
+  last_name: Yup.string()
     .min(2, "Last name must be greater than one character?")
     .required("Last Name Required"),
-  address: Yup.string().min(10, "Enter the full address?").optional(),
+  // address: Yup.string().min(10, "Enter the full address?").optional(),
   phone: Yup.string()
     .matches(phoneRegex, { message: "Invalid phone number format" })
     .max(13, "Max Egyptian number is 13 length, prefixed with +20")
     .required("Enter your phone number"),
-  birthdate: birthdateSchema,
+  birth_date: birthdateSchema,
 });
 
 const tripDateSchema = Yup.date()
@@ -111,17 +111,19 @@ export interface InputFieldProps<T> {
 
 // Form Field Types
 export type SignupFormFields =
-  | "firstName"
-  | "lastName"
+  | "first_name"
+  | "last_name"
   | "email"
   | "password"
   | "phone";
+export type LoginFormFields = "email" | "password";
+
 export type UserFormFields =
-  | "firstName"
-  | "lastName"
-  | "address"
+  | "first_name"
+  | "last_name"
+  // | "address"
   | "phone"
-  | "birthdate";
+  | "birth_date";
 export type AddTripFormFields =
   | "name"
   | "description"
@@ -138,7 +140,7 @@ export type CompanyDetailsFormFields =
 export type CompanyPapersFormFields = "title" | "imageUrl";
 
 // Input Arrays
-export const loginInputs: InputFieldProps<SignupFormFields>[] = [
+export const loginInputs: InputFieldProps<LoginFormFields>[] = [
   {
     name: "email",
     icon: "mail",
@@ -156,26 +158,26 @@ export const loginInputs: InputFieldProps<SignupFormFields>[] = [
 // user EditForm
 export const userInputs: InputFieldProps<UserFormFields>[] = [
   {
-    name: "firstName",
+    name: "first_name",
     icon: "person-sharp",
     autoCapitalize: "words",
     keyboardType: "default",
     trim: true,
   },
   {
-    name: "lastName",
+    name: "last_name",
     icon: "person-sharp",
     autoCapitalize: "words",
     keyboardType: "default",
     trim: true,
   },
-  {
-    name: "address",
-    icon: "home-outline",
-    autoCapitalize: "none",
-    keyboardType: "default",
-    trim: false, // No trimming for address
-  },
+  // {
+  //   name: "address",
+  //   icon: "home-outline",
+  //   autoCapitalize: "none",
+  //   keyboardType: "default",
+  //   trim: false, // No trimming for address
+  // },
   {
     name: "phone",
     icon: "phone-portrait-outline",
@@ -184,7 +186,7 @@ export const userInputs: InputFieldProps<UserFormFields>[] = [
     trim: true,
   },
   {
-    name: "birthdate",
+    name: "birth_date",
     icon: "calendar",
     autoCapitalize: "none",
     keyboardType: "default",
@@ -194,14 +196,14 @@ export const userInputs: InputFieldProps<UserFormFields>[] = [
 
 export const signupInputs: InputFieldProps<SignupFormFields>[] = [
   {
-    name: "firstName",
+    name: "first_name",
     icon: "person-sharp",
     autoCapitalize: "words",
     keyboardType: "default",
     trim: true,
   },
   {
-    name: "lastName",
+    name: "last_name",
     icon: "person-sharp",
     autoCapitalize: "words",
     keyboardType: "default",

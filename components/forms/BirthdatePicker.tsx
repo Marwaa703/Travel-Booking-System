@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import TextInputField from "./TextInputField";
@@ -10,19 +10,24 @@ interface DateInputPickerProps {
   error?: string;
   autoCapitalize?: "none" | "words" | "sentences" | "characters";
   keyboardType?: string;
-  icon?: any; // Adjust based on your icon type
+  icon?: any;
+  value?: string;
 }
 
 const DateInputPicker: React.FC<DateInputPickerProps> = ({
   onSelectDate,
   name,
+  value,
   error,
   autoCapitalize = "none",
-  keyboardType = "default",
   icon,
 }) => {
   const [date, setDate] = useState<Date>(new Date());
   const [show, setShow] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (value) setDate(new Date(value));
+  }, [value]);
 
   const onChange = (event: any, selectedDate?: Date) => {
     const currentDate = selectedDate || date;

@@ -1,25 +1,33 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FONTS } from "@/constants/theme";
 
 interface RatingProps {
-  rate: number;
+  rate: number | null;
 }
 
 const Rating = ({ rate }: RatingProps) => {
+  if (rate === null) return <Text>N/A</Text>;
+
   const fullStars = Math.floor(rate);
   const hasHalfStar = rate % 1 !== 0;
-if(rate ===0 ) return <Text>0</Text>
+  if (rate === 0) return <Text>0</Text>;
   return (
     <View style={styles.container}>
       {[...Array(fullStars)].map((_, index) => (
         <Ionicons key={index} name="star" size={FONTS.normal} color="gold" />
       ))}
-      {hasHalfStar && <Ionicons name="star-half" size={FONTS.normal} color="gold" />}
+      {hasHalfStar && (
+        <Ionicons name="star-half" size={FONTS.normal} color="gold" />
+      )}
       {[...Array(5 - Math.ceil(rate))].map((_, index) => (
-        <Ionicons key={index} name="star-outline" size={FONTS.normal} color="gray" />
+        <Ionicons
+          key={index}
+          name="star-outline"
+          size={FONTS.normal}
+          color="gray"
+        />
       ))}
 
       <Text style={styles.rate}>{rate}</Text>

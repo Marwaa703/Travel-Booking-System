@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CustomMarker from "@/components/maps/CustomMarker";
@@ -10,16 +10,18 @@ import {
   getBearing,
   OFFSET_DISTANCE,
 } from "@/utils/maps";
-// import { useRouter } from "expo-router";
-// import { places } from "@/constants/maps";
+
 import { useRoute } from "@react-navigation/native";
 
 const Map: React.FC = () => {
   const mapRef = useRef<MapView>(null);
   const route = useRoute();
   const { places } = route.params;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const locations = places ? JSON.parse(decodeURIComponent(places)) : [];
+
+  const locations = useMemo(
+    () => (places ? JSON.parse(decodeURIComponent(places)) : []),
+    [places],
+  );
 
   // const locations = places;
   const initialRegion = useMemo(

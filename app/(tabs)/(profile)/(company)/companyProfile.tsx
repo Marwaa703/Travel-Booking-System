@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import {
   View,
@@ -24,12 +23,11 @@ const CompanyProfile: React.FC = () => {
   ) as unknown as CompanyUser;
   const companies = useAppSelector((state) => state.companies.companies);
   // console.log({ cid: user.company_id, companies });
-// if(user.role === "Representative")
+  // if(user.role === "Representative")
   const currentCompany = useAppSelector((state) =>
-    selectCompanyById(state, user.company_id as string),
+    selectCompanyById(state, user?.company_id as string),
   ) as Company;
   // console.log({ currentCompany });
-  
 
   return (
     <>
@@ -48,12 +46,12 @@ const CompanyProfile: React.FC = () => {
             <View>
               <View style={styles.headerContainer}>
                 <Image
-                  source={{ uri: currentCompany.logo }}
+                  source={{ uri: currentCompany?.logo }}
                   style={styles.companyLogo}
                 />
-                <Text style={styles.companyName}>{currentCompany.name}</Text>
+                <Text style={styles.companyName}>{currentCompany?.name}</Text>
                 <Text style={styles.companyEmail}>
-                  {currentCompany.address}
+                  {currentCompany?.address}
                 </Text>
               </View>
 
@@ -62,7 +60,7 @@ const CompanyProfile: React.FC = () => {
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
-               <SettingCard
+              <SettingCard
                 title="Trips"
                 onPress={() => {
                   router.push(`companyHome/?companyId=${user.company_id}`);

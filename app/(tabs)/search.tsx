@@ -1,22 +1,26 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { View, TextInput, FlatList, StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native';
-import { trips } from '@/DummyData/trips.json'; 
-import Card from '@/components/Card'; 
-import Header from '@/components/core/Header';
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  FlatList,
+  StyleSheet,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { trips } from "@/DummyData/trips.json";
+import Card from "@/components/Card";
+import Header from "@/components/core/Header";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { COLORS, SPACING } from '@/constants/theme';
-
-
-
-
+import { COLORS, SPACING } from "@/constants/theme";
 
 const Search: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredTrips = trips.filter(trip => 
-    trip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    trip.location.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTrips = trips.filter(
+    (trip) =>
+      trip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.location.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -31,11 +35,16 @@ const Search: React.FC = () => {
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity>
-          <Ionicons name="search" size={24} color={COLORS.primary} style={styles.searchIcon} />
+          <Ionicons
+            name="search"
+            size={24}
+            color={COLORS.primary}
+            style={styles.searchIcon}
+          />
         </TouchableOpacity>
       </View>
 
-      {searchQuery === '' ? (
+      {searchQuery === "" ? (
         <View style={styles.iconContainer}>
           <Text style={styles.searchText}>Search For Places Here</Text>
           <Ionicons name="search" size={70} color={COLORS.secondary} />
@@ -47,19 +56,19 @@ const Search: React.FC = () => {
         </View>
       ) : (
         <FlatList
-          key={searchQuery === '' ? 'single-column' : 'two-columns'} 
+          key={searchQuery === "" ? "single-column" : "two-columns"}
           data={filteredTrips}
-          numColumns={2} 
+          numColumns={2}
           keyExtractor={(item, index) => index.toString()}
-          columnWrapperStyle={styles.columnWrapper} 
+          columnWrapperStyle={styles.columnWrapper}
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
-              <Card 
+              <Card
                 id={item.id}
-                image={{ uri: item.image }} 
-                title={item.title} 
-                subtitle={item.location} 
-                rating={item.rating} 
+                image={{ uri: item.image }}
+                title={item.title}
+                subtitle={item.location}
+                rating={item.rating}
               />
             </View>
           )}
@@ -74,8 +83,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderColor: COLORS.primary,
     borderWidth: 1,
     borderRadius: 15,
@@ -91,8 +100,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   searchText: {
     fontSize: 16,
@@ -106,14 +115,11 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     margin: SPACING.small,
-    width: Dimensions.get('screen').width * 0.45, 
+    width: Dimensions.get("screen").width * 0.45,
   },
   columnWrapper: {
-    justifyContent: 'space-between', 
+    justifyContent: "space-between",
   },
 });
 
 export default Search;
-
-
-

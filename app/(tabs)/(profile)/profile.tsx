@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
-
 import { View, Text, Button } from "react-native";
 import React from "react";
 import { COLORS } from "@/constants/theme";
 import { router } from "expo-router";
 
-//!THIS PAGE WILL BE REMOVED 
+//!THIS PAGE WILL BE REMOVED
 //! DO NOT STYLE IT
 
 const Profile = () => {

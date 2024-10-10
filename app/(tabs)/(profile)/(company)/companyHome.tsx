@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,24 +9,28 @@ import Spacer from "@/components/Spacer";
 import { FONTS } from "@/constants/theme";
 import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
-import { fetchTripsByCompanyId } from "@/redux/actions/tripActions";
-import { RootState } from "@/redux/store";
+
+import { RootState, useAppSelector } from "@/redux/store";
+import { selectCompanyTrips } from "@/redux/slices/tripsSlice";
 
 // todo: pass the companyId coming from currentCompanyUser (Company Representative)
 // todo: handle edit, delete trip here
 const CompanyHome = () => {
   const route = useRoute();
   const { companyId } = route.params as { companyId: string };
-  console.log(companyId);
+  const tripsState = useAppSelector((state) => state.trips);
+  const trips = selectCompanyTrips(tripsState, companyId);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (companyId) {
-      fetchTripsByCompanyId(companyId);
-    }
-  }, [companyId, dispatch]);
+  // useEffect(() => {
+  //   if (companyId) {
 
-  const { trips, isLoading: loading } = useSelector((state: RootState) => state.trips);
+  //   }
+  // }, [companyId, dispatch]);
+  // console.log({ trips, loading });
+  useEffect(() => {}, [trips]);
+  console.log({ companyId, trips });
+
   return (
     <View style={styles.container}>
       <Header title="Home Page" />
@@ -49,7 +52,7 @@ const CompanyHome = () => {
           </View>
           <Spacer />
 
-          {loading ? (
+          {/* {loading ? (
             <Text>Loading trips...</Text>
           ) : trips.length === 0 ? (
             <Text>No trips to display. Add one!</Text>
@@ -58,17 +61,17 @@ const CompanyHome = () => {
               {trips.map((trip) => (
                 <View key={trip.id} style={styles.cardWrapper}>
                   <Card
-                    id={trip.id as string} 
-                    image={trip.image ? trip.image.uri : 'default_image_uri'}
+                    id={trip.id as string}
+                    image={trip.image ? trip.image.uri : "default_image_uri"}
                     title={trip.name}
-                    subtitle={trip.name} 
+                    subtitle={trip.name}
                     rating={0}
                     price={`$${trip.price}`}
                   />
                 </View>
               ))}
             </View>
-          )}
+          )} */}
         </ScrollView>
       </Padding>
     </View>

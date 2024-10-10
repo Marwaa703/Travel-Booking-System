@@ -40,6 +40,24 @@ export const getAllTrips = async () => {
     }
   }
 };
+export const getFullTrips = async () => {
+  try {
+    const res = await api.get("/fullTrips");
+    console.log("Fetched Full trips:", res.data);
+    return res.data;
+  } catch (error: any) {
+    console.error("Get all Full trips failed with error:", error);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
+      const errorMessage =
+        error.response.data.error || "Failed to retrieve Full trips";
+      throw new Error(errorMessage);
+    } else {
+      console.error("Request failed:", error.message);
+      throw new Error(error.message || "Failed to retrieve Full trips");
+    }
+  }
+};
 
 // Get a single trip by ID
 export const getTripById = async (tripId: string) => {
@@ -108,7 +126,7 @@ export const deleteTrip = async (tripId: string) => {
 };
 
 // Get trips by company ID
-export const getTripsByCompanyId = async (companyId: string) => {
+export const getCompanyTrips = async (companyId: string) => {
   try {
     const res = await api.get(`/trips/company/${companyId}`);
     console.log("Fetched trips for company:", res.data);

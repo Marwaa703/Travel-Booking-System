@@ -40,19 +40,24 @@ const MultiStepRegisterCompanyForm = () => {
   };
 
   const handlePapersSubmit = async (data: CompanyPaper[]) => {
+    console.log({ papers: data });
     try {
       setLoading(true);
       setMsg("Registerinig Company...");
       setCompanyData((prev) => ({ ...prev, papers: data }));
+      const finalCompanyData: CompanyData = { ...companyData, papers: data };
       console.log("Final Company Data:", companyData);
 
       // todo:send to server
       // todo:get updated data from server
-      const updatedCompanyData = await signupCompany(companyData);
+      const updatedCompanyData = await signupCompany(finalCompanyData);
+      console.log("Final Company Response:", updatedCompanyData);
       console.log({ updatedCompanyData });
-      dispatch(addCompany(updatedCompanyData.details));
-      // todo: update redux with new data
-      router.replace("/login");
+      if (updatedCompanyData.success) {
+        dispatch(addCompany(updatedCompanyData.details as Company));
+        // todo: update redux with new data
+        router.replace("/login");
+      }
     } catch (error) {
       setMsg("error registering company...");
       setLoading(false);

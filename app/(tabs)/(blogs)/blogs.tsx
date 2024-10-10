@@ -1,15 +1,14 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS, FONTS, SHADOWS } from "@/constants/theme"; 
+import { COLORS, FONTS, SHADOWS } from "@/constants/theme";
 import CategoryCard from "@/components/blogs/CategoryCard";
-import { categories, recent_blogs, oldest_blogs } from "@/DummyData/blogs.json"; 
+import { categories, recent_blogs, oldest_blogs } from "@/DummyData/blogs.json";
 import BlogPostCard from "@/components/blogs/BlogPostCard";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import OldestPostCard from "@/components/blogs/OldestPostCard";
-import { useNavigation } from '@react-navigation/native';
-import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
 
 interface Blog {
   id: number;
@@ -19,7 +18,7 @@ interface Blog {
   author: string;
   readingTime: string;
   publishedTime: string;
-  category: string; 
+  category: string;
 }
 
 interface Category {
@@ -33,36 +32,42 @@ const Blogs: React.FC = () => {
 
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category],
     );
   };
 
   const renderCategory = ({ item }: { item: Category }) => (
     <View key={item.name}>
-      <CategoryCard 
-        title={item.name} 
-        image={item.image} 
-        onPress={() => toggleCategory(item.name)} 
+      <CategoryCard
+        title={item.name}
+        image={item.image}
+        onPress={() => toggleCategory(item.name)}
       />
       {/* Show posts if the category is expanded */}
       {expandedCategories.includes(item.name) && (
         <FlatList
           data={[
-            ...recent_blogs.filter(post => post.category === item.name),
-            ...oldest_blogs.filter(post => post.category === item.name),
-          ]} 
+            ...recent_blogs.filter((post) => post.category === item.name),
+            ...oldest_blogs.filter((post) => post.category === item.name),
+          ]}
           keyExtractor={(post) => post.id.toString()}
           renderItem={({ item: post }: { item: Blog }) => (
             <OldestPostCard
               post={post}
-              onPress={() => navigation.navigate('blogDetails', { blogId: post.id })}
+              onPress={() =>
+                navigation.navigate("blogDetails", { blogId: post.id })
+              }
             />
           )}
-          numColumns={2} 
-          columnWrapperStyle={styles.row} 
+          numColumns={2}
+          columnWrapperStyle={styles.row}
           ListEmptyComponent={() => (
             <View style={styles.emptyStateContainer}>
-              <Text style={styles.emptyStateText}>No posts found in this category</Text>
+              <Text style={styles.emptyStateText}>
+                No posts found in this category
+              </Text>
             </View>
           )}
         />
@@ -73,7 +78,7 @@ const Blogs: React.FC = () => {
   const renderBlogPostCard = ({ item }: { item: Blog }) => (
     <BlogPostCard
       id={item.id}
-      name={item.title} 
+      name={item.title}
       image={item.image}
       description={item.description}
       author={item.author}
@@ -90,12 +95,22 @@ const Blogs: React.FC = () => {
             {/* Header Section */}
             <View style={styles.headerContainer}>
               <View style={styles.header}>
-                <Ionicons name="person-circle-outline" size={30} color={COLORS.primary} />
-                <Ionicons name="notifications-outline" size={30} color={COLORS.primary} />
+                <Ionicons
+                  name="person-circle-outline"
+                  size={30}
+                  color={COLORS.primary}
+                />
+                <Ionicons
+                  name="notifications-outline"
+                  size={30}
+                  color={COLORS.primary}
+                />
               </View>
 
               <View style={styles.welcomeContainer}>
-                <Text style={styles.welcomeText}>Explore the Latest Travel Blogs & Updates</Text>
+                <Text style={styles.welcomeText}>
+                  Explore the Latest Travel Blogs & Updates
+                </Text>
               </View>
 
               {/* Categories Section */}
@@ -129,11 +144,13 @@ const Blogs: React.FC = () => {
               renderItem={({ item }: { item: Blog }) => (
                 <OldestPostCard
                   post={item}
-                  onPress={() => navigation.navigate('blogDetails', { blogId: item.id })}
+                  onPress={() =>
+                    navigation.navigate("blogDetails", { blogId: item.id })
+                  }
                 />
               )}
-              numColumns={2} 
-              columnWrapperStyle={styles.row} 
+              numColumns={2}
+              columnWrapperStyle={styles.row}
               ListEmptyComponent={() => (
                 <View style={styles.emptyStateContainer}>
                   <Text style={styles.emptyStateText}>No old blogs found</Text>
@@ -153,52 +170,52 @@ const styles = StyleSheet.create({
     marginBottom: 90,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 10,
     marginVertical: 10,
   },
   headerContainer: {
     paddingVertical: 20,
     paddingHorizontal: 15,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   welcomeContainer: {
     marginBottom: 30,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     shadowColor: SHADOWS.large.shadowColor,
     shadowOffset: SHADOWS.large.shadowOffset,
     shadowOpacity: SHADOWS.large.shadowOpacity,
   },
   welcomeText: {
     fontSize: 35,
-    fontWeight: 'bold',
-    color: COLORS.textPrimary, 
+    fontWeight: "bold",
+    color: COLORS.textPrimary,
   },
   scrollView: {
     marginVertical: 20,
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
     paddingHorizontal: 10,
-    color: COLORS.secondary, 
+    color: COLORS.secondary,
     marginBottom: 10,
   },
   emptyStateContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   emptyStateText: {
     fontSize: 18,
-    color: COLORS.textSecondary, 
+    color: COLORS.textSecondary,
   },
   row: {
-    justifyContent: 'space-between',
-    paddingHorizontal: 16, 
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
   },
 });
 

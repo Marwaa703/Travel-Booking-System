@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { View, Text, Dimensions, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import Header from "@/components/core/Header";
@@ -8,7 +7,7 @@ import { COLORS, SPACING } from "@/constants/theme";
 
 const PerviousTrip = () => {
   // Uncomment the next line to mock the trips data as empty for testing
-  const trips = []; 
+  const trips = [];
 
   if (trips.length === 0) {
     return (
@@ -29,19 +28,19 @@ const PerviousTrip = () => {
           data={trips}
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
-              <Card 
-                id={item.id} 
-                image={{ uri: item.image }} 
-                title={item.title} 
-                subtitle={item.location} 
-                rating={item.rating} 
+              <Card
+                id={item.id}
+                image={{ uri: item.image }}
+                title={item.title}
+                subtitle={item.location}
+                rating={item.rating}
               />
             </View>
           )}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={2} 
-          columnWrapperStyle={styles.columnWrapper} 
-          contentContainerStyle={styles.scrollContainer} 
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          contentContainerStyle={styles.scrollContainer}
         />
       </View>
     </>
@@ -52,24 +51,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SPACING.medium,
-    justifyContent: "center",  
-    alignItems: "center",    
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 80,
   },
   noTripsText: {
     textAlign: "center",
     marginTop: SPACING.xlarge,
     fontSize: 24,
-    color: COLORS.primary, 
-  
+    color: COLORS.primary,
   },
   cardContainer: {
     marginRight: SPACING.small,
-    width: Dimensions.get('screen').width * 0.44, 
+    width: Dimensions.get("screen").width * 0.44,
   },
   columnWrapper: {
-    justifyContent: "space-between", 
-    marginBottom:10
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
   scrollContainer: {
     paddingBottom: SPACING.large,

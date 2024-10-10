@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router } from "expo-router";
@@ -27,8 +26,8 @@ const Calendar = () => {
         const tripsWithDetails = await Promise.all(
           trips.map(async (booking) => {
             const trip = await getTripById(booking.trip_id);
-            return trip; 
-          })
+            return trip;
+          }),
         );
 
         setTripDetails(tripsWithDetails);
@@ -42,14 +41,20 @@ const Calendar = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Schedule" leftIcon="chevron-back" onLeftIconPress={() => router.push("home")}></Header>
+      <Header
+        title="Schedule"
+        leftIcon="chevron-back"
+        onLeftIconPress={() => router.push("home")}
+      ></Header>
       <View style={styles.calendar}>
         <WeeklyCalendar></WeeklyCalendar>
       </View>
       <Spacer />
       <View style={styles.subtitleContainer}>
         <Text style={styles.subtitle}>My Schedule</Text>
-        <Text style={styles.viewAll} onPress={() => {}}>View All</Text>
+        <Text style={styles.viewAll} onPress={() => {}}>
+          View All
+        </Text>
       </View>
 
       <Spacer />
@@ -69,9 +74,15 @@ const Calendar = () => {
                     rating={4}
                     price={trip.price}
                     avatars={[
-                      { uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg" },
-                      { uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg" },
-                      { uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg" }
+                      {
+                        uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
+                      },
+                      {
+                        uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg",
+                      },
+                      {
+                        uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg",
+                      },
                     ]}
                     peopleJoined={4}
                     caller="calendar"
@@ -90,24 +101,24 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
-    marginBottom: 100
+    marginBottom: 100,
   },
   calendar: {
     width: "100%",
     paddingHorizontal: 20,
-    marginVertical: 25
+    marginVertical: 25,
   },
   subtitle: {
     fontSize: FONTS.large,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: COLORS.textPrimary,
     flex: 1,
   },
   subtitleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
   viewAll: {
     fontSize: FONTS.normal,
@@ -117,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   noTripsText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: FONTS.normal,
     color: COLORS.textSecondary,
     marginVertical: 20,

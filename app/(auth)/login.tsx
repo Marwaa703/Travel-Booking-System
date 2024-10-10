@@ -1,17 +1,44 @@
-/* eslint-disable prettier/prettier */
-
 import Padding from "@/components/containers/Padding";
 import LoginForm from "@/components/forms/LoginForm";
 import LinkButton from "@/components/LinkButton";
 import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS, SPACING } from "@/constants/theme";
-import { useAppSelector } from "@/redux/store";
-import React from "react";
+import { fetchCompanies } from "@/redux/actions/companiesActions";
+import { fetchTrips } from "@/redux/actions/tripActions";
+import { fetchUsers } from "@/redux/actions/usersActions";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { UserTypes } from "@/types/user";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const Login = () => {
-  const state = useAppSelector(state=>state.user);
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const role = auth?.role as UserTypes;
+  useEffect(() => {
+    // load companies, current company users,
+    if (auth?.isAuthenticated) {
+      // user => companies(10), trips(10)(tripImages),
+      if (role === "User") {
+        dispatch(fetchTrips());
+        dispatch(fetchCompanies());
+      }
+
+      // CompanyUser =>  Companytrips(tripImages), CompanyUsers, CompanyImages,
+      if (role === "Company") {
+        // admin from company
+        dispatch(fetchTrips()); //select companyTrips only from trips
+        dispatch(fetchCompanies());
+      }
+      // Admin => companies(10), trips(10)(tripImages), CompanyUsers(per company), CompanyImages(per company), Users,
+      if (role === "Admin") {
+        dispatch(fetchTrips());
+        dispatch(fetchCompanies());
+        dispatch(fetchUsers());
+      }
+    }
+  }, [auth, role]);
 
   return (
     <Padding>

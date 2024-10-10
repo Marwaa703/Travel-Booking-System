@@ -12,7 +12,8 @@ import {
   addTrip as apiAddTrip,
   updateTrip as apiUpdateTrip,
   deleteTrip as apiDeleteTrip,
-  getTripsByCompanyId as apiGetTripsByCompanyId,
+  getCompanyTrips as apiGetTripsByCompanyId,
+  getFullTrips,
 } from "@/api/trips/trip";
 import { TripDetailes, Trip } from "@/types/trip";
 
@@ -20,7 +21,8 @@ import { TripDetailes, Trip } from "@/types/trip";
 export const fetchTrips = () => async (dispatch: AppDispatch) => {
   dispatch(setLoading(true));
   try {
-    const trips = await getAllTrips();
+    // will be adjusted for some trips
+    const trips = await getFullTrips();
     dispatch(setTrips(trips));
   } catch (error) {
     dispatch(setError(true));
@@ -29,33 +31,18 @@ export const fetchTrips = () => async (dispatch: AppDispatch) => {
   }
 };
 
-// Fetch trips by company ID
-export const fetchTripsByCompanyId =
-  (companyId: string) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const trips = await apiGetTripsByCompanyId(companyId);
-      dispatch(setTrips(trips));
-    } catch (error) {
-      dispatch(setError(true));
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
 // Add a new trip
-export const createTrip =
-  (tripData: TripDetailes) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const newTrip = await apiAddTrip(tripData);
-      dispatch(addTrip(newTrip));
-    } catch (error) {
-      dispatch(setError(true));
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+export const createTrip = (tripData: Trip) => async (dispatch: AppDispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const newTrip = await apiAddTrip(tripData);
+    dispatch(addTrip(newTrip));
+  } catch (error) {
+    dispatch(setError(true));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
 // Update an existing trip
 export const updateTrip =

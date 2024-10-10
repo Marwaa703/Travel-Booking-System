@@ -1,17 +1,16 @@
-/* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import messagesData from '@/DummyData/messages.json';
-import Header from '@/components/core/Header';
-import { useRoute } from "@react-navigation/native"; 
-import { router } from 'expo-router';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import messagesData from "@/DummyData/messages.json";
+import Header from "@/components/core/Header";
+import { useRoute } from "@react-navigation/native";
+import { router } from "expo-router";
 import { trips } from "@/DummyData/trips.json";
-import { COLORS } from '@/constants/theme';
+import { COLORS } from "@/constants/theme";
 
 interface Message {
   id: number;
   text: string;
-  timestamp: string;  
+  timestamp: string;
 }
 interface Trip {
   id: number;
@@ -19,7 +18,7 @@ interface Trip {
 }
 
 const TripInstruction: React.FC = () => {
-  const route = useRoute();  
+  const route = useRoute();
   const { tripId } = route.params as { tripId: string };
   const tripIdNumber = Number(tripId);
   const trip = trips.find((t) => t.id === tripIdNumber) as Trip | undefined;
@@ -29,12 +28,13 @@ const TripInstruction: React.FC = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const currentTime = new Date();
-  
+
       const visibleMessages = messagesData.filter(
-        message => new Date(message.timestamp).getTime() <= currentTime.getTime()
+        (message) =>
+          new Date(message.timestamp).getTime() <= currentTime.getTime(),
       );
       setChatMessages(visibleMessages);
-    }, 1000); 
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -42,8 +42,8 @@ const TripInstruction: React.FC = () => {
   const formatTimestamp = (timestamp: string) => {
     const date = new Date(timestamp);
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
+      hour: "2-digit",
+      minute: "2-digit",
     })}`;
   };
 
@@ -56,12 +56,14 @@ const TripInstruction: React.FC = () => {
 
   return (
     <>
-      <Header 
+      <Header
         title={trip?.title}
-        rightIcon='call-outline'
-        leftIcon='arrow-back'
+        rightIcon="call-outline"
+        leftIcon="arrow-back"
         onRightIconPress={() => {}}
-        onLeftIconPress={() => { router.back(); }}
+        onLeftIconPress={() => {
+          router.back();
+        }}
       />
       <View style={styles.container}>
         <FlatList
@@ -71,7 +73,9 @@ const TripInstruction: React.FC = () => {
           contentContainerStyle={styles.chatContainer}
         />
         <View style={styles.bottomTextContainer}>
-          <Text style={styles.bottomText}>The Instruction of your trip will appear here in time</Text>
+          <Text style={styles.bottomText}>
+            The Instruction of your trip will appear here in time
+          </Text>
         </View>
       </View>
     </>
@@ -84,21 +88,21 @@ export default TripInstruction;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     padding: 10,
-    marginBottom: 90, 
+    marginBottom: 90,
   },
   chatContainer: {
     flexGrow: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   messageContainer: {
     backgroundColor: COLORS.calendarSelected,
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
-    alignSelf: 'flex-start',
-    maxWidth: '80%',
+    alignSelf: "flex-start",
+    maxWidth: "80%",
   },
   messageText: {
     fontSize: 16,
@@ -107,17 +111,17 @@ const styles = StyleSheet.create({
   messageTime: {
     fontSize: 12,
     color: COLORS.textSecondary,
-    textAlign: 'right',
+    textAlign: "right",
     marginTop: 5,
   },
   bottomTextContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   },
   bottomText: {
     fontSize: 14,
     color: COLORS.error,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

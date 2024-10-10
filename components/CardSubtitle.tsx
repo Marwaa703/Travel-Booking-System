@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { OpaqueColorValue, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -24,7 +22,7 @@ export default CardSubtitle;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    marginTop:10
+    marginTop: 10,
   },
   text: {
     fontSize: FONTS.small,

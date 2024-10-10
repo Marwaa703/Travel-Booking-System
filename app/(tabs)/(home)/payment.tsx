@@ -1,19 +1,27 @@
-/* eslint-disable prettier/prettier */
-import { View, TextInput, Alert, StyleSheet, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import {
+  View,
+  TextInput,
+  Alert,
+  StyleSheet,
+  Text,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
-import Button from '@/components/Buttons';
-import { COLORS } from '@/constants/theme';
-import { fetchTripDetails, makePayment, bookTrip } from '@/api/payment'; 
-import { RootState } from '@/redux/store';
-import { useSelector } from 'react-redux';
+import Button from "@/components/Buttons";
+import { COLORS } from "@/constants/theme";
+import { fetchTripDetails, makePayment, bookTrip } from "@/api/payment";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
-const defaultImage = require('../../../assets/imgDefault.png');
+const defaultImage = require("../../../assets/imgDefault.png");
 
 const Payment: React.FC = () => {
   const route = useRoute();
   const { tripId } = route.params as { tripId: string };
-  const [userWalletAddress, setUserWalletAddress] = useState<string>('');
+  const [userWalletAddress, setUserWalletAddress] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [tripDetails, setTripDetails] = useState<any>(null);
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
@@ -24,7 +32,7 @@ const Payment: React.FC = () => {
         const data = await fetchTripDetails(tripId);
         setTripDetails(data);
       } catch (error: any) {
-        Alert.alert('Error', error.message || 'Could not fetch trip details');
+        Alert.alert("Error", error.message || "Could not fetch trip details");
       }
     };
     loadTripDetails();
@@ -32,26 +40,43 @@ const Payment: React.FC = () => {
 
   const handlePayment = async () => {
     if (!userWalletAddress) {
-      Alert.alert('Error', 'Please enter your wallet address');
+      Alert.alert("Error", "Please enter your wallet address");
       return;
     }
 
     try {
       setLoading(true);
-      const paymentResponse = await makePayment(tripDetails.company_id, tripId, userWalletAddress, tripDetails?.price);
+      const paymentResponse = await makePayment(
+        tripDetails.company_id,
+        tripId,
+        userWalletAddress,
+        tripDetails?.price,
+      );
       const { transactionHash } = paymentResponse;
 
-      Alert.alert('Payment Successful', `Transaction hash: ${transactionHash}`);
+      Alert.alert("Payment Successful", `Transaction hash: ${transactionHash}`);
 
-      const bookingResponse = await bookTrip(tripId, currentUser.id, transactionHash);
+      const bookingResponse = await bookTrip(
+        tripId,
+        currentUser.id,
+        transactionHash,
+      );
       if (bookingResponse) {
-        Alert.alert('Booking Successful', 'Your trip has been successfully booked!');
+        Alert.alert(
+          "Booking Successful",
+          "Your trip has been successfully booked!",
+        );
       } else {
-        Alert.alert('Booking Failed', 'Could not book the trip. Please try again.');
+        Alert.alert(
+          "Booking Failed",
+          "Could not book the trip. Please try again.",
+        );
       }
-
     } catch (error: any) {
-      Alert.alert('Error', error.message || 'Something went wrong during payment.');
+      Alert.alert(
+        "Error",
+        error.message || "Something went wrong during payment.",
+      );
     } finally {
       setLoading(false);
     }
@@ -68,7 +93,10 @@ const Payment: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require('../../../assets/eth_logo.png')} style={styles.ethLogo} />
+        <Image
+          source={require("../../../assets/eth_logo.png")}
+          style={styles.ethLogo}
+        />
       </View>
 
       <View style={styles.section}>
@@ -77,7 +105,9 @@ const Payment: React.FC = () => {
             <Text style={styles.tripText}>Title: {tripDetails.name}</Text>
             <Text style={styles.tripText}>Date: {tripDetails.date}</Text>
             <Text style={styles.tripText}>Rating: {4}</Text>
-            <Text style={styles.tripText}>People Joined: {tripDetails.max_reservations}</Text>
+            <Text style={styles.tripText}>
+              People Joined: {tripDetails.max_reservations}
+            </Text>
             <Text style={styles.tripText}>Price: {tripDetails.price} Wei</Text>
           </View>
 
@@ -98,9 +128,9 @@ const Payment: React.FC = () => {
         </View>
 
         <Button
-          title={loading ? 'Processing...' : 'Book Now'}
+          title={loading ? "Processing..." : "Book Now"}
           onPress={handlePayment}
-          align='center'
+          align="center"
           disabled={loading}
           width={"100%"}
         />
@@ -117,17 +147,17 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   logoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   ethLogo: {
     width: 200,
     height: 200,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   section: {
     backgroundColor: "#fff",
@@ -138,8 +168,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   infoSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   tripDetailsColumn: {
     flex: 1,
@@ -149,16 +179,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
     color: COLORS.textPrimary,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   imageColumn: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   tripImage: {
     width: 120,
     height: 120,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     borderRadius: 10,
     marginBottom: 20,
   },
@@ -168,15 +198,15 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   input: {
     height: 45,
     borderWidth: 2,
-    width: '95%',
+    width: "95%",
     paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     marginBottom: 20,
   },
 });

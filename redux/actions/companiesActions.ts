@@ -1,84 +1,87 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Company, CompanyUser, CompanyPaper } from "@/types/company";
+import { Company, CompanyUser } from "@/types/company";
 import companyApi from "@/api/company";
 import companyUsersApi from "@/api/companyUsers";
-import papersApi from "@/api/companyPapers";
+import { AppDispatch } from "../store";
+import {
+  addCompany,
+  addCompanyUser,
+  setCompanies,
+  setCompanyUsers,
+  setError,
+  setLoading,
+} from "../slices/companiesSlice";
 
-// Async actions for companies
-export const fetchCompanies = createAsyncThunk(
-  "companies/fetchCompanies",
-  async () => {
-    const companies = await companyApi.getAllCompanies();
-    return companies;
-  },
-);
+export const fetchCompanies = () => async (dispatch: AppDispatch) => {
+  const companies = await companyApi.getAllCompanies();
+  dispatch(setCompanies(companies));
+  return companies;
+};
 
-export const createCompany = createAsyncThunk(
-  "companies/createCompany",
-  async (companyDetails: Company) => {
-    const company = await companyApi.createCompany(companyDetails);
-    return company;
-  },
-);
+export const createCompany =
+  (companyDetails: Company) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const company = await companyApi.createCompany(companyDetails);
+      dispatch(addCompany(company));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
-export const updateCompany = createAsyncThunk(
-  "companies/updateCompany",
-  async (payload: Company) => {
-    const updatedCompany = await companyApi.updateCompany(
-      payload.id as string,
-      payload,
-    );
-    return updatedCompany;
-  },
-);
+export const updateCompany =
+  (payload: Company) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const updatedCompany = await companyApi.updateCompany(
+        payload.id as string,
+        payload,
+      );
+      dispatch(updateCompany(updatedCompany));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
-export const deleteCompany = createAsyncThunk(
-  "companies/deleteCompany",
-  async (companyId: string) => {
-    await companyApi.deleteCompany(companyId);
-    return companyId;
-  },
-);
+export const deleteCompany =
+  (companyId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      await companyApi.deleteCompany(companyId);
+      dispatch(deleteCompany(companyId));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
 // Async actions for company users
-export const fetchCompanyUsers = createAsyncThunk(
-  "companies/fetchCompanyUsers",
-  async (companyId: string) => {
-    const users = await companyUsersApi.getCompanyUsers(companyId);
-    return users;
-  },
-);
+export const fetchCompanyUsers =
+  (companyId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const users = await companyUsersApi.getCompanyUsers(companyId);
+      dispatch(setCompanyUsers(users));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
-export const createUser = createAsyncThunk(
-  "companies/createUser",
-  async (userData: CompanyUser) => {
-    const user = await companyUsersApi.createUser(userData);
-    return user;
-  },
-);
-
-// Async actions for company papers
-export const fetchCompanyPapers = createAsyncThunk(
-  "companies/fetchCompanyPapers",
-  async (companyId: string) => {
-    const papers = await papersApi.getCompanyPapers(companyId);
-    return papers;
-  },
-);
-
-export const createPaper = createAsyncThunk(
-  "companies/createPaper",
-  async (paperData: CompanyPaper) => {
-    const paper = await papersApi.createCompanyPaper(paperData);
-    return paper;
-  },
-);
-export const createPapers = createAsyncThunk(
-  "companies/createPapers",
-  async (papersData: CompanyPaper[]) => {
-    const createdPapers = await Promise.all(
-      papersData.map((paperData) => papersApi.createCompanyPaper(paperData)),
-    );
-    return createdPapers; // Return the array of created papers
-  },
-);
+export const createUser =
+  (userData: CompanyUser) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const user = await companyUsersApi.createUser(userData);
+      dispatch(addCompanyUser(user));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };

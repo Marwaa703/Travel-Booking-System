@@ -1,14 +1,20 @@
-/* eslint-disable prettier/prettier */
-import React from 'react';
-import { View, Text, Image, StyleSheet, ImageSourcePropType, TouchableOpacity } from 'react-native';
-import Rating from './Rating';
-import { COLORS, FONTS } from '@/constants/theme';
+import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ImageSourcePropType,
+  TouchableOpacity,
+} from "react-native";
+import Rating from "./Rating";
+import { COLORS, FONTS } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import CardSubtitle from './CardSubtitle';
-import { useNavigation } from 'expo-router';
-import { NavigationProp } from '@react-navigation/native';
-import { useRoute } from "@react-navigation/native"; 
-const defaultImage = require('../assets/imgDefault.png');
+import CardSubtitle from "./CardSubtitle";
+import { useNavigation } from "expo-router";
+import { NavigationProp } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
+const defaultImage = require("../assets/imgDefault.png");
 interface TripProfileCardProps {
   id: number;
   image: string;
@@ -17,26 +23,34 @@ interface TripProfileCardProps {
   rating: number;
   price: string;
   peopleJoined: number;
-  avatars: ImageSourcePropType[]; 
-  caller: string;  
+  avatars: ImageSourcePropType[];
+  caller: string;
 }
 
-const TripProfileCard: React.FC<TripProfileCardProps> = ({ 
-  id, image, title, date, rating, price, peopleJoined, avatars, caller 
+const TripProfileCard: React.FC<TripProfileCardProps> = ({
+  id,
+  image,
+  title,
+  date,
+  rating,
+  price,
+  peopleJoined,
+  avatars,
+  caller,
 }) => {
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute();
 
   const handlePress = () => {
-    if (caller === 'calendar') {
-      navigation.navigate('tripIns', { tripId: id });
+    if (caller === "calendar") {
+      navigation.navigate("tripIns", { tripId: id });
     } else {
-      navigation.navigate('tripDetails', { tripId: id });
+      navigation.navigate("tripDetails", { tripId: id });
     }
   };
   const imageSource = image ? { uri: image } : defaultImage;
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={handlePress}> 
+    <TouchableOpacity style={styles.cardContainer} onPress={handlePress}>
       {/* Image Section */}
       <Image source={imageSource} style={styles.image} />
       {/* Text and Info Section */}
@@ -45,7 +59,11 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
         <Text style={styles.title}>{title}</Text>
         {/* Date */}
         <View style={styles.dateContainer}>
-          <CardSubtitle icon={"calendar"} iconColor={COLORS.textSecondary} text={date} />
+          <CardSubtitle
+            icon={"calendar"}
+            iconColor={COLORS.textSecondary}
+            text={date}
+          />
         </View>
         {/* Rating */}
         <View style={styles.ratingContainer}>
@@ -71,17 +89,17 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
     elevation: 3, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
+    shadowColor: "#000", // Shadow for iOS
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-    position: 'relative',
+    position: "relative",
   },
   image: {
     width: 100,
@@ -94,26 +112,26 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONTS.normal,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
   },
   dateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 5,
   },
   ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 10,
   },
   peopleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 15,
   },
   avatarsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginRight: 15,
   },
   avatar: {
@@ -131,14 +149,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 15,
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     top: 10,
   },
   priceText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

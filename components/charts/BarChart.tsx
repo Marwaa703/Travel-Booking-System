@@ -1,18 +1,21 @@
-/* eslint-disable prettier/prettier */
-import { COLORS } from '@/constants/theme';
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { BarChart } from 'react-native-chart-kit';
+import { COLORS } from "@/constants/theme";
+import React from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { BarChart } from "react-native-chart-kit";
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = Dimensions.get("window").width;
 
 interface BarChartProps {
   title: string;
   selectedMonthYear: string;
-  data: any; 
+  data: any;
 }
 
-const BarChartComponent: React.FC<BarChartProps> = ({ title, selectedMonthYear, data }) => {
+const BarChartComponent: React.FC<BarChartProps> = ({
+  title,
+  selectedMonthYear,
+  data,
+}) => {
   return (
     <View style={styles.barContainer}>
       <Text style={styles.chartTitle}>{title}</Text>
@@ -33,36 +36,36 @@ const BarChartComponent: React.FC<BarChartProps> = ({ title, selectedMonthYear, 
 };
 
 const chartConfig = {
-  backgroundGradientFrom: '#f8f8f8',
-  backgroundGradientTo: '#fff',
+  backgroundGradientFrom: "#f8f8f8",
+  backgroundGradientTo: "#fff",
   decimalPlaces: 0,
   color: (opacity = 1) => `rgba(34, 150, 243, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   barPercentage: 0.6,
   propsForLabels: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 };
 
 const styles = StyleSheet.create({
   barContainer: {
     marginBottom: 40,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     elevation: 3,
     padding: 5,
   },
   chartTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 30,
     color: COLORS.textPrimary,
     paddingLeft: 20,
   },
   chartMonth: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: COLORS.secondary,
     marginBottom: 20,
     paddingLeft: 20,

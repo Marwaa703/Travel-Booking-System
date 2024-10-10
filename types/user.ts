@@ -1,15 +1,16 @@
-/* eslint-disable prettier/prettier */
 export interface User {
-  firstName: string;
-  lastName: string;
-  email:string;
-  address?: string;
+  id?: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  // address?: string;
   phone: string;
-  birthdate?: Date;
+  birth_date?: Date;
+  role: UserTypes;
 }
 
 export type UserTypes = "Admin" | "Company" | "Anonymous" | "User";
 export interface UserWithId extends User {
-  id: string; 
-  role: UserTypes; 
+  id: string;
+  role: UserTypes;
 }

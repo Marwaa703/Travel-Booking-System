@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import axios, { AxiosInstance } from "axios";
 import { store } from "../redux/store";
 import { RootState } from "../redux/store";
@@ -26,7 +25,6 @@ api.interceptors.request.use(
 );
 
 export default api;
-
 
 export const handleError = (
   error: any,

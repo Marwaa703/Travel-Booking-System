@@ -1,86 +1,108 @@
-/* eslint-disable prettier/prettier */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, UserTypes } from "@/types/user"; 
+import { User, UserTypes } from "@/types/user";
 
 interface UserWithId extends User {
-  id: string; 
+  id?: string;
   role: UserTypes;
 }
 
 interface UserState {
-  users: UserWithId[]; 
+  list: UserWithId[];
+  error: string | null;
+  loading: boolean;
 }
 
 const initialState: UserState = {
-  users: [], 
+  list: [],
+  error: null,
+  loading: false,
 };
 
 const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-   
     createUser: (
       state,
-      action: PayloadAction<{ id: string; userData: User; role: UserTypes }>
+      action: PayloadAction<{ id: string; userData: User; role: UserTypes }>,
     ) => {
       const newUser: UserWithId = {
         id: action.payload.id,
         ...action.payload.userData,
-        role: action.payload.role, 
+        role: action.payload.role,
       };
-      state.users.push(newUser);
+      state.list.push(newUser);
     },
 
     // Update an existing user by ID
-    updateUser: (
+    setUser: (
       state,
-      action: PayloadAction<{ id: string; updatedData: Partial<Omit<User, 'role'>> }>
+      action: PayloadAction<{
+        id: string;
+        updatedData: Partial<Omit<User, "role">>;
+      }>,
     ) => {
-      const index = state.users.findIndex(user => user.id === action.payload.id);
+      const index = state.list.findIndex(
+        (user) => user.id === action.payload.id,
+      );
       if (index !== -1) {
-        state.users[index] = {
-          ...state.users[index],
-          ...action.payload.updatedData, 
+        state.list[index] = {
+          ...state.list[index],
+          ...action.payload.updatedData,
         };
       }
     },
 
     // Delete a user by ID
-    deleteUser: (state, action: PayloadAction<{ id: string }>) => {
-      state.users = state.users.filter(user => user.id !== action.payload.id);
+    removeUser: (state, action: PayloadAction<string>) => {
+      state.list = state.list.filter((user) => user.id !== action.payload);
     },
 
-  
-
     // Set users (when loading from API)
-setUsers: (state, action: PayloadAction<UserWithId[]>) => {
-  state.users = action.payload;
-},
+    setUsers: (state, action: PayloadAction<UserWithId[]>) => {
+      state.list = action.payload;
+    },
 
-// Add a single user (for login)
-addUser: (state, action: PayloadAction<UserWithId>) => {
-  const existingUserIndex = state.users.findIndex(user => user.id === action.payload.id);
-  if (existingUserIndex === -1) {
-    state.users.push(action.payload); 
-  } else {
-    state.users[existingUserIndex] = action.payload; 
-  }
-},
+    // Add a single user (for login)
+    addUser: (state, action: PayloadAction<UserWithId>) => {
+      const existingUserIndex = state.list.findIndex(
+        (user) => user.id === action.payload.id,
+      );
+      if (existingUserIndex === -1) {
+        state.list.push(action.payload);
+      } else {
+        state.list[existingUserIndex] = action.payload;
+      }
+    },
 
     // Update a specific user's role by ID
     setUserRole: (
       state,
-      action: PayloadAction<{ id: string; role: UserTypes }>
+      action: PayloadAction<{ id: string; role: UserTypes }>,
     ) => {
-      const user = state.users.find(user => user.id === action.payload.id);
+      const user = state.list.find((user) => user.id === action.payload.id);
       if (user) {
-        user.role = action.payload.role; 
+        user.role = action.payload.role;
       }
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
 });
 
-export const { createUser, updateUser, deleteUser, setUsers,addUser, setUserRole } = userSlice.actions;
+export const {
+  createUser,
+  setUser,
+  removeUser,
+  setUsers,
+  addUser,
+  setUserRole,
+  setError,
+  setLoading,
+} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -85,11 +85,17 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    updateAuthUser: (state, action: PayloadAction<UserTypes>) => {
+      console.log("auth slice", action.payload);
+      if (state.currentUser?.id === action.payload?.id)
+        state.currentUser = action.payload;
+    },
   },
 });
 
 export const {
   signupStart,
+  updateAuthUser,
   signupSuccess,
   signupFailure,
   loginStart,

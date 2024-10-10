@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Header from "@/components/core/Header";
@@ -29,7 +28,7 @@ const Notification = () => {
       />
       <View style={styles.linksContainer}>
         <LinkButton label="Recent" to={"/notification"} />
-        <LinkButton label="Earlier" to={"/notification"}/>
+        <LinkButton label="Earlier" to={"/notification"} />
         <LinkButton label="Archieved" to={"/notification"} />
       </View>
       {notifications.length > 0 ? (

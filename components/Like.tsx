@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
