@@ -16,6 +16,9 @@ const Login = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const role = auth?.role as UserTypes;
+  const companyId =
+    auth?.role === "Company" ? auth?.currentUser?.company_id : "";
+
   useEffect(() => {
     // load companies, current company users,
     if (auth?.isAuthenticated) {
@@ -25,10 +28,11 @@ const Login = () => {
         dispatch(fetchCompanies());
       }
 
-      // CompanyUser =>  Companytrips(tripImages), CompanyUsers, CompanyImages,
+      // CompanyUser =>  Companytrips(tripImages) only, CompanyUsers, CompanyImages,
       if (role === "Company") {
         // admin from company
-        dispatch(fetchTrips()); //select companyTrips only from trips
+        console.log({ RepCompanyId: companyId });
+        dispatch(fetchTrips(companyId)); //select companyTrips only from trips
         dispatch(fetchCompanies());
       }
       // Admin => companies(10), trips(10)(tripImages), CompanyUsers(per company), CompanyImages(per company), Users,
@@ -38,7 +42,7 @@ const Login = () => {
         dispatch(fetchUsers());
       }
     }
-  }, [auth, dispatch, role]);
+  }, [auth, companyId, dispatch, role]);
 
   return (
     <Padding>

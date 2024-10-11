@@ -7,10 +7,10 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
-import { COLORS, SPACING } from "@/constants/theme";
+import { COLORS, FONTS, SPACING } from "@/constants/theme";
 import Card from "@/components/Card";
 import { trips, avatars } from "@/DummyData/trips.json";
 import Spacer from "@/components/Spacer";
@@ -18,11 +18,14 @@ import { useAppSelector } from "@/redux/store";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
+  const { isError, isLoading, trips } = useAppSelector((state) => state.trips);
   const avatarImages = avatars.map((avatar) => ({
     id: avatar.id,
     uri: avatar.uri,
   }));
-
+  useEffect(() => {
+    console.log({ trips: trips.length });
+  }, [trips.length]);
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
       <Header />
@@ -46,31 +49,31 @@ const Home = () => {
           </View>
 
           {/* Horizontal ScrollView for Trip Profile Cards */}
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.horizontalScroll}
-          >
-            {trips.map((trip, index) => (
-              <View
-                style={{
-                  marginRight: SPACING.small + 2,
-                  width: Dimensions.get("screen").width * 0.45,
-                }}
-                key={index}
-              >
-                <Card
-                  id={trip.id as unknown as string}
-                  image={trip.image}
-                  title={trip.title}
-                  subtitle={trip.location}
-                  rating={trip.rating}
-                />
-              </View>
-            ))}
-          </ScrollView>
+          {isLoading ? (
+            <Text>Loading trips...</Text>
+          ) : trips.length === 0 ? (
+            <Text>No trips to display. Add one!</Text>
+          ) : (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.horizontalScroll}
+            >
+              {trips.map((trip) => (
+                <View key={trip.id} style={styles.cardWrapper}>
+                  <Card
+                    id={trip.trip_id as string}
+                    image={trip.images[1]?.image_url || "default_image_uri"}
+                    title={trip.name}
+                    subtitle={trip.name}
+                    rating={0}
+                    price={`$${trip.price}`}
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          )}
         </View>
-
         <Spacer />
         <View style={styles.company}>
           <View style={styles.subtitleContainer}>
@@ -86,7 +89,7 @@ const Home = () => {
           <View style={styles.cardContainer}>
             {popularCompanies &&
               popularCompanies.slice(0, 6).map((company, index) => (
-                <View key={index} style={styles.companyCardWrapper}>
+                <View key={company.id} style={styles.companyCardWrapper}>
                   <Card
                     id={company.id as string}
                     image={company.logo as string}
@@ -158,6 +161,11 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     overflow: "visible",
     columnGap: 15,
+  },
+
+  cardWrapper: {
+    marginRight: SPACING.small + 2,
+    width: Dimensions.get("screen").width * 0.45,
   },
 });
 

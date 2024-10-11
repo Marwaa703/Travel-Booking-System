@@ -16,6 +16,7 @@ import icons from "@/constants/icons";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "./Rating";
 import Spacer from "./Spacer";
+import { useRouter } from "expo-router";
 const defaultImage = require("../assets/imgDefault.png");
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.44;
@@ -41,13 +42,17 @@ const Card: React.FC<CardProps> = ({
   buttonText,
 }) => {
   const navigation = useNavigation<NavigationProp<any>>();
+  const router = useRouter();
 
   const handlePress = () => {
     if (!buttonText) {
-      navigation.navigate("tripDetails", { tripId: id });
+      router.push(`tripDetails?id=${id}`);
+      // navigation.navigate("tripDetails", { tripId: id });
+      navigation.navigate("tripDetails", { id: id });
     }
   };
   const imageSource = image ? { uri: image } : defaultImage;
+  console.log({ id });
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress}>
       {/* Image */}

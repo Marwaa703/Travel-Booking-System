@@ -4,12 +4,14 @@ import AppTextInput from "./AppTextInput";
 import GenderPicker from "./GenderPicker";
 import Button from "../Buttons";
 import {
+  companyRoles,
   companyUserSignupInputs,
   companyUserSignupSchema,
 } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CompanyUser, Gender } from "@/types/company";
+import { CompanyUser, CompanyUserRoles, Gender } from "@/types/company";
 import Spacer from "../Spacer";
+import DropdownRolePicker from "./DropDownRolePicker";
 
 interface CompanyUserFormProps {
   onNext: (data: CompanyUser, gender: Gender) => void;
@@ -19,6 +21,7 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CompanyUser>({
     resolver: yupResolver(companyUserSignupSchema),
@@ -35,16 +38,25 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
       {companyUserSignupInputs.map(
         ({ trim, icon, name, autoCapitalize, keyboardType }) => (
           <Fragment key={name}>
-            <AppTextInput
-              trim={trim}
-              name={name}
-              control={control as unknown as Control<FieldValues>}
-              keyboardType={keyboardType}
-              autoCapitalize={autoCapitalize}
-              icon={icon}
-              error={errors[name]?.message}
-              secureTextEntry={name === "password"}
-            />
+            {name === "role" ? (
+              <DropdownRolePicker
+                items={companyRoles}
+                onSelect={(item) => setValue("role", item)}
+                name="role"
+                icon={icon}
+              />
+            ) : (
+              <AppTextInput
+                trim={trim}
+                name={name}
+                control={control as unknown as Control<FieldValues>}
+                keyboardType={keyboardType}
+                autoCapitalize={autoCapitalize}
+                icon={icon}
+                error={errors[name]?.message}
+                secureTextEntry={name === "password"}
+              />
+            )}
           </Fragment>
         ),
       )}

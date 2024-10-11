@@ -1,4 +1,4 @@
-import { Trip, TripDetailes } from "@/types/trip";
+import { Trip } from "@/types/trip";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TripsState {
@@ -22,7 +22,8 @@ const tripsSlice = createSlice({
     },
 
     addTrip: (state, action: PayloadAction<Trip>) => {
-      state.trips.push(action.payload);
+      const index = state.trips.findIndex((t) => t.id === action.payload.id);
+      if (index !== -1) state.trips.push(action.payload);
     },
 
     removeTrip: (state, action: PayloadAction<string>) => {
@@ -81,6 +82,8 @@ export const selectFavoriteTrips = (state: { trips: TripsState }) =>
   state.trips.trips.filter((t) => t.isFavorite);
 export const selectCompanyTrips = (state: TripsState, companyId: string) =>
   state.trips.filter((t) => t.company_id === companyId);
+export const selectTripById = (state: TripsState, tripId: string) =>
+  state.trips.filter((t) => t.trip_id === tripId)[0];
 
 // Export actions
 export const {

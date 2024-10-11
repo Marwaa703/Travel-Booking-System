@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONTS } from "@/constants/theme";
 import { captalizeFirstLetter, trimWhitespace } from "@/utils";
+import Spacer from "../Spacer";
 
 interface TextInputFieldProps extends TextInputProps {
   icon?: string;

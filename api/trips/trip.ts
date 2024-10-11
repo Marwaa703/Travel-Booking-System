@@ -1,4 +1,4 @@
-import { TripDetailes, Trip } from "@/types/trip";
+import { TripDetailes } from "@/types/trip";
 import api from "../axiosApi";
 
 // Add Trip
@@ -40,13 +40,17 @@ export const getAllTrips = async () => {
     }
   }
 };
-export const getFullTrips = async () => {
+export const getFullTrips = async (companyId?: string) => {
   try {
-    const res = await api.get("/fullTrips");
+    // Construct the API endpoint
+    const endpoint = companyId ? `/fullTrips/${companyId}` : "/fullTrips";
+    const res = await api.get(endpoint);
+
     console.log("Fetched Full trips:", res.data);
     return res.data;
   } catch (error: any) {
     console.error("Get all Full trips failed with error:", error);
+
     if (error.response) {
       console.error("Response data:", error.response.data);
       const errorMessage =

@@ -39,7 +39,6 @@ export interface TripInstruction {
 export interface Trip extends TripDetailes {
   images: TripImage[]; // Array of image URLs
   locations?: Location[];
-  details?: TripDetailes;
 }
 export interface TripFormData {
   images: TripImage[]; // Array of image URLs

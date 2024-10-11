@@ -19,7 +19,7 @@ const AddTrip = () => {
         subTitle="Please fill the following details!"
         topFlex={4}
       >
-        <MultiStepAddTripForm />
+        <MultiStepAddTripForm companyId={companyId} />
       </ScreenFormContainer>
     </ScreenWraper>
   );

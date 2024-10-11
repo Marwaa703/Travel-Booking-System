@@ -41,7 +41,7 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
       <Fragment>
         <TextInputField
           trim={false}
-          name={"caption"}
+          name={"paper Name"}
           onChangeText={(title) => setPaper((pre) => ({ ...pre, title }))}
           icon="logo-closed-captioning"
           onBlur={undefined}

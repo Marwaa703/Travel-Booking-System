@@ -40,12 +40,11 @@ const UserEditForm = forwardRef(({ user }: UserEditFormProps, ref) => {
     // reset
   };
 
-  console.log({ errors });
   useImperativeHandle(ref, () => ({
     submitData: handleSubmit(submitData),
   }));
   console.log({ userForm: user });
-  if (!user || !user.birth_date) return;
+  // if (!user || !user.birth_date) return ;
   return (
     <>
       {userInputs.map(({ icon, name, autoCapitalize, keyboardType, trim }) => (

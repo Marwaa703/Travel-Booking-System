@@ -46,13 +46,16 @@ const Button: React.FC<ButtonProps> = ({
         {loading ? (
           <>
             <ActivityIndicator color={COLORS.bg} />
-            <Text style={styles.loadingText}>{loadingMessage}</Text>
+            <Text style={[styles.loadingText, { fontSize }]}>
+              {loadingMessage}
+            </Text>
           </>
         ) : (
           <Text
-            style={
-              type === "secondary" ? styles.secondaryText : styles.primaryText
-            }
+            style={[
+              type === "secondary" ? styles.secondaryText : styles.primaryText,
+              { fontSize },
+            ]}
           >
             {title}
           </Text>
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   primaryText: {
-    fontSize: FONTS.large,
+    fontSize: FONTS.medium,
     color: COLORS.bg,
     fontWeight: "bold",
     textAlign: "center",
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     marginLeft: 10, // Space between spinner and text
     color: COLORS.bg,
     textAlign: "center",
+    fontSize: FONTS.normal,
   },
 });
 

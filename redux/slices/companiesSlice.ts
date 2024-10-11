@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CompaniesState {
   companies: Company[];
-  users: CompanyUser[];
+  users: CompanyUser[]; //will be used for COmpany role signed in
   loading: boolean;
   error: string | null;
 }

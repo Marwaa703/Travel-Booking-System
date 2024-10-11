@@ -46,6 +46,7 @@ const Pending = () => {
   const pendingCompanies = useAppSelector((state) =>
     state.companies.companies.filter((c) => !c.approved),
   );
+  console.log({ pendingCompanies });
   const [companies, setCompanies] = useState(pendingCompanies);
 
   const handleApprove = (company: Company) => {
@@ -62,9 +63,6 @@ const Pending = () => {
     // delete company papers from database
     console.log(`Company with ID ${companyId} denied!`);
   };
-  useEffect(() => {
-    setCompanies(pendingCompanies);
-  }, [pendingCompanies]);
   return (
     <>
       <Header title={`Pending Requests ${pendingCompanies.length}`} />

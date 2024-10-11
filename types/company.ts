@@ -15,6 +15,7 @@ export interface CompanyPaper {
 }
 
 export interface CompanyUser {
+  profile_picture?: string;
   id?: string;
   company_id?: string;
   first_name: string;

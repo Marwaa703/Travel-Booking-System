@@ -8,29 +8,18 @@ import Spacer from "../Spacer";
 import TripImageForm from "./TripImageForm";
 import TripLocationForm from "./TripLocationForm";
 import IconButton from "../IconButton";
-import {
-  Location,
-  TripDetailes,
-  Trip,
-  TripImage,
-  TripFormData,
-} from "@/types/trip";
+import { Location, TripDetailes, TripImage, TripFormData } from "@/types/trip";
 import { useRouter } from "expo-router";
 import DateInputPicker from "./BirthdatePicker";
-import { useDispatch } from "react-redux";
-import { createFullTrip } from "@/redux/actions/createCompleteTrip";
 import useLoadingState from "@/hooks/useLoadingSate";
 import { createTrip } from "@/api/auth";
-import { useAppSelector } from "@/redux/store";
-import { CompanyUser } from "@/types/company";
+import { useAppDispatch } from "@/redux/store";
+import { addTrip } from "@/redux/slices/tripsSlice";
 
-const MultiStepAddTripForm = () => {
+const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
-  const auth = useAppSelector(
-    (state) => state.auth.currentUser,
-  ) as unknown as CompanyUser;
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
   const [tripData, setTripData] = useState<TripFormData>({
@@ -43,7 +32,6 @@ const MultiStepAddTripForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm({
     resolver: yupResolver(addTripSchema),
@@ -73,13 +61,17 @@ const MultiStepAddTripForm = () => {
 
       // todo:send to server
       // todo:get updated data from server
-      const updatedTripData = await createTrip(
-        finalData,
-        auth.company_id as string,
+      const updatedTripData = await createTrip(finalData, companyId);
+      // todo: update redux with new data
+      dispatch(
+        addTrip({
+          ...updatedTripData?.details,
+          images: updatedTripData?.images,
+          locations: updatedTripData?.locations,
+        }),
       );
       console.log({ updatedTripData });
-      // todo: update redux with new data
-      router.replace("/login");
+      if (updatedTripData.success) router.back();
     } catch (error) {
       setMsg("error creating trip...");
       setLoading(false);
@@ -91,7 +83,7 @@ const MultiStepAddTripForm = () => {
     // reset();
     // router.back();
   };
-  console.log("lol");
+
   return (
     <View style={{ width: "100%" }}>
       {currentStep === 1 && (

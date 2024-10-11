@@ -78,7 +78,8 @@ const SignupForm = () => {
           error={errors[name]?.message}
         />
       ))}
-      <Text style={{ marginVertical: SPACING.medium }}>Select your gender</Text>
+      <Spacer />
+      {/* <Text style={{ marginVertical: SPACING.medium }}>Select your gender</Text> */}
       <GenderPicker
         setSelectedGender={setSelectedGender}
         selectedGender={selectedGender}

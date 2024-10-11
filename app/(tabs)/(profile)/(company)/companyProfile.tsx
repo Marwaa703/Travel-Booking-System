@@ -18,21 +18,16 @@ import useLogout from "@/hooks/useLogout";
 import { fetchTrips } from "@/redux/actions/tripActions";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
-  // todo: set the current company id current CompanyUser
   const user = useAppSelector(
     (state) => state.auth.currentUser,
   ) as unknown as CompanyUser;
-  const companies = useAppSelector((state) => state.companies.companies);
-  // console.log({ cid: user.company_id, companies });
-  // if(user.role === "Representative")
+
   const currentCompany = useAppSelector((state) =>
     selectCompanyById(state, user?.company_id as string),
   ) as Company;
-  // console.log({ currentCompany });
 
   const dispatch = useAppDispatch();
 
-  // console.log({ trips, loading });
   useEffect(() => {
     // admin from company
     dispatch(fetchTrips()); //select companyTrips only from trips
@@ -64,20 +59,22 @@ const CompanyProfile: React.FC = () => {
               </View>
 
               <SettingCard
-                title="Company Profile"
+                title="Details"
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
               <SettingCard
                 title="Trips"
                 onPress={() => {
-                  router.push(`companyHome/?companyId=${user?.company_id}`);
+                  router.push(`companyTrips/?companyId=${user?.company_id}`);
                 }}
                 leftIconName="air"
               />
               <SettingCard
                 title="Manage Employees"
-                onPress={() => {}}
+                onPress={() => {
+                  router.push(`companyUsers/?companyId=${user?.company_id}`);
+                }}
                 leftIconName="people"
               />
               <SettingCard

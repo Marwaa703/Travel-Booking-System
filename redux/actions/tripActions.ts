@@ -19,19 +19,22 @@ import {
 import { TripDetailes, Trip } from "@/types/trip";
 
 // Fetch all trips
-export const fetchTrips = () => async (dispatch: AppDispatch) => {
-  dispatch(setLoading(true));
-  try {
-    // will be adjusted for some trips
-    const trips = await getFullTrips();
-    console.log({ tripsFromAs: trips });
-    dispatch(setTrips(trips));
-  } catch (error) {
-    dispatch(setError(true));
-  } finally {
-    dispatch(setLoading(false));
-  }
-};
+export const fetchTrips =
+  (companyId?: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      // Fetch trips, optionally filtering by company ID
+      const trips = await getFullTrips(companyId);
+      console.log({ tripsFromAs: trips });
+      dispatch(setTrips(trips));
+    } catch (error) {
+      console.error("Error fetching trips:", error); // Added logging for debugging
+      dispatch(setError(true));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
 export const fetchCompanyTrips =
   (companyId: string) => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));

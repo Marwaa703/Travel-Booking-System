@@ -15,10 +15,11 @@ import CardSubtitle from "@/components/CardSubtitle";
 import icons from "@/constants/icons";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
-import { RootState } from "@/redux/store";
+import { RootState, useAppSelector } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { getTripLocationById } from "@/api/tripLocations";
 import { Location } from "@/types/trip";
+import { selectTripById } from "@/redux/slices/tripsSlice";
 
 interface Trip {
   id: number;
@@ -35,37 +36,15 @@ const TripDetails: React.FC = () => {
   const [locations, setLocations] = useState<Location[] | null>(null);
 
   // fetch trip details, locations, instructions in case of booked
-  const dispatch = useDispatch();
-  const { trips } = useSelector((state: RootState) => state.trips);
-  const { images = [] } = useSelector((state: RootState) => state.images) || {};
 
   const route = useRoute();
   const [isExpanded, setIsExpanded] = useState(false);
-  const { tripId } = route.params as { tripId: string };
-
-  const tripIdNumber = Number(tripId);
-
-  useEffect(() => {
-    // fetch trip locations
-    (async () => {
-      const locations = await getTripLocationById(tripId);
-      setLocations(locations as unknown as Location[]);
-    })();
-  }, [tripId]);
-
-  const {
-    image_url = "../../../assets/imgDefault.png",
-    name = "Default Trip Title",
-    subtitle = "Default Company",
-    rate = 0,
-    price = "N/A",
-    description = "Traveling is reported to have a positive impact on health. It can boost your immune system, improve your mood, and alleviate stress.",
-  } = {};
-
-  const imageUrl =
-    images.length > 0 && images[0].image_url
-      ? images[0].image_url
-      : "image_url";
+  const { id } = route.params as { id: string };
+  const tripId = "24";
+  // const idNumber = id;
+  console.log({ id });
+  const trip = useAppSelector((state) => selectTripById(state.trips, id));
+  console.log({ trip });
 
   const router = useRouter();
 
@@ -75,12 +54,13 @@ const TripDetails: React.FC = () => {
       `/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`,
     );
   };
-
+  const images = trip?.images;
+  console.log({ locations: trip?.locations });
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: imageUrl }} style={styles.image} />
+          <Image source={{ uri: images[0]?.image_url }} style={styles.image} />
           <View style={styles.mapButtonContainer}>
             <Button
               title={"See on Map"}
@@ -93,12 +73,12 @@ const TripDetails: React.FC = () => {
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.titleRow}>
-            <Text style={styles.tripTitle}>{name}</Text>
+            <Text style={styles.tripTitle}>{trip?.name}</Text>
             <View style={styles.like}>
               <Like />
             </View>
           </View>
-          <Text style={styles.companyName}>{subtitle}</Text>
+          <Text style={styles.companyName}>{trip?.company_id}</Text>
           <View style={styles.detailRow}>
             {/* update todo */}
             <CardSubtitle
@@ -106,8 +86,8 @@ const TripDetails: React.FC = () => {
               icon={icons.location}
               iconColor={COLORS.textSecondary}
             />
-            <Rating rate={rate} />
-            <Text style={styles.price}>{price}/Person</Text>
+            <Rating rate={trip?.rate} />
+            <Text style={styles.price}>{trip?.price}/Person</Text>
           </View>
           <Text style={styles.sectionTitle}>About Trip</Text>
           {/* Description container */}
@@ -125,7 +105,7 @@ const TripDetails: React.FC = () => {
                 ]}
                 numberOfLines={isExpanded ? undefined : 3}
               >
-                {description}
+                {trip?.description}
               </Text>
               {!isExpanded && (
                 <TouchableOpacity onPress={() => setIsExpanded(true)}>
@@ -140,7 +120,7 @@ const TripDetails: React.FC = () => {
               align="center"
               width={"120%"}
               onPress={() => {
-                router.push(`/payment?tripId=${tripId}`);
+                router.push(`/payment?tripId=${id}`);
               }}
             />
           </View>

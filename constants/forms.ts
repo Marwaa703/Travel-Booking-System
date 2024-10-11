@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 import { KeyboardTypeOptions } from "react-native";
 import { birthdateSchema, emailRegex, phoneRegex } from "./regext";
+import { UserTypes } from "@/types/user";
+import { CompanyUserRoles } from "@/types/company";
 
 // Validation Schemas
 export const loginSchema = Yup.object().shape({
@@ -324,4 +326,9 @@ export const companyPapersInputs: InputFieldProps<CompanyPapersFormFields>[] = [
     keyboardType: "default",
     trim: true,
   },
+];
+export const companyRoles: CompanyUserRoles[] = [
+  "Representative",
+  "Support",
+  "TourGuide",
 ];

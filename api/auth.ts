@@ -13,6 +13,7 @@ import {
   TripFormData,
   TripImage,
 } from "@/types/trip";
+import { localeData } from "moment";
 
 // Sign up for Normal users
 export const signup = async (userData: User) => {
@@ -134,38 +135,38 @@ export const createTrip = async (
   console.log({ companyId });
   try {
     // Step 1: Create the trip details
-    const tripDetailes = (await api.post<TripDetailes>("/trips", {
+    const tripDetailes = await api.post<TripDetailes>("/trips", {
       ...details,
       company_id: companyId,
-    })) as unknown as TripDetailes;
-
+    });
+    const trip_id = tripDetailes.data.id;
+    console.log("step 1 done:", trip_id, tripDetailes.data);
+    console.log({ locations });
     // Step 2: Create trip locations
-    const tripLocations = await Promise.all(
-      locations.map((loc) =>
-        api.post<Location>("/tripLocations", {
-          ...loc,
-          trip_id: tripDetailes.id,
-        }),
-      ),
+    const loactionsData = locations.map((loc) =>
+      api.post<Location>("/tripLocations", {
+        ...loc,
+        trip_id,
+      }),
     );
-
-    console.log("step 2", images);
+    const tripLocations = await Promise.all(loactionsData);
+    console.log("step 2 done:");
 
     // Step 3: Create trip images
-    console.log({ step3: tripDetailes?.id });
     const imagesData = images.map((img) =>
       api.post<TripImage>("/tripImages", {
         image_url: img.image_url,
         caption: img.caption,
-        trip_id: tripDetailes?.id,
+        trip_id,
       }),
     );
     const tripImages = await Promise.all(imagesData);
+    console.log({ step3forimages: tripImages.map((i) => i.status) });
 
     // Prepare the updated trip data
     return {
       success: true,
-      details: tripDetailes,
+      details: tripDetailes.data,
       locations: tripLocations.map((response) => response.data), // Extract data from each response
       images: tripImages.map((response) => response.data), // Extract data from each response
     };

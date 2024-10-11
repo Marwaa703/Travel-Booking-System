@@ -18,7 +18,7 @@ const EditProfileScreen: React.FC = () => {
   const [image, setImage] = useState<string>(
     "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
   );
-
+  // save image on redux
   useEffect(() => {}, [userEditFormRef, user]);
   const handleUpdate = () => {
     if (userEditFormRef.current) {
@@ -41,9 +41,6 @@ const EditProfileScreen: React.FC = () => {
           <View style={styles.profileContainer}>
             <Image source={{ uri: image }} style={styles.profileImage} />
             <ImagePickerCropper onSelectImage={(uri) => setImage(uri)} />
-            {/* <TouchableOpacity >
-              <Text style={styles.changeProfileText}>Change Profile Picture</Text>
-            </TouchableOpacity> */}
           </View>
 
           <UserEditForm ref={userEditFormRef} user={user} />
@@ -52,12 +49,16 @@ const EditProfileScreen: React.FC = () => {
     </>
   );
 };
+// <TouchableOpacity >
+//   <Text style={styles.changeProfileText}>Change Profile Picture</Text>
+// </TouchableOpacity>
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     marginTop: 20,
     marginBottom: 100,
+    flex: 1,
   },
   scrollContainer: {
     flexGrow: 1,
