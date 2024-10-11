@@ -60,7 +60,7 @@ const Home = () => {
               style={styles.horizontalScroll}
             >
               {trips.map((trip) => (
-                <View key={trip.id} style={styles.cardWrapper}>
+                <View key={trip.trip_id} style={styles.cardWrapper}>
                   <Card
                     id={trip.trip_id as string}
                     image={trip.images[1]?.image_url || "default_image_uri"}

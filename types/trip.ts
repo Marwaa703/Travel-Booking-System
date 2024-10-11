@@ -4,6 +4,7 @@ export interface TripDetailes {
   price: number;
   max_reservations: number;
   id?: string;
+  trip_id?: string;
   date: Date;
   status?: TripStatus;
   rate?: number | null;
@@ -38,7 +39,6 @@ export interface TripInstruction {
 
 export interface Trip extends TripDetailes {
   images: TripImage[]; // Array of image URLs
-  locations?: Location[];
 }
 export interface TripFormData {
   images: TripImage[]; // Array of image URLs

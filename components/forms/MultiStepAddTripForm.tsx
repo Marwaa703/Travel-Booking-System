@@ -67,7 +67,6 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
         addTrip({
           ...updatedTripData?.details,
           images: updatedTripData?.images,
-          locations: updatedTripData?.locations,
         }),
       );
       console.log({ updatedTripData });

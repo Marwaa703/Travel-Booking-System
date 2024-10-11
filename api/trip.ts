@@ -1,20 +1,20 @@
-import { Location, Trip, TripDetailes, Trip, TripImage } from "@/types/trip";
+import { Location, TripDetailes, TripImage, TripFormData } from "@/types/trip";
 import api from "./axiosApi";
 
 // get all trips
 export const createTrip = async (
-  tripData: Trip,
+  tripData: TripFormData,
 ): Promise<{
-  tripDetails: TripDetailes;
+  details: TripDetailes;
   locations: Location[];
   images: TripImage[];
 }> => {
-  const { tripDetails, locations, images } = tripData;
+  const { details, locations, images } = tripData;
 
   try {
     // Step 1: Create Trip
-    const tripResponse = await api.post<Trip>("/trips", tripDetails);
-    const tripId = tripResponse.data.details.id; // Assuming the trip ID is in the response data
+    const tripResponse = await api.post<TripDetailes>("/trips", details);
+    const tripId = tripResponse.data.trip_id; // Assuming the trip ID is in the response data
 
     // Step 2: Create Trip Locations with tripId
     const locationsResponse = await Promise.all(
@@ -38,7 +38,7 @@ export const createTrip = async (
 
     // Prepare the updated trip data
     return {
-      tripDetails: tripResponse.data.details,
+      details: tripResponse.data,
       locations: locationsResponse.map((response) => response.data), // Extract data from each response
       images: imagesResponse.map((response) => response.data), // Extract data from each response
     };
@@ -60,9 +60,9 @@ export const getAllTrips = async (): Promise<TripDetailes[]> => {
 };
 
 // Get a trip by ID
-export const getTripById = async (tripId: string): Promise<Trip> => {
+export const getTripById = async (tripId: string): Promise<TripDetailes> => {
   try {
-    const response = await api.get<Trip>(`/trips/${tripId}`);
+    const response = await api.get<TripDetailes>(`/trips/${tripId}`);
     return response.data;
   } catch (error) {
     console.log(error, "Failed to fetch trip");
@@ -73,10 +73,10 @@ export const getTripById = async (tripId: string): Promise<Trip> => {
 // Update a trip
 export const updateTrip = async (
   tripId: string,
-  tripData: Trip,
-): Promise<Trip> => {
+  tripData: TripDetailes,
+): Promise<TripDetailes> => {
   try {
-    const response = await api.put<Trip>(`/trips/${tripId}`, tripData);
+    const response = await api.put<TripDetailes>(`/trips/${tripId}`, tripData);
     return response.data;
   } catch (error) {
     console.log(error, "Failed to update trip");

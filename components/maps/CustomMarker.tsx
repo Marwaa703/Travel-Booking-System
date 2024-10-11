@@ -10,17 +10,17 @@ const CustomMarker = memo(
   function CustomMarker({ location }: CustomMarkerProps) {
     return (
       <Marker
-        coordinate={{ latitude: location.lat, longitude: location.lon }}
-        title={location.name}
+        coordinate={{ latitude: location?.lat, longitude: location?.lon }}
+        title={location?.name}
 
         //   style={{ width: 80, height: 80 }}
       >
         <View style={styles.markerContainer}>
           <View style={styles.imageContainer}>
-            <Image source={{ uri: location.imageUrl }} style={styles.image} />
+            <Image source={{ uri: location?.image_url }} style={styles.image} />
           </View>
           <View style={styles.orderContainer}>
-            <Text style={styles.orderText}>{location.order}</Text>
+            <Text style={styles.orderText}>{location?.location_order}</Text>
           </View>
         </View>
       </Marker>

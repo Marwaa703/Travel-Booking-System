@@ -16,13 +16,13 @@ import { useRoute } from "@react-navigation/native";
 const Map: React.FC = () => {
   const mapRef = useRef<MapView>(null);
   const route = useRoute();
-  const { places } = route.params;
+  const { places } = route.params as { places: string };
 
   const locations = useMemo(
     () => (places ? JSON.parse(decodeURIComponent(places)) : []),
     [places],
   );
-
+  console.log({ locations: locations?.length });
   // const locations = places;
   const initialRegion = useMemo(
     () => calculateInitialRegion(locations),

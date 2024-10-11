@@ -42,7 +42,10 @@ const CompanyHome = () => {
   }, [route.params?.newTrip]);
 
   const trips = alltrips
-    .filter((t) => t.company_id == companyId)
+    .filter((t) => {
+      console.log(typeof t.company_id, typeof companyId);
+      return t.company_id == companyId;
+    })
     .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
   console.log({ allTrips: alltrips.length, trips: trips.length });
   return (
@@ -70,7 +73,7 @@ const CompanyHome = () => {
             <Spacer />
             <View style={styles.cardContainer}>
               {trips.map((trip) => (
-                <View key={`trip-${trip.id}`} style={styles.cardWrapper}>
+                <View key={trip.trip_id} style={styles.cardWrapper}>
                   <Card
                     id={trip.id as string}
                     image={trip.images[0]?.image_url || "default_image_uri"}

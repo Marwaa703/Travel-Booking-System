@@ -15,12 +15,11 @@ import CardSubtitle from "@/components/CardSubtitle";
 import icons from "@/constants/icons";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
-import { RootState, useAppSelector } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { getTripLocationById } from "@/api/tripLocations";
+import { useAppSelector } from "@/redux/store";
+import { getLocationsByTripId } from "@/api/tripLocations";
 import { Location } from "@/types/trip";
 import { selectTripById } from "@/redux/slices/tripsSlice";
-
+import { Ionicons } from "@expo/vector-icons";
 interface Trip {
   id: number;
   name: string;
@@ -31,22 +30,27 @@ interface Trip {
   description: string;
   image_url: string;
 }
-
+// upgrade: by swaping
 const TripDetails: React.FC = () => {
+  const [index, setIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [locations, setLocations] = useState<Location[] | null>(null);
 
-  // fetch trip details, locations, instructions in case of booked
-
   const route = useRoute();
-  const [isExpanded, setIsExpanded] = useState(false);
   const { id } = route.params as { id: string };
-  const tripId = "24";
-  // const idNumber = id;
+
   console.log({ id });
+
   const trip = useAppSelector((state) => selectTripById(state.trips, id));
-  console.log({ trip });
 
   const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const locations = await getLocationsByTripId(id);
+      setLocations(locations);
+    })();
+  }, [id]);
 
   const handleSeeOnMap = () => {
     // will be handled
@@ -54,18 +58,48 @@ const TripDetails: React.FC = () => {
       `/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`,
     );
   };
+
   const images = trip?.images;
-  console.log({ locations: trip?.locations });
+
+  // console.log({ id, locations });
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: images[0]?.image_url }} style={styles.image} />
+          <View style={styles.arrows}>
+            <View style={styles.arrowsContainer}>
+              <Ionicons
+                name="arrow-back-outline"
+                size={24}
+                color="white"
+                onPress={() =>
+                  setIndex(index === 0 ? images?.length - 1 : index - 1)
+                }
+              />
+            </View>
+            <View style={styles.arrowsContainer}>
+              <Ionicons
+                name="arrow-forward-outline"
+                size={24}
+                color="white"
+                onPress={() =>
+                  setIndex(index === images?.length - 1 ? 0 : index + 1)
+                }
+              />
+            </View>
+          </View>
+
+          <Image
+            source={{ uri: images[index]?.image_url }}
+            style={styles.image}
+          />
+          <Text style={styles.caption}>{images[index]?.caption}</Text>
           <View style={styles.mapButtonContainer}>
             <Button
               title={"See on Map"}
               type="secondary"
-              width={"30%"}
+              width={"40%"}
               align="center"
               onPress={handleSeeOnMap}
             />
@@ -82,11 +116,11 @@ const TripDetails: React.FC = () => {
           <View style={styles.detailRow}>
             {/* update todo */}
             <CardSubtitle
-              text={"locationNames"}
+              text={locations[0]?.name || "locationNames"}
               icon={icons.location}
               iconColor={COLORS.textSecondary}
             />
-            <Rating rate={trip?.rate} />
+            <Rating rate={trip?.rate as number} />
             <Text style={styles.price}>{trip?.price}/Person</Text>
           </View>
           <Text style={styles.sectionTitle}>About Trip</Text>
@@ -131,6 +165,23 @@ const TripDetails: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  arrows: {
+    position: "absolute",
+    zIndex: 25,
+    top: "45%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  arrowsContainer: {
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "transparent",
@@ -141,6 +192,23 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: "relative",
+  },
+  caption: {
+    fontSize: FONTS.xxlarge,
+    zIndex: 20,
+    position: "absolute",
+    top: 26,
+    width: "100%",
+    textAlign: "center",
+    color: "#fff",
+    fontWeight: "bold",
+    padding: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+
+    textShadowColor: "rgba(0, 0, 0, 0.7)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    letterSpacing: 1.5,
   },
   image: {
     width: "100%",

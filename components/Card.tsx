@@ -84,6 +84,7 @@ const Card: React.FC<CardProps> = ({
         <Buttons
           type="secondary"
           title={buttonText}
+          fontSize={FONTS.small}
           onPress={() => {}}
           width={"60%"}
           align="flex-end"

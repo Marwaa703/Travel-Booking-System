@@ -39,9 +39,9 @@ export const getBearing = (
 
 export const calculateInitialRegion = (locations: Location[]) => {
   const midLat =
-    locations.reduce((sum, loc) => sum + loc.lat, 0) / locations.length;
+    locations?.reduce((sum, loc) => sum + loc.lat, 0) / locations?.length;
   const midLon =
-    locations.reduce((sum, loc) => sum + loc.lon, 0) / locations.length;
+    locations?.reduce((sum, loc) => sum + loc.lon, 0) / locations?.length;
   return {
     latitude: midLat,
     longitude: midLon,
@@ -88,7 +88,7 @@ export const adjustLocations = (
 
 export const getCoordinatesForPolyline = (locations: Location[]) => {
   return locations
-    .sort((a, b) => a.order - b.order)
+    .sort((a, b) => a.location_order - b.location_order)
     .map((location) => ({
       latitude: location.lat,
       longitude: location.lon,
