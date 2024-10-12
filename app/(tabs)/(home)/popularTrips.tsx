@@ -1,23 +1,28 @@
-import React, { Fragment, useEffect } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  ActivityIndicator,
-  StyleSheet,
-} from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment } from "react";
+import { View, Text, FlatList, StyleSheet, RefreshControl } from "react-native";
+import { useDispatch } from "react-redux";
 import { fetchTrips } from "@/redux/actions/tripActions";
-import { fetchImagesByTripId } from "@/redux/actions/imageActions";
-import { COLORS } from "@/constants/theme";
 import TripProfileCard from "@/components/TripProfileCard";
 import { RootState, useAppSelector } from "@/redux/store";
 import Spacer from "@/components/Spacer";
 import { formattedDate } from "@/utils";
+import useRefreshControl from "@/hooks/useRefreshControl";
 
 const PopularTrips: React.FC = () => {
   const dispatch = useDispatch();
-  const trips = useAppSelector((state) => state.trips.trips);
+  const trips = useAppSelector((state: RootState) => state.trips.trips);
+
+  //^how to use the useRefreshControl Hook (3 steps)
+  // ^STEP ONE: Define the function that will be called to refresh data.
+  // ^This is where you define what should happen when the user pulls to refresh.
+  const onRefresh = async () => {
+    await dispatch(fetchTrips());
+  };
+
+  // ^STEP TWO: Pass the onRefresh function to the useRefreshControl hook.
+  // ^The hook returns the refreshControl object, which manages the refreshing state.
+  const { refreshControl } = useRefreshControl({ onRefresh });
+
   return (
     <View style={styles.container}>
       {trips.length === 0 ? (
@@ -30,7 +35,6 @@ const PopularTrips: React.FC = () => {
             const tripImages = item.images.filter(
               (image) => image.trip_id === item.trip_id,
             );
-            console.log(tripImages);
             return (
               <Fragment key={item.trip_id}>
                 <TripProfileCard
@@ -52,6 +56,9 @@ const PopularTrips: React.FC = () => {
               </Fragment>
             );
           }}
+          // ^STEP THREE: Add the refreshControl prop to the FlatList component.
+          // ^This ensures that when the user pulls down, the refreshing action triggers the onRefresh function defined earlier.
+          refreshControl={<RefreshControl {...refreshControl} />}
         />
       )}
     </View>
@@ -64,16 +71,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
-  // loadingContainer: {
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
-  // errorContainer: {
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
 });
 
 export default PopularTrips;

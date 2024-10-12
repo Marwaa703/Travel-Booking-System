@@ -12,7 +12,7 @@ import { router } from "expo-router";
 import Header from "@/components/core/Header";
 import { COLORS, FONTS, SPACING } from "@/constants/theme";
 import Card from "@/components/Card";
-import { trips, avatars } from "@/DummyData/trips.json";
+import { avatars } from "@/DummyData/trips.json";
 import Spacer from "@/components/Spacer";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
