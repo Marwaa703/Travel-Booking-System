@@ -1,7 +1,6 @@
 import {
   View,
   TextInput,
-  Alert,
   StyleSheet,
   Text,
   Image,
@@ -13,18 +12,27 @@ import { useRoute } from "@react-navigation/native";
 import Button from "@/components/Buttons";
 import { COLORS } from "@/constants/theme";
 import { fetchTripDetails, makePayment, bookTrip } from "@/api/payment";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
-
+import { useAppSelector } from "@/redux/store";
+import { User } from "@/types/user";
+import CustomAlert from "@/components/core/Alert";
 const defaultImage = require("../../../assets/imgDefault.png");
 
+//!Need to Handle the logic better
 const Payment: React.FC = () => {
   const route = useRoute();
   const { tripId } = route.params as { tripId: string };
   const [userWalletAddress, setUserWalletAddress] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [tripDetails, setTripDetails] = useState<any>(null);
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "success" | "error" | "info";
+  } | null>(null);
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
+
+  const userId = user.id?.toString();
 
   useEffect(() => {
     const loadTripDetails = async () => {
@@ -32,7 +40,10 @@ const Payment: React.FC = () => {
         const data = await fetchTripDetails(tripId);
         setTripDetails(data);
       } catch (error: any) {
-        Alert.alert("Error", error.message || "Could not fetch trip details");
+        setAlert({
+          message: error.message || "Could not fetch trip details",
+          type: "error",
+        });
       }
     };
     loadTripDetails();
@@ -40,7 +51,7 @@ const Payment: React.FC = () => {
 
   const handlePayment = async () => {
     if (!userWalletAddress) {
-      Alert.alert("Error", "Please enter your wallet address");
+      setAlert({ message: "Please enter your wallet address", type: "error" });
       return;
     }
 
@@ -54,29 +65,28 @@ const Payment: React.FC = () => {
       );
       const { transactionHash } = paymentResponse;
 
-      Alert.alert("Payment Successful", `Transaction hash: ${transactionHash}`);
+      setAlert({
+        message: `Payment Successful! Transaction hash: ${transactionHash}`,
+        type: "success",
+      });
 
-      const bookingResponse = await bookTrip(
-        tripId,
-        currentUser.id,
-        transactionHash,
-      );
+      const bookingResponse = await bookTrip(tripId, userId, transactionHash);
       if (bookingResponse) {
-        Alert.alert(
-          "Booking Successful",
-          "Your trip has been successfully booked!",
-        );
+        setAlert({
+          message: "Your trip has been successfully booked!",
+          type: "success",
+        });
       } else {
-        Alert.alert(
-          "Booking Failed",
-          "Could not book the trip. Please try again.",
-        );
+        setAlert({
+          message: "Could not book the trip. Please try again.",
+          type: "error",
+        });
       }
     } catch (error: any) {
-      Alert.alert(
-        "Error",
-        error.message || "Something went wrong during payment.",
-      );
+      setAlert({
+        message: error.message || "Something went wrong during payment.",
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -90,6 +100,7 @@ const Payment: React.FC = () => {
       </View>
     );
   }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.logoContainer}>
@@ -98,7 +109,7 @@ const Payment: React.FC = () => {
           style={styles.ethLogo}
         />
       </View>
-
+      {alert && <CustomAlert message={alert.message} type={alert.type} />}
       <View style={styles.section}>
         <View style={styles.infoSection}>
           <View style={styles.tripDetailsColumn}>
@@ -208,5 +219,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#f9f9f9",
     marginBottom: 20,
+    alignSelf: "center",
   },
 });

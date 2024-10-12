@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "./axiosApi";
 
 // Fetch trip details by ID
@@ -16,7 +17,6 @@ export const fetchTripDetails = async (tripId: string) => {
     );
   }
 };
-
 // Make a payment
 export const makePayment = async (
   companyId: number | string,
@@ -25,7 +25,14 @@ export const makePayment = async (
   amountInWei: string,
 ) => {
   try {
-    const res = await api.post("/payment", {
+    console.log("Making payment with data:", {
+      companyId,
+      tripId,
+      userWalletAddress,
+      amountInWei,
+    });
+
+    const res = await axios.post("http://192.168.1.4:3002/payment", {
       companyId,
       tripId,
       userWalletAddress,
@@ -33,6 +40,7 @@ export const makePayment = async (
     });
     return res.data;
   } catch (error: any) {
+    console.error("Payment error:", error);
     const errorMessage =
       error.response?.data?.message ||
       error.message ||
@@ -44,20 +52,28 @@ export const makePayment = async (
   }
 };
 
-// Book the trip after payment
 export const bookTrip = async (
   tripId: string,
-  userId: number,
+  userId: string,
   transactionHash: string,
 ) => {
   try {
-    const res = await api.post("/booked_trip", {
+    console.log("Booking trip with data:", {
       tripId,
       userId,
       transactionHash,
     });
+
+    const res = await api.post("/booked_trip", {
+      trip_id: tripId,
+      user_id: userId,
+      transactionHash,
+    });
+    console.log(res.data);
     return res.data;
   } catch (error: any) {
+    console.error("Booking error:", error);
+    console.error("Booking error details:", error.response?.data);
     const errorMessage =
       error.response?.data?.message ||
       error.message ||

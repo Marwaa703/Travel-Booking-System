@@ -40,12 +40,12 @@ const TripDetails: React.FC = () => {
   const route = useRoute();
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = route.params as { id: string };
-  const tripId = "24";
+  // const tripId = "24";
   // const idNumber = id;
   console.log({ id });
   const trip = useAppSelector((state) => selectTripById(state.trips, id));
   console.log({ trip });
-
+  console.log({ id });
   const router = useRouter();
 
   const handleSeeOnMap = () => {
@@ -56,7 +56,18 @@ const TripDetails: React.FC = () => {
   };
   const images = trip?.images;
   console.log({ locations: trip?.locations });
+
   return (
+    // <View style={styles.buttonContainer}>
+    //   <Button
+    //     title={"Book Now"}
+    //     align="center"
+    //     width={"120%"}
+    //     onPress={() => {
+    //       router.push(`/payment?tripId=${id}`);
+    //     }}
+    //   />
+    // </View>
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.imageContainer}>
@@ -219,8 +230,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonContainer: {
-    alignSelf: "center",
-    marginTop: "auto",
+    // alignSelf: "center",
+    marginTop: 140, //^Change that to auto
   },
 });
 

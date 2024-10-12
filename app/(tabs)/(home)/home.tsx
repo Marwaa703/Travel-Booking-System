@@ -15,6 +15,7 @@ import Card from "@/components/Card";
 import { trips, avatars } from "@/DummyData/trips.json";
 import Spacer from "@/components/Spacer";
 import { useAppSelector } from "@/redux/store";
+import { User } from "@/types/user";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
@@ -24,8 +25,15 @@ const Home = () => {
     uri: avatar.uri,
   }));
   useEffect(() => {
-    console.log({ trips: trips.length });
+    // console.log({ trips: trips.length });
   }, [trips.length]);
+
+  // const user = useAppSelector(
+  //   (state) => state.auth.currentUser,
+  // ) as unknown as User;
+
+  // console.log(user?.role);
+
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
       <Header />
