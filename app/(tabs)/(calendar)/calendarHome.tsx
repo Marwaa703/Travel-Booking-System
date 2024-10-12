@@ -8,16 +8,21 @@ import TripProfileCard from "@/components/TripProfileCard";
 import Padding from "@/components/containers/Padding";
 import WeeklyCalendar from "@/components/Calendar";
 import { getBookedTripsByUserId } from "@/api/bookedTrips";
-import { RootState } from "@/redux/store";
+import { RootState, useAppSelector } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { getTripById } from "@/api/trips/trip";
 import moment from "moment";
+import FormatDate from "@/components/core/FormatDate";
+import { setError } from "@/redux/slices/companiesSlice";
+import { User } from "@/types/user";
 
 const Calendar = () => {
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
   const [bookedTrips, setBookedTrips] = useState([]);
   const [tripDetails, setTripDetails] = useState([]);
-  const userId = currentUser?.id;
+  const userId = user?.id;
 
   useEffect(() => {
     const fetchBookedTrips = async () => {
@@ -74,7 +79,7 @@ const Calendar = () => {
                     id={trip.id}
                     image={trip.image_url}
                     title={trip.name}
-                    date={trip.date}
+                    date={<FormatDate dateString={trip.date} />}
                     rating={4}
                     price={trip.price}
                     avatars={[

@@ -82,7 +82,7 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
       </View>
       {/* Price Tag */}
       <View style={styles.priceContainer}>
-        <Text style={styles.priceText}>$ {price}</Text>
+        <Text style={styles.priceText}>WEI {price}</Text>
       </View>
     </TouchableOpacity>
   );

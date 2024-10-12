@@ -112,13 +112,13 @@ const TripEdit: React.FC = () => {
     <>
       <Header title="Trip Instruction" />
       <View style={styles.container}>
-        <Text>Insruction</Text>
+        <Text>Instruction</Text>
         <TextInputField
           name={"Trip instruction"}
           onChangeText={setInstruction}
           onBlur={undefined}
           value={instruction}
-          icon="arrow-undo-outline"
+          icon="clipboard-outline"
           trim={false}
         />
 

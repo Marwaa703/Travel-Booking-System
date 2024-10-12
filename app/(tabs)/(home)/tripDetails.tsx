@@ -20,6 +20,8 @@ import { getLocationsByTripId } from "@/api/tripLocations";
 import { Location } from "@/types/trip";
 import { selectTripById } from "@/redux/slices/tripsSlice";
 import { Ionicons } from "@expo/vector-icons";
+import { selectCompanyById } from "@/redux/slices/companiesSlice";
+import { Company } from "@/types/company";
 interface Trip {
   id: number;
   name: string;
@@ -42,6 +44,9 @@ const TripDetails: React.FC = () => {
   console.log({ id });
 
   const trip = useAppSelector((state) => selectTripById(state.trips, id));
+  const company = useAppSelector((state) =>
+    selectCompanyById(state, trip?.company_id as string),
+  ) as Company;
 
   const router = useRouter();
 
@@ -113,7 +118,7 @@ const TripDetails: React.FC = () => {
                 <Like />
               </View>
             </View>
-            <Text style={styles.companyName}>{trip?.company_id}</Text>
+            <Text style={styles.companyName}>{company.name}</Text>
             <View style={styles.detailRow}>
               {/* update todo */}
               {/* <CardSubtitle

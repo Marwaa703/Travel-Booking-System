@@ -46,10 +46,20 @@ const PopularTrips: React.FC = () => {
                   }
                   title={item.name}
                   date={formattedDate(item.date)}
-                  rating={0}
+                  rating={4}
                   price={item.price}
                   peopleJoined={item.max_reservations}
-                  avatars={[]}
+                  avatars={[
+                    {
+                      uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
+                    },
+                    {
+                      uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg",
+                    },
+                    {
+                      uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg",
+                    },
+                  ]}
                   caller={"Home"}
                 />
                 <Spacer />

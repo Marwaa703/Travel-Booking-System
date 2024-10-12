@@ -12,6 +12,8 @@ import { COLORS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import { getInstructionsByTripId } from "@/api/trips/tripInstruction";
 import { TripInstruction } from "@/types/trip";
+import { useAppSelector } from "@/redux/store";
+import { selectTripById } from "@/redux/slices/tripsSlice";
 
 const TripInstructions: React.FC = () => {
   const route = useRoute();
@@ -20,6 +22,7 @@ const TripInstructions: React.FC = () => {
   const [visibleMessages, setVisibleMessages] = useState<TripInstruction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const trip = useAppSelector((state) => selectTripById(state.trips, tripId));
 
   useEffect(() => {
     const fetchInstructions = async () => {
@@ -88,7 +91,7 @@ const TripInstructions: React.FC = () => {
   return (
     <>
       <Header
-        title={`Trip ${tripId}`}
+        title={trip.name}
         rightIcon="call-outline"
         leftIcon="arrow-back"
         onRightIconPress={() => {}}
