@@ -72,7 +72,7 @@ const CompanyHome = () => {
               {trips.map((trip) => (
                 <View key={`trip-${trip.id}`} style={styles.cardWrapper}>
                   <Card
-                    id={trip.id as string}
+                    id={trip.trip_id as string}
                     image={trip.images[0]?.image_url || "default_image_uri"}
                     title={trip.name}
                     subtitle={trip.name}
