@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,176 +6,208 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import Header from "@/components/core/Header";
 import { COLORS } from "@/constants/theme";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  birthdate: string;
-  gender: string;
-  phone: string;
-}
+import userApi from "@/api/userApi";
+import { User } from "@/types/user";
+import { UserTypes } from "@/types/user";
+import Alert from "@/components/core/Alert";
 
 const RegisterUsersScreen: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: "1",
-      name: "User",
-      email: "user1@user.com",
-      birthdate: "1990-01-01",
-      gender: "Male",
-      phone: "123-456-7890",
-    },
-    {
-      id: "2",
-      name: "User Two",
-      email: "user2@user.com",
-      birthdate: "1985-05-15",
-      gender: "Female",
-      phone: "987-654-3210",
-    },
-    {
-      id: "3",
-      name: "User Three",
-      email: "user3@user.com",
-      birthdate: "1999-09-20",
-      gender: "Male",
-      phone: "456-654-3210",
-    },
-  ]);
-
-  const [name, setName] = useState<string>("");
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [birthdate, setBirthdate] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
+  const [birthDate, setBirthDate] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
+  const [role, setRole] = useState<UserTypes | string>("user");
   const [editUser, setEditUser] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true);
+      try {
+        const fetchedUsers = await userApi.getAllUsers();
+        const filteredUsers = fetchedUsers.filter(
+          (user) => user.role === "User",
+        );
+        setUsers(filteredUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setError("Failed to load users. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUsers();
+  }, []);
+
   // Update user
-  const updateUser = () => {
-    setUsers(
-      users.map((user) =>
-        user.id === editUser
-          ? { ...user, name, email, birthdate, gender, phone }
-          : user,
-      ),
-    );
-    resetForm();
+  const updateUser = async () => {
+    if (editUser) {
+      try {
+        const updatedUser = await userApi.updateUser(editUser, {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          birth_date: birthDate,
+          phone,
+          role,
+        });
+
+        setUsers((prevUsers) =>
+          prevUsers.map((user) => (user.id === editUser ? updatedUser : user)),
+        );
+        resetForm();
+      } catch (error) {
+        console.error("Error updating user:", error);
+        setError("Failed to update user. Please try again.");
+      }
+    }
   };
 
   // Delete user
-  const deleteUser = (id: string) => {
-    setUsers(users.filter((user) => user.id !== id));
+  const deleteUser = async (id: string) => {
+    try {
+      await userApi.deleteUser(id);
+      setUsers(users.filter((user) => user.id !== id));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      setError("Failed to delete user. Please try again.");
+    }
   };
 
-  // Reset the form
   const resetForm = () => {
     setEditUser(null);
-    setName("");
+    setFirstName("");
+    setLastName("");
     setEmail("");
-    setBirthdate("");
-    setGender("");
+    setBirthDate("");
     setPhone("");
+    setRole("user");
   };
 
   return (
     <>
       <Header title="Register Users" />
       <View style={styles.container}>
-        <FlatList
-          data={[{ key: "form" }, ...users]}
-          keyExtractor={(item) => (item as any).id || item.key}
-          renderItem={({ item }) => {
-            if ((item as any).key === "form") {
-              return (
-                <View style={styles.formContainer}>
-                  <Text style={styles.title}>Manage Users</Text>
-                  {editUser && (
-                    <>
-                      <TextInput
-                        placeholder="Enter user name"
-                        value={name}
-                        onChangeText={setName}
-                        style={styles.input}
-                      />
-                      <TextInput
-                        placeholder="Enter email"
-                        value={email}
-                        onChangeText={setEmail}
-                        style={styles.input}
-                      />
-                      <TextInput
-                        placeholder="Enter birthdate (YYYY-MM-DD)"
-                        value={birthdate}
-                        onChangeText={setBirthdate}
-                        style={styles.input}
-                      />
-                      <TextInput
-                        placeholder="Enter gender"
-                        value={gender}
-                        onChangeText={setGender}
-                        style={styles.input}
-                      />
-                      <TextInput
-                        placeholder="Enter phone"
-                        value={phone}
-                        onChangeText={setPhone}
-                        style={styles.input}
-                      />
-                      <TouchableOpacity
-                        style={styles.updateButton}
-                        onPress={updateUser}
-                      >
-                        <Text style={styles.updateButtonText}>Update User</Text>
-                      </TouchableOpacity>
-                    </>
-                  )}
-                </View>
-              );
-            } else {
-              const user = item as User;
-              return (
-                <View style={styles.userContainer}>
-                  <View>
-                    <Text style={styles.userName}>Name: {user.name}</Text>
-                    <Text style={styles.userDetails}>Email: {user.email}</Text>
-                    <Text style={styles.userDetails}>
-                      Birthdate: {user.birthdate}
-                    </Text>
-                    <Text style={styles.userDetails}>
-                      Gender: {user.gender}
-                    </Text>
-                    <Text style={styles.userDetails}>Phone: {user.phone}</Text>
-                  </View>
-                  <View style={styles.actionButtons}>
-                    <TouchableOpacity
-                      style={styles.editButton}
-                      onPress={() => {
-                        setEditUser(user.id);
-                        setName(user.name);
-                        setEmail(user.email);
-                        setBirthdate(user.birthdate);
-                        setGender(user.gender);
-                        setPhone(user.phone);
-                      }}
-                    >
-                      <Text style={styles.editButtonText}>Edit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.deleteButton}
-                      onPress={() => deleteUser(user.id)}
-                    >
-                      <Text style={styles.deleteButtonText}>Delete</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              );
-            }
-          }}
-        />
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color={COLORS.secondary}
+            style={styles.loader}
+          />
+        ) : (
+          <>
+            {error && <Alert message={error} type="error" />}
+            <FlatList
+              data={[{ key: "form" }, ...users]}
+              keyExtractor={(item) => (item as any).id || item.key}
+              renderItem={({ item }) => {
+                if ((item as any).key === "form") {
+                  return (
+                    <View style={styles.formContainer}>
+                      <Text style={styles.title}>Manage Users</Text>
+                      {editUser && (
+                        <>
+                          <TextInput
+                            placeholder="Enter first name"
+                            value={firstName}
+                            onChangeText={setFirstName}
+                            style={styles.input}
+                          />
+                          <TextInput
+                            placeholder="Enter last name"
+                            value={lastName}
+                            onChangeText={setLastName}
+                            style={styles.input}
+                          />
+                          <TextInput
+                            placeholder="Enter email"
+                            value={email}
+                            onChangeText={setEmail}
+                            style={styles.input}
+                          />
+                          <TextInput
+                            placeholder="Enter birthdate (YYYY-MM-DD)"
+                            value={birthDate}
+                            onChangeText={setBirthDate}
+                            style={styles.input}
+                          />
+                          <TextInput
+                            placeholder="Enter phone"
+                            value={phone}
+                            onChangeText={setPhone}
+                            style={styles.input}
+                          />
+                          <TouchableOpacity
+                            style={styles.updateButton}
+                            onPress={updateUser}
+                          >
+                            <Text style={styles.updateButtonText}>
+                              Update User
+                            </Text>
+                          </TouchableOpacity>
+                        </>
+                      )}
+                    </View>
+                  );
+                } else {
+                  const user = item as User;
+                  return (
+                    <View style={styles.userContainer}>
+                      <View>
+                        <Text style={styles.userName}>
+                          Name: {user.first_name} {user.last_name}
+                        </Text>
+                        <Text style={styles.userDetails}>
+                          Email: {user.email}
+                        </Text>
+                        <Text style={styles.userDetails}>
+                          Birthdate: {user.birth_date?.toString().split("T")[0]}{" "}
+                        </Text>
+                        <Text style={styles.userDetails}>
+                          Phone: {user.phone}
+                        </Text>
+                        <Text style={styles.userDetails}>
+                          Role: {user.role}
+                        </Text>
+                      </View>
+                      <View style={styles.actionButtons}>
+                        <TouchableOpacity
+                          style={styles.editButton}
+                          onPress={() => {
+                            setEditUser(user.id);
+                            setFirstName(user.first_name);
+                            setLastName(user.last_name);
+                            setEmail(user.email);
+                            setBirthDate(
+                              user.birth_date?.toString().split("T")[0] || "",
+                            );
+                            setPhone(user.phone);
+                            setRole(user.role);
+                          }}
+                        >
+                          <Text style={styles.editButtonText}>Edit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.deleteButton}
+                          onPress={() => deleteUser(user.id)}
+                        >
+                          <Text style={styles.deleteButtonText}>Delete</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  );
+                }
+              }}
+            />
+          </>
+        )}
       </View>
     </>
   );
@@ -186,6 +218,9 @@ export default RegisterUsersScreen;
 const styles = StyleSheet.create({
   container: {
     marginBottom: 190,
+  },
+  loader: {
+    marginTop: 20,
   },
   formContainer: {
     padding: 20,
