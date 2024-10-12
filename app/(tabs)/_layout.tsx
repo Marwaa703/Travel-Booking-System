@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Keyboard, Dimensions, View } from "react-native";
+import React from "react";
+import { Dimensions, View } from "react-native";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/theme";
@@ -7,32 +7,6 @@ import { COLORS } from "../../constants/theme";
 type RouteName = "(home)" | "(calendar)" | "search" | "(blogs)" | "(profile)";
 
 const Layout = () => {
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const [tabBarHeight, setTabBarHeight] = useState(100); // Default height
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setKeyboardVisible(true);
-        setTabBarHeight(0);
-      },
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardVisible(false);
-        setTabBarHeight(100);
-      },
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
   return (
     <Tabs
       screenOptions={({ route }) => ({
@@ -88,8 +62,8 @@ const Layout = () => {
         tabBarStyle: {
           position: "absolute",
           bottom: 0,
-          backgroundColor: isKeyboardVisible ? "transparent" : "#fff",
-          height: tabBarHeight,
+          backgroundColor: "#fff",
+          height: 100,
           borderTopLeftRadius: 60,
           borderTopRightRadius: 60,
           shadowColor: "#000",
