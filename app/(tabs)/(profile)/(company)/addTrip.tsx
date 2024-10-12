@@ -14,11 +14,7 @@ const AddTrip = () => {
   return (
     <ScreenWraper>
       <Spacer />
-      <ScreenFormContainer
-        title="Add New Trip"
-        subTitle="Please fill the following details!"
-        topFlex={4}
-      >
+      <ScreenFormContainer title="Add New Trip" topFlex={4}>
         <MultiStepAddTripForm companyId={companyId} />
       </ScreenFormContainer>
     </ScreenWraper>

@@ -38,7 +38,6 @@ const TripDetails: React.FC = () => {
 
   const route = useRoute();
   const { id } = route.params as { id: string };
-
   console.log({ id });
 
   const trip = useAppSelector((state) => selectTripById(state.trips, id));
@@ -55,13 +54,14 @@ const TripDetails: React.FC = () => {
   const handleSeeOnMap = () => {
     // will be handled
     router.push(
-      `/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`,
+      `/tripMap?places=${encodeURIComponent(JSON.stringify(locations || {}))}`,
     );
   };
 
   const images = trip?.images;
+  const defaultImage = require("../../../assets/imgDefault.png");
 
-  // console.log({ id, locations });
+  console.log({ id, locations, images });
 
   return (
     <View style={styles.container}>
@@ -91,7 +91,11 @@ const TripDetails: React.FC = () => {
           </View>
 
           <Image
-            source={{ uri: images[index]?.image_url }}
+            source={{
+              uri: images[index]?.image_url
+                ? images[index]?.image_url
+                : defaultImage,
+            }}
             style={styles.image}
           />
           <Text style={styles.caption}>{images[index]?.caption}</Text>
@@ -116,7 +120,7 @@ const TripDetails: React.FC = () => {
           <View style={styles.detailRow}>
             {/* update todo */}
             <CardSubtitle
-              text={locations[0]?.name || "locationNames"}
+              text={locations[0]?.name.slice(0, 12) || "locationNames"}
               icon={icons.location}
               iconColor={COLORS.textSecondary}
             />
