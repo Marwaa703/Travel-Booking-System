@@ -18,3 +18,24 @@ export const getRandomColor = () => {
   }
   return color;
 };
+export function hashTextPercent(
+  inputString: string,
+  hashChar: string = "*",
+  percentage: number = 70,
+): string {
+  if (percentage < 0 || percentage > 100) {
+    console.log("percentage must be between 0 and 100");
+    return inputString;
+  }
+  // Calculate the index for the last 70%
+  const length = inputString.length;
+  const cutIndex = Math.floor(length * (1 - percentage / 100)); // The index to start hashing from
+
+  if (length === 0) {
+    return ""; // Return an empty string for empty input
+  }
+
+  // Create the hashed part and keep the first 30%
+  const hashedPart = hashChar.repeat(length - cutIndex);
+  return inputString.slice(0, cutIndex) + hashedPart;
+}

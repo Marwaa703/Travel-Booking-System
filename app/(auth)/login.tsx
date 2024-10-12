@@ -21,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     // load companies, current company users,
-    if (auth?.isAuthenticated) {
+    if (auth?.isAuthenticated && auth?.token) {
       // user => companies(10), trips(10)(tripImages),
       if (role === "User") {
         dispatch(fetchTrips());

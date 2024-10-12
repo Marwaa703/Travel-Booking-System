@@ -5,6 +5,7 @@ import { AppDispatch } from "../store";
 import {
   addCompany,
   addCompanyUser,
+  editCompany,
   setCompanies,
   setCompanyUsers,
   setError,
@@ -30,7 +31,7 @@ export const createCompany =
     }
   };
 
-export const updateCompany =
+export const updateCompanyDetails =
   (payload: Company) => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {
@@ -38,7 +39,7 @@ export const updateCompany =
         payload.id as string,
         payload,
       );
-      dispatch(updateCompany(updatedCompany));
+      dispatch(editCompany(updatedCompany));
     } catch (error) {
       dispatch(setError(error as string));
     } finally {

@@ -15,8 +15,6 @@ const SignupCompany = () => {
           <View style={styles.top}>
             <View style={styles.header}>
               <Text style={styles.title}>Register your company now</Text>
-              <Spacer />
-              <Text style={styles.subTitle}>Company Representitive Signup</Text>
             </View>
             {/* headerend  */}
             {/* form  */}
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
   header: {
     textAlign: "center",
     alignItems: "center",
-    height: "15%",
+    height: "10%",
   },
   title: {
     fontSize: FONTS.xlarge,

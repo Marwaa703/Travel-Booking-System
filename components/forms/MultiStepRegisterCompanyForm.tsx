@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CompanyUserForm from "./CompanyUserForm";
 import CompanyDetailsForm from "./CompanyDetailsForm";
 import CompanyPapersForm from "./CompanyPapersForm";
@@ -17,6 +17,7 @@ import { useAppDispatch } from "@/redux/store";
 import { addCompany } from "@/redux/slices/companiesSlice";
 import useLoadingState from "@/hooks/useLoadingSate";
 import { signupCompany } from "@/api/auth";
+import { COLORS, FONTS } from "@/constants/theme";
 
 const MultiStepRegisterCompanyForm = () => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
@@ -66,8 +67,14 @@ const MultiStepRegisterCompanyForm = () => {
       setLoading(false);
     }
   };
+  const steps = [
+    "Company Representitive Information",
+    "Company Details",
+    "Company Papers",
+  ];
   return (
     <View style={{ width: "100%" }}>
+      <Text style={styles.subTitle}>{steps[currentStep]}</Text>
       {currentStep === 1 && <CompanyUserForm onNext={handleUserNext} />}
       {currentStep === 2 && <CompanyDetailsForm onNext={handleDetailsNext} />}
       {currentStep === 3 && (
@@ -86,3 +93,9 @@ const MultiStepRegisterCompanyForm = () => {
 };
 
 export default MultiStepRegisterCompanyForm;
+const styles = StyleSheet.create({
+  subTitle: {
+    fontSize: FONTS.medium,
+    color: COLORS.textSubtitle,
+  },
+});

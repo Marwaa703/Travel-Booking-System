@@ -41,10 +41,7 @@ const companiesSlice = createSlice({
     removeCompanyUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter((user) => user.id !== action.payload);
     },
-    editCompany: (
-      state,
-      action: PayloadAction<Partial<Company> & { id: string }>,
-    ) => {
+    editCompany: (state, action: PayloadAction<Partial<Company>>) => {
       const { id, ...changes } = action.payload;
       const companyIndex = state.companies.findIndex(
         (company) => company.id === id,

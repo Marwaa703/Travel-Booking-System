@@ -12,6 +12,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CompanyUser, CompanyUserRoles, Gender } from "@/types/company";
 import Spacer from "../Spacer";
 import DropdownRolePicker from "./DropDownRolePicker";
+import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface CompanyUserFormProps {
   onNext: (data: CompanyUser, gender: Gender) => void;
@@ -22,6 +24,7 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
     control,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<CompanyUser>({
     resolver: yupResolver(companyUserSignupSchema),
@@ -30,6 +33,15 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
   const [selectedGender, setSelectedGender] = React.useState<Gender>("male");
 
   const handleUserSignup = (data: CompanyUser) => {
+    if (data.role !== "Representative") {
+      Toast.show({
+        type: "error",
+        text1: "Role type error??",
+        text2: `${data.role} can't signup for a company`,
+      });
+      console.log("wrong role");
+      return;
+    }
     onNext(data, selectedGender);
   };
 
@@ -60,6 +72,7 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
           </Fragment>
         ),
       )}
+      <Toast />
       <Spacer height={12} />
       <GenderPicker
         selectedGender={selectedGender}
