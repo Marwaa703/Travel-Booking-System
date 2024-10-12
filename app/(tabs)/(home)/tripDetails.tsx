@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Button from "@/components/Buttons";
@@ -20,6 +21,7 @@ import { getLocationsByTripId } from "@/api/tripLocations";
 import { Location } from "@/types/trip";
 import { selectTripById } from "@/redux/slices/tripsSlice";
 import { Ionicons } from "@expo/vector-icons";
+
 interface Trip {
   id: number;
   name: string;
@@ -30,16 +32,17 @@ interface Trip {
   description: string;
   image_url: string;
 }
-// upgrade: by swaping
+
+const { height } = Dimensions.get("window");
+
 const TripDetails: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isTruncated, setIsTruncated] = useState(false);
   const [locations, setLocations] = useState<Location[] | null>(null);
 
   const route = useRoute();
   const { id } = route.params as { id: string };
-
-  console.log({ id });
 
   const trip = useAppSelector((state) => selectTripById(state.trips, id));
 
@@ -53,7 +56,6 @@ const TripDetails: React.FC = () => {
   }, [id]);
 
   const handleSeeOnMap = () => {
-    // will be handled
     router.push(
       `/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`,
     );
@@ -61,111 +63,109 @@ const TripDetails: React.FC = () => {
 
   const images = trip?.images;
 
-  // console.log({ id, locations });
-  if (!trip) return;
-  else
-    return (
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <View style={styles.imageContainer}>
-            <View style={styles.arrows}>
-              <View style={styles.arrowsContainer}>
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={24}
-                  color="white"
-                  onPress={() =>
-                    setIndex(index === 0 ? images?.length - 1 : index - 1)
-                  }
-                />
-              </View>
-              <View style={styles.arrowsContainer}>
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={24}
-                  color="white"
-                  onPress={() =>
-                    setIndex(index === images?.length - 1 ? 0 : index + 1)
-                  }
-                />
-              </View>
-            </View>
+  if (!trip) return null;
 
-            <Image
-              source={{ uri: images[index]?.image_url }}
-              style={styles.image}
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.imageContainer}>
+          <View style={styles.arrows}>
+            <View style={styles.arrowsContainer}>
+              <Ionicons
+                name="arrow-back-outline"
+                size={24}
+                color="white"
+                onPress={() =>
+                  setIndex(index === 0 ? images?.length - 1 : index - 1)
+                }
+              />
+            </View>
+            <View style={styles.arrowsContainer}>
+              <Ionicons
+                name="arrow-forward-outline"
+                size={24}
+                color="white"
+                onPress={() =>
+                  setIndex(index === images?.length - 1 ? 0 : index + 1)
+                }
+              />
+            </View>
+          </View>
+
+          <Image
+            source={{ uri: images[index]?.image_url }}
+            style={styles.image}
+          />
+          <Text style={styles.caption}>{images[index]?.caption}</Text>
+          <View style={styles.mapButtonContainer}>
+            <Button
+              title={"SEE ON MAP"}
+              type="secondary"
+              width={"40%"}
+              align="center"
+              onPress={handleSeeOnMap}
             />
-            <Text style={styles.caption}>{images[index]?.caption}</Text>
-            <View style={styles.mapButtonContainer}>
-              <Button
-                title={"See on Map"}
-                type="secondary"
-                width={"40%"}
-                align="center"
-                onPress={handleSeeOnMap}
-              />
+          </View>
+        </View>
+        <View style={styles.infoContainer}>
+          <View style={styles.titleRow}>
+            <Text style={styles.tripTitle}>{trip?.name}</Text>
+            <View style={styles.like}>
+              <Like />
             </View>
           </View>
-          <View style={styles.infoContainer}>
-            <View style={styles.titleRow}>
-              <Text style={styles.tripTitle}>{trip?.name}</Text>
-              <View style={styles.like}>
-                <Like />
-              </View>
-            </View>
-            <Text style={styles.companyName}>{trip?.company_id}</Text>
-            <View style={styles.detailRow}>
-              {/* update todo */}
-              {/* <CardSubtitle
-                text={"locationNames"}
-                icon={icons.location}
-                iconColor={COLORS.textSecondary}
-              /> */}
-              <Rating rate={trip?.rate as number} />
-              <Text style={styles.price}>{trip?.price}/Person</Text>
-            </View>
-            <Text style={styles.sectionTitle}>About Trip</Text>
-            {/* Description container */}
-            <View style={styles.descriptionContainer}>
-              <ScrollView
-                style={styles.scrollableDescription}
-                nestedScrollEnabled
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1 }}
-              >
-                <Text
-                  style={[
-                    styles.tripDescription,
-                    !isExpanded && styles.descriptionTruncated,
-                  ]}
-                  numberOfLines={isExpanded ? undefined : 3}
-                >
-                  {trip?.description}
-                </Text>
-                {!isExpanded && (
-                  <TouchableOpacity onPress={() => setIsExpanded(true)}>
-                    <Text style={styles.readMore}>Read More</Text>
-                  </TouchableOpacity>
-                )}
-              </ScrollView>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                title={"Book Now"}
-                align="center"
-                width={"120%"}
-                onPress={() => {
-                  router.push(`/payment?tripId=${id}`);
+          <Text style={styles.companyName}>{trip?.company_id}</Text>
+          <View style={styles.detailRow}>
+            <Rating rate={trip?.rate as number} />
+            <Text style={styles.price}>{trip?.price}/Person</Text>
+          </View>
+          <Text style={styles.sectionTitle}>About Trip</Text>
+          {/* Description container */}
+          <View style={styles.descriptionContainer}>
+            <ScrollView
+              style={styles.scrollableDescription}
+              nestedScrollEnabled
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ flexGrow: 1 }}
+            >
+              <Text
+                style={[
+                  styles.tripDescription,
+                  !isExpanded && styles.descriptionTruncated,
+                ]}
+                numberOfLines={isExpanded ? undefined : 3}
+                onTextLayout={(e) => {
+                  // Check if text is overflowing beyond the number of lines.
+                  setIsTruncated(e.nativeEvent.lines.length > 1);
                 }}
-              />
-            </View>
+              >
+                {trip?.description}
+              </Text>
+              {isTruncated && !isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={styles.readMore}>Read More</Text>
+                </TouchableOpacity>
+              )}
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
-    );
+          <View style={styles.buttonContainer}>
+            <Button
+              title={"Book Now"}
+              align="center"
+              width={"100%"}
+              onPress={() => {
+                router.push(`/payment?tripId=${id}`);
+              }}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
+  // Styles remain unchanged.
   arrows: {
     position: "absolute",
     zIndex: 25,
@@ -198,27 +198,27 @@ const styles = StyleSheet.create({
     fontSize: FONTS.xxlarge,
     zIndex: 20,
     position: "absolute",
-    top: 26,
+    top: 35,
     width: "100%",
     textAlign: "center",
     color: "#fff",
     fontWeight: "bold",
-    padding: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-
-    textShadowColor: "rgba(0, 0, 0, 0.7)",
+    padding: 25,
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    textShadowColor: "rgba(0, 0, 0, 0.9)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
     letterSpacing: 1.5,
+    fontStyle: "italic",
   },
   image: {
     width: "100%",
-    height: 450,
+    height: height * 0.65,
     resizeMode: "cover",
   },
   mapButtonContainer: {
     position: "absolute",
-    bottom: "17.5%",
+    bottom: "14%",
     right: "14%",
     width: "75%",
   },
@@ -288,8 +288,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonContainer: {
-    // alignSelf: "center",
-    marginTop: 140, //^Change that to auto
+    alignSelf: "center",
+    marginTop: "auto",
   },
 });
 
