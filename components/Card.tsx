@@ -17,6 +17,8 @@ import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "./Rating";
 import Spacer from "./Spacer";
 import { useRouter } from "expo-router";
+import { useAppSelector } from "@/redux/store";
+import { User } from "@/types/user";
 const defaultImage = require("../assets/imgDefault.png");
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.44;
@@ -44,15 +46,23 @@ const Card: React.FC<CardProps> = ({
   const navigation = useNavigation<NavigationProp<any>>();
   const router = useRouter();
 
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
+
   const handlePress = () => {
     if (!buttonText) {
-      router.push(`tripDetails?id=${id}`);
-      // navigation.navigate("tripDetails", { tripId: id });
-      navigation.navigate("tripDetails", { id: id });
+      if (user?.role === "User" || user?.role === "Admin") {
+        router.push(`tripDetails?id=${id}`);
+        // navigation.navigate("tripDetails", { tripId: id });
+      } else {
+        router.push(`tripInstruction?id=${id}`);
+        // navigation.navigate("tripInstruction", { tripId: id });
+      }
     }
   };
   const imageSource = image ? { uri: image } : defaultImage;
-  console.log({ id });
+  // console.log({ id });
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress}>
       {/* Image */}
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: "100%",
-    height: "50%", // Adjust the height of the image container to keep the aspect ratio consistent
+    height: "50%",
     justifyContent: "center",
     alignItems: "center",
   },

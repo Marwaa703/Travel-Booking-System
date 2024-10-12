@@ -16,7 +16,7 @@ const Calendar = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const [bookedTrips, setBookedTrips] = useState([]);
   const [tripDetails, setTripDetails] = useState([]);
-  const userId = currentUser.id;
+  const userId = currentUser?.id;
 
   useEffect(() => {
     const fetchBookedTrips = async () => {

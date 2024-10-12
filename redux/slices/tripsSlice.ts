@@ -83,7 +83,7 @@ export const selectFavoriteTrips = (state: { trips: TripsState }) =>
 export const selectCompanyTrips = (state: TripsState, companyId: string) =>
   state.trips.filter((t) => t.company_id === companyId);
 export const selectTripById = (state: TripsState, tripId: string) =>
-  state.trips.filter((t) => t.trip_id === tripId)[0];
+  state.trips.filter((t) => t.id === tripId)[0];
 
 // Export actions
 export const {

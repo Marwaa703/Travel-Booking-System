@@ -60,10 +60,21 @@ const TripDetails: React.FC = () => {
   };
 
   const images = trip?.images;
+  const defaultImage = require("../../../assets/imgDefault.png");
 
-  // console.log({ id, locations });
-
+  console.log({ trip });
+  return;
   return (
+    // <View style={styles.buttonContainer}>
+    //   <Button
+    //     title={"Book Now"}
+    //     align="center"
+    //     width={"120%"}
+    //     onPress={() => {
+    //       router.push(`/payment?tripId=${id}`);
+    //     }}
+    //   />
+    // </View>
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.imageContainer}>
@@ -91,7 +102,11 @@ const TripDetails: React.FC = () => {
           </View>
 
           <Image
-            source={{ uri: images[index]?.image_url }}
+            source={{
+              uri: images[index]?.image_url
+                ? images[index]?.image_url
+                : defaultImage,
+            }}
             style={styles.image}
           />
           <Text style={styles.caption}>{images[index]?.caption}</Text>
@@ -287,8 +302,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonContainer: {
-    alignSelf: "center",
-    marginTop: "auto",
+    // alignSelf: "center",
+    marginTop: 140, //^Change that to auto
   },
 });
 

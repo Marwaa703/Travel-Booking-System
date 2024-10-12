@@ -23,6 +23,7 @@
     "expo": "~51.0.28",
     "expo-calendar": "~13.0.5",
     "expo-constants": "~16.0.2",
+    "expo-image": "~1.13.0",
     "expo-image-manipulator": "^12.0.5",
     "expo-image-picker": "^15.0.7",
     "expo-linear-gradient": "~13.0.2",
@@ -51,8 +52,7 @@
     "redux-persist": "^6.0.0",
     "uuid": "^10.0.0",
     "victory-native": "^41.4.0",
-    "yup": "^1.4.0",
-    "expo-image": "~1.13.0"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

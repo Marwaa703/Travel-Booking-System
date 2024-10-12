@@ -10,6 +10,7 @@ export interface TripDetailes {
   rate?: number | null;
   isFavorite?: boolean;
   company_id?: string;
+  // trip_id: string;
   // New
   // Add other trip details fields as needed
 }

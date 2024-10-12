@@ -45,10 +45,9 @@ const InputField: React.FC<TextFieldProps> = ({
       }
     }
 
-    setError(""); // Clear error if validation passes
+    setError("");
     return true;
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}:</Text>
