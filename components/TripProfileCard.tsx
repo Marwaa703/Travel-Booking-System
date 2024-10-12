@@ -11,7 +11,7 @@ import Rating from "./Rating";
 import { COLORS, FONTS } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CardSubtitle from "./CardSubtitle";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 const defaultImage = require("../assets/imgDefault.png");
@@ -21,7 +21,7 @@ interface TripProfileCardProps {
   title: string;
   date: string;
   rating: number;
-  price: string;
+  price: number;
   peopleJoined: number;
   avatars: ImageSourcePropType[];
   caller: string;
@@ -40,12 +40,13 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
 }) => {
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute();
-
+  const router = useRouter();
   const handlePress = () => {
     if (caller === "calendar") {
       navigation.navigate("tripIns", { tripId: id });
     } else {
-      navigation.navigate("tripDetails", { tripId: id });
+      // navigation.navigate("tripDetails", { tripId: id });
+      router.push(`tripDetails?id=${id}`);
     }
   };
   const imageSource = image ? { uri: image } : defaultImage;

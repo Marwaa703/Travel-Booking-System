@@ -39,3 +39,10 @@ export function hashTextPercent(
   const hashedPart = hashChar.repeat(length - cutIndex);
   return inputString.slice(0, cutIndex) + hashedPart;
 }
+
+export const formattedDate = (date: Date) =>
+  new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
