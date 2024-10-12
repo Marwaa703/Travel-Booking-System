@@ -4,7 +4,7 @@ import moment from "moment";
 import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
 import { COLORS, FONTS } from "@/constants/theme";
 
-const WeeklyCalendar = () => {
+const WeeklyCalendar = ({ tripStartDates }) => {
   // Initialize the selected date to today
   const [selectedDate, setSelectedDate] = useState(moment());
 
@@ -28,6 +28,9 @@ const WeeklyCalendar = () => {
       const day = moment(startOfWeek).add(i, "days");
       const isSelected = selectedDate.isSame(day, "day"); // Check if the day is the selected date
 
+      // Check if the day matches any of the trip start dates
+      const hasTrip = tripStartDates.includes(day.format("YYYY-MM-DD"));
+
       days.push(
         <TouchableOpacity
           key={i}
@@ -47,6 +50,9 @@ const WeeklyCalendar = () => {
             style={[styles.dayNumber, isSelected && styles.selectedDayNumber]}
           >
             {day.format("D")} {/* Day number */}
+          </Text>
+          <Text>
+            {hasTrip && <View style={styles.dot} />} {/* Display the dot */}
           </Text>
         </TouchableOpacity>,
       );
@@ -127,6 +133,13 @@ const styles = StyleSheet.create({
   },
   selectedDayNumber: {
     color: "#FF6200",
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    backgroundColor: "#FF6200",
+    borderRadius: 3,
+    marginTop: 4,
   },
 });
 
