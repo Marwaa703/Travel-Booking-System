@@ -54,15 +54,15 @@ const TripDetails: React.FC = () => {
   const handleSeeOnMap = () => {
     // will be handled
     router.push(
-      `/tripMap?places=${encodeURIComponent(JSON.stringify(locations || {}))}`,
+      `/tripMap?places=${encodeURIComponent(JSON.stringify(locations))}`,
     );
   };
 
   const images = trip?.images;
   const defaultImage = require("../../../assets/imgDefault.png");
 
-  console.log({ id, locations, images });
-
+  console.log({ id, locations, images, trip });
+  if (!trip || !images) return <Text>Trip isn't undefined</Text>;
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -120,7 +120,7 @@ const TripDetails: React.FC = () => {
           <View style={styles.detailRow}>
             {/* update todo */}
             <CardSubtitle
-              text={locations[0]?.name.slice(0, 12) || "locationNames"}
+              text={locations[0]?.name || "locationNames"}
               icon={icons.location}
               iconColor={COLORS.textSecondary}
             />
