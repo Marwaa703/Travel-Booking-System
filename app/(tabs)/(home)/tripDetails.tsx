@@ -63,7 +63,6 @@ const TripDetails: React.FC = () => {
   const defaultImage = require("../../../assets/imgDefault.png");
 
   console.log({ trip });
-  return;
   return (
     // <View style={styles.buttonContainer}>
     //   <Button
