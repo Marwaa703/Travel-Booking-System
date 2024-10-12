@@ -11,6 +11,7 @@ import { getBookedTripsByUserId } from "@/api/bookedTrips";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { getTripById } from "@/api/trips/trip";
+import moment from "moment";
 
 const Calendar = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
@@ -38,7 +39,10 @@ const Calendar = () => {
 
     fetchBookedTrips();
   }, [userId]);
-
+  // Extract start dates of the trips
+  const tripStartDates = tripDetails.map(
+    (trip) => moment(trip.date).format("YYYY-MM-DD") || [],
+  );
   return (
     <View style={styles.container}>
       <Header
@@ -47,7 +51,7 @@ const Calendar = () => {
         onLeftIconPress={() => router.push("home")}
       ></Header>
       <View style={styles.calendar}>
-        <WeeklyCalendar></WeeklyCalendar>
+        <WeeklyCalendar tripStartDates={tripStartDates} />
       </View>
       <Spacer />
       <View style={styles.subtitleContainer}>
