@@ -100,7 +100,7 @@ const TripInstructions: React.FC = () => {
         <FlatList
           data={visibleMessages}
           renderItem={renderMessage}
-          keyExtractor={(item) => item.instruction_id.toString()}
+          keyExtractor={(item) => item?.instruction_id.toString()}
           contentContainerStyle={styles.chatContainer}
         />
         <View style={styles.bottomTextContainer}>

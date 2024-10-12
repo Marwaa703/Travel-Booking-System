@@ -110,7 +110,7 @@ const TripDetails: React.FC = () => {
             <View style={styles.titleRow}>
               <Text style={styles.tripTitle}>{trip?.name}</Text>
               <View style={styles.like}>
-                <Like />
+                <Like tripId={trip.trip_id} />
               </View>
             </View>
             <Text style={styles.companyName}>{trip?.company_id}</Text>

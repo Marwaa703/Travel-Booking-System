@@ -2,12 +2,19 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../constants/theme";
-
-const Like = () => {
-  const [liked, setLiked] = useState(false);
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { toggleFavorite } from "@/redux/slices/tripsSlice";
+interface LikeProps {
+  tripId: string;
+}
+const Like = ({ tripId }: LikeProps) => {
+  const dispatch = useAppDispatch();
+  const isFavorite = useAppSelector(
+    (state) => state.trips.trips.find((t) => t.trip_id === tripId)?.isFavorite,
+  );
   const handleLike = () => {
-    setLiked(!liked);
     // todo: handle redux
+    dispatch(toggleFavorite(tripId));
     // todo: update api once
     // rating can't be modified
   };
@@ -19,9 +26,9 @@ const Like = () => {
       style={styles.container}
     >
       <Ionicons
-        name={liked ? "heart" : "heart-outline"}
+        name={isFavorite ? "heart" : "heart-outline"}
         size={20}
-        color={liked ? "red" : "white"}
+        color={isFavorite ? "red" : "white"}
       />
     </TouchableOpacity>
   );

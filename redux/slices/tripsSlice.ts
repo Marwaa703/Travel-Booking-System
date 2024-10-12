@@ -46,7 +46,9 @@ const tripsSlice = createSlice({
     },
 
     toggleFavorite: (state, action: PayloadAction<string>) => {
-      const index = state.trips.findIndex((trip) => trip.id === action.payload);
+      const index = state.trips.findIndex(
+        (trip) => trip.trip_id === action.payload,
+      );
       if (index !== -1) {
         state.trips[index].isFavorite = !state.trips[index].isFavorite;
         // then select all fav trips locally
@@ -78,8 +80,8 @@ const tripsSlice = createSlice({
 });
 
 // Selector to get favorite trips
-export const selectFavoriteTrips = (state: { trips: TripsState }) =>
-  state.trips.trips.filter((t) => t.isFavorite);
+export const selectFavoriteTrips = (state: TripsState) =>
+  state.trips.filter((t) => t.isFavorite);
 export const selectCompanyTrips = (state: TripsState, companyId: string) =>
   state.trips.filter((t) => t.company_id === companyId);
 export const selectTripById = (state: TripsState, tripId: string) =>
