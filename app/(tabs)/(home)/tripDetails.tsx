@@ -60,122 +60,109 @@ const TripDetails: React.FC = () => {
   };
 
   const images = trip?.images;
-  const defaultImage = require("../../../assets/imgDefault.png");
 
-  console.log({ trip });
-  return (
-    // <View style={styles.buttonContainer}>
-    //   <Button
-    //     title={"Book Now"}
-    //     align="center"
-    //     width={"120%"}
-    //     onPress={() => {
-    //       router.push(`/payment?tripId=${id}`);
-    //     }}
-    //   />
-    // </View>
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.imageContainer}>
-          <View style={styles.arrows}>
-            <View style={styles.arrowsContainer}>
-              <Ionicons
-                name="arrow-back-outline"
-                size={24}
-                color="white"
-                onPress={() =>
-                  setIndex(index === 0 ? images?.length - 1 : index - 1)
-                }
+  // console.log({ id, locations });
+  if (!trip) return;
+  else
+    return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <View style={styles.imageContainer}>
+            <View style={styles.arrows}>
+              <View style={styles.arrowsContainer}>
+                <Ionicons
+                  name="arrow-back-outline"
+                  size={24}
+                  color="white"
+                  onPress={() =>
+                    setIndex(index === 0 ? images?.length - 1 : index - 1)
+                  }
+                />
+              </View>
+              <View style={styles.arrowsContainer}>
+                <Ionicons
+                  name="arrow-forward-outline"
+                  size={24}
+                  color="white"
+                  onPress={() =>
+                    setIndex(index === images?.length - 1 ? 0 : index + 1)
+                  }
+                />
+              </View>
+            </View>
+
+            <Image
+              source={{ uri: images[index]?.image_url }}
+              style={styles.image}
+            />
+            <Text style={styles.caption}>{images[index]?.caption}</Text>
+            <View style={styles.mapButtonContainer}>
+              <Button
+                title={"See on Map"}
+                type="secondary"
+                width={"40%"}
+                align="center"
+                onPress={handleSeeOnMap}
               />
             </View>
-            <View style={styles.arrowsContainer}>
-              <Ionicons
-                name="arrow-forward-outline"
-                size={24}
-                color="white"
-                onPress={() =>
-                  setIndex(index === images?.length - 1 ? 0 : index + 1)
-                }
-              />
+          </View>
+          <View style={styles.infoContainer}>
+            <View style={styles.titleRow}>
+              <Text style={styles.tripTitle}>{trip?.name}</Text>
+              <View style={styles.like}>
+                <Like />
+              </View>
             </View>
-          </View>
-
-          <Image
-            source={{
-              uri: images[index]?.image_url
-                ? images[index]?.image_url
-                : defaultImage,
-            }}
-            style={styles.image}
-          />
-          <Text style={styles.caption}>{images[index]?.caption}</Text>
-          <View style={styles.mapButtonContainer}>
-            <Button
-              title={"See on Map"}
-              type="secondary"
-              width={"40%"}
-              align="center"
-              onPress={handleSeeOnMap}
-            />
-          </View>
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.titleRow}>
-            <Text style={styles.tripTitle}>{trip?.name}</Text>
-            <View style={styles.like}>
-              <Like />
+            <Text style={styles.companyName}>{trip?.company_id}</Text>
+            <View style={styles.detailRow}>
+              {/* update todo */}
+              {/* <CardSubtitle
+                text={"locationNames"}
+                icon={icons.location}
+                iconColor={COLORS.textSecondary}
+              /> */}
+              <Rating rate={trip?.rate as number} />
+              <Text style={styles.price}>{trip?.price}/Person</Text>
             </View>
-          </View>
-          <Text style={styles.companyName}>{trip?.company_id}</Text>
-          <View style={styles.detailRow}>
-            {/* update todo */}
-            <CardSubtitle
-              text={locations[0]?.name || "locationNames"}
-              icon={icons.location}
-              iconColor={COLORS.textSecondary}
-            />
-            <Rating rate={trip?.rate as number} />
-            <Text style={styles.price}>{trip?.price}/Person</Text>
-          </View>
-          <Text style={styles.sectionTitle}>About Trip</Text>
-          {/* Description container */}
-          <View style={styles.descriptionContainer}>
-            <ScrollView
-              style={styles.scrollableDescription}
-              nestedScrollEnabled
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ flexGrow: 1 }}
-            >
-              <Text
-                style={[
-                  styles.tripDescription,
-                  !isExpanded && styles.descriptionTruncated,
-                ]}
-                numberOfLines={isExpanded ? undefined : 3}
+            <Text style={styles.sectionTitle}>About Trip</Text>
+            {/* Description container */}
+            <View style={styles.descriptionContainer}>
+              <ScrollView
+                style={styles.scrollableDescription}
+                nestedScrollEnabled
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ flexGrow: 1 }}
               >
-                {trip?.description}
-              </Text>
-              {!isExpanded && (
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
-                  <Text style={styles.readMore}>Read More</Text>
-                </TouchableOpacity>
-              )}
-            </ScrollView>
+                <Text
+                  style={[
+                    styles.tripDescription,
+                    !isExpanded && styles.descriptionTruncated,
+                  ]}
+                  numberOfLines={isExpanded ? undefined : 3}
+                >
+                  {trip?.description}
+                </Text>
+                {!isExpanded && (
+                  <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                    <Text style={styles.readMore}>Read More</Text>
+                  </TouchableOpacity>
+                )}
+              </ScrollView>
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title={"Book Now"}
+                align="center"
+                width={"120%"}
+                onPress={() => {
+                  router.push(`/payment?tripId=${id}`);
+                }}
+              />
+            </View>
           </View>
-          <View style={styles.buttonContainer}>
-            <Button
-              title={"Book Now"}
-              align="center"
-              width={"120%"}
-              onPress={() => {
-                router.push(`/payment?tripId=${id}`);
-              }}
-            />
-          </View>
-        </View>
-      </ScrollView>
-    </View>
-  );
+        </ScrollView>
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({

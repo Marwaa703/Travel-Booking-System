@@ -74,7 +74,7 @@ const MultiStepRegisterCompanyForm = () => {
   ];
   return (
     <View style={{ width: "100%" }}>
-      <Text style={styles.subTitle}>{steps[currentStep]}</Text>
+      <Text style={styles.subTitle}>{steps[currentStep - 1]}</Text>
       {currentStep === 1 && <CompanyUserForm onNext={handleUserNext} />}
       {currentStep === 2 && <CompanyDetailsForm onNext={handleDetailsNext} />}
       {currentStep === 3 && (

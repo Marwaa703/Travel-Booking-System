@@ -73,8 +73,8 @@ const Home = () => {
                     id={trip.trip_id as string}
                     image={trip.images[1]?.image_url || "default_image_uri"}
                     title={trip.name}
-                    subtitle={trip.name}
-                    rating={0}
+                    subtitle={"Egypt"}
+                    rating={null}
                     price={`$${trip.price}`}
                   />
                 </View>

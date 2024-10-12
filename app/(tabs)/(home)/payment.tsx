@@ -15,6 +15,7 @@ import { fetchTripDetails, makePayment, bookTrip } from "@/api/payment";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
 import CustomAlert from "@/components/core/Alert";
+import ScreenWraper from "@/components/containers/ScreenWraper";
 const defaultImage = require("../../../assets/imgDefault.png");
 
 //!Need to Handle the logic better
@@ -102,51 +103,55 @@ const Payment: React.FC = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image
-          source={require("../../../assets/eth_logo.png")}
-          style={styles.ethLogo}
-        />
-      </View>
-      {alert && <CustomAlert message={alert.message} type={alert.type} />}
-      <View style={styles.section}>
-        <View style={styles.infoSection}>
-          <View style={styles.tripDetailsColumn}>
-            <Text style={styles.tripText}>Title: {tripDetails.name}</Text>
-            <Text style={styles.tripText}>Date: {tripDetails.date}</Text>
-            <Text style={styles.tripText}>Rating: {4}</Text>
-            <Text style={styles.tripText}>
-              People Joined: {tripDetails.max_reservations}
-            </Text>
-            <Text style={styles.tripText}>Price: {tripDetails.price} Wei</Text>
-          </View>
-
-          <View style={styles.imageColumn}>
-            <Image source={defaultImage} style={styles.tripImage} />
-          </View>
-        </View>
-
-        <View style={styles.inputSection}>
-          <Text style={styles.label}>Enter your Wallet Address:</Text>
-          <TextInput
-            style={styles.input}
-            value={userWalletAddress}
-            onChangeText={setUserWalletAddress}
-            placeholder="0x..."
-            placeholderTextColor="#aaa"
+    <ScreenWraper>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../../../assets/eth_logo.png")}
+            style={styles.ethLogo}
           />
         </View>
+        {alert && <CustomAlert message={alert.message} type={alert.type} />}
+        <View style={styles.section}>
+          <View style={styles.infoSection}>
+            <View style={styles.tripDetailsColumn}>
+              <Text style={styles.tripText}>Title: {tripDetails.name}</Text>
+              <Text style={styles.tripText}>Date: {tripDetails.date}</Text>
+              {/* <Text style={styles.tripText}>Rating: {4}</Text> */}
+              {/* <Text style={styles.tripText}>
+              People Joined: {tripDetails.max_reservations}
+              </Text> */}
+              <Text style={styles.tripText}>
+                Price: {tripDetails.price} Wei
+              </Text>
+            </View>
 
-        <Button
-          title={loading ? "Processing..." : "Book Now"}
-          onPress={handlePayment}
-          align="center"
-          disabled={loading}
-          width={"100%"}
-        />
-      </View>
-    </ScrollView>
+            <View style={styles.imageColumn}>
+              <Image source={defaultImage} style={styles.tripImage} />
+            </View>
+          </View>
+
+          <View style={styles.inputSection}>
+            <Text style={styles.label}>Enter your Wallet Address:</Text>
+            <TextInput
+              style={styles.input}
+              value={userWalletAddress}
+              onChangeText={setUserWalletAddress}
+              placeholder="0x..."
+              placeholderTextColor="#aaa"
+            />
+          </View>
+
+          <Button
+            title={loading ? "Processing..." : "Book Now"}
+            onPress={handlePayment}
+            align="center"
+            disabled={loading}
+            width={"100%"}
+          />
+        </View>
+      </ScrollView>
+    </ScreenWraper>
   );
 };
 

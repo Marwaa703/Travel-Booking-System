@@ -12,5 +12,6 @@ export default ScreenWraper;
 const styles = StyleSheet.create({
   wraper: {
     marginBottom: bottomTabsHeight,
+    backgroundColor: "white",
   },
 });

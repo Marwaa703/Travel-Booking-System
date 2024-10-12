@@ -8,11 +8,27 @@ interface RatingProps {
 }
 
 const Rating = ({ rate }: RatingProps) => {
-  if (rate === null) return <Text>N/A</Text>;
+  // If rate is null, display 5 grey stars
+  if (rate === null) {
+    return (
+      <View style={styles.container}>
+        {[...Array(5)].map((_, index) => (
+          <Ionicons
+            key={index}
+            name="star-outline"
+            size={FONTS.normal}
+            color="gray"
+          />
+        ))}
+      </View>
+    );
+  }
 
   const fullStars = Math.floor(rate);
   const hasHalfStar = rate % 1 !== 0;
+
   if (rate === 0) return <Text>0</Text>;
+
   return (
     <View style={styles.container}>
       {[...Array(fullStars)].map((_, index) => (
@@ -29,7 +45,6 @@ const Rating = ({ rate }: RatingProps) => {
           color="gray"
         />
       ))}
-
       <Text style={styles.rate}>{rate}</Text>
     </View>
   );

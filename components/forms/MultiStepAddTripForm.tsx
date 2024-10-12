@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { addTripInputs, addTripSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ import useLoadingState from "@/hooks/useLoadingSate";
 import { createTrip } from "@/api/auth";
 import { useAppDispatch } from "@/redux/store";
 import { addTrip } from "@/redux/slices/tripsSlice";
+import { COLORS, FONTS } from "@/constants/theme";
 
 const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
@@ -82,9 +83,16 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
     // reset();
     // router.back();
   };
+  const steps = [
+    "Trip Details ",
+    "Add Trip Locations in order",
+    "Add Trip Images",
+  ];
+  console.log({ step: steps[currentStep - 1], currentStep });
 
   return (
     <View style={{ width: "100%" }}>
+      <Text style={styles.subTitle}>{steps[currentStep - 1]}</Text>
       {currentStep === 1 && (
         <>
           {addTripInputs.map(
@@ -145,3 +153,9 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
 };
 
 export default MultiStepAddTripForm;
+const styles = StyleSheet.create({
+  subTitle: {
+    fontSize: FONTS.medium,
+    color: COLORS.textSubtitle,
+  },
+});

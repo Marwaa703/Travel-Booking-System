@@ -5,7 +5,7 @@ import React, { PropsWithChildren } from "react";
 import { StyleSheet, Text, View } from "react-native";
 interface ScreenFormContainerProps {
   title: string;
-  subTitle: string;
+  subTitle?: string;
   topFlex?: number;
 }
 const ScreenFormContainer = ({
@@ -35,12 +35,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginBottom: SPACING.large,
+    // backgroundColor: "white",
   },
 
   header: {
     textAlign: "center",
     alignItems: "center",
-    height: "15%",
+    height: "10%",
   },
   title: {
     fontSize: FONTS.xlarge,

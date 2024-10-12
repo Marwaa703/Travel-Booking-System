@@ -66,7 +66,6 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
                 autoCapitalize={autoCapitalize}
                 icon={icon}
                 error={errors[name]?.message}
-                secureTextEntry={name === "password"}
               />
             )}
           </Fragment>

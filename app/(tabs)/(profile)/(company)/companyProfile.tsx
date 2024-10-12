@@ -16,6 +16,7 @@ import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { Company, CompanyUser } from "@/types/company";
 import useLogout from "@/hooks/useLogout";
 import { fetchTrips } from "@/redux/actions/tripActions";
+import ApprovedState from "@/components/company/ApprovedState";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   const user = useAppSelector(
@@ -32,6 +33,7 @@ const CompanyProfile: React.FC = () => {
     // admin from company
     dispatch(fetchTrips()); //select companyTrips only from trips
   }, [dispatch]);
+  const approved = currentCompany?.approved;
   return (
     <>
       <Header
@@ -54,7 +56,7 @@ const CompanyProfile: React.FC = () => {
                 />
                 <Text style={styles.companyName}>{currentCompany?.name}</Text>
                 <Text style={styles.companyEmail}>
-                  {currentCompany?.address}
+                  <ApprovedState approved={approved as boolean} />
                 </Text>
               </View>
 
@@ -63,6 +65,8 @@ const CompanyProfile: React.FC = () => {
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
+              {/* disable if not approved */}
+
               <SettingCard
                 title="Trips"
                 onPress={() => {
