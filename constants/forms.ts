@@ -69,12 +69,12 @@ export const addTripSchema = Yup.object().shape({
 // Company Details Schema
 export const companyUserSignupSchema = signupSchema.concat(
   Yup.object().shape({
-    role: Yup.string()
-      .oneOf(
-        ["Representative", "Support", "TourGuide"],
-        "Role must be one of: Representative, Support, TourGuide",
-      )
-      .required("Role is required"),
+    // role: Yup.string()
+    //   .oneOf(
+    //     ["Representative", "Support", "TourGuide"],
+    //     "Role must be one of: Representative, Support, TourGuide",
+    //   )
+    //   .required("Role is required"),
   }),
 );
 export const companyDetailsSchema = Yup.object().shape({
@@ -132,7 +132,7 @@ export type AddTripFormFields =
   | "price"
   | "max_reservations"
   | "date";
-export type CompanyUserFormFields = SignupFormFields | "role";
+export type CompanyUserFormFields = SignupFormFields;
 export type CompanyDetailsFormFields =
   | "name"
   | "address"
@@ -269,15 +269,7 @@ export const addTripInputs: InputFieldProps<AddTripFormFields>[] = [
 ];
 
 export const companyUserSignupInputs: InputFieldProps<CompanyUserFormFields>[] =
-  [
-    ...signupInputs,
-    {
-      name: "role",
-      icon: "briefcase",
-      autoCapitalize: "none",
-      trim: true,
-    },
-  ];
+  [...signupInputs];
 
 export const companyDetailsInputs: InputFieldProps<CompanyDetailsFormFields>[] =
   [

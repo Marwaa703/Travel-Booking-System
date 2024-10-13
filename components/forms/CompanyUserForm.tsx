@@ -33,16 +33,16 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
   const [selectedGender, setSelectedGender] = React.useState<Gender>("male");
 
   const handleUserSignup = (data: CompanyUser) => {
-    if (data.role !== "Representative") {
-      Toast.show({
-        type: "error",
-        text1: "Role type error??",
-        text2: `${data.role} can't signup for a company`,
-      });
-      console.log("wrong role");
-      return;
-    }
-    onNext(data, selectedGender);
+    // if (data.role !== "Representative") {
+    //   Toast.show({
+    //     type: "error",
+    //     text1: "Role type error??",
+    //     text2: `${data.role} can't signup for a company`,
+    //   });
+    //   console.log("wrong role");
+    //   return;
+    // }
+    onNext({ ...data, role: "Representative" }, selectedGender);
   };
 
   return (
@@ -50,24 +50,15 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
       {companyUserSignupInputs.map(
         ({ trim, icon, name, autoCapitalize, keyboardType }) => (
           <Fragment key={name}>
-            {name === "role" ? (
-              <DropdownRolePicker
-                items={companyRoles}
-                onSelect={(item) => setValue("role", item)}
-                name="role"
-                icon={icon}
-              />
-            ) : (
-              <AppTextInput
-                trim={trim}
-                name={name}
-                control={control as unknown as Control<FieldValues>}
-                keyboardType={keyboardType}
-                autoCapitalize={autoCapitalize}
-                icon={icon}
-                error={errors[name]?.message}
-              />
-            )}
+            <AppTextInput
+              trim={trim}
+              name={name}
+              control={control as unknown as Control<FieldValues>}
+              keyboardType={keyboardType}
+              autoCapitalize={autoCapitalize}
+              icon={icon}
+              error={errors[name]?.message}
+            />
           </Fragment>
         ),
       )}

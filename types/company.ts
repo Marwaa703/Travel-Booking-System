@@ -24,7 +24,7 @@ export interface CompanyUser {
   phone: string;
   password: string;
   birth_date?: string;
-  role: CompanyUserRoles;
+  role?: CompanyUserRoles;
   gender?: Gender;
 }
 export interface CompanyData {
