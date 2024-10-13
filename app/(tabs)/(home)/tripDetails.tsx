@@ -22,6 +22,8 @@ import { selectTripById } from "@/redux/slices/tripsSlice";
 import { Ionicons } from "@expo/vector-icons";
 import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { Company } from "@/types/company";
+import { selectAllBookedTrips } from "@/redux/slices/bookedTripSlice";
+import Alert from "@/components/core/Alert";
 interface Trip {
   id: number;
   name: string;
@@ -65,6 +67,10 @@ const TripDetails: React.FC = () => {
   };
 
   const images = trip?.images;
+  const bookedTrips = useAppSelector(selectAllBookedTrips);
+  const isTripBooked = bookedTrips.some(
+    (trip) => trip.trip_id.toString() === id,
+  );
 
   // console.log({ id, locations });
   if (!trip) return;
@@ -155,14 +161,18 @@ const TripDetails: React.FC = () => {
               </ScrollView>
             </View>
             <View style={styles.buttonContainer}>
-              <Button
-                title={"Book Now"}
-                align="center"
-                width={"120%"}
-                onPress={() => {
-                  router.push(`/payment?tripId=${id}`);
-                }}
-              />
+              {isTripBooked ? (
+                <Alert message={"Trip Booked"} type={"info"} />
+              ) : (
+                <Button
+                  title="Book Now"
+                  align="center"
+                  width={"120%"}
+                  onPress={() => {
+                    router.push(`/payment?tripId=${id}`);
+                  }}
+                />
+              )}
             </View>
           </View>
         </ScrollView>

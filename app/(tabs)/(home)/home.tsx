@@ -14,8 +14,11 @@ import { COLORS, FONTS, SPACING } from "@/constants/theme";
 import Card from "@/components/Card";
 import { avatars } from "@/DummyData/trips.json";
 import Spacer from "@/components/Spacer";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
+import { getBookedTripsByUserId } from "@/api/bookedTrips";
+import { addBookedTrip } from "@/redux/slices/bookedTripSlice";
+import { setLoading } from "@/redux/slices/companiesSlice";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
@@ -28,11 +31,25 @@ const Home = () => {
     // console.log({ trips: trips.length });
   }, [trips.length]);
 
-  // const user = useAppSelector(
-  //   (state) => state.auth.currentUser,
-  // ) as unknown as User;
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
 
   // console.log(user?.role);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const fetchBookedTrips = async () => {
+      if (user?.id) {
+        const trips = await getBookedTripsByUserId(user.id);
+        trips.forEach((trip) => {
+          dispatch(addBookedTrip(trip));
+        });
+        setLoading(false);
+      }
+    };
+
+    fetchBookedTrips();
+  }, [dispatch, user]);
 
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
