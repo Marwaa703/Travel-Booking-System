@@ -11,11 +11,10 @@ const FormatDate: React.FC<FormatDateProps> = ({ dateString }) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
-    second: "numeric",
   }).format(date);
 
   return <Text>{formattedDate}</Text>;
