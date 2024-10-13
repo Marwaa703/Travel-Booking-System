@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Button } from "react-native";
 import { COLORS, FONTS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import SettingCard from "@/components/SettingContainer";
@@ -23,6 +23,7 @@ const AdminProfile: React.FC = () => {
           />
         </View>
         <Text style={styles.greetingText}>Hello, Admin</Text>
+        <Button title="Logout" onPress={() => handleLogout()} />
 
         <SettingCard
           title="Pending Requests"

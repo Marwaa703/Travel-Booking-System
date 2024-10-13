@@ -18,6 +18,7 @@ const Login = () => {
   const role = auth?.role as UserTypes;
   const companyId =
     auth?.role === "Company" ? auth?.currentUser?.company_id : "";
+  // call api to check token from saved user data(auth) ?token
 
   useEffect(() => {
     // load companies, current company users,

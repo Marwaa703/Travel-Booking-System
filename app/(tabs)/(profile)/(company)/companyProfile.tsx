@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Button,
 } from "react-native";
 import SettingCard from "@/components/SettingContainer";
 import { COLORS } from "@/constants/theme";
@@ -34,6 +35,7 @@ const CompanyProfile: React.FC = () => {
     dispatch(fetchTrips()); //select companyTrips only from trips
   }, [dispatch]);
   const approved = currentCompany?.approved;
+  // const logout = useLogout();
   return (
     <>
       <Header
@@ -66,7 +68,7 @@ const CompanyProfile: React.FC = () => {
                 leftIconName="business"
               />
               {/* disable if not approved */}
-
+              <Button title="Logout" onPress={() => logout()} />
               <SettingCard
                 title="Trips"
                 onPress={() => {

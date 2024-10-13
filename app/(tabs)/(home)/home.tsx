@@ -53,8 +53,10 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
-      <Header />
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
+      <ScrollView
+        contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
+      >
+        <Header />
         <Text style={styles.title}>Explore the Beautiful</Text>
         <Text style={styles.span}>World!</Text>
         <Image

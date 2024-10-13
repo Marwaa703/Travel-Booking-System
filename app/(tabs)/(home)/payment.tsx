@@ -18,6 +18,7 @@ import CustomAlert from "@/components/core/Alert";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import FormatDate from "@/components/core/FormatDate";
 import { selectTripById } from "@/redux/slices/tripsSlice";
+import Spacer from "@/components/Spacer";
 // const defaultImage = require("../../../assets/imgDefault.png");
 
 //!Need to Handle the logic better
@@ -154,6 +155,7 @@ const Payment: React.FC = () => {
           disabled={loading}
           width={"100%"}
         />
+        <Spacer height={50} />
       </View>
     </ScrollView>
     // </ScreenWraper>

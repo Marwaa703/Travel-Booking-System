@@ -12,7 +12,6 @@ import { useRouter } from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
 import CardSubtitle from "@/components/CardSubtitle";
-import icons from "@/constants/icons";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
 import { useAppSelector } from "@/redux/store";
@@ -29,6 +28,7 @@ const TripDetails: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [locations, setLocations] = useState<Location[] | null>(null);
+  const [isTruncated, setIsTruncated] = useState(false);
 
   const route = useRoute();
   const { id } = route.params as { id: string };
@@ -140,10 +140,13 @@ const TripDetails: React.FC = () => {
                     !isExpanded && styles.descriptionTruncated,
                   ]}
                   numberOfLines={isExpanded ? undefined : 3}
+                  onTextLayout={(e) => {
+                    setIsTruncated(e.nativeEvent.lines.length > 1);
+                  }}
                 >
                   {trip?.description}
                 </Text>
-                {!isExpanded && (
+                {isTruncated && !isExpanded && (
                   <TouchableOpacity onPress={() => setIsExpanded(true)}>
                     <Text style={styles.readMore}>Read More</Text>
                   </TouchableOpacity>
@@ -200,21 +203,21 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   caption: {
-    fontSize: FONTS.xxlarge,
+    fontSize: FONTS.xlarge,
     zIndex: 20,
     position: "absolute",
-    top: 26,
+    top: 35,
     width: "100%",
     textAlign: "center",
     color: "#fff",
     fontWeight: "bold",
     padding: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-
-    textShadowColor: "rgba(0, 0, 0, 0.7)",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    textShadowColor: "rgba(0, 0, 0, 0.9)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
     letterSpacing: 1.5,
+    fontStyle: "italic",
   },
   image: {
     width: "100%",
@@ -294,7 +297,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     // alignSelf: "center",
-    marginTop: 140, //^Change that to auto
+    marginTop: "auto", //^Change that to auto
   },
 });
 

@@ -3,6 +3,7 @@ import { View, ScrollView, StyleSheet } from "react-native";
 import Card from "@/components/Card";
 import Padding from "@/components/containers/Padding";
 import { useAppSelector } from "@/redux/store";
+import Header from "@/components/core/Header";
 
 const PopularCompanies = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
