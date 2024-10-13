@@ -20,16 +20,7 @@ import { getLocationsByTripId } from "@/api/tripLocations";
 import { Location } from "@/types/trip";
 import { selectTripById } from "@/redux/slices/tripsSlice";
 import { Ionicons } from "@expo/vector-icons";
-interface Trip {
-  id: number;
-  name: string;
-  subtitle: string;
-  rate: number;
-  price: string;
-  location: string;
-  description: string;
-  image_url: string;
-}
+
 // upgrade: by swaping
 const TripDetails: React.FC = () => {
   const [index, setIndex] = useState(0);
@@ -110,7 +101,7 @@ const TripDetails: React.FC = () => {
             <View style={styles.titleRow}>
               <Text style={styles.tripTitle}>{trip?.name}</Text>
               <View style={styles.like}>
-                <Like tripId={trip.trip_id} />
+                <Like tripId={trip.trip_id as string} />
               </View>
             </View>
             <Text style={styles.companyName}>{trip?.company_id}</Text>
