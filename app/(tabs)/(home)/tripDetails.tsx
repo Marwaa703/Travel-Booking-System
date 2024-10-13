@@ -23,6 +23,7 @@ import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { Company } from "@/types/company";
 import { selectAllBookedTrips } from "@/redux/slices/bookedTripSlice";
 import Alert from "@/components/core/Alert";
+import Spacer from "@/components/Spacer";
 // upgrade: by swaping
 const TripDetails: React.FC = () => {
   const [index, setIndex] = useState(0);
@@ -153,6 +154,7 @@ const TripDetails: React.FC = () => {
                 )}
               </ScrollView>
             </View>
+            <Spacer />
             <View style={styles.buttonContainer}>
               {isTripBooked ? (
                 <Alert message={"Trip Booked"} type={"info"} />
@@ -296,8 +298,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonContainer: {
-    // alignSelf: "center",
+    alignSelf: "center",
     marginTop: "auto", //^Change that to auto
+    width: "50%",
   },
 });
 
