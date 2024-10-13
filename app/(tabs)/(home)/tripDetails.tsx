@@ -24,16 +24,6 @@ import { selectCompanyById } from "@/redux/slices/companiesSlice";
 import { Company } from "@/types/company";
 import { selectAllBookedTrips } from "@/redux/slices/bookedTripSlice";
 import Alert from "@/components/core/Alert";
-interface Trip {
-  id: number;
-  name: string;
-  subtitle: string;
-  rate: number;
-  price: string;
-  location: string;
-  description: string;
-  image_url: string;
-}
 // upgrade: by swaping
 const TripDetails: React.FC = () => {
   const [index, setIndex] = useState(0);
