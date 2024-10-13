@@ -11,6 +11,7 @@
     "format": "eslint -- --fix"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.3",
     "@hookform/resolvers": "^3.9.0",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/datetimepicker": "^8.2.0",

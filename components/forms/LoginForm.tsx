@@ -1,10 +1,10 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useState } from "react";
 import { loginInputs, loginSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
 import Button from "../Buttons";
-import { FONTS } from "@/constants/theme";
+import { COLORS, FONTS } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import LinkButton from "../LinkButton";
 import { router } from "expo-router";
@@ -23,6 +23,7 @@ const LoginForm = () => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const [error, setError] = useState("");
   const [userType, setUserType] = useState<UserTypes>("User");
+
   const dispatch = useAppDispatch();
   const {
     control,
