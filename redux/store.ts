@@ -8,6 +8,7 @@ import tripsSlice from "@/redux/slices/tripsSlice";
 import authSlice from "@/redux/slices/authSlice";
 import imagesSlice from "@/redux/slices/tripImageSlice";
 import instructionsSlice from "@/redux/slices/tripInstructionSlice";
+import bookedTripReducer from "@/redux/slices/bookedTripSlice";
 
 // Persist configurations for each slice
 const tripsPersistConfig = {
@@ -40,6 +41,11 @@ const instructionsPersistConfig = {
   storage: AsyncStorage,
 };
 
+const bookedTripsPersistConfig = {
+  key: "bookedTrips",
+  storage: AsyncStorage,
+};
+
 // Create persisted reducers
 const persistedTripsReducer = persistReducer(tripsPersistConfig, tripsSlice);
 const persistedUserReducer = persistReducer(userPersistConfig, userSlice);
@@ -53,6 +59,10 @@ const persistedInstructionsReducer = persistReducer(
   instructionsPersistConfig,
   instructionsSlice,
 );
+const persistedBookedTripsReducer = persistReducer(
+  bookedTripsPersistConfig,
+  bookedTripReducer,
+);
 
 // Configure the store
 export const store = configureStore({
@@ -63,6 +73,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     images: persistedImagesReducer,
     instructions: persistedInstructionsReducer,
+    bookedTrips: persistedBookedTripsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

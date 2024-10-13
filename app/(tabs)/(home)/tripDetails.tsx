@@ -20,7 +20,20 @@ import { getLocationsByTripId } from "@/api/tripLocations";
 import { Location } from "@/types/trip";
 import { selectTripById } from "@/redux/slices/tripsSlice";
 import { Ionicons } from "@expo/vector-icons";
-
+import { selectCompanyById } from "@/redux/slices/companiesSlice";
+import { Company } from "@/types/company";
+import { selectAllBookedTrips } from "@/redux/slices/bookedTripSlice";
+import Alert from "@/components/core/Alert";
+interface Trip {
+  id: number;
+  name: string;
+  subtitle: string;
+  rate: number;
+  price: string;
+  location: string;
+  description: string;
+  image_url: string;
+}
 // upgrade: by swaping
 const TripDetails: React.FC = () => {
   const [index, setIndex] = useState(0);
@@ -33,6 +46,9 @@ const TripDetails: React.FC = () => {
   console.log({ id });
 
   const trip = useAppSelector((state) => selectTripById(state.trips, id));
+  const company = useAppSelector((state) =>
+    selectCompanyById(state, trip?.company_id as string),
+  ) as Company;
 
   const router = useRouter();
 
@@ -51,6 +67,10 @@ const TripDetails: React.FC = () => {
   };
 
   const images = trip?.images;
+  const bookedTrips = useAppSelector(selectAllBookedTrips);
+  const isTripBooked = bookedTrips.some(
+    (trip) => trip.trip_id.toString() === id,
+  );
 
   // console.log({ id, locations });
   if (!trip) return;
@@ -104,7 +124,7 @@ const TripDetails: React.FC = () => {
                 <Like tripId={trip.trip_id as string} />
               </View>
             </View>
-            <Text style={styles.companyName}>{trip?.company_id}</Text>
+            <Text style={styles.companyName}>{company.name}</Text>
             <View style={styles.detailRow}>
               {/* update todo */}
               {/* <CardSubtitle
@@ -141,14 +161,18 @@ const TripDetails: React.FC = () => {
               </ScrollView>
             </View>
             <View style={styles.buttonContainer}>
-              <Button
-                title={"Book Now"}
-                align="center"
-                width={"120%"}
-                onPress={() => {
-                  router.push(`/payment?tripId=${id}`);
-                }}
-              />
+              {isTripBooked ? (
+                <Alert message={"Trip Booked"} type={"info"} />
+              ) : (
+                <Button
+                  title="Book Now"
+                  align="center"
+                  width={"120%"}
+                  onPress={() => {
+                    router.push(`/payment?tripId=${id}`);
+                  }}
+                />
+              )}
             </View>
           </View>
         </ScrollView>

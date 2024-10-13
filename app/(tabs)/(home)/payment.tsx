@@ -16,7 +16,9 @@ import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
 import CustomAlert from "@/components/core/Alert";
 import ScreenWraper from "@/components/containers/ScreenWraper";
-const defaultImage = require("../../../assets/imgDefault.png");
+import FormatDate from "@/components/core/FormatDate";
+import { selectTripById } from "@/redux/slices/tripsSlice";
+// const defaultImage = require("../../../assets/imgDefault.png");
 
 //!Need to Handle the logic better
 const Payment: React.FC = () => {
@@ -34,6 +36,8 @@ const Payment: React.FC = () => {
   ) as unknown as User;
 
   const userId = user.id?.toString();
+  const trip = useAppSelector((state) => selectTripById(state.trips, tripId));
+  const image = trip?.images[0].image_url;
 
   useEffect(() => {
     const loadTripDetails = async () => {
@@ -103,55 +107,56 @@ const Payment: React.FC = () => {
   }
 
   return (
-    <ScreenWraper>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../../../assets/eth_logo.png")}
-            style={styles.ethLogo}
-          />
-        </View>
-        {alert && <CustomAlert message={alert.message} type={alert.type} />}
-        <View style={styles.section}>
-          <View style={styles.infoSection}>
-            <View style={styles.tripDetailsColumn}>
-              <Text style={styles.tripText}>Title: {tripDetails.name}</Text>
-              <Text style={styles.tripText}>Date: {tripDetails.date}</Text>
-              {/* <Text style={styles.tripText}>Rating: {4}</Text> */}
-              {/* <Text style={styles.tripText}>
+    // <ScreenWraper>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("../../../assets/eth_logo.png")}
+          style={styles.ethLogo}
+        />
+      </View>
+      {alert && <CustomAlert message={alert.message} type={alert.type} />}
+      <View style={styles.section}>
+        <View style={styles.infoSection}>
+          <View style={styles.tripDetailsColumn}>
+            <Text style={styles.tripText}>Title: {tripDetails.name}</Text>
+            <Text style={styles.tripText}>
+              Date: {<FormatDate dateString={tripDetails.date} />}
+            </Text>
+
+            {/* <Text style={styles.tripText}>Rating: {4}</Text> */}
+            {/* <Text style={styles.tripText}>
               People Joined: {tripDetails.max_reservations}
               </Text> */}
-              <Text style={styles.tripText}>
-                Price: {tripDetails.price} Wei
-              </Text>
-            </View>
-
-            <View style={styles.imageColumn}>
-              <Image source={defaultImage} style={styles.tripImage} />
-            </View>
+            <Text style={styles.tripText}>Price: {tripDetails.price} Wei</Text>
           </View>
 
-          <View style={styles.inputSection}>
-            <Text style={styles.label}>Enter your Wallet Address:</Text>
-            <TextInput
-              style={styles.input}
-              value={userWalletAddress}
-              onChangeText={setUserWalletAddress}
-              placeholder="0x..."
-              placeholderTextColor="#aaa"
-            />
+          <View style={styles.imageColumn}>
+            <Image source={{ uri: image }} style={styles.tripImage} />
           </View>
+        </View>
 
-          <Button
-            title={loading ? "Processing..." : "Book Now"}
-            onPress={handlePayment}
-            align="center"
-            disabled={loading}
-            width={"100%"}
+        <View style={styles.inputSection}>
+          <Text style={styles.label}>Enter your Wallet Address:</Text>
+          <TextInput
+            style={styles.input}
+            value={userWalletAddress}
+            onChangeText={setUserWalletAddress}
+            placeholder="0x..."
+            placeholderTextColor="#aaa"
           />
         </View>
-      </ScrollView>
-    </ScreenWraper>
+
+        <Button
+          title={loading ? "Processing..." : "Book Now"}
+          onPress={handlePayment}
+          align="center"
+          disabled={loading}
+          width={"100%"}
+        />
+      </View>
+    </ScrollView>
+    // </ScreenWraper>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -8,29 +8,34 @@ import TripProfileCard from "@/components/TripProfileCard";
 import Padding from "@/components/containers/Padding";
 import WeeklyCalendar from "@/components/Calendar";
 import { getBookedTripsByUserId } from "@/api/bookedTrips";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 import { getTripById } from "@/api/trips/trip";
 import moment from "moment";
+import FormatDate from "@/components/core/FormatDate";
+import { setError } from "@/redux/slices/companiesSlice";
+import { User } from "@/types/user";
+import { useDispatch } from "react-redux";
+import { setBookedTrips } from "@/redux/slices/bookedTripSlice";
 
 const Calendar = () => {
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
-  const [bookedTrips, setBookedTrips] = useState([]);
+  const user = useAppSelector(
+    (state) => state.auth.currentUser,
+  ) as unknown as User;
   const [tripDetails, setTripDetails] = useState([]);
-  const userId = currentUser?.id;
+  const userId = user?.id;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchBookedTrips = async () => {
       try {
-        const trips = await getBookedTripsByUserId(userId);
-        setBookedTrips(trips);
+        const trips = await getBookedTripsByUserId(userId!);
+        dispatch(setBookedTrips(trips));
         const tripsWithDetails = await Promise.all(
-          trips.map(async (booking) => {
+          trips.map(async (booking: { trip_id: string }) => {
             const trip = await getTripById(booking.trip_id);
             return trip;
           }),
         );
-
         setTripDetails(tripsWithDetails);
       } catch (err) {
         setError(err.message);
@@ -38,18 +43,19 @@ const Calendar = () => {
     };
 
     fetchBookedTrips();
-  }, [userId]);
-  // Extract start dates of the trips
-  const tripStartDates = tripDetails.map(
-    (trip) => moment(trip.date).format("YYYY-MM-DD") || [],
-  );
+  }, [userId, dispatch]);
+
+  const tripStartDates = useMemo(() => {
+    return tripDetails.map((trip) => moment(trip.date).format("YYYY-MM-DD"));
+  }, [tripDetails]);
+
   return (
     <View style={styles.container}>
       <Header
         title="Schedule"
         leftIcon="chevron-back"
         onLeftIconPress={() => router.push("home")}
-      ></Header>
+      />
       <View style={styles.calendar}>
         <WeeklyCalendar tripStartDates={tripStartDates} />
       </View>
@@ -60,7 +66,6 @@ const Calendar = () => {
           View All
         </Text>
       </View>
-
       <Spacer />
       <ScrollView>
         <Padding>
@@ -74,7 +79,7 @@ const Calendar = () => {
                     id={trip.id}
                     image={trip.image_url}
                     title={trip.name}
-                    date={trip.date}
+                    date={<FormatDate dateString={trip.date} />}
                     rating={4}
                     price={trip.price}
                     avatars={[
