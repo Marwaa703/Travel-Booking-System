@@ -1,5 +1,5 @@
 import { RootState } from "../store";
-import { Company, CompanyUser } from "@/types/company";
+import { Company, CompanyUser, NewCompanyUser } from "@/types/company";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CompaniesState {
@@ -29,9 +29,13 @@ const companiesSlice = createSlice({
     addCompany: (state, action: PayloadAction<Company>) => {
       state.companies.push(action.payload);
     },
-    addCompanyUser: (state, action: PayloadAction<CompanyUser>) => {
+    addCompanyUser: (
+      state,
+      action: PayloadAction<CompanyUser | NewCompanyUser>,
+    ) => {
       // check if user is already registered
-      state.users.push(action.payload);
+      const index = state.users.findIndex((u) => u.id === action.payload.id);
+      if (index === -1) state.users.push(action.payload);
     },
     removeCompany: (state, action: PayloadAction<string>) => {
       state.companies = state.companies.filter(

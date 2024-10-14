@@ -15,6 +15,7 @@ export default function CompanyLayout() {
       <Stack.Screen name="companyTrips" options={{ headerShown: false }} />
       <Stack.Screen name="companyUsers" options={{ headerShown: false }} />
       <Stack.Screen name="addTrip" options={{ title: "Add Trip" }} />
+      <Stack.Screen name="addUser" options={{ title: "Add New User" }} />
       <Stack.Screen name="tripInstruction" options={{ headerShown: false }} />
     </Stack>
   );

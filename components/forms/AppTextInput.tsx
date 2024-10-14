@@ -1,21 +1,26 @@
-import { TextInputProps, View } from "react-native";
+import { Text, TextInputProps, View } from "react-native";
 import React from "react";
 import { Control, Controller, FieldValues } from "react-hook-form";
 import { captalizeFirstLetter } from "@/utils";
 import TextInputField from "./TextInputField";
 import FieldErrorMessage from "./FieldErrorMessage";
+import { COLORS, FONTS } from "@/constants/theme";
+import Spacer from "../Spacer";
+import TextNote from "./TextNote";
 
 interface AppTextInputProps extends TextInputProps {
   icon?: any;
   pass?: boolean;
   error?: string;
   name: string;
+  note?: string;
   control: Control<FieldValues> | undefined;
   trim?: boolean;
 }
 const AppTextInput = ({
   control,
   name,
+  note,
   icon,
   pass = false,
   error,
@@ -42,7 +47,9 @@ const AppTextInput = ({
           </>
         )}
       />
+      <TextNote note={note} />
       <FieldErrorMessage error={error as string} />
+      <Spacer />
     </View>
   );
 };

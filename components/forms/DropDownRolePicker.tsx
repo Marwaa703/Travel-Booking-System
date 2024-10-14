@@ -8,13 +8,13 @@ import {
   StyleSheet,
 } from "react-native";
 import FieldErrorMessage from "./FieldErrorMessage"; // Assuming you have a FieldErrorMessage component
-import { CompanyUserRoles } from "@/types/company";
+import { CompanySubUserRoles } from "@/types/company";
 import { COLORS, FONTS } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 
 interface DropdownProps {
-  items: CompanyUserRoles[];
-  onSelect: (item: CompanyUserRoles) => void;
+  items: CompanySubUserRoles[];
+  onSelect: (item: CompanySubUserRoles) => void;
   name: string;
   error?: string;
   value?: string;
@@ -36,7 +36,7 @@ const DropdownRolePicker: React.FC<DropdownProps> = ({
     if (value) setSelectedValue(value);
   }, [value]);
 
-  const handleSelect = (item: CompanyUserRoles) => {
+  const handleSelect = (item: CompanySubUserRoles) => {
     setSelectedValue(item);
     onSelect(item);
     setModalVisible(false);

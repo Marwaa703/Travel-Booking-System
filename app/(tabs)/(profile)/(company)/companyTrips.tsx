@@ -33,13 +33,13 @@ const CompanyHome = () => {
     }, [companyId, dispatch]),
   );
   useEffect(() => {
-    if (route.params?.newTrip) {
+    if (route.params?.addTrip) {
       Toast.show({
         text1: "TripAdded",
         text2: "Your new trip has been added successfully!",
       });
     }
-  }, [route.params?.newTrip]);
+  }, [route.params?.addTrip]);
 
   const trips = alltrips
     .filter((t) => {
@@ -48,7 +48,7 @@ const CompanyHome = () => {
     })
     .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
   console.log({ allTrips: alltrips.length, trips: trips.length });
-  console.log(trips.id);
+  console.log(trips);
   return (
     <View style={styles.container}>
       <Header title="Trips" />

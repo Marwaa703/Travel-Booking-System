@@ -15,7 +15,7 @@ import { StyleSheet, Text, View } from "react-native";
 const Login = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const role = auth?.role as UserTypes;
+  const role = auth?.role;
   const companyId =
     auth?.role === "Company" ? auth?.currentUser?.company_id : "";
   // call api to check token from saved user data(auth) ?token
@@ -71,7 +71,7 @@ const Login = () => {
         {/* End form  */}
         {/* Bottom  */}
 
-        <OnboardingComingSoon />
+        {/* <OnboardingComingSoon /> */}
       </View>
     </Padding>
   );
@@ -87,14 +87,15 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.large,
   },
   top: {
-    flex: 2,
+    // flex: 4,
     justifyContent: "space-evenly",
   },
   center: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
+    columnGap: 6,
   },
   header: {
     textAlign: "center",

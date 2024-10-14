@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { KeyboardTypeOptions } from "react-native";
 import { birthdateSchema, emailRegex, phoneRegex } from "./regext";
 import { UserTypes } from "@/types/user";
-import { CompanyUserRoles } from "@/types/company";
+import { CompanySubUserRoles, CompanyUserRoles } from "@/types/company";
 
 // Validation Schemas
 export const loginSchema = Yup.object().shape({
@@ -67,29 +67,36 @@ export const addTripSchema = Yup.object().shape({
 });
 
 // Company Details Schema
-export const companyUserSignupSchema = signupSchema.concat(
+export const companyNewUserSignupSchema = signupSchema.concat(
   Yup.object().shape({
-    // role: Yup.string()
-    //   .oneOf(
-    //     ["Representative", "Support", "TourGuide"],
-    //     "Role must be one of: Representative, Support, TourGuide",
-    //   )
-    //   .required("Role is required"),
+    role: Yup.string()
+      .oneOf(
+        ["Support", "TourGuide"],
+        "Role must be one of: Support, TourGuide",
+      )
+      .required("Role is required"),
   }),
+);
+export const companyUserSignupSchema = signupSchema.concat(
+  Yup.object().shape({}),
 );
 export const companyDetailsSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Company name must be at least 2 characters")
-    .required("Company name is required"),
+    .required("Company name is required!"),
   address: Yup.string()
     .min(10, "Address must be at least 10 characters")
-    .required("Address is required"),
+    .required("Address is required!"),
   logo: Yup.string()
     .url("Logo must be a valid URL")
-    .required("Logo URL is required"),
+    .matches(
+      /\.(jpg|jpeg|png)$/i,
+      "Logo must be a valid image URL (jpg, jpeg, png)",
+    )
+    .required("Logo URL is required!"),
   wallet: Yup.string()
-    .optional()
-    .matches(/^0x[a-fA-F0-9]{40}$/, "Wallet must be a valid Ethereum address"),
+    .matches(/^0x[a-fA-F0-9]{40}$/, "Wallet must be a valid Ethereum address?")
+    .required("wallet address is required!"),
 });
 
 // Company Paper Schema
@@ -109,6 +116,7 @@ export interface InputFieldProps<T> {
   keyboardType?: KeyboardTypeOptions | undefined;
   autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
   trim?: boolean; // New trim property
+  note?: string;
 }
 
 // Form Field Types
@@ -133,6 +141,7 @@ export type AddTripFormFields =
   | "max_reservations"
   | "date";
 export type CompanyUserFormFields = SignupFormFields;
+export type CompanyNewUserFormFields = SignupFormFields | "role";
 export type CompanyDetailsFormFields =
   | "name"
   | "address"
@@ -268,6 +277,11 @@ export const addTripInputs: InputFieldProps<AddTripFormFields>[] = [
   },
 ];
 
+export const companyNewUserSignupInputs: InputFieldProps<CompanyNewUserFormFields>[] =
+  [
+    ...signupInputs,
+    { name: "role", icon: "briefcase", autoCapitalize: "none", trim: true },
+  ];
 export const companyUserSignupInputs: InputFieldProps<CompanyUserFormFields>[] =
   [...signupInputs];
 
@@ -293,6 +307,7 @@ export const companyDetailsInputs: InputFieldProps<CompanyDetailsFormFields>[] =
       autoCapitalize: "none",
       keyboardType: "default",
       trim: true,
+      note: "Support image links only end with .jpg, .png., ...etc?",
     },
     {
       name: "wallet",
@@ -324,3 +339,4 @@ export const companyRoles: CompanyUserRoles[] = [
   "Support",
   "TourGuide",
 ];
+export const companySubRoles: CompanySubUserRoles[] = ["Support", "TourGuide"];

@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from "react-native";
 import React from "react";
+import { COLORS, FONTS } from "@/constants/theme";
 
 interface ActionButtonProps {
   text: string;
@@ -40,19 +41,21 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 1,
     alignItems: "center",
-    width: 100,
+    width: 80,
   },
   action: {
     backgroundColor: "transparent",
   },
   primary: {
-    backgroundColor: "#007BFF", // Customize as needed
+    backgroundColor: "dodgerblue",
+    borderRadius: 1,
   },
   // eslint-disable-next-line react-native/no-unused-styles
   secondary: {
-    backgroundColor: "#6C757D", // Customize as needed
+    backgroundColor: "#6C757D",
   },
   text: {
-    fontWeight: "bold",
+    letterSpacing: 0.7,
+    fontSize: FONTS.small,
   },
 });

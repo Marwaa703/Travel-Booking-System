@@ -4,6 +4,9 @@ import { CompanyPaper } from "@/types/company";
 import Spacer from "../Spacer";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TextInputField from "./TextInputField";
+import TextNote from "./TextNote";
+import Toast, { ToastShowParams } from "react-native-toast-message"; // Ensure you import Toast
+import Notify from "../notifications/Notify";
 
 interface CompanyPapersFormProps {
   onSubmit: (data: CompanyPaper[]) => void;
@@ -21,42 +24,69 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
     title: "",
     image_url: "",
   });
+  const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
 
   const handlePapersSubmit = () => {
-    onSubmit(papers);
+    if (papers.length >= 2) onSubmit(papers);
+    else
+      setToastData({
+        text1: "Invalid number of Papers",
+        text2: "Must add at leat 2 of the company papers?",
+        type: "error",
+      });
   };
+
   const handleAddImage = () => {
+    const imageUrlPattern = /\.(jpg|jpeg|png)$/i;
+
     if (paper.title && paper.image_url) {
-      // inject companyId from currentCompanyUser SignedIn
-      setPapers((pre) => [...pre, paper]);
-      setPaper({ title: "", image_url: "" });
-    } else alert("Can't add empty values");
+      if (imageUrlPattern.test(paper.image_url)) {
+        // inject companyId from currentCompanyUser SignedIn
+        setPapers((prev) => [...prev, paper]);
+        setPaper({ title: "", image_url: "" });
+      } else {
+        setToastData({
+          text1: "Invalid Image URL",
+          text2: "Image URL must end with .jpg, .jpeg, or .png",
+          type: "error",
+        });
+      }
+    } else {
+      setToastData({
+        text1: "Empty Fields",
+        text2: "Can't add empty values",
+        type: "error",
+      });
+    }
   };
 
   const handleDeletePaper = (index: number) => {
     setPapers(papers.filter((_, i) => i !== index));
   };
+
   return (
     <>
       <Fragment>
         <TextInputField
           trim={false}
           name={"paper Name"}
-          onChangeText={(title) => setPaper((pre) => ({ ...pre, title }))}
+          onChangeText={(title) => setPaper((prev) => ({ ...prev, title }))}
           icon="logo-closed-captioning"
           onBlur={undefined}
           value={paper.title}
         />
+        <Spacer />
         <TextInputField
           name={"image"}
           onChangeText={(imageUrl) =>
-            setPaper((pre) => ({ ...pre, image_url: imageUrl }))
+            setPaper((prev) => ({ ...prev, image_url: imageUrl }))
           }
           icon="image-outline"
           onBlur={undefined}
           value={paper.image_url}
           trim={false}
         />
+        <TextNote note="Support Image links ending with .jpg, .jpeg, or .png!" />
         <Spacer />
         <TouchableOpacity onPress={handleAddImage} style={styles.addButton}>
           <Text>+</Text>
@@ -70,8 +100,8 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
                 style={styles.locationImage}
                 onError={() =>
                   setPapers(
-                    papers.map((paper, i) =>
-                      i === index ? { ...paper, image_url: "" } : paper,
+                    papers.map((p, i) =>
+                      i === index ? { ...p, image_url: "" } : p,
                     ),
                   )
                 }
@@ -94,11 +124,14 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
         loadingMessage={msg}
         loading={loading}
       />
+      {toastData && <Notify data={toastData} />}
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
   );
 };
 
 export default CompanyPapersForm;
+
 const styles = StyleSheet.create({
   addButton: {
     justifyContent: "center",
@@ -109,7 +142,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0e0e0",
     marginHorizontal: "auto",
   },
-
   addedLocationRow: {
     flexDirection: "row",
     alignItems: "center",

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { CompanyUser, CompanyUserRoles } from "@/types/company";
 import { getRandomColor } from "@/utils";
 import ActionButton from "../buttons/ActionButton";
+import { FONTS } from "@/constants/theme";
 
 interface UserCardProps {
   user: CompanyUser;
@@ -11,6 +12,7 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
+  if (!user) return;
   const calculateAge = (birthDate?: string): number => {
     if (!birthDate) return 0;
     const today = new Date();
@@ -43,14 +45,15 @@ const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
     }
   };
 
-  const roleBadgeColor = getRoleBadgeColor(user.role);
-  const roleInitial = user.role.charAt(0).toUpperCase(); // First letter of the role
+  const roleBadgeColor = getRoleBadgeColor(user?.role as CompanyUserRoles);
+  console.log({ user });
+  const roleInitial = user?.role && user?.role?.charAt(0).toUpperCase(); // First letter of the role
 
   return (
     <View style={styles.card}>
       <View style={styles.profileRow}>
-        {user.profile_picture ? (
-          <Image source={{ uri: user.profile_picture }} style={styles.image} />
+        {user?.profile_picture ? (
+          <Image source={{ uri: user?.profile_picture }} style={styles.image} />
         ) : (
           <View
             style={[
@@ -59,16 +62,16 @@ const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
             ]}
           >
             <Text style={styles.initials}>
-              {getInitials(user.first_name, user.last_name)}
+              {getInitials(user?.first_name || "", user?.last_name || "")}
             </Text>
           </View>
         )}
         <View style={styles.userInfo}>
           <Text
             style={styles.name}
-          >{`${user.first_name} ${user.last_name}`}</Text>
-          <Text style={styles.details}>{user.email}</Text>
-          <Text style={styles.details}>{user.phone}</Text>
+          >{`${user?.first_name} ${user?.last_name}`}</Text>
+          <Text style={styles.details}>{user?.email}</Text>
+          <Text style={styles.details}>{user?.phone}</Text>
         </View>
       </View>
       <View style={[styles.roleBadge, { backgroundColor: roleBadgeColor }]}>
@@ -79,15 +82,17 @@ const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
           Age: {calculateAge(user?.birth_date)} years
         </Text>
       )}
-      <View style={styles.buttonContainer}>
-        <ActionButton text="Edit" onPress={onEdit} variant="primary" />
-        <ActionButton
-          text="Delete"
-          onPress={() => onDelete(user.id as string)}
-          variant="action"
-          textColor="red"
-        />
-      </View>
+      {user?.role !== "Representative" && (
+        <View style={styles.buttonContainer}>
+          <ActionButton text="Edit" onPress={onEdit} variant="primary" />
+          <ActionButton
+            text="Delete"
+            onPress={() => onDelete(user?.id as string)}
+            variant="action"
+            textColor="red"
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -97,13 +102,24 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     position: "relative",
-    elevation: 1,
+    borderRadius: 8,
+    backgroundColor: "#ffffff",
+    elevation: 4, // Use elevation for Android shadow
+    shadowColor: "#000", // Shadow color for iOS
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1, // Shadow opacity for iOS
+    shadowRadius: 4, // Shadow radius for iOS
     overflow: "hidden",
+    marginBottom: 10, // Add some spacing between cards
   },
   profileRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: 10,
+    columnGap: 4,
   },
   image: {
     width: 50,
@@ -112,28 +128,30 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   initialsContainer: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
   },
   initials: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: FONTS.small,
+    fontWeight: "500",
     color: "white",
   },
   userInfo: {
     flex: 1,
   },
   name: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: FONTS.normal,
+    fontWeight: "500",
+    letterSpacing: 1,
   },
   details: {
-    fontSize: 14,
+    fontSize: FONTS.small,
     color: "#666",
+    letterSpacing: 0.5,
   },
   roleBadge: {
     position: "absolute",
@@ -158,7 +176,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     marginTop: 10,
   },
 });

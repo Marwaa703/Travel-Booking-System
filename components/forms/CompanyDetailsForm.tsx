@@ -5,6 +5,7 @@ import Button from "../Buttons";
 import { companyDetailsInputs, companyDetailsSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Company } from "@/types/company";
+import Spacer from "../Spacer";
 
 interface CompanyDetailsFormProps {
   onNext: (data: Company) => void;
@@ -26,7 +27,7 @@ const CompanyDetailsForm: React.FC<CompanyDetailsFormProps> = ({ onNext }) => {
   return (
     <>
       {companyDetailsInputs.map(
-        ({ icon, name, autoCapitalize, keyboardType, trim }) => (
+        ({ icon, name, autoCapitalize, keyboardType, trim, note }) => (
           <Fragment key={name}>
             <AppTextInput
               name={name}
@@ -36,6 +37,7 @@ const CompanyDetailsForm: React.FC<CompanyDetailsFormProps> = ({ onNext }) => {
               icon={icon}
               trim={trim}
               error={errors[name]?.message}
+              note={note}
             />
           </Fragment>
         ),

@@ -1,14 +1,8 @@
-import { CompanyUser } from "@/types/company";
+import { CompanyUser, NewCompanyUser } from "@/types/company";
 import api, { handleError } from "./axiosApi";
 const companyUsersApi = {
   //Sign up for companies and companies users
   createUser: async (user: CompanyUser): Promise<CompanyUser> => {
-    if (user.role !== "Representative") {
-      throw new Error(
-        "Only users of type 'Representative' can sign up for a company.",
-      );
-    }
-
     try {
       // Step 2: Create User with companyId
       const userResponse = await api.post<CompanyUser>("/company/signup", {
@@ -19,7 +13,21 @@ const companyUsersApi = {
       return userResponse.data;
     } catch (error) {
       console.error("Error during signupCompany:", error);
-      throw new Error("Failed to sign up company."); // You can handle the error as needed
+      throw new Error("Failed to sign up company.");
+    }
+  },
+  createNewUser: async (user: NewCompanyUser): Promise<NewCompanyUser> => {
+    try {
+      // Step 2: Create User with companyId
+      const userResponse = await api.post<NewCompanyUser>("/company/signup", {
+        ...user,
+      });
+
+      // Prepare the updated company data
+      return userResponse.data;
+    } catch (error) {
+      console.error("Error during add new company  user:", error);
+      throw new Error("Failed to sign up new company user.");
     }
   },
 

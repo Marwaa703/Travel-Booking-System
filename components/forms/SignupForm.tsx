@@ -3,14 +3,13 @@ import { signupInputs, signupSchema } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, FieldValues, useForm } from "react-hook-form";
 import Button from "../Buttons";
-import { FONTS, SPACING } from "@/constants/theme";
+import { FONTS } from "@/constants/theme";
 import AppTextInput from "./AppTextInput";
 import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
-import { Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { signup } from "@/api/auth";
-import { signupSuccess, signupFailure } from "@/redux/slices/authSlice";
+import { signupSuccess } from "@/redux/slices/authSlice";
 import { router } from "expo-router";
 import { Gender } from "@/types/company";
 import useLoadingState from "@/hooks/useLoadingSate";
@@ -78,8 +77,6 @@ const SignupForm = () => {
           error={errors[name]?.message}
         />
       ))}
-      <Spacer />
-      {/* <Text style={{ marginVertical: SPACING.medium }}>Select your gender</Text> */}
       <GenderPicker
         setSelectedGender={setSelectedGender}
         selectedGender={selectedGender}

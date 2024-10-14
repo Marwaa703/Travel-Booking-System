@@ -1,4 +1,4 @@
-import { Company, CompanyUser } from "@/types/company";
+import { Company, NewCompanyUser } from "@/types/company";
 import companyApi from "@/api/company";
 import companyUsersApi from "@/api/companyUsers";
 import { AppDispatch } from "../store";
@@ -6,6 +6,7 @@ import {
   addCompany,
   addCompanyUser,
   editCompany,
+  removeCompanyUser,
   setCompanies,
   setCompanyUsers,
   setError,
@@ -74,12 +75,24 @@ export const fetchCompanyUsers =
     }
   };
 
-export const createUser =
-  (userData: CompanyUser) => async (dispatch: AppDispatch) => {
+export const addNewUser =
+  (userData: NewCompanyUser) => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {
-      const user = await companyUsersApi.createUser(userData);
+      const user = await companyUsersApi.createNewUser(userData);
       dispatch(addCompanyUser(user));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+export const deleteCompanyUser =
+  (userId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      await companyUsersApi.deleteCompanyUser(userId);
+      dispatch(removeCompanyUser(userId));
     } catch (error) {
       dispatch(setError(error as string));
     } finally {

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 14,
 
-    marginVertical: 6,
+    marginVertical: 2,
     flexDirection: "row",
     width: "100%",
   },

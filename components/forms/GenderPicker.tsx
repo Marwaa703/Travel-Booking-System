@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     padding: 8,
-
+    paddingVertical: 10,
     flexDirection: "row-reverse",
     alignItems: "center",
     justifyContent: "center",
@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#000", // Default text color
-    marginTop: 5,
+    // marginTop: 5,
   },
   selectedText: {
     color: "#fff", // Text color for selected button
-    marginTop: 5,
+    // marginTop: 5,
   },
 });
 

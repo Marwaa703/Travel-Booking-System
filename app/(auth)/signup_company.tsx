@@ -1,6 +1,5 @@
 import Padding from "@/components/containers/Padding";
 import MultiStepRegisterCompanyForm from "@/components/forms/MultiStepRegisterCompanyForm";
-import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
 import React from "react";
@@ -20,12 +19,10 @@ const SignupCompany = () => {
             {/* form  */}
             <View>
               <MultiStepRegisterCompanyForm />
-              <Spacer />
-              <Spacer />
-              <View style={styles.center}>
+              {/* <View style={styles.center}>
                 <Text style={styles.subTitle}>Already have an account?</Text>
                 <LinkButton to={"login"} label="Sign In" />
-              </View>
+              </View> */}
               <Spacer />
             </View>
           </View>
@@ -51,8 +48,9 @@ const styles = StyleSheet.create({
   center: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
+    columnGap: 6,
   },
   header: {
     textAlign: "center",

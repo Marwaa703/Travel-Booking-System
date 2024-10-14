@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
   center: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
+    columnGap: 6,
   },
   company: {
     color: COLORS.accent,

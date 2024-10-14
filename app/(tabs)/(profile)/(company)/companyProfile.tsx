@@ -6,7 +6,6 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
-  Button,
 } from "react-native";
 import SettingCard from "@/components/SettingContainer";
 import { COLORS } from "@/constants/theme";
@@ -68,26 +67,33 @@ const CompanyProfile: React.FC = () => {
                 leftIconName="business"
               />
               {/* disable if not approved */}
-              <Button title="Logout" onPress={() => logout()} />
-              <SettingCard
-                title="Trips"
-                onPress={() => {
-                  router.push(`companyTrips/?companyId=${user?.company_id}`);
-                }}
-                leftIconName="air"
-              />
-              <SettingCard
-                title="Manage Employees"
-                onPress={() => {
-                  router.push(`companyUsers/?companyId=${user?.company_id}`);
-                }}
-                leftIconName="people"
-              />
-              <SettingCard
-                title="Company Settings"
-                onPress={() => {}}
-                leftIconName="settings"
-              />
+              {approved && (
+                <>
+                  <SettingCard
+                    title="Trips"
+                    onPress={() => {
+                      router.push(
+                        `companyTrips/?companyId=${user?.company_id}`,
+                      );
+                    }}
+                    leftIconName="air"
+                  />
+                  <SettingCard
+                    title="Manage Employees"
+                    onPress={() => {
+                      router.push(
+                        `companyUsers/?companyId=${user?.company_id}`,
+                      );
+                    }}
+                    leftIconName="people"
+                  />
+                  <SettingCard
+                    title="Company Settings"
+                    onPress={() => {}}
+                    leftIconName="settings"
+                  />
+                </>
+              )}
               <SettingCard
                 title="Other Settings"
                 onPress={() => {}}

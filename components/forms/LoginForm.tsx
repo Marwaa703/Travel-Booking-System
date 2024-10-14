@@ -98,7 +98,7 @@ const LoginForm = () => {
       <Button
         title="Sign In"
         onPress={handleSubmit(handleLogin)}
-        fontSize={FONTS.large}
+        fontSize={FONTS.medium}
         loadingMessage={msg}
         loading={loading}
       />

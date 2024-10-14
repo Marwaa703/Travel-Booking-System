@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     marginLeft: 10, // Space between spinner and text
     color: COLORS.bg,
     textAlign: "center",
-    fontSize: FONTS.normal,
+    fontSize: FONTS.medium,
   },
 });
 

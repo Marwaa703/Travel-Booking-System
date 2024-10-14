@@ -33,15 +33,6 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
   const [selectedGender, setSelectedGender] = React.useState<Gender>("male");
 
   const handleUserSignup = (data: CompanyUser) => {
-    // if (data.role !== "Representative") {
-    //   Toast.show({
-    //     type: "error",
-    //     text1: "Role type error??",
-    //     text2: `${data.role} can't signup for a company`,
-    //   });
-    //   console.log("wrong role");
-    //   return;
-    // }
     onNext({ ...data, role: "Representative" }, selectedGender);
   };
 
@@ -63,7 +54,6 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
         ),
       )}
       <Toast />
-      <Spacer height={12} />
       <GenderPicker
         selectedGender={selectedGender}
         setSelectedGender={setSelectedGender}

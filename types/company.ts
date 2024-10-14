@@ -3,7 +3,7 @@ export interface Company {
   name: string;
   address: string;
   logo: string;
-  wallet?: string;
+  wallet: string;
   approved?: boolean;
 }
 
@@ -27,10 +27,17 @@ export interface CompanyUser {
   role?: CompanyUserRoles;
   gender?: Gender;
 }
+
 export interface CompanyData {
   user: CompanyUser;
   details: Company;
   papers: CompanyPaper[];
 }
 export type CompanyUserRoles = "Representative" | "Support" | "TourGuide";
+
+export interface NewCompanyUser extends Omit<CompanyUser, "role"> {
+  role: CompanySubUserRoles;
+}
+export type CompanySubUserRoles = "Support" | "TourGuide";
+
 export type Gender = "male" | "female";
