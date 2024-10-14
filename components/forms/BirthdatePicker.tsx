@@ -22,7 +22,7 @@ const DateInputPicker: React.FC<DateInputPickerProps> = ({
   autoCapitalize = "none",
   icon,
 }) => {
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date | null>(null);
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const DateInputPicker: React.FC<DateInputPickerProps> = ({
     setShow(false);
     setDate(currentDate);
     // Update the value in the form
-    onSelectDate(currentDate);
+    onSelectDate(currentDate as Date);
   };
 
   return (
@@ -42,7 +42,7 @@ const DateInputPicker: React.FC<DateInputPickerProps> = ({
       <TextInputField
         name={name}
         icon={icon}
-        value={date.toLocaleDateString()} // Display the formatted date
+        value={date ? date.toLocaleDateString() : ""} // Display the formatted date
         onFocus={() => setShow(true)} // Show date picker on focus
         placeholder={`Select ${name}`} // Adjust the placeholder
         autoCapitalize={autoCapitalize}
@@ -54,7 +54,7 @@ const DateInputPicker: React.FC<DateInputPickerProps> = ({
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={date}
+          value={new Date()}
           mode="date"
           display="default"
           onChange={onChange}

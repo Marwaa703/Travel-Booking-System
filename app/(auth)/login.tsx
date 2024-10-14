@@ -1,9 +1,11 @@
+import { login } from "@/api/auth";
 import Padding from "@/components/containers/Padding";
 import LoginForm from "@/components/forms/LoginForm";
 import LinkButton from "@/components/LinkButton";
 import OnboardingComingSoon from "@/components/OnboardingComingSoon";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS, SPACING } from "@/constants/theme";
+import useLogout from "@/hooks/useLogout";
 import { fetchCompanies } from "@/redux/actions/companiesActions";
 import { fetchTrips } from "@/redux/actions/tripActions";
 import { fetchUsers } from "@/redux/actions/usersActions";
@@ -16,10 +18,11 @@ const Login = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const role = auth?.role;
+  const logout = useLogout();
   const companyId =
     auth?.role === "Company" ? auth?.currentUser?.company_id : "";
-  // call api to check token from saved user data(auth) ?token
 
+  // call api to check token from saved user data(auth) ?token
   useEffect(() => {
     // load companies, current company users,
     if (auth?.isAuthenticated && auth?.token) {

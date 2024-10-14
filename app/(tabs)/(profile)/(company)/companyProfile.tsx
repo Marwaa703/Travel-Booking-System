@@ -22,6 +22,7 @@ const CompanyProfile: React.FC = () => {
   const user = useAppSelector(
     (state) => state.auth.currentUser,
   ) as unknown as CompanyUser;
+  const token = useAppSelector((state) => state.auth.token);
 
   const currentCompany = useAppSelector((state) =>
     selectCompanyById(state, user?.company_id as string),
@@ -34,7 +35,11 @@ const CompanyProfile: React.FC = () => {
     dispatch(fetchTrips()); //select companyTrips only from trips
   }, [dispatch]);
   const approved = currentCompany?.approved;
-  // const logout = useLogout();
+  useEffect(() => {
+    console.log({ token });
+    if (!token) logout();
+    console.log({ auth: "no " });
+  }, [token, logout]);
   return (
     <>
       <Header

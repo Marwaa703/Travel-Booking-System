@@ -1,6 +1,6 @@
 import useLocationSearch, { LocationResult } from "@/hooks/useLocationSearch";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Text, TouchableOpacity, ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextInputField from "./forms/TextInputField";
 import { COLORS } from "@/constants/theme";
@@ -46,7 +46,7 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
   };
 
   return (
-    <SafeAreaView>
+    <View>
       <TextInputField
         trim={false}
         name={"search"}
@@ -72,7 +72,7 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
             <Text>{item.display_name.slice(0, 50)}</Text>
           </TouchableOpacity>
         ))}
-    </SafeAreaView>
+    </View>
   );
 };
 

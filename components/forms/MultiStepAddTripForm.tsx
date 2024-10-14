@@ -16,6 +16,7 @@ import { createTrip } from "@/api/auth";
 import { useAppDispatch } from "@/redux/store";
 import { addTrip } from "@/redux/slices/tripsSlice";
 import { COLORS, FONTS } from "@/constants/theme";
+import Button from "../Buttons";
 
 const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
@@ -59,18 +60,14 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
     try {
       setLoading(true);
       setMsg("Registerinig Company...");
-
-      // todo:send to server
-      // todo:get updated data from server
       const updatedTripData = await createTrip(finalData, companyId);
-      // todo: update redux with new data
       dispatch(
         addTrip({
           ...updatedTripData?.details,
           images: updatedTripData?.images,
         }),
       );
-      console.log({ updatedTripData });
+
       if (updatedTripData.success) router.back();
     } catch (error) {
       setMsg("error creating trip...");
@@ -84,7 +81,7 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
     // router.back();
   };
   const steps = [
-    "Trip Details ",
+    "Trip Details",
     "Add Trip Locations in order",
     "Add Trip Images",
   ];
@@ -92,7 +89,8 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
 
   return (
     <View style={{ width: "100%" }}>
-      <Text style={styles.subTitle}>{steps[currentStep - 1]}</Text>
+      <Text style={styles.subTitle}>{steps[currentStep - 1]}:</Text>
+      <Spacer />
       {currentStep === 1 && (
         <>
           {addTripInputs.map(
@@ -121,11 +119,7 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
             ),
           )}
           <Spacer />
-          <IconButton
-            title="Next"
-            onPress={handleSubmit(handleAddTrip)}
-            direction="next"
-          />
+          <Button title="Next" onPress={handleSubmit(handleAddTrip)} />
         </>
       )}
 
@@ -141,11 +135,7 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
 
       <Spacer />
       {currentStep > 1 && (
-        <IconButton
-          title="Back"
-          onPress={() => setCurrentStep(currentStep - 1)}
-          direction="back"
-        />
+        <Button title="Back" onPress={() => setCurrentStep(currentStep - 1)} />
       )}
       <Spacer />
     </View>

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import IconButton from "../IconButton";
 import LocationSearch from "../LocationSearch";
 import TextInputField from "./TextInputField";
 import { Location } from "@/types/trip";
+import Spacer from "../Spacer";
+import Button from "../Buttons";
+import TextNote from "./TextNote";
+import LocationPicker from "../maps/LocationPicker";
 
 interface TripLocationFormProps {
   onNext: (locations: Location[]) => void;
@@ -55,19 +58,57 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   return (
     <View>
       <View style={styles.locationRow}>
-        <LocationSearch
-          placeholder={placeholder}
-          setPlaceholder={setPlaceholder}
-          onSelectLocation={(location) => handleSelectLocation(location)}
+        <TextNote
+          note="Write location name, and choose pick it from map?"
+          style={{ alignSelf: "flex-start" }}
         />
+        <Spacer height={4} />
+        <View style={styles.row}>
+          <View style={{ width: "88%" }}>
+            <TextInputField
+              trim={false}
+              name={"location Name"}
+              onChangeText={(text) => setImageUrl(text)}
+              icon="image-outline"
+              onBlur={undefined}
+              value={imageUrl}
+            />
+          </View>
+          <LocationPicker
+            onLocationSelect={(lat, lon) => console.log({ loc: { lat, lon } })}
+          />
+        </View>
+        <Spacer />
+        <TextNote
+          note="or search for the location here..!"
+          style={{ alignSelf: "flex-start" }}
+        />
+        <View style={styles.row}>
+          <View style={{ width: "88%" }}>
+            <LocationSearch
+              placeholder={placeholder}
+              setPlaceholder={setPlaceholder}
+              onSelectLocation={(location) => handleSelectLocation(location)}
+            />
+          </View>
+        </View>
+        <Spacer />
         <TextInputField
           trim={false}
-          name={"image"}
+          name={"location Image link"}
           onChangeText={(text) => setImageUrl(text)}
           icon="image-outline"
           onBlur={undefined}
           value={imageUrl}
         />
+        <TextNote
+          style={{ alignSelf: "flex-start" }}
+          note="Support Image links ending with .jpg, .jpeg, or .png!"
+        />
+
+        <Spacer />
+
+        <Spacer />
         <TouchableOpacity onPress={handleAddLocation} style={styles.addButton}>
           <Text>+</Text>
         </TouchableOpacity>
@@ -99,8 +140,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
           </View>
         ))}
       </View>
-
-      <IconButton title="Next" onPress={handleSubmit} direction="next" />
+      <Button title="Next" onPress={handleSubmit} />
     </View>
   );
 };
@@ -109,8 +149,14 @@ const styles = StyleSheet.create({
   locationRow: {
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     marginBottom: 16,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
   },
   addButton: {
     justifyContent: "center",
@@ -148,5 +194,4 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
 });
-
 export default TripLocationForm;

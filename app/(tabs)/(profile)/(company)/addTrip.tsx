@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 import React from "react";
-import ScreenFormContainer from "@/components/containers/ScreenFormContainer";
 import Spacer from "@/components/Spacer";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import MultiStepAddTripForm from "@/components/forms/MultiStepAddTripForm";
 import { useRoute } from "@react-navigation/native";
+import Padding from "@/components/containers/Padding";
 
 const AddTrip = () => {
   const route = useRoute();
@@ -13,10 +13,10 @@ const AddTrip = () => {
   console.log({ companyIds: companyId });
   return (
     <ScreenWraper>
-      <Spacer />
-      <ScreenFormContainer title="Add New Trip" topFlex={4}>
+      <Spacer height={28} />
+      <Padding>
         <MultiStepAddTripForm companyId={companyId} />
-      </ScreenFormContainer>
+      </Padding>
     </ScreenWraper>
   );
 };

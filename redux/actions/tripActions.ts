@@ -8,11 +8,9 @@ import {
   removeTrip,
 } from "@/redux/slices/tripsSlice";
 import {
-  getAllTrips,
   addTrip as apiAddTrip,
   updateTrip as apiUpdateTrip,
   deleteTrip as apiDeleteTrip,
-  getCompanyTrips as apiGetTripsByCompanyId,
   getFullTrips,
   getCompanyTrips,
 } from "@/api/trips/trip";
@@ -25,7 +23,6 @@ export const fetchTrips =
     try {
       // Fetch trips, optionally filtering by company ID
       const trips = await getFullTrips(companyId);
-      console.log({ tripsFromAs: trips });
       dispatch(setTrips(trips));
     } catch (error) {
       console.error("Error fetching trips:", error); // Added logging for debugging
