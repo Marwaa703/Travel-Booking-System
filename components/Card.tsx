@@ -43,7 +43,7 @@ const Card: React.FC<CardProps> = ({
   price,
   buttonText,
 }) => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  // const navigation = useNavigation<NavigationProp<any>>();
   const router = useRouter();
   console.log("card trip id ", id);
   const user = useAppSelector(
@@ -102,9 +102,11 @@ const Card: React.FC<CardProps> = ({
       ) : null}
 
       {/* Like icon */}
-      <View style={styles.iconContainer}>
-        <Like tripId={id} />
-      </View>
+      {user?.role === "User" && (
+        <View style={styles.iconContainer}>
+          <Like tripId={id} />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

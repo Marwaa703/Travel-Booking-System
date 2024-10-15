@@ -4,6 +4,9 @@ import Button from "../Buttons";
 import TextInputField from "./TextInputField";
 import Spacer from "../Spacer";
 import { TripImage } from "@/types/trip";
+import TextNote from "./TextNote";
+import Notify from "../notifications/Notify";
+import Toast, { ToastShowParams } from "react-native-toast-message";
 
 interface TripImageFormProps {
   onSubmit: (data: TripImage[]) => void;
@@ -14,15 +17,20 @@ interface TripImageFormProps {
 const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
-
   const [images, setImages] = useState<TripImage[]>([]);
+  const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
 
   const handleAddImage = () => {
     if (imageUrl && caption) {
       setImages([...images, { image_url: imageUrl, caption }]);
       setCaption("");
       setImageUrl("");
-    } else alert("Can't add empty values");
+    } else
+      setToastData({
+        text1: "Invalid user inputs?",
+        text2: "can't add empty values for image link, and caption",
+        type: "error",
+      });
   };
 
   const handleSubmit = () => {
@@ -35,28 +43,31 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   return (
     <View>
       <TextInputField
-        name={"image"}
+        name={"image link"}
         onChangeText={(text) => setImageUrl(text)}
         icon="image-outline"
         onBlur={undefined}
         value={imageUrl}
         trim={false}
       />
+      <TextNote
+        style={{ alignSelf: "flex-start" }}
+        note="Support Image links ending with .jpg, .jpeg, or .png!"
+      />
+      <Spacer />
       <TextInputField
         trim={false}
-        name={"caption"}
+        name={"caption text, will appear on trip gallery"}
         onChangeText={(text) => setCaption(text)}
         icon="logo-closed-captioning"
         onBlur={undefined}
         value={caption}
       />
-
       <Spacer />
       <TouchableOpacity onPress={handleAddImage} style={styles.addButton}>
         <Text>+</Text>
       </TouchableOpacity>
       <Spacer />
-
       {images.map((img, index) => (
         <View key={index} style={styles.addedLocationRow}>
           {img.image_url ? (
@@ -82,6 +93,9 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
         </View>
       ))}
       <Spacer />
+
+      {toastData && <Notify data={toastData} />}
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       <Button
         type="primary"
         width={"100%"}
