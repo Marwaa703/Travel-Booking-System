@@ -3,7 +3,6 @@ import { View, Text, FlatList, StyleSheet, Platform } from "react-native";
 import Alert from "@/components/core/Alert";
 import Header from "@/components/core/Header";
 import Button from "@/components/Buttons";
-import InputField from "@/components/InputField";
 import {
   addInstruction,
   getInstructionsByTripId,
@@ -12,7 +11,6 @@ import { useRoute } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TripInstruction } from "@/types/trip";
 import TextInputField from "@/components/forms/TextInputField";
-import ScreenWraper from "@/components/containers/ScreenWraper";
 
 const TripEdit: React.FC = () => {
   const [instruction, setInstruction] = useState("");
@@ -154,7 +152,6 @@ const TripEdit: React.FC = () => {
             onChange={handleDateChange}
           />
         )}
-
         {showTimePicker && (
           <DateTimePicker
             value={displayTime || new Date()}
@@ -163,7 +160,6 @@ const TripEdit: React.FC = () => {
             onChange={handleTimeChange}
           />
         )}
-
         <Button
           title={loading ? "Submitting..." : "Add Instruction"}
           onPress={handleSubmit}
@@ -171,13 +167,11 @@ const TripEdit: React.FC = () => {
           disabled={loading}
           align="center"
         />
-
         <View style={styles.error}>
           {alertMessage && alertType && (
             <Alert message={alertMessage} type={alertType} />
           )}
         </View>
-
         {/* Display Instructions in a Table */}
         <Text style={styles.tableHeader}>Instructions List</Text>
         <View style={styles.table}>

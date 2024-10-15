@@ -30,18 +30,18 @@ const Button: React.FC<ButtonProps> = ({
   fontSize = FONTS.medium,
   loadingMessage,
   loading,
+  disabled,
 }) => {
   return (
     <View style={[styles.container, { alignItems: align }]}>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={!disabled ? onPress : () => {}}
         style={[
           styles.button,
           type === "secondary" ? styles.secondaryButton : styles.primaryButton,
           ,
-          { width },
+          { width, backgroundColor: disabled ? "grey" : COLORS.primary },
         ]}
-        disabled={loading ? true : false}
       >
         {loading ? (
           <>

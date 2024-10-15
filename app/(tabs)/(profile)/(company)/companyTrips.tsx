@@ -1,8 +1,7 @@
 import { ScrollView, Text, View, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import Button from "@/components/Buttons";
 import Header from "@/components/core/Header";
-import Card from "@/components/Card";
 import Padding from "@/components/containers/Padding";
 import Spacer from "@/components/Spacer";
 import { FONTS } from "@/constants/theme";
@@ -10,8 +9,13 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { fetchTrips } from "@/redux/actions/tripActions";
-import Toast from "react-native-toast-message"; // For displaying notifications
+import {
+  deleteFullTrip,
+  fetchTrips,
+  updateTripStatus,
+} from "@/redux/actions/tripActions";
+import TripManagementCard from "@/components/company/TripManagementCard";
+import { TripDetailes, TripStatus } from "@/types/trip";
 
 // todo: handle edit, delete trip here
 const CompanyHome = () => {
@@ -20,11 +24,7 @@ const CompanyHome = () => {
 
   const { companyId } = route.params as { companyId: string };
 
-  const {
-    isError,
-    isLoading,
-    trips: alltrips,
-  } = useAppSelector((state) => state.trips);
+  const { isLoading, trips: alltrips } = useAppSelector((state) => state.trips);
 
   //fix:  companyId type is diff
   useFocusEffect(
@@ -32,14 +32,15 @@ const CompanyHome = () => {
       dispatch(fetchTrips(companyId));
     }, [companyId, dispatch]),
   );
-  useEffect(() => {
-    if (route.params?.addTrip) {
-      Toast.show({
-        text1: "TripAdded",
-        text2: "Your new trip has been added successfully!",
-      });
-    }
-  }, [route.params?.addTrip]);
+  // useEffect(() => {
+  //   if (route.params?.addTrip) {
+  //     console.log("new trip has been added and now we will check this");
+  //     Toast.show({
+  //       text1: "TripAdded",
+  //       text2: "Your new trip has been added successfully!",
+  //     });
+  //   }
+  // }, [route.params?.addTrip]);
 
   const trips = alltrips
     .filter((t) => {
@@ -49,6 +50,21 @@ const CompanyHome = () => {
     .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
   console.log({ allTrips: alltrips.length, trips: trips.length });
   console.log(trips);
+
+  const handleDeleteTrip = (id: string) => {
+    console.log(id);
+    dispatch(deleteFullTrip(id));
+    if (!isLoading) console.log("done");
+  };
+  const handleChangeStatus = (trip: TripDetailes) => {
+    console.log(trip.trip_id);
+    const updated: Partial<TripDetailes> = {
+      status: "active",
+    };
+    dispatch(updateTripStatus(trip.trip_id as string, updated));
+    console.log("done", isLoading);
+  };
+
   return (
     <View style={styles.container}>
       <Header title="Trips" />
@@ -69,19 +85,24 @@ const CompanyHome = () => {
         ) : trips.length === 0 ? (
           <Text>No trips to display. Add one!</Text>
         ) : (
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.sectionTitle}>Current trips</Text>
             <Spacer />
             <View style={styles.cardContainer}>
               {trips.map((trip) => (
                 <View key={trip.trip_id} style={styles.cardWrapper}>
-                  <Card
+                  <TripManagementCard
                     id={trip.trip_id as string}
                     image={trip.images[0]?.image_url || "default_image_uri"}
                     title={trip.name}
-                    subtitle={trip.name}
-                    rating={0}
-                    price={`$${trip.price}`}
+                    rating={trip.rate ?? null}
+                    price={trip.price}
+                    status={trip.status as TripStatus}
+                    handleEdit={(id) => console.log({ edittrip: id })}
+                    handleDelete={() =>
+                      handleDeleteTrip(trip.trip_id as string)
+                    }
+                    handleChangeStatus={() => handleChangeStatus(trip)}
                   />
                 </View>
               ))}
@@ -112,13 +133,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   cardWrapper: {
-    width: "48%",
+    width: "100%",
     marginBottom: 20,
   },
   cardContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
 });
 

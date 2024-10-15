@@ -7,8 +7,6 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProp } from "@react-navigation/native";
 import Like from "@/components/Like";
 import Buttons from "@/components/Buttons";
 import CardSubtitle from "./CardSubtitle";
@@ -29,7 +27,7 @@ interface CardProps {
   image: string;
   title: string;
   subtitle: string;
-  rating: number;
+  rating: number | null;
   price?: string; // Optional price prop
   buttonText?: string; // Optional button text
 }
@@ -90,7 +88,7 @@ const Card: React.FC<CardProps> = ({
       <Spacer />
       {price ? (
         <Text style={styles.priceText}>{price} / Person</Text>
-      ) : buttonText ? (
+      ) : buttonText && user?.role === "User" ? (
         <Buttons
           type="secondary"
           title={buttonText}

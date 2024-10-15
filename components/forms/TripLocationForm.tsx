@@ -218,15 +218,15 @@ import Spacer from "../Spacer";
 import Button from "../Buttons";
 import TextNote from "./TextNote";
 import LocationPicker from "../maps/LocationPicker";
-import Toast, { ToastShowParams } from "react-native-toast-message";
-import Notify from "../notifications/Notify";
+import Toast from "react-native-toast-message";
+import { imageUrlPattern } from "@/constants/regext";
 
 interface TripLocationFormProps {
   onNext: (locations: Location[]) => void;
 }
 
 const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
-  const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
+  // const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
 
   const [placeholder, setPlaceholder] = useState(
     "Search for a location or place",
@@ -249,19 +249,33 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
       selectedLocation.lat !== null &&
       selectedLocation.lon !== null
     ) {
-      setLocations([
-        ...locations,
-        {
-          lat: selectedLocation.lat as unknown as number,
-          lon: selectedLocation.lon as unknown as number,
-          name: selectedLocation.name as string,
-          location_order: locations.length + 1,
-          image_url: imageUrl,
-        },
-      ]);
-      setImageUrl(""); // Clear the image URL input after adding
-      setSelectedLocation({ name: "", lat: null, lon: null }); // Reset selected location
-      setPlaceholder("Search for places");
+      if (imageUrlPattern.test(imageUrl)) {
+        setLocations([
+          ...locations,
+          {
+            lat: selectedLocation.lat as unknown as number,
+            lon: selectedLocation.lon as unknown as number,
+            name: selectedLocation.name as string,
+            location_order: locations.length + 1,
+            image_url: imageUrl,
+          },
+        ]);
+        setImageUrl(""); // Clear the image URL input after adding
+        setSelectedLocation({ name: "", lat: null, lon: null }); // Reset selected location
+        setPlaceholder("Search for places");
+      } else {
+        Toast.show({
+          text1: "Invalid Image URL",
+          text2: "Image URL must end with .jpg, .jpeg, or .png",
+          type: "error",
+        });
+      }
+    } else {
+      Toast.show({
+        text1: "Empty Fields",
+        text2: "Can't add empty values",
+        type: "error",
+      });
     }
   };
 
@@ -286,7 +300,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
     if (locations.length >= 1) {
       onNext(locations);
     } else
-      setToastData({
+      Toast.show({
         text1: "Trip Locations are required?",
         text2: "add one or more locations for the trip!",
         type: "error",
@@ -356,8 +370,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
         </TouchableOpacity>
       </View>
 
-      {toastData && <Notify data={toastData} />}
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast position="top" />
       <View style={styles.addedLocationsContainer}>
         {locations.length === 0 && (
           <Text>Add locations to be displayed here</Text>

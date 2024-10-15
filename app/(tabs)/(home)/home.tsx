@@ -10,26 +10,30 @@ import {
 import React, { useEffect } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
-import { COLORS, FONTS, SPACING } from "@/constants/theme";
+import { COLORS, SPACING } from "@/constants/theme";
 import Card from "@/components/Card";
 import { avatars } from "@/DummyData/trips.json";
 import Spacer from "@/components/Spacer";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
 import { getBookedTripsByUserId } from "@/api/bookedTrips";
-import { addBookedTrip } from "@/redux/slices/bookedTripSlice";
+import { addBookedTrip, BookedTrip } from "@/redux/slices/bookedTripSlice";
 import { setLoading } from "@/redux/slices/companiesSlice";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
-  const { isError, isLoading, trips } = useAppSelector((state) => state.trips);
+  const {
+    isError,
+    isLoading,
+    trips: allTrips,
+  } = useAppSelector((state) => state.trips);
   const avatarImages = avatars.map((avatar) => ({
     id: avatar.id,
     uri: avatar.uri,
   }));
-  useEffect(() => {
-    // console.log({ trips: trips.length });
-  }, [trips.length]);
+  // useEffect(() => {
+  //   // console.log({ trips: trips.length });
+  // }, [a.length]);
 
   const user = useAppSelector(
     (state) => state.auth.currentUser,
@@ -41,7 +45,7 @@ const Home = () => {
     const fetchBookedTrips = async () => {
       if (user?.id) {
         const trips = await getBookedTripsByUserId(user.id);
-        trips.forEach((trip) => {
+        trips.forEach((trip: BookedTrip) => {
           dispatch(addBookedTrip(trip));
         });
         setLoading(false);
@@ -50,7 +54,9 @@ const Home = () => {
 
     fetchBookedTrips();
   }, [dispatch, user]);
-
+  // show user activated trips only
+  const trips = allTrips.filter((t) => t.status === "active");
+  console.log({ trips });
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
       <ScrollView
@@ -78,7 +84,7 @@ const Home = () => {
           {/* Horizontal ScrollView for Trip Profile Cards */}
           {isLoading ? (
             <Text>Loading trips...</Text>
-          ) : trips.length === 0 ? (
+          ) : trips?.length === 0 ? (
             <Text>No trips to display. Add one!</Text>
           ) : (
             <ScrollView
@@ -86,7 +92,7 @@ const Home = () => {
               showsHorizontalScrollIndicator={false}
               style={styles.horizontalScroll}
             >
-              {trips.map((trip) => (
+              {trips?.map((trip) => (
                 <View key={trip.trip_id} style={styles.cardWrapper}>
                   <Card
                     id={trip.trip_id as string}

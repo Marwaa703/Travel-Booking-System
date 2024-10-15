@@ -21,3 +21,4 @@ export const birthdateSchema = Yup.date()
     }
     return age >= 18; // Allow exact 18th birthday
   });
+export const imageUrlPattern = /\.(jpg|jpeg|png)$/i;

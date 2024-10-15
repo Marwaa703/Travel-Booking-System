@@ -85,7 +85,7 @@ export const updateTrip = async (
 };
 
 // Delete a trip
-export const deleteTrip = async (tripId: string): Promise<void> => {
+export const deleteFullTrip = async (tripId: string): Promise<void> => {
   try {
     await api.delete(`/trips/${tripId}`);
   } catch (error) {

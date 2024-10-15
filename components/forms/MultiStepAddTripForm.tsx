@@ -7,7 +7,6 @@ import AppTextInput from "./AppTextInput";
 import Spacer from "../Spacer";
 import TripImageForm from "./TripImageForm";
 import TripLocationForm from "./TripLocationForm";
-import IconButton from "../IconButton";
 import { Location, TripDetailes, TripImage, TripFormData } from "@/types/trip";
 import { useRouter } from "expo-router";
 import DateInputPicker from "./BirthdatePicker";
@@ -61,10 +60,11 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
       setLoading(true);
       setMsg("Registerinig Company...");
       const updatedTripData = await createTrip(finalData, companyId);
+      const details: TripDetailes = updatedTripData.details as TripDetailes;
       dispatch(
         addTrip({
-          ...updatedTripData?.details,
-          images: updatedTripData?.images,
+          ...details,
+          images: updatedTripData.images,
         }),
       );
 

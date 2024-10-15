@@ -112,7 +112,7 @@ export const updateTrip = async (
 // Delete a trip
 export const deleteTrip = async (tripId: string) => {
   try {
-    const res = await api.delete(`/trips/${tripId}`);
+    const res = await api.delete(`/fullTrips/${tripId}`);
     return res.data; //we can use it in alert for message for the company that this trip is deleted
   } catch (error: any) {
     if (error.response) {

@@ -6,14 +6,7 @@ import {
   CompanyPaper,
   CompanyUser,
 } from "@/types/company";
-import {
-  Location,
-  Trip,
-  TripDetailes,
-  TripFormData,
-  TripImage,
-} from "@/types/trip";
-import { localeData } from "moment";
+import { Location, TripDetailes, TripFormData, TripImage } from "@/types/trip";
 
 // Sign up for Normal users
 export const signup = async (userData: User) => {
@@ -127,7 +120,7 @@ export const createTrip = async (
   success: boolean;
   details?: TripDetailes;
   locations?: Location[];
-  images?: TripImage[];
+  images: TripImage[];
   error?: string;
 }> => {
   const { images, locations, details } = trip;
@@ -161,7 +154,6 @@ export const createTrip = async (
       }),
     );
     const tripImages = await Promise.all(imagesData);
-    console.log({ step3forimages: tripImages.map((i) => i.status) });
 
     // Prepare the updated trip data
     return {
@@ -172,6 +164,6 @@ export const createTrip = async (
     };
   } catch (error) {
     console.error("Error during create:", error);
-    return { success: false, error: "Failed to create trip." };
+    return { success: false, error: "Failed to create trip.", images: [] };
   }
 };

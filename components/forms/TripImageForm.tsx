@@ -5,8 +5,8 @@ import TextInputField from "./TextInputField";
 import Spacer from "../Spacer";
 import { TripImage } from "@/types/trip";
 import TextNote from "./TextNote";
-import Notify from "../notifications/Notify";
-import Toast, { ToastShowParams } from "react-native-toast-message";
+import Toast from "react-native-toast-message";
+import { imageUrlPattern } from "@/constants/regext";
 
 interface TripImageFormProps {
   onSubmit: (data: TripImage[]) => void;
@@ -18,15 +18,22 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
   const [images, setImages] = useState<TripImage[]>([]);
-  const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
 
   const handleAddImage = () => {
     if (imageUrl && caption) {
-      setImages([...images, { image_url: imageUrl, caption }]);
-      setCaption("");
-      setImageUrl("");
+      if (imageUrlPattern.test(imageUrl)) {
+        setImages([...images, { image_url: imageUrl, caption }]);
+        setCaption("");
+        setImageUrl("");
+      } else {
+        Toast.show({
+          text1: "Invalid image url?",
+          text2: "add valid image url that ends with .jpg, .png, or .jpeg",
+          type: "error",
+        });
+      }
     } else
-      setToastData({
+      Toast.show({
         text1: "Invalid user inputs?",
         text2: "can't add empty values for image link, and caption",
         type: "error",
@@ -34,7 +41,15 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   };
 
   const handleSubmit = () => {
-    onSubmit(images);
+    if (images.length >= 1) {
+      onSubmit(images);
+    } else {
+      Toast.show({
+        text1: "Can't submit empty data?",
+        text2: "add at least one image for new trip",
+        type: "error",
+      });
+    }
   };
 
   const handleDeleteImage = (index: number) => {
@@ -94,8 +109,7 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
       ))}
       <Spacer />
 
-      {toastData && <Notify data={toastData} />}
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast />
       <Button
         type="primary"
         width={"100%"}

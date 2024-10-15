@@ -120,7 +120,7 @@ const Pending = () => {
                   style={styles.denyButton}
                   onPress={() => handleDeny(company.id as string)}
                 >
-                  <Text style={styles.buttonText}>Deny</Text>
+                  <Text style={styles.buttonText}>Reject</Text>
                 </TouchableOpacity>
               </View>
               <Spacer />

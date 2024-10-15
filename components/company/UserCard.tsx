@@ -82,17 +82,17 @@ const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
           Age: {calculateAge(user?.birth_date)} years
         </Text>
       )}
-      {user?.role !== "Representative" && (
-        <View style={styles.buttonContainer}>
-          <ActionButton text="Edit" onPress={onEdit} variant="primary" />
+      <View style={styles.buttonContainer}>
+        <ActionButton text="Edit" onPress={onEdit} variant="primary" />
+        {user?.role !== "Representative" && (
           <ActionButton
             text="Delete"
             onPress={() => onDelete(user?.id as string)}
             variant="action"
             textColor="red"
           />
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 };

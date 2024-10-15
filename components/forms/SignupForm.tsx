@@ -13,8 +13,10 @@ import { signupSuccess } from "@/redux/slices/authSlice";
 import { router } from "expo-router";
 import { Gender } from "@/types/company";
 import useLoadingState from "@/hooks/useLoadingSate";
+import TermsAndConditions from "../admin/TermsAndConditions";
 
 const SignupForm = () => {
+  const [agrred, setAgrred] = useState(false);
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const [selectedGender, setSelectedGender] = useState<Gender>("male");
   const dispatch = useDispatch();
@@ -63,7 +65,7 @@ const SignupForm = () => {
       setMsg("");
     }
   };
-
+  console.log({ agrred });
   return (
     <>
       {signupInputs.map(({ icon, name, autoCapitalize, keyboardType }) => (
@@ -81,13 +83,14 @@ const SignupForm = () => {
         setSelectedGender={setSelectedGender}
         selectedGender={selectedGender}
       />
-      <Spacer />
+      <TermsAndConditions onAgree={(checked) => setAgrred(checked)} />
       <Button
         title="Sign Up"
         onPress={handleSubmit(handleSignup)} // Call handleSignup on form submission
-        fontSize={FONTS.large}
+        fontSize={FONTS.medium}
         loadingMessage={msg}
         loading={loading}
+        disabled={errors && !agrred}
       />
     </>
   );

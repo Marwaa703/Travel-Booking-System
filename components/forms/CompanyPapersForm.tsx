@@ -5,8 +5,9 @@ import Spacer from "../Spacer";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TextInputField from "./TextInputField";
 import TextNote from "./TextNote";
-import Toast, { ToastShowParams } from "react-native-toast-message"; // Ensure you import Toast
-import Notify from "../notifications/Notify";
+import Toast from "react-native-toast-message";
+import { imageUrlPattern } from "@/constants/regext";
+import TermsAndConditions from "../admin/TermsAndConditions";
 
 interface CompanyPapersFormProps {
   onSubmit: (data: CompanyPaper[]) => void;
@@ -19,17 +20,18 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
   loading,
   msg,
 }) => {
+  const [agreed, setAgreed] = useState(false);
+
   const [papers, setPapers] = useState<CompanyPaper[]>([]);
   const [paper, setPaper] = useState<CompanyPaper>({
     title: "",
     image_url: "",
   });
-  const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
 
   const handlePapersSubmit = () => {
     if (papers.length >= 2) onSubmit(papers);
     else
-      setToastData({
+      Toast.show({
         text1: "Invalid number of Papers",
         text2: "Must add at leat 2 of the company papers?",
         type: "error",
@@ -37,22 +39,20 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
   };
 
   const handleAddImage = () => {
-    const imageUrlPattern = /\.(jpg|jpeg|png)$/i;
-
     if (paper.title && paper.image_url) {
       if (imageUrlPattern.test(paper.image_url)) {
         // inject companyId from currentCompanyUser SignedIn
         setPapers((prev) => [...prev, paper]);
         setPaper({ title: "", image_url: "" });
       } else {
-        setToastData({
+        Toast.show({
           text1: "Invalid Image URL",
           text2: "Image URL must end with .jpg, .jpeg, or .png",
           type: "error",
         });
       }
     } else {
-      setToastData({
+      Toast.show({
         text1: "Empty Fields",
         text2: "Can't add empty values",
         type: "error",
@@ -118,14 +118,17 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
         ))}
         <Spacer />
       </Fragment>
+      <Spacer />
+      <TermsAndConditions onAgree={(checked) => setAgreed(checked)} />
+
       <Button
         title="Submit"
         onPress={handlePapersSubmit}
         loadingMessage={msg}
         loading={loading}
+        disabled={!agreed}
       />
-      {toastData && <Notify data={toastData} />}
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast />
     </>
   );
 };

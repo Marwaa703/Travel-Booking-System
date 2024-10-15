@@ -13,6 +13,7 @@ import {
   deleteTrip as apiDeleteTrip,
   getFullTrips,
   getCompanyTrips,
+  deleteTrip,
 } from "@/api/trips/trip";
 import { TripDetailes, Trip } from "@/types/trip";
 
@@ -73,16 +74,30 @@ export const updateTrip =
       dispatch(setLoading(false));
     }
   };
+export const updateTripStatus =
+  (tripId: string, updates: Partial<TripDetailes>) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const updatedTripStatus = await apiUpdateTrip(tripId, updates);
+      dispatch(updateTripDetails({ id: tripId, details: updatedTripStatus }));
+    } catch (error) {
+      dispatch(setError(true));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
 // Delete a trip
-export const deleteTrip = (tripId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setLoading(true));
-  try {
-    await apiDeleteTrip(tripId);
-    dispatch(removeTrip(tripId));
-  } catch (error) {
-    dispatch(setError(true));
-  } finally {
-    dispatch(setLoading(false));
-  }
-};
+export const deleteFullTrip =
+  (tripId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const res = await deleteTrip(tripId);
+      if (res) dispatch(removeTrip(tripId));
+    } catch (error) {
+      dispatch(setError(true));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };

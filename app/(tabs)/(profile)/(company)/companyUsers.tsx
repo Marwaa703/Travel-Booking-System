@@ -20,8 +20,7 @@ import {
   deleteCompanyUser,
   fetchCompanyUsers,
 } from "@/redux/actions/companiesActions";
-import Toast, { ToastShowParams } from "react-native-toast-message"; // Import if needed for typing
-import Notify from "@/components/notifications/Notify";
+import Toast from "react-native-toast-message"; // Import if needed for typing
 
 const CompanyUsers = () => {
   const route = useRoute();
@@ -29,8 +28,6 @@ const CompanyUsers = () => {
 
   const { companyId } = route.params as { companyId: string };
   const { error, loading, users } = useAppSelector((state) => state.companies);
-
-  const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
 
   // Fetch users when the component is focused
   useFocusEffect(
@@ -41,7 +38,7 @@ const CompanyUsers = () => {
 
   useEffect(() => {
     if (route.params?.addUser) {
-      setToastData({
+      Toast.show({
         text1: "User Added",
         text2: "Your new user has been added successfully!",
         type: "success",
@@ -59,7 +56,7 @@ const CompanyUsers = () => {
           text: "Delete",
           onPress: () => {
             dispatch(deleteCompanyUser(userId));
-            setToastData({
+            Toast.show({
               text1: "User Deleted",
               text2: "The user has been deleted successfully!",
               type: "success",
@@ -93,31 +90,32 @@ const CompanyUsers = () => {
       ) : users.length === 0 ? (
         <Text>No users to display. Add one!</Text>
       ) : (
-        <ScrollView>
-          <Padding>
-            <Text style={styles.sectionTitle}>Current Users</Text>
-            <Spacer />
-            <View style={styles.cardContainer}>
-              {users.map((user) => (
-                <Fragment key={user?.id}>
-                  {user && (
-                    <UserCard
-                      user={user}
-                      onEdit={() =>
-                        router.push(`/editUser/?userId=${user?.id}`)
-                      }
-                      onDelete={handleDeleteUser}
-                    />
-                  )}
-                  <Spacer height={16} />
-                </Fragment>
-              ))}
-            </View>
-          </Padding>
-        </ScrollView>
+        <>
+          <Text style={styles.sectionTitle}>Current Users</Text>
+          <ScrollView>
+            <Padding>
+              <Spacer />
+              <View style={styles.cardContainer}>
+                {users.map((user) => (
+                  <Fragment key={user?.id}>
+                    {user && (
+                      <UserCard
+                        user={user}
+                        onEdit={() =>
+                          router.push(`/editUser/?userId=${user?.id}`)
+                        }
+                        onDelete={handleDeleteUser}
+                      />
+                    )}
+                    <Spacer height={16} />
+                  </Fragment>
+                ))}
+              </View>
+            </Padding>
+          </ScrollView>
+        </>
       )}
-      {toastData && <Notify data={toastData} />}
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast />
     </View>
   );
 };
@@ -138,7 +136,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FONTS.large,
-    fontWeight: "bold",
+    fontWeight: "500",
+    marginLeft: 18,
   },
   cardContainer: {
     flexDirection: "row",
