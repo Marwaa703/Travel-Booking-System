@@ -100,7 +100,7 @@ const Card: React.FC<CardProps> = ({
       ) : null}
 
       {/* Like icon */}
-      {user?.role === "User" && (
+      {user?.role === "User" && !buttonText && (
         <View style={styles.iconContainer}>
           <Like tripId={id} />
         </View>

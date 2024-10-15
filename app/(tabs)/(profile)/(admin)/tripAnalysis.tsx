@@ -8,7 +8,8 @@ import BarChartComponent from "@/components/charts/BarChart";
 import Header from "@/components/core/Header";
 import Buttons from "@/components/Buttons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { COLORS } from "@/constants/theme";
+import { COLORS, FONTS } from "@/constants/theme";
+import Spacer from "@/components/Spacer";
 
 const TripAnalysisScreen: React.FC = () => {
   const trips = tripsData.trips;
@@ -100,7 +101,9 @@ const TripAnalysisScreen: React.FC = () => {
             type="secondary"
             title="Pick Date"
             onPress={() => setShowDatePicker(true)}
-            width="120%"
+            width="80%"
+            align="flex-end"
+            fontSize={FONTS.normal}
           />
           {showDatePicker && (
             <DateTimePicker
@@ -112,6 +115,7 @@ const TripAnalysisScreen: React.FC = () => {
           )}
         </View>
 
+        <Spacer />
         <BarChartComponent
           title="Monthly Trip Status Analysis"
           selectedMonthYear={selectedMonthYear}
@@ -131,9 +135,10 @@ const styles = StyleSheet.create({
   },
 
   datePickerText: {
-    fontSize: 22,
-    fontWeight: "bold",
+    fontSize: FONTS.normal,
+    fontWeight: "500",
     color: COLORS.textPrimary,
+    textAlign: "left",
   },
 
   datePickerContainer: {

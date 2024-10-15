@@ -22,6 +22,7 @@ const ProfileScreen: React.FC = () => {
   ) as unknown as User;
   const logout = useLogout();
   console.log({ auth });
+
   return (
     <>
       <Header
@@ -42,11 +43,15 @@ const ProfileScreen: React.FC = () => {
             <View style={styles.headerContainer}>
               <Image
                 source={{
-                  uri: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+                  uri: user?.profile_picture
+                    ? user?.profile_picture
+                    : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
                 }}
                 style={styles.profileImage}
               />
-              <Text style={styles.profileName}>{user?.first_name}</Text>
+              <Text style={styles.profileName}>
+                {user?.first_name + " " + user?.last_name}
+              </Text>
               <Text style={styles.profileEmail}>{user?.email}</Text>
             </View>
 

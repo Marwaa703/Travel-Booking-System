@@ -43,7 +43,11 @@ const EditProfileScreen: React.FC = () => {
             <ImagePickerCropper onSelectImage={(uri) => setImage(uri)} />
           </View>
 
-          <UserEditForm ref={userEditFormRef} user={user} />
+          <UserEditForm
+            ref={userEditFormRef}
+            user={user}
+            profilePicture={image}
+          />
         </View>
       </ScrollView>
     </>

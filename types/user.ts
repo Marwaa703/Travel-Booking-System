@@ -7,6 +7,7 @@ export interface User {
   phone: string;
   birth_date?: Date;
   role: UserTypes;
+  profile_picture?: string;
 }
 
 export type UserTypes = "Admin" | "Company" | "Anonymous" | "User";

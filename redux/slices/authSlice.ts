@@ -90,6 +90,13 @@ const authSlice = createSlice({
       if (state.currentUser?.id === action.payload?.id)
         state.currentUser = action.payload;
     },
+    updateAuthUserData: (state, action: PayloadAction<Partial<User>>) => {
+      if (state.currentUser.id === action.payload.id) {
+        state.currentUser = { ...state.currentUser, ...action.payload };
+      } else {
+        console.log("can't find user with id", action.payload?.id);
+      }
+    },
   },
 });
 
@@ -99,6 +106,7 @@ export const {
   signupSuccess,
   signupFailure,
   loginStart,
+  updateAuthUserData,
   loginSuccess,
   loginFailure,
   logout,

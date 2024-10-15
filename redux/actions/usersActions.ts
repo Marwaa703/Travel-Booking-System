@@ -6,13 +6,13 @@ import {
   addUser,
   createUser,
   removeUser,
-  setUserRole,
   setUser,
+  updateUser,
 } from "@/redux/slices/userSlice";
 
 import { User, UserTypes } from "@/types/user";
 import userApi from "@/api/userApi";
-import { updateAuthUser } from "../slices/authSlice";
+import { updateAuthUser, updateAuthUserData } from "../slices/authSlice";
 
 // Sign up a new user
 export const signupUser = (userData: User) => async (dispatch: AppDispatch) => {
@@ -75,12 +75,14 @@ export const fetchUserById =
   };
 
 // Update a user
-export const updateUser =
-  (userId: string, userData: User) => async (dispatch: AppDispatch) => {
+export const updateUserData =
+  (userId: string, userData: User, profile_picture?: string) =>
+  async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {
       const updatedUser = await userApi.updateUser(userId, userData);
-      dispatch(setUser({ id: userId, updatedData: updatedUser }));
+      dispatch(updateUser({ ...updatedUser, profile_picture }));
+      dispatch(updateAuthUserData({ ...updatedUser, profile_picture }));
       //   will update auth in case of user
       console.log({ updatedUser });
       //   dispatch(updateAuthUser(updatedUser));

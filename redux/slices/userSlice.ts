@@ -76,13 +76,14 @@ const userSlice = createSlice({
     },
 
     // Update a specific user's role by ID
-    setUserRole: (
-      state,
-      action: PayloadAction<{ id: string; role: UserTypes }>,
-    ) => {
-      const user = state.list.find((user) => user.id === action.payload.id);
-      if (user) {
-        user.role = action.payload.role;
+    updateUser: (state, action: PayloadAction<Partial<User>>) => {
+      const index = state.list.findIndex(
+        (user) => user.id === action.payload.id,
+      );
+      if (index !== -1) {
+        state.list[index] = { ...state.list[index], ...action.payload };
+      } else {
+        console.log("can't find user with id", action.payload?.id);
       }
     },
     setError: (state, action: PayloadAction<string>) => {
@@ -100,7 +101,7 @@ export const {
   removeUser,
   setUsers,
   addUser,
-  setUserRole,
+  updateUser,
   setError,
   setLoading,
 } = userSlice.actions;
