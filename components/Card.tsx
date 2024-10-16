@@ -92,9 +92,9 @@ const Card: React.FC<CardProps> = ({
         <Buttons
           type="secondary"
           title={buttonText}
-          fontSize={FONTS.small}
+          fontSize={FONTS.xsmall}
           onPress={() => {}}
-          width={"60%"}
+          width={"50%"}
           align="flex-end"
         />
       ) : null}

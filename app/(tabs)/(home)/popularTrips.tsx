@@ -10,13 +10,15 @@ import useRefreshControl from "@/hooks/useRefreshControl";
 
 const PopularTrips: React.FC = () => {
   const dispatch = useDispatch();
-  const trips = useAppSelector((state: RootState) => state.trips.trips);
+  const trips = useAppSelector((state: RootState) => state.trips.trips).filter(
+    (t) => t.status === "active",
+  );
 
   //^how to use the useRefreshControl Hook (3 steps)
   // ^STEP ONE: Define the function that will be called to refresh data.
   // ^This is where you define what should happen when the user pulls to refresh.
   const onRefresh = async () => {
-    await dispatch(fetchTrips());
+    dispatch(fetchTrips());
   };
 
   // ^STEP TWO: Pass the onRefresh function to the useRefreshControl hook.
