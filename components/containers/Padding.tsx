@@ -9,7 +9,7 @@ export default Padding;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     flex: 1,
     height: "100%",
   },

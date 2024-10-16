@@ -18,7 +18,7 @@ const PopularTrips: React.FC = () => {
   // ^STEP ONE: Define the function that will be called to refresh data.
   // ^This is where you define what should happen when the user pulls to refresh.
   const onRefresh = async () => {
-    dispatch(fetchTrips());
+    await dispatch(fetchTrips());
   };
 
   // ^STEP TWO: Pass the onRefresh function to the useRefreshControl hook.

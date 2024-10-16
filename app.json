@@ -19,12 +19,26 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "VIBRATE"
+      ],
+      "notification": {
+        "icon": "./assets/adaptive-icon.png",
+        "color": "#000000"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "31d7ba31-2f46-49ad-aa8c-990784280e2a"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

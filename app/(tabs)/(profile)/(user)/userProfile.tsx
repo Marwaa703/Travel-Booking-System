@@ -96,7 +96,7 @@ const ProfileScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingTop: 20,
     marginBottom: 100,
   },

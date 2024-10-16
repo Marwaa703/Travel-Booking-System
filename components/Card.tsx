@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Like from "@/components/Like";
-import Buttons from "@/components/Buttons";
 import CardSubtitle from "./CardSubtitle";
 import icons from "@/constants/icons";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -17,6 +16,8 @@ import Spacer from "./Spacer";
 import { useRouter } from "expo-router";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
+import { subscribe, unsubscribe } from "@/redux/slices/authSlice";
+import SubscribeButton from "./buttons/SubscriptionButton";
 const defaultImage = require("../assets/imgDefault.png");
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.44;
@@ -60,7 +61,7 @@ const Card: React.FC<CardProps> = ({
     }
   };
   const imageSource = image ? { uri: image } : defaultImage;
-  // console.log({ id });
+
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress}>
       {/* Image */}
@@ -89,12 +90,11 @@ const Card: React.FC<CardProps> = ({
       {price ? (
         <Text style={styles.priceText}>{price} / Person</Text>
       ) : buttonText && user?.role === "User" ? (
-        <Buttons
-          type="secondary"
-          title={buttonText}
-          fontSize={FONTS.xsmall}
-          onPress={() => {}}
-          width={"50%"}
+        <SubscribeButton
+          type="primary"
+          subscriptionValue={id}
+          buttonText={buttonText}
+          width="50%"
           align="flex-end"
         />
       ) : null}

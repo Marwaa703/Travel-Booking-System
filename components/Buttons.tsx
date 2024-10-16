@@ -32,16 +32,25 @@ const Button: React.FC<ButtonProps> = ({
   loading,
   disabled,
 }) => {
+  const buttonStyle = {
+    width,
+    backgroundColor: disabled
+      ? "grey"
+      : type === "secondary"
+        ? styles.secondaryButton.backgroundColor
+        : styles.primaryButton.backgroundColor,
+  };
+
+  const buttonStyles = [
+    styles.button,
+    type === "secondary" ? styles.secondaryButton : styles.primaryButton,
+    buttonStyle,
+  ];
   return (
     <View style={[styles.container, { alignItems: align }]}>
       <TouchableOpacity
         onPress={!disabled ? onPress : () => {}}
-        style={[
-          styles.button,
-          type === "secondary" ? styles.secondaryButton : styles.primaryButton,
-          ,
-          { width, backgroundColor: disabled ? "grey" : COLORS.primary },
-        ]}
+        style={buttonStyles}
       >
         {loading ? (
           <>

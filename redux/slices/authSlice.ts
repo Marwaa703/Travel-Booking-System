@@ -8,6 +8,12 @@ interface AuthState {
   role: UserTypes | null;
   loading: boolean;
   error: string | null;
+  subscriptions: SubscriptionsState;
+}
+
+export interface SubscriptionsState {
+  companies: string[];
+  locations: string[];
 }
 
 const initialState: AuthState = {
@@ -17,6 +23,7 @@ const initialState: AuthState = {
   role: null,
   loading: false,
   error: null,
+  subscriptions: { companies: [], locations: [] },
 };
 
 const authSlice = createSlice({
@@ -97,6 +104,40 @@ const authSlice = createSlice({
         console.log("can't find user with id", action.payload?.id);
       }
     },
+    subscribe: (
+      state,
+      action: PayloadAction<{ type: "Location" | "Company"; value: string }>,
+    ) => {
+      if (action.payload.type === "Company") {
+        const index = state.subscriptions.companies.findIndex(
+          (id) => id === action.payload.value,
+        );
+        if (index === -1) {
+          state.subscriptions.companies.push(action.payload.value);
+        }
+      } else if (action.payload.type === "Location") {
+        const index = state.subscriptions.locations.findIndex(
+          (id) => id === action.payload.value,
+        );
+        if (index === -1) {
+          state.subscriptions.locations.push(action.payload.value);
+        }
+      }
+    },
+    unsubscribe: (
+      state,
+      action: PayloadAction<{ type: "Location" | "Company"; value: string }>,
+    ) => {
+      if (action.payload.type === "Company") {
+        state.subscriptions.companies = state.subscriptions.companies.filter(
+          (id) => id !== action.payload.value,
+        );
+      } else if (action.payload.type === "Location") {
+        state.subscriptions.locations = state.subscriptions.locations.filter(
+          (id) => id !== action.payload.value,
+        );
+      }
+    },
   },
 });
 
@@ -110,6 +151,8 @@ export const {
   loginSuccess,
   loginFailure,
   logout,
+  subscribe,
+  unsubscribe,
 } = authSlice.actions;
 
 export default authSlice.reducer;

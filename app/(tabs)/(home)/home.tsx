@@ -7,7 +7,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
 import { COLORS, SPACING } from "@/constants/theme";
@@ -19,22 +19,54 @@ import { User } from "@/types/user";
 import { getBookedTripsByUserId } from "@/api/bookedTrips";
 import { addBookedTrip, BookedTrip } from "@/redux/slices/bookedTripSlice";
 import { setLoading } from "@/redux/slices/companiesSlice";
-
+import NotificationService from "@/services/NotificationService";
+import Button from "@/components/Buttons";
+import * as Notifications from "expo-notifications"; // Add this line
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
-  const {
-    isError,
-    isLoading,
-    trips: allTrips,
-  } = useAppSelector((state) => state.trips);
+  const { isLoading, trips: allTrips } = useAppSelector((state) => state.trips);
   const avatarImages = avatars.map((avatar) => ({
     id: avatar.id,
     uri: avatar.uri,
   }));
-  // useEffect(() => {
-  //   // console.log({ trips: trips.length });
-  // }, [a.length]);
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState<
+    Notifications.Notification | undefined
+  >(undefined);
+  const notificationListener = useRef<Notifications.Subscription>();
+  const responseListener = useRef<Notifications.Subscription>();
 
+  useEffect(() => {
+    NotificationService.initialize()
+      .then((token) => setExpoPushToken(token))
+      .catch((error) => console.error(error));
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      notificationListener.current &&
+        Notifications.removeNotificationSubscription(
+          notificationListener.current,
+        );
+      responseListener.current &&
+        Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+  const handleSendNotification = async () => {
+    await NotificationService.sendPushNotification(
+      expoPushToken,
+      "Test Title",
+      "Test Body",
+    );
+  };
   const user = useAppSelector(
     (state) => state.auth.currentUser,
   ) as unknown as User;
@@ -69,7 +101,7 @@ const Home = () => {
           source={require("../../../assets/Vector.png")}
           style={styles.image}
         />
-
+        <Button onPress={() => handleSendNotification()} title="Notify" />
         <View style={styles.trips}>
           <View style={styles.subtitleContainer}>
             <Text style={styles.subtitle}>Best Trips</Text>
