@@ -9,20 +9,28 @@ import {
   companySubRoles,
 } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Gender, NewCompanyUser } from "@/types/company";
+import { CompanyUser, Gender, NewCompanyUser } from "@/types/company";
 import Spacer from "../Spacer";
 import DropdownRolePicker from "./DropDownRolePicker";
 import Toast from "react-native-toast-message";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addNewUser } from "@/redux/actions/companiesActions";
+import {
+  addNewUser,
+  updateCompanyUser,
+} from "@/redux/actions/companiesActions";
 import { useRouter } from "expo-router";
+import { User } from "@/types/user";
 
 interface CompanyNewUserFormProps {
+  user?: CompanyUser;
+  type: "new" | "update";
   companyId: string;
 }
 
 const CompanyNewUserForm: React.FC<CompanyNewUserFormProps> = ({
   companyId,
+  user,
+  type,
 }) => {
   const {
     control,
@@ -32,7 +40,9 @@ const CompanyNewUserForm: React.FC<CompanyNewUserFormProps> = ({
     formState: { errors },
   } = useForm<NewCompanyUser>({
     resolver: yupResolver(companyNewUserSignupSchema),
+    defaultValues: type === "update" ? { ...user, password: "" } : {},
   });
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -42,10 +52,19 @@ const CompanyNewUserForm: React.FC<CompanyNewUserFormProps> = ({
   const handleUserSignup = async (data: NewCompanyUser) => {
     // handle signup here;
     console.log({ data: { ...data, comapny_id: companyId } });
-
     try {
       dispatch(
-        addNewUser({ ...data, company_id: companyId, gender: selectedGender }),
+        type === "new"
+          ? addNewUser({
+              ...data,
+              company_id: companyId,
+              gender: selectedGender,
+            })
+          : updateCompanyUser({
+              ...data,
+              gender: selectedGender,
+              company_id: companyId,
+            }),
       );
 
       reset();
@@ -90,7 +109,7 @@ const CompanyNewUserForm: React.FC<CompanyNewUserFormProps> = ({
       <Button
         loading={loading}
         loadingMessage="Adding new user..."
-        title="Submit"
+        title={type === "new" ? "Submit" : "Update"}
         onPress={handleSubmit(handleUserSignup)}
       />
     </>

@@ -37,6 +37,15 @@ const companiesSlice = createSlice({
       const index = state.users.findIndex((u) => u.id === action.payload.id);
       if (index === -1) state.users.push(action.payload);
     },
+    editCompanyUser: (
+      state,
+      action: PayloadAction<Partial<CompanyUser | NewCompanyUser>>,
+    ) => {
+      // check if user is already registered
+      const index = state.users.findIndex((u) => u.id === action.payload.id);
+      if (index === -1)
+        state.users[index] = { ...state.users[index], ...action.payload };
+    },
     removeCompany: (state, action: PayloadAction<string>) => {
       state.companies = state.companies.filter(
         (company) => company.id !== action.payload,
@@ -75,6 +84,7 @@ export const {
   addCompanyUser,
   removeCompanyUser,
   setCompanyUsers,
+  editCompanyUser,
   setError,
   setLoading,
 } = companiesSlice.actions;

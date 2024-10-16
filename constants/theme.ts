@@ -3,8 +3,8 @@ export const COLORS = {
   primary: "#E88D67", // Primary color for app elements
   secondary: "#006989", // Secondary color for headers, buttons, etc.
   accent: "#005C78", // Accent color for highlights
-  light: "#F7F7F9", // light color
-  bg: "#F3F7EC", // Background color for screens
+  light: "#ffffff", // light color
+  bg: "#F1F1F1", // Background color for screens
   textPrimary: "#333333", // Primary text color
   textSubtitle: "#7D848D", // Primary text color
   textSecondary: "#777777", // Secondary text color
@@ -16,22 +16,20 @@ export const COLORS = {
   opacity: "rgba(255, 255, 255, 0.7)",
   link: "#0D6EFD",
 };
-export const DARK_COLORS = {
-  primary: "#E88D67", // Keeping the primary color consistent
-  secondary: "#00A1C1", // Lighter secondary color to stand out on dark background
-  accent: "#008FB3", // Accent color for highlights
-  light: "#3A3A3C", // Darker "light" color for contrast
-  background: "#1C1C1E", // Dark background color for screens
-  textPrimary: "#EAEAEA", // Light color for primary text
-  textSubtitle: "#A0A3A8", // Slightly dimmed text for subtitles
-  textSecondary: "#B0B0B0", // Lighter secondary text color
-  error: "#FF6B6B", // Bright error color for dark backgrounds
-  success: "#4CAF50", // Same success color to retain consistency
-  warning: "#FF9800", // Same warning color
-  priceTag: "#FBA834", // Same price tag color
-  calendarSelected: "#1E90FF", // Bright selected date color to pop on dark background
-  opacity: "rgba(255, 255, 255, 0.3)", // Adjusted opacity for overlays
-  link: "#3A8DFF", // Lighter link color for better contrast
+export const COLORSs = {
+  primary: "#FF9756", // Primary color for app elements
+  secondary: "#65BFD3", // Secondary color for headers, buttons, etc.
+  accent: "#61B5C6", // Accent color for highlights
+  light: "#121212", // Light color
+  bg: "#1E1E1E", // Background color for screens
+  textPrimary: "#F1F1F1", // Primary text color
+  textSubtitle: "#C4C4C4", // Subtitle text color
+  textSecondary: "#A9A9A9", // Secondary text color
+  error: "#FF6B6B", // Error color
+  success: "#4CAF50", // Success color
+  warning: "#FFC107", // Warning color
+  priceTag: "#FFBA54", // Color for price tags
+  calendarSelected: "#A8E6FF", // Calendar selected date color
 };
 
 export const FONTS = {

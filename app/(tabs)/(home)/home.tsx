@@ -21,7 +21,9 @@ import { addBookedTrip, BookedTrip } from "@/redux/slices/bookedTripSlice";
 import { setLoading } from "@/redux/slices/companiesSlice";
 import NotificationService from "@/services/NotificationService";
 import Button from "@/components/Buttons";
-import * as Notifications from "expo-notifications"; // Add this line
+import * as Notifications from "expo-notifications";
+import Hero from "@/components/core/Hero";
+
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
   const { isLoading, trips: allTrips } = useAppSelector((state) => state.trips);
@@ -63,8 +65,9 @@ const Home = () => {
   const handleSendNotification = async () => {
     await NotificationService.sendPushNotification(
       expoPushToken,
-      "Test Title",
-      "Test Body",
+      "Check this new trip ",
+
+      "Company x has launched a trip, hurry up to book it",
     );
   };
   const user = useAppSelector(
@@ -95,12 +98,14 @@ const Home = () => {
         contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
       >
         <Header />
-        <Text style={styles.title}>Explore the Beautiful</Text>
+        <Hero />
+        <Spacer />
+        {/* <Text style={styles.title}>Explore the Beautiful</Text>
         <Text style={styles.span}>World!</Text>
         <Image
           source={require("../../../assets/Vector.png")}
           style={styles.image}
-        />
+        /> */}
         <Button onPress={() => handleSendNotification()} title="Notify" />
         <View style={styles.trips}>
           <View style={styles.subtitleContainer}>

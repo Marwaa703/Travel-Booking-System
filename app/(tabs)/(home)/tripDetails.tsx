@@ -11,7 +11,6 @@ import Button from "@/components/Buttons";
 import { useRouter } from "expo-router";
 import { COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
-import CardSubtitle from "@/components/CardSubtitle";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
 import { useAppSelector } from "@/redux/store";
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   infoContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg,
     borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
     paddingHorizontal: 30,

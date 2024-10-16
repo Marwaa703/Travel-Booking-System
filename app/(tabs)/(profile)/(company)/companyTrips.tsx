@@ -1,23 +1,19 @@
 import { ScrollView, Text, View, StyleSheet } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Button from "@/components/Buttons";
 import Header from "@/components/core/Header";
 import Padding from "@/components/containers/Padding";
 import Spacer from "@/components/Spacer";
-import { FONTS } from "@/constants/theme";
+import { COLORS, FONTS } from "@/constants/theme";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import {
-  deleteFullTrip,
-  fetchTrips,
-  updateTripStatus,
-} from "@/redux/actions/tripActions";
+import { fetchTrips } from "@/redux/actions/tripActions";
 import TripManagementCard from "@/components/company/TripManagementCard";
-import { TripDetailes, TripStatus } from "@/types/trip";
+import { Trip, TripStatus } from "@/types/trip";
+import Toast from "react-native-toast-message";
 
-// todo: handle edit, delete trip here
 const CompanyHome = () => {
   const route = useRoute();
   const dispatch = useAppDispatch();
@@ -26,44 +22,28 @@ const CompanyHome = () => {
 
   const { isLoading, trips: alltrips } = useAppSelector((state) => state.trips);
 
-  //fix:  companyId type is diff
+  // Fetch trips when the screen is focused
   useFocusEffect(
     useCallback(() => {
       dispatch(fetchTrips(companyId));
-    }, [companyId, dispatch]),
+    }, [companyId]),
   );
-  // useEffect(() => {
-  //   if (route.params?.addTrip) {
-  //     console.log("new trip has been added and now we will check this");
-  //     Toast.show({
-  //       text1: "TripAdded",
-  //       text2: "Your new trip has been added successfully!",
-  //     });
-  //   }
-  // }, [route.params?.addTrip]);
 
+  // Display success toast when a new trip is added
+  useEffect(() => {
+    if (route.params?.addTrip) {
+      Toast.show({
+        text1: "Trip Added",
+        text2: "Your new trip has been added successfully!",
+        position: "top",
+      });
+    }
+  }, [route.params?.addTrip]);
+
+  // Filter trips by companyId and sort them
   const trips = alltrips
-    .filter((t) => {
-      console.log(typeof t.company_id, typeof companyId);
-      return t.company_id == companyId;
-    })
+    .filter((t) => t.company_id == companyId)
     .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
-  console.log({ allTrips: alltrips.length, trips: trips.length });
-  console.log(trips);
-
-  const handleDeleteTrip = (id: string) => {
-    console.log(id);
-    dispatch(deleteFullTrip(id));
-    if (!isLoading) console.log("done");
-  };
-  const handleChangeStatus = (trip: TripDetailes) => {
-    console.log(trip.trip_id);
-    const updated: Partial<TripDetailes> = {
-      status: "active",
-    };
-    dispatch(updateTripStatus(trip.trip_id as string, updated));
-    console.log("done", isLoading);
-  };
 
   return (
     <View style={styles.container}>
@@ -79,31 +59,18 @@ const CompanyHome = () => {
             />
           </View>
         </View>
-
+        <Text style={styles.sectionTitle}>Current trips</Text>
         {isLoading ? (
           <Text>Loading trips...</Text>
         ) : trips.length === 0 ? (
           <Text>No trips to display. Add one!</Text>
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={styles.sectionTitle}>Current trips</Text>
             <Spacer />
             <View style={styles.cardContainer}>
               {trips.map((trip) => (
                 <View key={trip.trip_id} style={styles.cardWrapper}>
-                  <TripManagementCard
-                    id={trip.trip_id as string}
-                    image={trip.images[0]?.image_url || "default_image_uri"}
-                    title={trip.name}
-                    rating={trip.rate ?? null}
-                    price={trip.price}
-                    status={trip.status as TripStatus}
-                    handleEdit={(id) => console.log({ edittrip: id })}
-                    handleDelete={() =>
-                      handleDeleteTrip(trip.trip_id as string)
-                    }
-                    handleChangeStatus={() => handleChangeStatus(trip)}
-                  />
+                  <TripManagementCard trip={trip} />
                 </View>
               ))}
             </View>
@@ -117,24 +84,22 @@ const CompanyHome = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: COLORS.bg,
     marginBottom: 90,
   },
   addButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 10,
   },
   addButtonWrapper: {
-    width: "70%",
+    width: "100%",
   },
   sectionTitle: {
     fontSize: FONTS.large,
-    fontWeight: "bold",
   },
   cardWrapper: {
     width: "100%",
-    marginBottom: 20,
   },
   cardContainer: {
     flexDirection: "column",

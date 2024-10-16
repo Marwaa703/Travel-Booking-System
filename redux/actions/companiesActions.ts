@@ -6,6 +6,7 @@ import {
   addCompany,
   addCompanyUser,
   editCompany,
+  editCompanyUser,
   removeCompanyUser,
   setCompanies,
   setCompanyUsers,
@@ -81,6 +82,21 @@ export const addNewUser =
     try {
       const user = await companyUsersApi.createNewUser(userData);
       dispatch(addCompanyUser(user));
+    } catch (error) {
+      dispatch(setError(error as string));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+export const updateCompanyUser =
+  (userData: Partial<NewCompanyUser>) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const user = await companyUsersApi.updateCompanyUser(
+        userData.id as string,
+        userData,
+      );
+      dispatch(editCompanyUser(user));
     } catch (error) {
       dispatch(setError(error as string));
     } finally {

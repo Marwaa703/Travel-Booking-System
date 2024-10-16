@@ -60,6 +60,7 @@ const CompanyUsers = () => {
               text1: "User Deleted",
               text2: "The user has been deleted successfully!",
               type: "success",
+              topOffset: 80,
             });
           },
         },
@@ -81,6 +82,7 @@ const CompanyUsers = () => {
           />
         </View>
       </View>
+      <Toast />
 
       {loading ? (
         <Padding>
@@ -101,9 +103,11 @@ const CompanyUsers = () => {
                     {user && (
                       <UserCard
                         user={user}
-                        onEdit={() =>
-                          router.push(`/editUser/?userId=${user?.id}`)
-                        }
+                        onEdit={() => {
+                          router.push(
+                            `/editUser/?user=${JSON.stringify(user)}`,
+                          );
+                        }}
                         onDelete={handleDeleteUser}
                       />
                     )}
@@ -115,7 +119,6 @@ const CompanyUsers = () => {
           </ScrollView>
         </>
       )}
-      <Toast />
     </View>
   );
 };

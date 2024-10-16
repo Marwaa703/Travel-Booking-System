@@ -1,73 +1,101 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { TripStatus } from "@/types/trip"; // Importing TripStatus type
+import { Trip, TripDetailes, TripStatus } from "@/types/trip"; // Importing TripStatus type
 import ActionButton from "../buttons/ActionButton";
+import { COLORS } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
+import Spacer from "../Spacer";
+import { getStatusStyle } from "@/constants/styles";
+import { useAppDispatch } from "@/redux/store";
+import { deleteFullTrip, updateTripStatus } from "@/redux/actions/tripActions";
+import Toast from "react-native-toast-message";
 
 const defaultImage = require("@/assets/imgDefault.png");
 
 interface TripManagementCardProps {
-  id: string;
-  image: string;
-  title: string;
-  rating: number | null;
-  price?: number;
-  status: TripStatus;
-  handleEdit: (tripId: string) => void;
-  handleDelete: (tripId: string) => void;
-  handleChangeStatus: (tripId: string, newStatus: TripStatus) => void;
+  trip: Trip;
 }
 
-const TripManagementCard: React.FC<TripManagementCardProps> = ({
-  id,
-  image,
-  title,
-  rating,
-  price,
-  status,
-  handleEdit,
-  handleDelete,
-  handleChangeStatus,
-}) => {
+const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
+  const { status, trip_id, company_id, images, name, price } = trip;
+  const image = images[0]?.image_url;
   const imageSource = image ? { uri: image } : defaultImage;
 
+  const dispatch = useAppDispatch();
   const canDelete = status === "paused" || status === "canceled";
+  const statusStyle = getStatusStyle(status as TripStatus);
 
-  const getStatusStyle = () => {
-    switch (status) {
-      case "active":
-        return { backgroundColor: "lightgreen", color: "green" };
-      case "paused":
-        return { backgroundColor: "lightyellow", color: "goldenrod" };
-      case "canceled":
-        return { backgroundColor: "lightcoral", color: "red" };
-      case "completed":
-        return { backgroundColor: "lightblue", color: "blue" };
-      default:
-        return { backgroundColor: "#fff", color: "#000" };
+  const handleDeleteTrip = () => {
+    // can't delete active or booked trip
+    if (status !== "active" && status !== "completed") {
+      dispatch(deleteFullTrip(trip_id as string))
+        .then(() => {
+          // Toast.show({
+          //   type: "success",
+          //   text1: "Trip Deleted",
+          //   text2: "The trip has been deleted successfully.",
+          //   position: "top",
+          // });
+        })
+        .catch(() => {
+          // Toast.show({
+          //   type: "error",
+          //   text1: "Failed to Delete Trip",
+          //   text2: "An error occurred while deleting the trip.",
+          //   position: "top",
+          // });
+        });
+    } else {
+      // Toast.show({
+      //   type: "error",
+      //   text1: "Cannot Delete Trip",
+      //   text2: "Active or completed trips cannot be deleted.",
+      //   position: "top",
+      // });
     }
   };
 
-  const statusStyle = getStatusStyle();
+  const handleChangeStatus = () => {
+    const newStatus = status === "paused" ? "active" : "paused";
+    // todo: check if trip is any user booked or not
+    const updated: Partial<TripDetailes> = {
+      status: newStatus,
+    };
+    dispatch(updateTripStatus(trip_id as string, updated))
+      .then(() => {
+        // Toast.show({
+        //   type: "success",
+        //   text1: "Status Updated",
+        //   text2: "The trip status has been updated successfully.",
+        //   position: "top",
+        // });
+      })
+      .catch(() => {
+        // Toast.show({
+        //   type: "error",
+        //   text1: "Failed to Update Status",
+        //   text2: "An error occurred while updating the trip status.",
+        //   position: "top",
+        // });
+      });
+  };
 
   return (
-    <View
-      style={[
-        styles.cardContainer,
-        {
-          borderRightWidth: status === "active" ? 2 : 0,
-          borderRightColor: "green",
-        },
-      ]}
-    >
+    <View style={[styles.cardContainer]}>
+      <Toast position="bottom" />
       {/* Image */}
       <View style={styles.imageContainer}>
         <Image source={imageSource} style={styles.image} />
       </View>
-
       {/* Text content */}
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.rating}>Rating: {rating}</Text>
+        <Text style={styles.title}>{name}</Text>
+        {/* <View
+          style={{ flexDirection: "row", alignItems: "center", columnGap: 4 }}
+        >
+          <Text style={styles.rating}>{rating}</Text>
+          <Ionicons name="star" size={14} color={COLORS.primary} />
+        </View> */}
         {price && <Text style={styles.priceText}>{price} / Person</Text>}
       </View>
 
@@ -79,27 +107,26 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({
         ]}
       >
         <Text style={[styles.statusText, { color: statusStyle.color }]}>
-          {status.charAt(0).toUpperCase() + status.slice(1)}
+          {status && status.charAt(0).toUpperCase() + status.slice(1)}
         </Text>
       </View>
+      <Spacer />
 
       {/* Action Buttons */}
-      <View style={styles.actionContainer}>
-        {status !== "active" && (
-          <ActionButton
-            onPress={() =>
-              handleChangeStatus(id, status === "paused" ? "active" : "paused")
-            }
-            text={status === "paused" ? "Activate" : "Pause"}
-            style={styles.actionButton}
-          />
-        )}
+      <View style={[styles.actionContainer]}>
         {canDelete && (
           <ActionButton
-            onPress={() => handleDelete(id)}
+            onPress={handleDeleteTrip}
             text="Delete"
             variant="action"
             textColor="red"
+            style={[styles.actionButton]}
+          />
+        )}
+        {(status === "paused" || status === "active") && (
+          <ActionButton
+            onPress={handleChangeStatus}
+            text={status === "paused" ? "Activate" : "Pause"}
             style={styles.actionButton}
           />
         )}
@@ -111,15 +138,16 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({
 const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.light,
     borderRadius: 10,
-    elevation: 1,
+    elevation: 2,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 1, height: 0 },
     shadowOpacity: 0.9,
     shadowRadius: 2,
     padding: 10,
     marginBottom: 15,
+    position: "relative",
   },
   imageContainer: {
     width: "100%",
@@ -135,39 +163,42 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingVertical: 8,
+    rowGap: 4,
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "400",
     color: "#000",
   },
-  rating: {
-    fontSize: 12,
-    color: "#999",
-  },
+  // rating: {
+  //   fontSize: 12,
+  //   color: "#999",
+  // },
   priceText: {
-    fontSize: 12,
-    color: "#007BFF",
-    fontWeight: "bold",
+    fontSize: 14,
+    color: "#005c78",
+    fontWeight: "400",
   },
   statusContainer: {
-    padding: 5,
-    borderRadius: 5,
+    padding: 6,
+    paddingHorizontal: 8,
+    borderRadius: 50,
     alignSelf: "flex-start",
-    marginTop: 10,
+    position: "absolute",
+    top: 16,
+    right: 16,
   },
   statusText: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "400",
+    letterSpacing: 0.9,
   },
   actionContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginTop: 10,
   },
   actionButton: {
     flex: 1,
-    marginHorizontal: 5,
   },
 });
 

@@ -83,15 +83,21 @@ const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
         </Text>
       )}
       <View style={styles.buttonContainer}>
-        <ActionButton text="Edit" onPress={onEdit} variant="primary" />
         {user?.role !== "Representative" && (
           <ActionButton
+            style={{ flex: 1 }}
             text="Delete"
             onPress={() => onDelete(user?.id as string)}
             variant="action"
             textColor="red"
           />
         )}
+        <ActionButton
+          style={{ flex: 1 }}
+          text="Edit"
+          onPress={onEdit}
+          variant="primary"
+        />
       </View>
     </View>
   );
@@ -178,6 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginTop: 10,
+    flex: 1,
   },
 });
 

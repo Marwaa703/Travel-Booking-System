@@ -10,6 +10,7 @@ import { isCompanyUserRole } from "@/utils";
 import { router, useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import Toast from "react-native-toast-message";
 
 const { height } = Dimensions.get("window");
 
@@ -18,6 +19,7 @@ const ExploreScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Toast />
       {/* Top Image */}
       <Image
         source={{

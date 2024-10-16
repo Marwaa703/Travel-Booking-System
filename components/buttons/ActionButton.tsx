@@ -15,7 +15,8 @@ interface ActionButtonProps {
   onPress: () => void;
   style?:
     | StyleProp<ViewStyle>
-    | ((state: PressableStateCallbackType) => StyleProp<ViewStyle>);
+    | ((state: PressableStateCallbackType) => StyleProp<ViewStyle>)
+    | undefined;
   variant?: "action" | "primary" | "secondary"; // Button style
   textColor?: string; // New prop for text color
 }
@@ -28,7 +29,10 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   textColor = "white", // Default text color
 }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, styles[variant]]}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.container, style, styles[variant]]}
+    >
       <Text style={[styles.text, { color: textColor }]}>{text}</Text>
     </Pressable>
   );

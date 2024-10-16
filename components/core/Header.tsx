@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 50,
-    padding: 13,
+    marginVertical: 18,
+    padding: 16,
     marginBottom: 1,
   },
   title: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "500",
     color: COLORS.textPrimary,
   },
 });

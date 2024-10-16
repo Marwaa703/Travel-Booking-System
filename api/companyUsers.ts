@@ -85,17 +85,17 @@ const companyUsersApi = {
   // Update a company user
   updateCompanyUser: async (
     userId: string,
-    userData: CompanyUser,
-  ): Promise<CompanyUser> => {
+    userData: Partial<NewCompanyUser>,
+  ): Promise<NewCompanyUser> => {
     try {
-      const response = await api.put<CompanyUser>(
+      const response = await api.put<NewCompanyUser>(
         `/company/users/${userId}`,
         userData,
       );
       return response.data;
     } catch (error) {
       handleError(error, "Failed to update company user");
-      return {} as CompanyUser; // Return an empty object if needed
+      return {} as NewCompanyUser; // Return an empty object if needed
     }
   },
 

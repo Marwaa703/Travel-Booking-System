@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.opacity,
     padding: 15,
     borderRadius: 10,
-    margin: 20,
   },
   titleText: {
     flex: 1, // Takes up available space

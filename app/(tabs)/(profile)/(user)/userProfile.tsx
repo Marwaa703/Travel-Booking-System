@@ -14,6 +14,7 @@ import { router } from "expo-router";
 import useLogout from "@/hooks/useLogout";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
+import Spacer from "@/components/Spacer";
 
 const ProfileScreen: React.FC = () => {
   const auth = useAppSelector((state) => state.auth.currentUser);
@@ -38,7 +39,7 @@ const ProfileScreen: React.FC = () => {
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>
-          <View>
+          <View style={styles.cardlist}>
             {/* Profile Header */}
             <View style={styles.headerContainer}>
               <Image
@@ -54,6 +55,7 @@ const ProfileScreen: React.FC = () => {
               </Text>
               <Text style={styles.profileEmail}>{user?.email}</Text>
             </View>
+            <Spacer height={24} />
 
             {/* Setting Cards */}
             {/* <SettingCard
@@ -66,26 +68,31 @@ const ProfileScreen: React.FC = () => {
               onPress={() => router.push("/favTrip")}
               leftIconName="favorite"
             />
+            <Spacer height={16} />
             <SettingCard
               title="Previous Trips"
               onPress={() => router.push("/perviousTrip")}
               leftIconName="history"
             />
+            <Spacer height={16} />
             <SettingCard
               title="Settings"
               onPress={() => {}}
               leftIconName="settings"
             />
+            <Spacer height={16} />
             <SettingCard
               title="Other Setting"
               onPress={() => {}}
               leftIconName="tune"
             />
+            <Spacer height={16} />
             <SettingCard
               title="Log Out"
               onPress={() => logout()}
               leftIconName="logout"
             />
+            <Spacer height={16} />
           </View>
         </SafeAreaView>
       </ScrollView>
@@ -97,16 +104,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 0,
-    paddingTop: 20,
+    // paddingTop: 20,
     marginBottom: 100,
+    rowGap: 10,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
   },
+  cardlist: {
+    justifyContent: "center",
+    marginHorizontal: 16,
+    alignItems: "center",
+  },
   headerContainer: {
     alignItems: "center",
-    marginVertical: 30,
+    marginVertical: 10,
   },
   profileImage: {
     width: 80,
@@ -117,7 +130,7 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 20,
     fontWeight: "bold",
-    marginVertical: 10,
+    marginTop: 8,
     color: COLORS.textPrimary,
   },
   profileEmail: {

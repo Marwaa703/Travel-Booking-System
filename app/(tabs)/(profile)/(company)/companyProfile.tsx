@@ -17,6 +17,8 @@ import { Company, CompanyUser } from "@/types/company";
 import useLogout from "@/hooks/useLogout";
 import { fetchTrips } from "@/redux/actions/tripActions";
 import ApprovedState from "@/components/company/ApprovedState";
+import Spacer from "@/components/Spacer";
+import Toast from "react-native-toast-message";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   const user = useAppSelector(
@@ -51,6 +53,7 @@ const CompanyProfile: React.FC = () => {
           router.back();
         }}
       />
+      <Toast />
       {currentCompany && (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <SafeAreaView style={styles.container}>
@@ -65,12 +68,13 @@ const CompanyProfile: React.FC = () => {
                   <ApprovedState approved={approved as boolean} />
                 </Text>
               </View>
-
+              <Spacer height={24} />
               <SettingCard
                 title="Details"
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
+              <Spacer height={16} />
               {/* disable if not approved */}
               {approved && (
                 <>
@@ -83,6 +87,7 @@ const CompanyProfile: React.FC = () => {
                     }}
                     leftIconName="air"
                   />
+                  <Spacer height={16} />
                   <SettingCard
                     title="Manage Employees"
                     onPress={() => {
@@ -92,6 +97,7 @@ const CompanyProfile: React.FC = () => {
                     }}
                     leftIconName="people"
                   />
+                  <Spacer height={16} />
                   <SettingCard
                     title="Company Settings"
                     onPress={() => {}}
@@ -99,6 +105,7 @@ const CompanyProfile: React.FC = () => {
                   />
                 </>
               )}
+              <Spacer height={16} />
               <SettingCard
                 title="Other Settings"
                 onPress={() => {}}
@@ -116,16 +123,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
     marginBottom: 100,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
+    backgroundColor: COLORS.bg,
   },
   headerContainer: {
     alignItems: "center",
-    marginVertical: 30,
+    marginVertical: 8,
   },
   companyLogo: {
     width: 80,
@@ -135,8 +142,8 @@ const styles = StyleSheet.create({
   },
   companyName: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginVertical: 10,
+    fontWeight: "500",
+    marginTop: 8,
     color: COLORS.textPrimary,
   },
   companyEmail: {
