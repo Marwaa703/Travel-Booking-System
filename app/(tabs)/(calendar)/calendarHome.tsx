@@ -74,7 +74,7 @@ const Calendar = () => {
     <View style={styles.container}>
       <Header
         title="Schedule"
-        leftIcon="chevron-back"
+        leftIcon="home-outline"
         onLeftIconPress={() => router.push("home")}
       />
       <View style={styles.calendar}>

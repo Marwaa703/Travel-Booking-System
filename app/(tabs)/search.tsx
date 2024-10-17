@@ -13,6 +13,7 @@ import Card from "@/components/Card";
 import Header from "@/components/core/Header";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS, SPACING } from "@/constants/theme";
+import { router } from "expo-router";
 
 const Search: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,7 +26,13 @@ const Search: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Header title={"Search"} />
+      <Header
+        title={"Search"}
+        leftIcon="home-outline"
+        onLeftIconPress={() => {
+          router.push("home");
+        }}
+      />
 
       <View style={styles.searchContainer}>
         <TextInput

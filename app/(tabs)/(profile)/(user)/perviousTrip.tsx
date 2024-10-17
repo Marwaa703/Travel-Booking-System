@@ -4,6 +4,7 @@ import Header from "@/components/core/Header";
 import Card from "@/components/Card";
 import { COLORS, SPACING } from "@/constants/theme";
 import { useAppSelector } from "@/redux/store";
+import { router } from "expo-router";
 
 const PerviousTrip = () => {
   const previousTrips = useAppSelector((state) => state.trips.previousTrips);
@@ -22,7 +23,11 @@ const PerviousTrip = () => {
 
   return (
     <>
-      <Header title="Previous Trips" />
+      <Header
+        title="Previous Trips"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <View style={styles.container}>
         <FlatList
           data={previousTrips}

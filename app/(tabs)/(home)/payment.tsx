@@ -24,6 +24,8 @@ import useLoadingState from "@/hooks/useLoadingSate";
 import { Ionicons } from "@expo/vector-icons";
 import Padding from "@/components/containers/Padding";
 import { ExchangeRatesResponse, getExchangeRates } from "@/api/etherRateApi";
+import Header from "@/components/core/Header";
+import { router } from "expo-router";
 
 const Payment: React.FC = () => {
   const { loading, msg, setLoading, setMsg } = useLoadingState();
@@ -153,98 +155,114 @@ const Payment: React.FC = () => {
     );
   }
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <ScreenWraper>
-        <Padding>
-          <Spacer />
+    <>
+      <Header
+        title="Payment"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.navigate(`tripDetails?id=${tripId}`)}
+      />
 
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("../../../assets/eth_logo.png")}
-              style={styles.ethLogo}
-            />
-          </View>
-          {alert && <CustomAlert message={alert.message} type={alert.type} />}
-          <Spacer height={26} />
-          <View style={styles.section}>
-            <View style={styles.infoSection}>
-              <View style={styles.tripDetailsColumn}>
-                <View style={styles.row}>
-                  <Ionicons name="location" size={18} color={COLORS.primary} />
-                  <Text style={styles.tripText}>{tripDetails.name}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Ionicons name="time" size={18} color={COLORS.primary} />
-                  <Text style={styles.tripText}>
-                    {<FormatDate dateString={tripDetails.date} />}
-                  </Text>
-                </View>
-                <View style={styles.row}>
-                  <Ionicons name="logo-usd" size={18} color={COLORS.primary} />
-                  <Text style={styles.tripText}>{tripCostUSD} USD</Text>
-                </View>
-                <View style={styles.row}>
-                  <Ionicons name="card" size={18} color={COLORS.primary} />
-                  <Text style={styles.tripText}>
-                    {tripCostEther.toFixed(6)} ETH
-                  </Text>
-                </View>
-              </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <ScreenWraper>
+          <Padding>
+            <Spacer />
 
-              <View style={styles.imageColumn}>
-                <Image source={{ uri: image }} style={styles.tripImage} />
-              </View>
+            <View style={styles.logoContainer}>
+              <Image
+                source={require("../../../assets/eth_logo.png")}
+                style={styles.ethLogo}
+              />
             </View>
+            {alert && <CustomAlert message={alert.message} type={alert.type} />}
+            <Spacer height={26} />
+            <View style={styles.section}>
+              <View style={styles.infoSection}>
+                <View style={styles.tripDetailsColumn}>
+                  <View style={styles.row}>
+                    <Ionicons
+                      name="location"
+                      size={18}
+                      color={COLORS.primary}
+                    />
+                    <Text style={styles.tripText}>{tripDetails.name}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Ionicons name="time" size={18} color={COLORS.primary} />
+                    <Text style={styles.tripText}>
+                      {<FormatDate dateString={tripDetails.date} />}
+                    </Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Ionicons
+                      name="logo-usd"
+                      size={18}
+                      color={COLORS.primary}
+                    />
+                    <Text style={styles.tripText}>{tripCostUSD} USD</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Ionicons name="card" size={18} color={COLORS.primary} />
+                    <Text style={styles.tripText}>
+                      {tripCostEther.toFixed(6)} ETH
+                    </Text>
+                  </View>
+                </View>
 
-            <Spacer height={50} />
-            <View>
-              <View style={styles.row}>
-                <Ionicons name="analytics" size={18} color={COLORS.primary} />
-                <Text style={styles.tripText}>
-                  Rate: {rates?.rates.ETH}{" "}
-                  <Text style={{ color: COLORS.primary }}>USD/ETH</Text>
-                </Text>
+                <View style={styles.imageColumn}>
+                  <Image source={{ uri: image }} style={styles.tripImage} />
+                </View>
               </View>
-              <Spacer />
-              <View style={styles.row}>
-                <Ionicons
-                  name="timer-outline"
-                  size={18}
-                  color={COLORS.primary}
+
+              <Spacer height={50} />
+              <View>
+                <View style={styles.row}>
+                  <Ionicons name="analytics" size={18} color={COLORS.primary} />
+                  <Text style={styles.tripText}>
+                    Rate: {rates?.rates.ETH}{" "}
+                    <Text style={{ color: COLORS.primary }}>USD/ETH</Text>
+                  </Text>
+                </View>
+                <Spacer />
+                <View style={styles.row}>
+                  <Ionicons
+                    name="timer-outline"
+                    size={18}
+                    color={COLORS.primary}
+                  />
+                  <Text style={styles.tripText}>{lastUpdateTime}</Text>
+                </View>
+              </View>
+              <Spacer height={50} />
+              <View>
+                <Label
+                  text="Enter your Wallet Address:"
+                  style={{ color: COLORS.secondary }}
                 />
-                <Text style={styles.tripText}>{lastUpdateTime}</Text>
+                <Spacer height={8} />
+                <TextInputField
+                  name={"your wallet address ex: 0xa2..."}
+                  onBlur={undefined}
+                  onChangeText={setUserWalletAddress}
+                  value={userWalletAddress}
+                  icon="wallet"
+                />
               </View>
-            </View>
-            <Spacer height={50} />
-            <View>
-              <Label
-                text="Enter your Wallet Address:"
-                style={{ color: COLORS.secondary }}
-              />
               <Spacer height={8} />
-              <TextInputField
-                name={"your wallet address ex: 0xa2..."}
-                onBlur={undefined}
-                onChangeText={setUserWalletAddress}
-                value={userWalletAddress}
-                icon="wallet"
+              <Button
+                title={"Pay"}
+                onPress={handlePayment}
+                align="flex-start"
+                disabled={loading}
+                width={"100%"}
+                loading={loading}
+                loadingMessage={msg}
               />
+              <Spacer height={50} />
             </View>
-            <Spacer height={8} />
-            <Button
-              title={"Pay"}
-              onPress={handlePayment}
-              align="flex-start"
-              disabled={loading}
-              width={"100%"}
-              loading={loading}
-              loadingMessage={msg}
-            />
-            <Spacer height={50} />
-          </View>
-        </Padding>
-      </ScreenWraper>
-    </ScrollView>
+          </Padding>
+        </ScreenWraper>
+      </ScrollView>
+    </>
   );
 };
 
