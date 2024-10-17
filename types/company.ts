@@ -5,7 +5,7 @@ export interface Company {
   logo: string;
   wallet: string;
   approved?: boolean;
-  status?: ApproveStatus;
+  status?: CompanyApproveStatus;
   admin_msg?: string | null;
 }
 
@@ -36,6 +36,11 @@ export interface CompanyData {
   papers: CompanyPaper[];
 }
 export type CompanyUserRoles = "Representative" | "Support" | "TourGuide";
+export const companyUserRoles: CompanyUserRoles[] = [
+  "Representative",
+  "Support",
+  "TourGuide",
+];
 
 export interface NewCompanyUser extends Omit<CompanyUser, "role"> {
   role: CompanySubUserRoles;
@@ -43,4 +48,20 @@ export interface NewCompanyUser extends Omit<CompanyUser, "role"> {
 export type CompanySubUserRoles = "Support" | "TourGuide";
 
 export type Gender = "male" | "female";
-export type ApproveStatus = "pending" | "approved" | "rejected";
+export type CompanyApproveStatus = "pending" | "approved" | "rejected";
+export const companyApproveStatus: CompanyApproveStatus[] = [
+  "pending",
+  "approved",
+  "rejected",
+];
+export type CompanyEditSection =
+  | "Representative"
+  | "Papers"
+  | "Details"
+  | "Full";
+export const companyEditSections: CompanyEditSection[] = [
+  "Full",
+  "Details",
+  "Papers",
+  "Representative",
+];

@@ -7,6 +7,7 @@ import { router } from "expo-router";
 import Padding from "@/components/containers/Padding";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import useLogout from "@/hooks/useLogout";
+import Spacer from "@/components/Spacer";
 
 const AdminProfile: React.FC = () => {
   const handleLogout = useLogout();
@@ -23,7 +24,7 @@ const AdminProfile: React.FC = () => {
           />
         </View>
         <Text style={styles.greetingText}>Hello, Admin</Text>
-
+        <Spacer />
         <SettingCard
           title="Pending Requests"
           onPress={() => {
@@ -32,6 +33,7 @@ const AdminProfile: React.FC = () => {
           leftIconName="pending-actions"
         />
 
+        <Spacer />
         <SettingCard
           title="Companies Approved"
           onPress={() => {
@@ -39,6 +41,7 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="verified"
         />
+        <Spacer />
         <SettingCard
           title="Trips Analysis"
           onPress={() => {
@@ -46,6 +49,7 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="bar-chart"
         />
+        <Spacer />
         <SettingCard
           title="Register Users"
           onPress={() => {
@@ -53,6 +57,7 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="person-add"
         />
+        <Spacer />
       </Padding>
     </ScreenWraper>
   );

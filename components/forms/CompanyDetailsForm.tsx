@@ -9,15 +9,20 @@ import Spacer from "../Spacer";
 
 interface CompanyDetailsFormProps {
   onNext: (data: Company) => void;
+  initialData?: Company;
 }
 
-const CompanyDetailsForm: React.FC<CompanyDetailsFormProps> = ({ onNext }) => {
+const CompanyDetailsForm: React.FC<CompanyDetailsFormProps> = ({
+  onNext,
+  initialData,
+}) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<Company>({
     resolver: yupResolver(companyDetailsSchema),
+    defaultValues: initialData ? initialData : undefined,
   });
 
   const handleDetailsSubmit = (data: Company) => {
@@ -42,7 +47,10 @@ const CompanyDetailsForm: React.FC<CompanyDetailsFormProps> = ({ onNext }) => {
           </Fragment>
         ),
       )}
-      <Button title="Next" onPress={handleSubmit(handleDetailsSubmit)} />
+      <Button
+        title={initialData ? "Update" : "Next"}
+        onPress={handleSubmit(handleDetailsSubmit)}
+      />
     </>
   );
 };
