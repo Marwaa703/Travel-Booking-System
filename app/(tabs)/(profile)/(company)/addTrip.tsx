@@ -5,6 +5,8 @@ import ScreenWraper from "@/components/containers/ScreenWraper";
 import MultiStepAddTripForm from "@/components/forms/MultiStepAddTripForm";
 import { useRoute } from "@react-navigation/native";
 import Padding from "@/components/containers/Padding";
+import Header from "@/components/core/Header";
+import { router } from "expo-router";
 
 const AddTrip = () => {
   const route = useRoute();
@@ -13,6 +15,11 @@ const AddTrip = () => {
   console.log({ companyIds: companyId });
   return (
     <ScreenWraper>
+      <Header
+        title="Add Trip"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <Spacer height={28} />
       <Padding>
         <MultiStepAddTripForm companyId={companyId} />

@@ -6,6 +6,8 @@ import Spacer from "@/components/Spacer";
 import Padding from "@/components/containers/Padding";
 import CompanyNewUserForm from "@/components/forms/CompanyNewUserForm";
 import { User } from "@/types/user";
+import Header from "@/components/core/Header";
+import { router } from "expo-router";
 
 const EditUser = () => {
   const route = useRoute();
@@ -13,6 +15,11 @@ const EditUser = () => {
 
   return (
     <ScreenWraper>
+      <Header
+        title="Edit Company Users"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <Padding>
         <Spacer />
         <CompanyNewUserForm

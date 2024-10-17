@@ -47,7 +47,11 @@ const CompanyHome = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Trips" />
+      <Header
+        title="Trips"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <Padding>
         <View style={styles.addButtonContainer}>
           <View style={styles.addButtonWrapper}>

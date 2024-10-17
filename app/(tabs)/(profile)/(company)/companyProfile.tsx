@@ -47,11 +47,8 @@ const CompanyProfile: React.FC = () => {
       <Header
         title="Company Profile"
         rightIcon="exit-outline"
-        leftIcon="arrow-back"
         onRightIconPress={() => logout()}
-        onLeftIconPress={() => {
-          router.back();
-        }}
+        onLeftIconPress={() => () => {}}
       />
       <Toast />
       {currentCompany && (
