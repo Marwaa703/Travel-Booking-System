@@ -14,6 +14,7 @@ import userApi from "@/api/userApi";
 import { User } from "@/types/user";
 import { UserTypes } from "@/types/user";
 import Alert from "@/components/core/Alert";
+import { router } from "expo-router";
 
 const RegisterUsersScreen: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -93,7 +94,11 @@ const RegisterUsersScreen: React.FC = () => {
 
   return (
     <>
-      <Header title="Register Users" />
+      <Header
+        title="Register Users"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <View style={styles.container}>
         {loading ? (
           <ActivityIndicator

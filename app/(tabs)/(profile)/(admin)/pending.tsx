@@ -17,6 +17,7 @@ import Spacer from "@/components/Spacer";
 import papersApi from "@/api/companyPapers";
 import { hashTextPercent } from "@/utils";
 import FullScreenImage from "@/components/FullScreenImage";
+import { router } from "expo-router";
 
 const Pending = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +65,12 @@ const Pending = () => {
   console.log(companies[0]);
   return (
     <>
-      <Header title={`Pending Requests ${pendingCompanies.length}`} />
+      <Header
+        title={`Pending Requests ${pendingCompanies.length}`}
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
+
       <ScrollView style={styles.container}>
         {!companies.length && <Text>No pending companies!</Text>}
         {companies &&

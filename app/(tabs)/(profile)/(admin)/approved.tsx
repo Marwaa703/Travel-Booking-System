@@ -16,6 +16,7 @@ import Header from "@/components/core/Header";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Company } from "@/types/company";
 import { editCompany, removeCompany } from "@/redux/slices/companiesSlice";
+import { router } from "expo-router";
 
 const ApprovedCompaniesScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +53,11 @@ const ApprovedCompaniesScreen: React.FC = () => {
 
   return (
     <>
-      <Header title={"Approved Companies"} />
+      <Header
+        title={"Approved Companies"}
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <View style={styles.container}>
         <Text style={styles.title}>Manage Companies</Text>
         {/* List of Companies */}

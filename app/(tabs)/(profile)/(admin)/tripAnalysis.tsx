@@ -10,6 +10,7 @@ import Buttons from "@/components/Buttons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { COLORS, FONTS } from "@/constants/theme";
 import Spacer from "@/components/Spacer";
+import { router } from "expo-router";
 
 const TripAnalysisScreen: React.FC = () => {
   const trips = tripsData.trips;
@@ -81,7 +82,11 @@ const TripAnalysisScreen: React.FC = () => {
 
   return (
     <>
-      <Header title="Trips Analysis" />
+      <Header
+        title="Trips Analysis"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <ScrollView style={styles.container}>
         <PieChartComponent
           title="Overall Trip Status"
