@@ -167,7 +167,7 @@ const Blogs: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 90,
+    marginBottom: 80,
   },
   header: {
     flexDirection: "row",
