@@ -67,7 +67,7 @@ export default TextInputField;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.bg,
     borderRadius: 25,
     paddingVertical: 8,
     paddingHorizontal: 14,

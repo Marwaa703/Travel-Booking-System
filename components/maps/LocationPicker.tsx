@@ -8,10 +8,12 @@ import { COLORS, FONTS } from "@/constants/theme";
 
 interface LocationPickerProps {
   onLocationSelect: (latitude: number, longitude: number) => void; // Function to return selected location
+  active?: boolean;
 }
 
 const LocationPicker: React.FC<LocationPickerProps> = ({
   onLocationSelect,
+  active = false,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{
@@ -71,7 +73,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       <Ionicons
         name="location"
         size={30}
-        color={COLORS.primary}
+        color={active ? COLORS.accent : COLORS.primary}
         onPress={() => setIsModalVisible(true)}
       />
 
