@@ -1,5 +1,6 @@
 import { login } from "@/api/auth";
 import Padding from "@/components/containers/Padding";
+import Header from "@/components/core/Header";
 import LoginForm from "@/components/forms/LoginForm";
 import LinkButton from "@/components/LinkButton";
 import OnboardingComingSoon from "@/components/OnboardingComingSoon";
@@ -49,34 +50,37 @@ const Login = () => {
   }, [auth, companyId, dispatch, role]);
 
   return (
-    <Padding>
-      <View style={styles.container}>
-        {/* header */}
-        <View style={styles.top}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Sign in now</Text>
-            <Spacer />
-            <Text style={styles.subTitle}>
-              Please sign in to continue our app
-            </Text>
-          </View>
-          {/* headerend  */}
-          {/* form  */}
-          <View>
-            <LoginForm />
-            <Spacer />
-            <View style={styles.center}>
-              <Text style={styles.subTitle}>Don’t have an account?</Text>
-              <LinkButton to={"signup"} label="Sign Up" />
+    <>
+      <Header title="Sign in Now" rightIcon="" leftIcon="" />
+      <Padding>
+        <View style={styles.container}>
+          {/* header */}
+          <View style={styles.top}>
+            <View style={styles.header}>
+              {/* <Text style={styles.title}>Sign in now</Text> */}
+              <Spacer />
+              <Text style={styles.subTitle}>
+                Please sign in to continue our app
+              </Text>
+            </View>
+            {/* headerend  */}
+            {/* form  */}
+            <View>
+              <LoginForm />
+              <Spacer />
+              <View style={styles.center}>
+                <Text style={styles.subTitle}>Don’t have an account?</Text>
+                <LinkButton to={"signup"} label="Sign Up" />
+              </View>
             </View>
           </View>
-        </View>
-        {/* End form  */}
-        {/* Bottom  */}
+          {/* End form  */}
+          {/* Bottom  */}
 
-        {/* <OnboardingComingSoon /> */}
-      </View>
-    </Padding>
+          {/* <OnboardingComingSoon /> */}
+        </View>
+      </Padding>
+    </>
   );
 };
 

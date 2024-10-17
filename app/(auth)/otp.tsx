@@ -7,6 +7,7 @@ import Button from "@/components/Buttons";
 import FieldErrorMessage from "@/components/forms/FieldErrorMessage";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import OTPInput from "@/components/forms/OtpInput";
+import Header from "@/components/core/Header";
 
 const Otp = () => {
   const router = useRouter();
@@ -37,27 +38,30 @@ const Otp = () => {
     }
   };
   return (
-    <Padding>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>OTP Verification</Text>
-          <Spacer />
-          <Text
-            style={styles.subTitle}
-          >{`Please check your email ${email ? email : ""} to see the verification code`}</Text>
+    <>
+      <Header title="OTP Verification" rightIcon="" leftIcon="" />
+      <Padding>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            {/* <Text style={styles.title}>OTP Verification</Text> */}
+            <Spacer />
+            <Text
+              style={styles.subTitle}
+            >{`Please check your email ${email ? email : ""} to see the verification code`}</Text>
+          </View>
+          <Spacer height={0} />
+          <OTPInput onSubmitOtp={handleOtp} code="511226" />
+          <FieldErrorMessage error={error} />
+          <View style={styles.btnContainer}>
+            <Button
+              title="Reset Password"
+              type="primary"
+              onPress={handleVerifyOtp}
+            />
+          </View>
         </View>
-        <Spacer height={0} />
-        <OTPInput onSubmitOtp={handleOtp} code="511226" />
-        <FieldErrorMessage error={error} />
-        <View style={styles.btnContainer}>
-          <Button
-            title="Reset Password"
-            type="primary"
-            onPress={handleVerifyOtp}
-          />
-        </View>
-      </View>
-    </Padding>
+      </Padding>
+    </>
   );
 };
 

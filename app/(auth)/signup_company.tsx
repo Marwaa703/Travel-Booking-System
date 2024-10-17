@@ -1,4 +1,5 @@
 import Padding from "@/components/containers/Padding";
+import Header from "@/components/core/Header";
 import MultiStepRegisterCompanyForm from "@/components/forms/MultiStepRegisterCompanyForm";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -8,12 +9,13 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 const SignupCompany = () => {
   return (
     <ScrollView>
+      <Header title="Register your company now" rightIcon="" leftIcon="" />
       <Padding>
         <View style={styles.container}>
           {/* header */}
           <View style={styles.top}>
             <View style={styles.header}>
-              <Text style={styles.title}>Register your company now</Text>
+              {/* <Text style={styles.title}>Register your company now</Text> */}
             </View>
             {/* headerend  */}
             {/* form  */}
