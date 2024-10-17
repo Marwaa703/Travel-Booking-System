@@ -19,14 +19,14 @@ import { updateCompanyDetails } from "@/redux/actions/companiesActions";
 interface UpdateCompanyStatusProps {
   visible: boolean;
   onClose: () => void;
-  // onUpdate: (company: object) => void;
+  onApprove: (companyId: string) => void;
   company: Company; // Adjust this type according to your company object structure
 }
 
 const UpdateCompanyStatus: React.FC<UpdateCompanyStatusProps> = ({
   visible,
   onClose,
-  // onUpdate,
+  onApprove,
   company,
 }) => {
   const dispatch = useAppDispatch();
@@ -46,7 +46,17 @@ const UpdateCompanyStatus: React.FC<UpdateCompanyStatusProps> = ({
 
     if (section === "Details") {
       dispatch(updateCompanyDetails(updatedCompany));
+    } else if (section === undefined) {
+      dispatch(
+        updateCompanyDetails({
+          ...company,
+          approved: true,
+          admin_msg: adminMsg,
+          status: "approved",
+        }),
+      );
     }
+    onApprove(company.id as string);
     onClose(); // Close the modal after updating
   };
 

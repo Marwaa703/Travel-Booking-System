@@ -81,6 +81,13 @@ const CompanyProfile: React.FC = () => {
                 </Text>
               </View>
               <Spacer height={24} />
+
+              {approved === true && status === "approved" && (
+                <>
+                  <Text>{adminMessage}</Text>
+                  <Spacer height={16} />
+                </>
+              )}
               {approved === false && status === "rejected" && (
                 <>
                   <Text>Rejection Note: {msg && msg}</Text>

@@ -35,20 +35,13 @@ const Pending = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageModal, setImageModal] = useState(false);
 
-  const handleApprove = (c: Company) => {
+  const handleApprove = (id: string) => {
     // update server
-    dispatch(
-      updateCompanyDetails({
-        ...c,
-        approved: true,
-        admin_msg: "Congratulations! your company has been approved",
-        status: "approved",
-      }),
-    );
+
     // console.log(`Company with ID ${company?.name} approved!`);
 
     setCompanies((prevCompanies) =>
-      prevCompanies.filter((company) => company?.id !== c.id),
+      prevCompanies.filter((company) => company?.id !== id),
     );
   };
   // handle deny is don on UpdateCompanyStatus
@@ -124,22 +117,23 @@ const Pending = () => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.approveButton}
-                  onPress={() => handleApprove(company)}
+                  onPress={() => setModalVisible(true)}
                 >
-                  <Text style={styles.buttonText}>Approve</Text>
+                  <Text style={styles.buttonText}>Change Company Status</Text>
                 </TouchableOpacity>
                 <UpdateCompanyStatus
                   company={company}
                   onClose={() => setModalVisible(false)}
                   visible={isModalVisible}
+                  onApprove={(id) => handleApprove(id)}
                 />
 
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.denyButton}
                   onPress={() => setModalVisible(true)}
                 >
                   <Text style={styles.buttonText}>Reject</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
               <Spacer />
             </View>

@@ -33,7 +33,7 @@ const AdminProfile: React.FC = () => {
           leftIconName="pending-actions"
         />
 
-        <Spacer />
+        <Spacer height={16} />
         <SettingCard
           title="Companies Approved"
           onPress={() => {
@@ -41,7 +41,7 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="verified"
         />
-        <Spacer />
+        <Spacer height={16} />
         <SettingCard
           title="Trips Analysis"
           onPress={() => {
@@ -49,7 +49,7 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="bar-chart"
         />
-        <Spacer />
+        <Spacer height={16} />
         <SettingCard
           title="Register Users"
           onPress={() => {
@@ -57,7 +57,7 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="person-add"
         />
-        <Spacer />
+        <Spacer height={16} />
       </Padding>
     </ScreenWraper>
   );
