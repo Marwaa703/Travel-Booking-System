@@ -25,6 +25,7 @@ import * as Notifications from "expo-notifications";
 import Hero from "@/components/core/Hero";
 import { companyUserRoles } from "@/types/company";
 import { Trip } from "@/types/trip";
+import { travelerImage1, travelerImage2 } from "@/constants/icons";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
@@ -113,7 +114,7 @@ const Home = () => {
         contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
       >
         <Header />
-        <Hero />
+        <Hero travelerImage={travelerImage2} />
         <Spacer />
         {/* <Text style={styles.title}>Explore the Beautiful</Text>
         <Text style={styles.span}>World!</Text>
@@ -211,8 +212,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   subtitle: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 18,
     color: COLORS.textPrimary,
     // paddingTop: 15,
     flex: 1,

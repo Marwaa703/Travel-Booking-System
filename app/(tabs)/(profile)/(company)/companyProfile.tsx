@@ -19,7 +19,6 @@ import { fetchTrips } from "@/redux/actions/tripActions";
 import CompanyStatus from "@/components/company/CompanyStatus";
 import Spacer from "@/components/Spacer";
 import Toast from "react-native-toast-message";
-import ActionButton from "@/components/buttons/ActionButton";
 import { adminMsgSpliter } from "@/constants/admin";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
@@ -59,12 +58,6 @@ const CompanyProfile: React.FC = () => {
         onRightIconPress={logout}
         onLeftIconPress={router.back}
       />
-      {/* <ActionButton
-        text="Check"
-        onPress={() => {
-          console.log({ status, approved, section, msg });
-        }}
-      /> */}
       <Toast />
       {currentCompany && (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -81,13 +74,16 @@ const CompanyProfile: React.FC = () => {
                 </Text>
               </View>
               <Spacer height={24} />
-
-              {approved === true && status === "approved" && (
+              {/* improved: should be displayed once */}
+              {/* {approved === true && status === "approved" && (
                 <>
                   <Text>{adminMessage}</Text>
+                  <Text style={{ textAlign: "center" }}>
+                    Start adding trips
+                  </Text>
                   <Spacer height={16} />
                 </>
-              )}
+              )} */}
               {approved === false && status === "rejected" && (
                 <>
                   <Text>Rejection Note: {msg && msg}</Text>
@@ -138,7 +134,9 @@ const CompanyProfile: React.FC = () => {
               <Spacer height={16} />
               <SettingCard
                 title="Other Settings"
-                onPress={() => {}}
+                onPress={() => {
+                  router.push("/(profile)/settings");
+                }}
                 leftIconName="tune"
               />
             </View>

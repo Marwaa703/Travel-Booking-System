@@ -5,8 +5,8 @@ export interface TripDetailes {
   max_reservations: number;
   id?: string;
   trip_id?: string;
-  end_date?: Date;
   date: Date;
+  end_date: Date;
   status?: TripStatus;
   rate?: number | null;
   isFavorite?: boolean;

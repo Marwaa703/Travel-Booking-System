@@ -20,7 +20,7 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   const [images, setImages] = useState<TripImage[]>([]);
 
   const handleAddImage = () => {
-    if (imageUrl && caption) {
+    if (imageUrl) {
       if (imageUrlPattern.test(imageUrl)) {
         setImages([...images, { image_url: imageUrl, caption }]);
         setCaption("");

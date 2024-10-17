@@ -9,6 +9,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import OldestPostCard from "@/components/blogs/OldestPostCard";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
+import Hero from "@/components/core/Hero";
+import { travelerImage1, travelerImage2 } from "@/constants/icons";
 
 interface Blog {
   id: number;
@@ -29,7 +31,6 @@ interface Category {
 const Blogs: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) =>
       prev.includes(category)
@@ -94,7 +95,7 @@ const Blogs: React.FC = () => {
           <>
             {/* Header Section */}
             <View style={styles.headerContainer}>
-              <View style={styles.header}>
+              {/* <View style={styles.header}>
                 <Ionicons
                   name="person-circle-outline"
                   size={30}
@@ -105,13 +106,14 @@ const Blogs: React.FC = () => {
                   size={30}
                   color={COLORS.primary}
                 />
-              </View>
+              </View> */}
+              <Hero travelerImage={travelerImage1} />
 
-              <View style={styles.welcomeContainer}>
+              {/* <View style={styles.welcomeContainer}>
                 <Text style={styles.welcomeText}>
                   Explore the Latest Travel Blogs & Updates
                 </Text>
-              </View>
+              </View> */}
 
               {/* Categories Section */}
               <Text style={styles.sectionTitle}>Categories</Text>
@@ -198,10 +200,10 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginVertical: 10,
     paddingHorizontal: 10,
-    color: COLORS.secondary,
+    color: COLORS.primary,
     marginBottom: 10,
   },
   emptyStateContainer: {
