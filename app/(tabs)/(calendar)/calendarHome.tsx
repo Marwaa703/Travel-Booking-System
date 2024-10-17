@@ -1,5 +1,11 @@
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -16,6 +22,7 @@ import { setError } from "@/redux/slices/companiesSlice";
 import { User } from "@/types/user";
 import { useDispatch } from "react-redux";
 import { setBookedTrips } from "@/redux/slices/bookedTripSlice";
+import useRefreshControl from "@/hooks/useRefreshControl";
 
 const Calendar = () => {
   const user = useAppSelector(
@@ -25,29 +32,43 @@ const Calendar = () => {
   const userId = user?.id;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchBookedTrips = async () => {
-      try {
-        const trips = await getBookedTripsByUserId(userId!);
-        dispatch(setBookedTrips(trips));
-        const tripsWithDetails = await Promise.all(
-          trips.map(async (booking: { trip_id: string }) => {
-            const trip = await getTripById(booking.trip_id);
-            return trip;
-          }),
-        );
-        setTripDetails(tripsWithDetails);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
+  const fetchBookedTrips = useCallback(async () => {
+    try {
+      const trips = await getBookedTripsByUserId(userId!);
+      dispatch(setBookedTrips(trips));
+      const tripsWithDetails = await Promise.all(
+        trips.map(async (booking: { trip_id: string }) => {
+          const trip = await getTripById(booking.trip_id);
+          console.log(trip);
+          const tripImage = trip.images ? trip.images[0] : null;
 
-    fetchBookedTrips();
-  }, [userId, dispatch]);
+          return { ...trip, image_url: tripImage };
+        }),
+      );
+
+      const activeTrips = tripsWithDetails.filter(
+        (trip) => trip.status !== "completed",
+      );
+
+      setTripDetails(activeTrips);
+    } catch (error) {
+      setError(error.message);
+    }
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchBookedTrips();
+    }
+  }, [userId, fetchBookedTrips]);
 
   const tripStartDates = useMemo(() => {
     return tripDetails.map((trip) => moment(trip.date).format("YYYY-MM-DD"));
   }, [tripDetails]);
+
+  const { refreshControl } = useRefreshControl({
+    onRefresh: fetchBookedTrips,
+  });
 
   return (
     <View style={styles.container}>
@@ -67,7 +88,7 @@ const Calendar = () => {
         </Text>
       </View>
       <Spacer />
-      <ScrollView>
+      <ScrollView refreshControl={<RefreshControl {...refreshControl} />}>
         <Padding>
           <View style={{ marginTop: 10 }}>
             {tripDetails.length === 0 ? (

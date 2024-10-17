@@ -14,6 +14,10 @@ import { getInstructionsByTripId } from "@/api/trips/tripInstruction";
 import { TripInstruction } from "@/types/trip";
 import { useAppSelector } from "@/redux/store";
 import { selectTripById } from "@/redux/slices/tripsSlice";
+import StarRating from "@/components/StarRating";
+import { updateTrip } from "@/api/trips/trip";
+import { useDispatch } from "react-redux";
+import { moveTripToPrevious } from "@/redux/slices/tripsSlice";
 
 const TripInstructions: React.FC = () => {
   const route = useRoute();
@@ -22,34 +26,43 @@ const TripInstructions: React.FC = () => {
   const [visibleMessages, setVisibleMessages] = useState<TripInstruction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [ratingSubmitted, setRatingSubmitted] = useState<boolean>(false);
   const trip = useAppSelector((state) => selectTripById(state.trips, tripId));
-  useEffect(() => {
-    const fetchInstructions = async () => {
-      setLoading(true);
-      try {
-        const instructions = await getInstructionsByTripId(tripId);
-        setChatMessages(instructions);
-      } catch (err: any) {
-        setError(err.message || "Failed to load instructions");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const dispatch = useDispatch();
 
-    fetchInstructions();
-  }, [tripId]);
+  const hasTripEnded = trip.end_date && new Date(trip.end_date) <= new Date();
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date();
-      const visibleMessages = chatMessages.filter(
-        (message) =>
-          new Date(message.display_time).getTime() <= currentTime.getTime(),
-      );
-      setVisibleMessages(visibleMessages);
-    }, 1000);
+    if (!hasTripEnded) {
+      const fetchInstructions = async () => {
+        setLoading(true);
+        try {
+          const instructions = await getInstructionsByTripId(tripId);
+          setChatMessages(instructions);
+        } catch (err: any) {
+          setError(err.message || "Failed to load instructions");
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    return () => clearInterval(intervalId);
+      fetchInstructions();
+    }
+  }, [tripId, hasTripEnded]);
+
+  useEffect(() => {
+    if (chatMessages.length > 0) {
+      const intervalId = setInterval(() => {
+        const currentTime = new Date();
+        const visibleMessages = chatMessages.filter(
+          (message) =>
+            new Date(message.display_time).getTime() <= currentTime.getTime(),
+        );
+        setVisibleMessages(visibleMessages);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
   }, [chatMessages]);
 
   const formatTimestamp = (display_time: string) => {
@@ -69,6 +82,21 @@ const TripInstructions: React.FC = () => {
       </Text>
     </View>
   );
+
+  const handleRatingChange = async (rate: number) => {
+    try {
+      const updatedTripRate = await updateTrip(tripId, {
+        rate,
+        status: "completed",
+      });
+      console.log({ updatedTripRate });
+      dispatch(moveTripToPrevious(updatedTripRate));
+      setRatingSubmitted(true);
+    } catch (error) {
+      console.error("Failed to update trip rating:", error);
+      setError("Failed to submit rating. Please try again.");
+    }
+  };
 
   if (loading) {
     return (
@@ -99,17 +127,42 @@ const TripInstructions: React.FC = () => {
         }}
       />
       <View style={styles.container}>
-        <FlatList
-          data={visibleMessages}
-          renderItem={renderMessage}
-          keyExtractor={(item) => item?.instruction_id.toString()}
-          contentContainerStyle={styles.chatContainer}
-        />
-        <View style={styles.bottomTextContainer}>
-          <Text style={styles.bottomText}>
-            The instructions for your trip will appear here in time.
-          </Text>
-        </View>
+        {!hasTripEnded ? (
+          <>
+            <FlatList
+              data={visibleMessages}
+              renderItem={renderMessage}
+              keyExtractor={(item) => item?.instruction_id.toString()}
+              contentContainerStyle={styles.chatContainer}
+            />
+            <View style={styles.bottomTextContainer}>
+              <Text style={styles.bottomText}>
+                The instructions for your trip will appear here in time.
+              </Text>
+            </View>
+          </>
+        ) : (
+          <View style={styles.bottomTextContainer}>
+            <Text style={styles.endTripText}>
+              Your adventure has come to a close! We hope you enjoyed every
+              moment. Thank you for being with us!
+            </Text>
+          </View>
+        )}
+        {hasTripEnded && (
+          <View style={styles.ratingContainer}>
+            {!ratingSubmitted ? (
+              <>
+                <Text style={styles.ratingText}>Rate your trip:</Text>
+                <StarRating onRatingChange={handleRatingChange} />
+              </>
+            ) : (
+              <Text style={styles.thankYouText}>
+                Thank you for your rating!
+              </Text>
+            )}
+          </View>
+        )}
       </View>
     </>
   );
@@ -169,5 +222,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.error,
     fontWeight: "bold",
+    textAlign: "center",
+  },
+  endTripText: {
+    textAlign: "center",
+    color: COLORS.success,
+    fontWeight: "bold",
+  },
+  ratingContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  ratingText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: COLORS.textPrimary,
+  },
+  thankYouText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: COLORS.success,
   },
 });

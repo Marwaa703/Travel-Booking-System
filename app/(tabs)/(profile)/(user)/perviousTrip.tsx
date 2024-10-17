@@ -1,15 +1,15 @@
 import { View, Text, Dimensions, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import Header from "@/components/core/Header";
-import { trips } from "@/DummyData/trips.json";
 import Card from "@/components/Card";
 import { COLORS, SPACING } from "@/constants/theme";
+import { useAppSelector } from "@/redux/store";
 
 const PerviousTrip = () => {
-  // Uncomment the next line to mock the trips data as empty for testing
-  const trips = [];
+  const previousTrips = useAppSelector((state) => state.trips.previousTrips);
+  console.log("Previous Trips:", previousTrips);
 
-  if (trips.length === 0) {
+  if (!Array.isArray(previousTrips) || previousTrips.length === 0) {
     return (
       <>
         <Header title="Previous Trips" />
@@ -25,19 +25,19 @@ const PerviousTrip = () => {
       <Header title="Previous Trips" />
       <View style={styles.container}>
         <FlatList
-          data={trips}
+          data={previousTrips}
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
               <Card
-                id={item.id}
-                image={{ uri: item.image }}
-                title={item.title}
-                subtitle={item.location}
-                rating={item.rating}
+                id={item.trip_id}
+                // image={{ uri: item.}}
+                title={item.name}
+                subtitle={item.description}
+                rating={item.rate}
               />
             </View>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.trip_id}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.scrollContainer}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 interface StarRatingProps {
@@ -22,7 +22,6 @@ const StarRating: React.FC<StarRatingProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Rate your trip</Text>
       <View style={styles.starContainer}>
         {[...Array(maxStars)].map((_, index) => (
           <TouchableOpacity
@@ -49,12 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#333",
-  },
+
   starContainer: {
     flexDirection: "row",
   },

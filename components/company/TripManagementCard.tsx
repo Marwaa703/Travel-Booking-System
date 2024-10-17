@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Alert } from "react-native";
 import { Trip, TripDetailes, TripStatus } from "@/types/trip"; // Importing TripStatus type
 import ActionButton from "../buttons/ActionButton";
 import { COLORS } from "@/constants/theme";
@@ -10,6 +10,7 @@ import { useAppDispatch } from "@/redux/store";
 import { deleteFullTrip, updateTripStatus } from "@/redux/actions/tripActions";
 import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
+import { getUserBookedByTripId } from "@/api/bookedTrips";
 
 const defaultImage = require("@/assets/imgDefault.png");
 
@@ -58,10 +59,33 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
     }
   };
 
-  const handleChangeStatus = () => {
+  const handleChangeStatus = async () => {
+    try {
+      const bookedUsers = await getUserBookedByTripId(trip_id as string);
+      if (bookedUsers.length > 0) {
+        // Toast notification or alert that the status cannot be changed
+        // Toast.show({
+        //   type: "error",
+        //   text1: "Cannot Change Status",
+        //   text2: "This trip cannot be paused because there are users booked.",
+        //   position: "top",
+        // });
+        Alert.alert(
+          "This trip cannot be paused because there are users booked.",
+        );
+        return;
+      }
+    } catch (error) {
+      // Toast.show({
+      //   type: "error",
+      //   text1: "Error Fetching Booked Users",
+      //   text2:
+      //     error.message || "An error occurred while checking booked users.",
+      //   position: "top",
+      // });
+      return;
+    }
     const newStatus = status === "paused" ? "active" : "paused";
-    // todo: check if trip is any user booked or not
-
     const updated: Partial<TripDetailes> = {
       status: newStatus,
     };

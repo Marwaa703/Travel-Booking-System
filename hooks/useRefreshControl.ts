@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RefreshControlProps, RefreshControl } from "react-native";
+import { RefreshControlProps } from "react-native";
 
 type UseRefreshControlProps = {
   onRefresh: () => Promise<void>;
