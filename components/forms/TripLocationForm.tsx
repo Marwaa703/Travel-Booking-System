@@ -227,7 +227,7 @@ interface TripLocationFormProps {
 
 const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   // const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
-
+  const [activeIcon, setActiveIcon] = useState(false);
   const [placeholder, setPlaceholder] = useState(
     "Search for a location or place",
   );
@@ -263,6 +263,7 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
         setImageUrl(""); // Clear the image URL input after adding
         setSelectedLocation({ name: "", lat: null, lon: null }); // Reset selected location
         setPlaceholder("Search for places");
+        setActiveIcon(false);
       } else {
         Toast.show({
           text1: "Invalid Image URL",
@@ -328,9 +329,11 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
             <Text>or</Text>
           </View>
           <LocationPicker
-            onLocationSelect={(lat, lon) =>
-              setSelectedLocation((prev) => ({ ...prev, lat, lon }))
-            }
+            active={activeIcon}
+            onLocationSelect={(lat, lon) => {
+              setSelectedLocation((prev) => ({ ...prev, lat, lon }));
+              setActiveIcon(true);
+            }}
           />
         </View>
         <Spacer height={14} />

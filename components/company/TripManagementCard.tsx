@@ -9,6 +9,7 @@ import { getStatusStyle } from "@/constants/styles";
 import { useAppDispatch } from "@/redux/store";
 import { deleteFullTrip, updateTripStatus } from "@/redux/actions/tripActions";
 import Toast from "react-native-toast-message";
+import { useRouter } from "expo-router";
 
 const defaultImage = require("@/assets/imgDefault.png");
 
@@ -17,6 +18,8 @@ interface TripManagementCardProps {
 }
 
 const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
+  const router = useRouter();
+
   const { status, trip_id, company_id, images, name, price } = trip;
   const image = images[0]?.image_url;
   const imageSource = image ? { uri: image } : defaultImage;
@@ -58,6 +61,7 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
   const handleChangeStatus = () => {
     const newStatus = status === "paused" ? "active" : "paused";
     // todo: check if trip is any user booked or not
+
     const updated: Partial<TripDetailes> = {
       status: newStatus,
     };
@@ -78,6 +82,10 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
         //   position: "top",
         // });
       });
+  };
+
+  const handleInstructions = (id: string) => {
+    router.push(`tripInstruction?id=${id}`);
   };
 
   return (
@@ -121,6 +129,14 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
             variant="action"
             textColor="red"
             style={[styles.actionButton]}
+          />
+        )}
+        {status === "active" && (
+          <ActionButton
+            onPress={() => handleInstructions(trip_id as string)}
+            text={"Instructions"}
+            style={[styles.actionButton, { marginRight: 4 }]}
+            variant="secondary"
           />
         )}
         {(status === "paused" || status === "active") && (

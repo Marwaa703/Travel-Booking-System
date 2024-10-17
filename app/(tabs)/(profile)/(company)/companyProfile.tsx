@@ -105,6 +105,7 @@ const CompanyProfile: React.FC = () => {
                   />
                 </>
               )}
+              {/* todo: {rejectd will show edit card and admin msg} */}
               <Spacer height={16} />
               <SettingCard
                 title="Other Settings"

@@ -145,6 +145,7 @@ const Home = () => {
           )}
         </View>
         <Spacer />
+
         <View style={styles.company}>
           <View style={styles.subtitleContainer}>
             <Text style={styles.subtitle}>Popular Companies</Text>
