@@ -135,7 +135,7 @@ const CompanyProfile: React.FC = () => {
               )}
               <Spacer height={16} />
               <SettingCard
-                title="Other Settings"
+                title="Settings"
                 onPress={() => {
                   router.push("/(profile)/settings");
                 }}

@@ -79,9 +79,11 @@ const Card: React.FC<CardProps> = ({
         />
 
         {/* Rating */}
-        <View style={styles.ratingContainer}>
-          <Rating rate={rating} />
-        </View>
+        {rating && (
+          <View style={styles.ratingContainer}>
+            <Rating rate={rating} />
+          </View>
+        )}
       </View>
 
       {/* Conditionally render price or button */}
@@ -115,8 +117,8 @@ const styles = StyleSheet.create({
     height: CARD_HEIGHT,
     borderRadius: 10,
     overflow: "hidden",
-    backgroundColor: "#fff",
-    elevation: 1,
+    backgroundColor: COLORS.bg_surface,
+    elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.9,
@@ -142,8 +144,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONTS.normal,
-    fontWeight: "bold",
-    color: "#000",
+    // fontWeight: "bold",
+    color: COLORS.textPrimary,
   },
   ratingContainer: {
     flexDirection: "row",

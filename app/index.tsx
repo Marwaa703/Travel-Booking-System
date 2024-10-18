@@ -1,6 +1,6 @@
 import Button from "@/components/Buttons";
 import Spacer from "@/components/Spacer";
-import { FONTS, SPACING } from "@/constants/theme";
+import { COLORS, FONTS, SPACING } from "@/constants/theme";
 import {
   fetchCompanies,
   fetchCompanyUsers,
@@ -64,7 +64,7 @@ const ExploreScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: COLORS.bg,
   },
   topImage: {
     width: "100%",

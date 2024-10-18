@@ -90,7 +90,7 @@ const WeeklyCalendar = ({ tripStartDates }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg_surface,
   },
   currentDateText: {
     fontSize: FONTS.large,

@@ -79,7 +79,7 @@ const ProfileScreen: React.FC = () => {
             />
             <Spacer height={16} />
             <SettingCard
-              title="Other Setting"
+              title="Setting"
               onPress={() => {
                 router.push("/(profile)/settings");
               }}

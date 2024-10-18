@@ -9,6 +9,7 @@ import { formattedDate } from "@/utils";
 import useRefreshControl from "@/hooks/useRefreshControl";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
+import { COLORS } from "@/constants/theme";
 
 const PopularTrips: React.FC = () => {
   const dispatch = useDispatch();
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: COLORS.bg,
   },
 });
 

@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import Spacer from "@/components/Spacer";
 import Padding from "@/components/containers/Padding";
-import { COLORS, FONTS } from "@/constants/theme";
+import { COLORS, dark, FONTS, light } from "@/constants/theme";
 import ToggleSwitch from "@/components/forms/FullToggleSwitch";
 
 const Settings = () => {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const themes = {
+    light,
+    dark,
+  };
   return (
     <ScreenWraper>
       <Spacer height={24} />

@@ -109,10 +109,12 @@ const Home = () => {
 
   const trips = filterTripsByRole(allTrips, user);
   return (
-    <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
+    <SafeAreaView
+      style={{ flex: 1, marginBottom: 70, backgroundColor: COLORS.bg }}
+    >
       <Header onLeftIconPress={() => {}} leftIcon="" title="Home" />
       <ScrollView
-        contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
+        contentContainerStyle={{ padding: 20, backgroundColor: COLORS.bg }}
       >
         <Hero travelerImage={travelerImage2} />
         <Spacer />
@@ -198,21 +200,21 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
-  span: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: COLORS.primary,
-  },
-  image: {
-    width: 95,
-    marginBottom: 20,
-    marginLeft: 40,
-  },
+  // title: {
+  //   fontSize: 35,
+  //   fontWeight: "bold",
+  //   color: COLORS.textPrimary,
+  // },
+  // span: {
+  //   fontSize: 35,
+  //   fontWeight: "bold",
+  //   color: COLORS.primary,
+  // },
+  // image: {
+  //   width: 95,
+  //   marginBottom: 20,
+  //   marginLeft: 40,
+  // },
   subtitle: {
     fontSize: 18,
     color: COLORS.textPrimary,

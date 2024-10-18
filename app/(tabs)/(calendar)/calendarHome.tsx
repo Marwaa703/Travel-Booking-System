@@ -100,12 +100,12 @@ const Calendar = () => {
                 return (
                   <View key={index} style={styles.cardWrapper}>
                     <TripProfileCard
-                      id={trip.id}
+                      id={trip?.id}
                       image={firstImageUrl}
-                      title={trip.name}
-                      date={<FormatDate dateString={trip.date} />}
+                      title={trip?.name}
+                      date={<FormatDate dateString={trip?.date} />}
                       rating={4}
-                      price={trip.price}
+                      price={trip?.price}
                       avatars={[
                         {
                           uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
@@ -133,7 +133,7 @@ const Calendar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: COLORS.bg,
     flex: 1,
     marginBottom: 80,
   },
@@ -154,10 +154,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
-  viewAll: {
-    fontSize: FONTS.normal,
-    color: COLORS.secondary,
-  },
+  // viewAll: {
+  //   fontSize: FONTS.normal,
+  //   color: COLORS.secondary,
+  // },
   cardWrapper: {
     marginBottom: 20,
   },

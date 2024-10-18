@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: SPACING.large,
+    backgroundColor: COLORS.bg,
   },
   top: {
     // flex: 4,
