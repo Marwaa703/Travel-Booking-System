@@ -20,8 +20,8 @@ const Notification = () => {
   return (
     <View style={styles.container}>
       <Header
-        leftIcon="chevron-back"
-        rightIcon="trash"
+        leftIcon="arrow-back"
+        rightIcon="trash-outline"
         onLeftIconPress={() => router.push("home")}
         onRightIconPress={() => setNotifications([])}
         title="Notification"

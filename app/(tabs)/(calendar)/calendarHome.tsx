@@ -1,5 +1,11 @@
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
 import { COLORS, FONTS } from "@/constants/theme";
@@ -16,6 +22,7 @@ import { setError } from "@/redux/slices/companiesSlice";
 import { User } from "@/types/user";
 import { useDispatch } from "react-redux";
 import { setBookedTrips } from "@/redux/slices/bookedTripSlice";
+import useRefreshControl from "@/hooks/useRefreshControl";
 
 const Calendar = () => {
   const user = useAppSelector(
@@ -24,36 +31,48 @@ const Calendar = () => {
   const [tripDetails, setTripDetails] = useState([]);
   const userId = user?.id;
   const dispatch = useDispatch();
+  const { trips: tripImgs } = useAppSelector((state) => state.trips);
+
+  const fetchBookedTrips = useCallback(async () => {
+    try {
+      const trips = await getBookedTripsByUserId(userId!);
+      dispatch(setBookedTrips(trips));
+      const tripsWithDetails = await Promise.all(
+        trips.map(async (booking: { trip_id: string }) => {
+          const trip = await getTripById(booking.trip_id);
+          return { ...trip };
+        }),
+      );
+
+      const activeTrips = tripsWithDetails.filter(
+        (trip) => trip.status !== "completed",
+      );
+
+      setTripDetails(activeTrips);
+    } catch (error) {
+      setError(error.message);
+    }
+  }, [dispatch, userId]);
 
   useEffect(() => {
-    const fetchBookedTrips = async () => {
-      try {
-        const trips = await getBookedTripsByUserId(userId!);
-        dispatch(setBookedTrips(trips));
-        const tripsWithDetails = await Promise.all(
-          trips.map(async (booking: { trip_id: string }) => {
-            const trip = await getTripById(booking.trip_id);
-            return trip;
-          }),
-        );
-        setTripDetails(tripsWithDetails);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    fetchBookedTrips();
-  }, [userId, dispatch]);
+    if (userId) {
+      fetchBookedTrips();
+    }
+  }, [userId, fetchBookedTrips]);
 
   const tripStartDates = useMemo(() => {
     return tripDetails.map((trip) => moment(trip.date).format("YYYY-MM-DD"));
   }, [tripDetails]);
 
+  const { refreshControl } = useRefreshControl({
+    onRefresh: fetchBookedTrips,
+  });
+
   return (
     <View style={styles.container}>
       <Header
         title="Schedule"
-        leftIcon="chevron-back"
+        leftIcon="home-outline"
         onLeftIconPress={() => router.push("home")}
       />
       <View style={styles.calendar}>
@@ -67,37 +86,47 @@ const Calendar = () => {
         </Text>
       </View>
       <Spacer />
-      <ScrollView>
+      <ScrollView refreshControl={<RefreshControl {...refreshControl} />}>
         <Padding>
           <View style={{ marginTop: 10 }}>
             {tripDetails.length === 0 ? (
               <Text style={styles.noTripsText}>No trips booked yet.</Text>
             ) : (
-              tripDetails.map((trip, index) => (
-                <View key={index} style={styles.cardWrapper}>
-                  <TripProfileCard
-                    id={trip.id}
-                    image={trip.image_url}
-                    title={trip.name}
-                    date={<FormatDate dateString={trip.date} />}
-                    rating={4}
-                    price={trip.price}
-                    avatars={[
-                      {
-                        uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
-                      },
-                      {
-                        uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg",
-                      },
-                      {
-                        uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg",
-                      },
-                    ]}
-                    peopleJoined={4}
-                    caller="calendar"
-                  />
-                </View>
-              ))
+              tripDetails.map((trip, index) => {
+                const tripWithImages = tripImgs.find(
+                  (t) => t.trip_id === trip.id,
+                );
+
+                const firstImageUrl =
+                  tripWithImages && tripWithImages.images.length > 0
+                    ? tripWithImages.images[0].image_url
+                    : null;
+                return (
+                  <View key={index} style={styles.cardWrapper}>
+                    <TripProfileCard
+                      id={trip.id}
+                      image={firstImageUrl}
+                      title={trip.name}
+                      date={<FormatDate dateString={trip.date} />}
+                      rating={4}
+                      price={trip.price}
+                      avatars={[
+                        {
+                          uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
+                        },
+                        {
+                          uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg",
+                        },
+                        {
+                          uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg",
+                        },
+                      ]}
+                      peopleJoined={4}
+                      caller="calendar"
+                    />
+                  </View>
+                );
+              })
             )}
           </View>
         </Padding>
@@ -110,7 +139,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
-    marginBottom: 100,
+    marginBottom: 80,
   },
   calendar: {
     width: "100%",

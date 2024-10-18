@@ -6,13 +6,14 @@ export interface BookedTrip {
   trip_id: string;
 }
 
-// Define the state type
 interface BookedTripsState {
   trips: BookedTrip[];
+  usersBookedByTripId: { [key: string]: string[] }; // key as trip_id, value as an array of user_ids
 }
 
 const initialState: BookedTripsState = {
   trips: [],
+  usersBookedByTripId: {},
 };
 
 const bookedTripSlice = createSlice({
@@ -28,19 +29,34 @@ const bookedTripSlice = createSlice({
       );
     },
     setBookedTrips: (state, action: PayloadAction<BookedTrip[]>) => {
-      state.trips = action.payload; // Update the trips with the fetched ones
+      state.trips = action.payload;
+    },
+    setUsersBookedByTrip: (
+      state,
+      action: PayloadAction<{ trip_id: string; users: string[] }>,
+    ) => {
+      state.usersBookedByTripId[action.payload.trip_id] = action.payload.users;
     },
   },
 });
 
-export const { addBookedTrip, removeBookedTrip, setBookedTrips } =
-  bookedTripSlice.actions;
+export const {
+  addBookedTrip,
+  removeBookedTrip,
+  setBookedTrips,
+  setUsersBookedByTrip,
+} = bookedTripSlice.actions;
 
+// Selectors
 export const selectAllBookedTrips = (state: RootState) =>
   state.bookedTrips.trips;
 
 export const selectBookedTripsByUser =
   (user_id: string) => (state: RootState) =>
     state.bookedTrips.trips.filter((trip) => trip.user_id === user_id);
+
+export const selectUsersBookedByTrip =
+  (trip_id: string) => (state: RootState) =>
+    state.bookedTrips.usersBookedByTripId[trip_id] || [];
 
 export default bookedTripSlice.reducer;

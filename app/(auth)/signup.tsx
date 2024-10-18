@@ -1,4 +1,5 @@
 import Padding from "@/components/containers/Padding";
+import Header from "@/components/core/Header";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
@@ -8,43 +9,46 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 const Signup = () => {
   return (
-    <ScrollView>
-      <Padding>
-        <View style={styles.container}>
-          {/* header */}
-          <View style={styles.top}>
-            <View style={styles.header}>
-              <Text style={styles.title}>Sign Up now</Text>
-              <Spacer />
-              <Text style={styles.subTitle}>
-                Please fill the details and create account
-              </Text>
-            </View>
-            {/* header_end  */}
-            {/* form  */}
-            <View>
-              <SignupForm />
-              <Spacer />
-              <View style={styles.center}>
-                <Text style={styles.subTitle}>Already have an account?</Text>
-                <LinkButton to={"login"} label="Sign In" />
+    <>
+      <Header title="Sign Up Now" rightIcon="" leftIcon="" />
+      <ScrollView>
+        <Padding>
+          <View style={styles.container}>
+            {/* header */}
+            <View style={styles.top}>
+              <View style={styles.header}>
+                {/* <Text style={styles.title}>Sign Up now</Text> */}
+                <Spacer />
+                <Text style={styles.subTitle}>
+                  Please fill the details and create account
+                </Text>
               </View>
-              <Spacer height={26} />
-              <View style={{ marginHorizontal: "auto" }}>
-                <LinkButton
-                  style={styles.company}
-                  to={"signup_company"}
-                  label="Are you a Company?"
-                />
+              {/* header_end  */}
+              {/* form  */}
+              <View>
+                <SignupForm />
+                <Spacer />
+                <View style={styles.center}>
+                  <Text style={styles.subTitle}>Already have an account?</Text>
+                  <LinkButton to={"login"} label="Sign In" />
+                </View>
+                <Spacer height={26} />
+                <View style={{ marginHorizontal: "auto" }}>
+                  <LinkButton
+                    style={styles.company}
+                    to={"signup_company"}
+                    label="Are you a Company?"
+                  />
+                </View>
+                <Spacer />
               </View>
-              <Spacer />
             </View>
+            {/* End form  */}
+            {/* Bottom  */}
           </View>
-          {/* End form  */}
-          {/* Bottom  */}
-        </View>
-      </Padding>
-    </ScrollView>
+        </Padding>
+      </ScrollView>
+    </>
   );
 };
 

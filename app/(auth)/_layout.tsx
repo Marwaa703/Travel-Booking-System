@@ -27,26 +27,11 @@ const AuthLayout = () => {
   return (
     <>
       <Stack>
-        <Stack.Screen
-          name="login"
-          options={{ headerTitle: "", headerBackground: () => null }}
-        />
-        <Stack.Screen
-          name="signup"
-          options={{ headerTitle: "", headerBackground: () => null }}
-        />
-        <Stack.Screen
-          name="signup_company"
-          options={{ headerTitle: "", headerBackground: () => null }}
-        />
-        <Stack.Screen
-          name="forget_password"
-          options={{ headerTitle: "", headerBackground: () => null }}
-        />
-        <Stack.Screen
-          name="otp"
-          options={{ headerTitle: "", headerBackground: () => null }}
-        />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="signup" options={{ headerShown: false }} />
+        <Stack.Screen name="signup_company" options={{ headerShown: false }} />
+        <Stack.Screen name="forget_password" options={{ headerShown: false }} />
+        <Stack.Screen name="otp" options={{ headerShown: false }} />
       </Stack>
       <StatusBar backgroundColor={"#161622"} style="light" />
     </>

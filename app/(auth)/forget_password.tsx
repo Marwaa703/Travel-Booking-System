@@ -8,6 +8,7 @@ import Button from "@/components/Buttons";
 import FieldErrorMessage from "@/components/forms/FieldErrorMessage";
 import { useRouter } from "expo-router";
 import { emailRegex } from "@/constants/regext";
+import Header from "@/components/core/Header";
 
 const ForgetPass = () => {
   const router = useRouter();
@@ -44,36 +45,39 @@ const ForgetPass = () => {
     }
   };
   return (
-    <Padding>
-      <View style={styles.container}>
-        {/* header */}
-        {/* <View style={styles.top}> */}
-        <View style={styles.header}>
-          <Text style={styles.title}>Forget Password</Text>
-          <Spacer />
-          <Text style={styles.subTitle}>
-            Enter your email address to reset your password
-          </Text>
-        </View>
-        <TextInputField
-          keyboardType="email-address"
-          name="email"
-          onBlur={() => {}}
-          onChangeText={setEmail}
-          value={email}
-          icon="mail"
-          placeholder="myname@mail.com"
-        />
-        <FieldErrorMessage error={error} />
-        <View style={styles.btnContainer}>
-          <Button
-            title="Reset Password"
-            type="primary"
-            onPress={handleResetPassword}
+    <>
+      <Header title="Forget Password" rightIcon="" leftIcon="" />
+      <Padding>
+        <View style={styles.container}>
+          {/* header */}
+          {/* <View style={styles.top}> */}
+          <View style={styles.header}>
+            {/* <Text style={styles.title}>Forget Password</Text> */}
+            <Spacer />
+            <Text style={styles.subTitle}>
+              Enter your email address to reset your password
+            </Text>
+          </View>
+          <TextInputField
+            keyboardType="email-address"
+            name="email"
+            onBlur={() => {}}
+            onChangeText={setEmail}
+            value={email}
+            icon="mail"
+            placeholder="myname@mail.com"
           />
+          <FieldErrorMessage error={error} />
+          <View style={styles.btnContainer}>
+            <Button
+              title="Reset Password"
+              type="primary"
+              onPress={handleResetPassword}
+            />
+          </View>
         </View>
-      </View>
-    </Padding>
+      </Padding>
+    </>
   );
 };
 

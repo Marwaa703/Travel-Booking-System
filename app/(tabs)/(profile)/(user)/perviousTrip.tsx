@@ -1,15 +1,16 @@
 import { View, Text, Dimensions, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import Header from "@/components/core/Header";
-import { trips } from "@/DummyData/trips.json";
 import Card from "@/components/Card";
 import { COLORS, SPACING } from "@/constants/theme";
+import { useAppSelector } from "@/redux/store";
+import { router } from "expo-router";
 
 const PerviousTrip = () => {
-  // Uncomment the next line to mock the trips data as empty for testing
-  const trips = [];
+  const previousTrips = useAppSelector((state) => state.trips.previousTrips);
+  const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
-  if (trips.length === 0) {
+  if (!Array.isArray(previousTrips) || previousTrips.length === 0) {
     return (
       <>
         <Header title="Previous Trips" />
@@ -22,22 +23,36 @@ const PerviousTrip = () => {
 
   return (
     <>
-      <Header title="Previous Trips" />
+      <Header
+        title="Previous Trips"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <View style={styles.container}>
         <FlatList
-          data={trips}
-          renderItem={({ item }) => (
-            <View style={styles.cardContainer}>
-              <Card
-                id={item.id}
-                image={{ uri: item.image }}
-                title={item.title}
-                subtitle={item.location}
-                rating={item.rating}
-              />
-            </View>
-          )}
-          keyExtractor={(item) => item.id.toString()}
+          data={previousTrips}
+          renderItem={({ item }) => {
+            const tripWithImages = tripImgs.find(
+              (trip) => trip.trip_id === item.id,
+            );
+
+            const firstImageUrl =
+              tripWithImages && tripWithImages.images.length > 0
+                ? tripWithImages.images[0].image_url
+                : null;
+            return (
+              <View style={styles.cardContainer}>
+                <Card
+                  id={item.id}
+                  image={firstImageUrl}
+                  title={item.name}
+                  subtitle={item.description}
+                  rating={item.rate}
+                />
+              </View>
+            );
+          }}
+          keyExtractor={(item) => item.trip_id}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.scrollContainer}

@@ -29,13 +29,10 @@ const ProfileScreen: React.FC = () => {
       <Header
         title="User Profile"
         rightIcon="create-outline"
-        leftIcon="arrow-back"
         onRightIconPress={() => {
           router.push("/userEdit");
         }}
-        onLeftIconPress={() => {
-          router.back();
-        }}
+        onLeftIconPress={() => {}}
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <SafeAreaView style={styles.container}>

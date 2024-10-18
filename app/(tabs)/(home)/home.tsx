@@ -113,6 +113,14 @@ const Home = () => {
       <ScrollView
         contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
       >
+        <Header
+          onLeftIconPress={() =>
+            router.navigate(
+              `(tabs)/(profile)/(${user.role ? user.role.toLowerCase() : "defaultRole"})`,
+            )
+          }
+        />
+        <Hero />
         <Header />
         <Hero travelerImage={travelerImage2} />
         <Spacer />
@@ -162,34 +170,36 @@ const Home = () => {
         </View>
         <Spacer />
 
-        <View style={styles.company}>
-          <View style={styles.subtitleContainer}>
-            <Text style={styles.subtitle}>Popular Companies</Text>
-            <Text
-              style={styles.viewAll}
-              onPress={() => router.push("/popularCompanies")}
-            >
-              View All
-            </Text>
+        {(user.role === "Admin" || user.role === "User") && (
+          <View style={styles.company}>
+            <View style={styles.subtitleContainer}>
+              <Text style={styles.subtitle}>Popular Companies</Text>
+              <Text
+                style={styles.viewAll}
+                onPress={() => router.push("/popularCompanies")}
+              >
+                View All
+              </Text>
+            </View>
+            <Spacer />
+            <View style={styles.cardContainer}>
+              {popularCompanies &&
+                popularCompanies.slice(0, 6).map((company, index) => (
+                  <View key={company.id} style={styles.companyCardWrapper}>
+                    <Card
+                      id={company.id as string}
+                      image={company.logo as string}
+                      title={company.name}
+                      subtitle={company.address.slice(0, 20)}
+                      rating={4}
+                      buttonText={"Subscribe"}
+                    />
+                  </View>
+                ))}
+            </View>
+            <Spacer height={SPACING.large} />
           </View>
-          <Spacer />
-          <View style={styles.cardContainer}>
-            {popularCompanies &&
-              popularCompanies.slice(0, 6).map((company, index) => (
-                <View key={company.id} style={styles.companyCardWrapper}>
-                  <Card
-                    id={company.id as string}
-                    image={company.logo as string}
-                    title={company.name}
-                    subtitle={company.address.slice(0, 20)}
-                    rating={4}
-                    buttonText={"Subscibe"}
-                  />
-                </View>
-              ))}
-          </View>
-          <Spacer height={SPACING.large} />
-        </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

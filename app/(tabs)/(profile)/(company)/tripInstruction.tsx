@@ -11,6 +11,7 @@ import { useRoute } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TripInstruction } from "@/types/trip";
 import TextInputField from "@/components/forms/TextInputField";
+import { router } from "expo-router";
 
 const TripEdit: React.FC = () => {
   const [instruction, setInstruction] = useState("");
@@ -108,7 +109,11 @@ const TripEdit: React.FC = () => {
 
   return (
     <>
-      <Header title="Trip Instruction" />
+      <Header
+        title="Trip Instruction"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <View style={styles.container}>
         <Text>Instruction</Text>
         <TextInputField

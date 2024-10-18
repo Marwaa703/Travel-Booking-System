@@ -12,7 +12,8 @@ const Layout = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           let iconName;
-          let isSearchIcon = route.name === ("search" as RouteName);
+          const isSearchIcon = route.name === ("search" as RouteName);
+
           switch (route.name as RouteName) {
             case "(home)":
               iconName = "home-outline";
@@ -38,9 +39,9 @@ const Layout = () => {
             <View
               style={{
                 backgroundColor: isSearchIcon ? COLORS.accent : "transparent",
-                borderRadius: isSearchIcon ? 35 : 0,
-                width: isSearchIcon ? 70 : "auto",
-                height: isSearchIcon ? 70 : "auto",
+                borderRadius: isSearchIcon ? 28 : 0,
+                width: isSearchIcon ? 58 : "auto",
+                height: isSearchIcon ? 58 : "auto",
                 justifyContent: "center",
                 alignItems: "center",
                 shadowColor: isSearchIcon ? COLORS.accent : "transparent",
@@ -48,7 +49,7 @@ const Layout = () => {
                 shadowOffset: { width: 0, height: 5 },
                 shadowRadius: isSearchIcon ? 10 : 0,
                 elevation: isSearchIcon ? 10 : 0,
-                marginBottom: isSearchIcon ? 30 : 0,
+                marginBottom: isSearchIcon ? 25 : 0,
               }}
             >
               <Ionicons
@@ -63,24 +64,24 @@ const Layout = () => {
           position: "absolute",
           bottom: 0,
           backgroundColor: "#fff",
-          height: 100,
-          borderTopLeftRadius: 60,
-          borderTopRightRadius: 60,
+          height: 80,
+          borderTopLeftRadius: 50,
+          borderTopRightRadius: 50,
           shadowColor: "#000",
           shadowOpacity: 0.1,
           shadowOffset: { width: 0, height: 10 },
-          shadowRadius: 20,
+          shadowRadius: 15,
           elevation: 5,
           width: Dimensions.get("window").width,
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.textSecondary,
         tabBarLabelStyle: {
-          fontSize: 12,
-          paddingBottom: 25,
+          fontSize: 10,
+          paddingBottom: 20,
         },
         tabBarItemStyle: {
-          paddingTop: 25,
+          paddingTop: 20,
         },
       })}
     >

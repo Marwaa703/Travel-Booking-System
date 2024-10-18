@@ -16,6 +16,7 @@ import { Company, CompanyPaper, CompanyUser } from "@/types/company";
 import ZoomableImage from "@/components/FullScreenImage";
 import { Image } from "expo-image";
 import Header from "@/components/core/Header";
+import { router } from "expo-router";
 
 const CompanyProfileScreen = () => {
   const [papers, setPapers] = useState<CompanyPaper[]>([]);
@@ -52,7 +53,11 @@ const CompanyProfileScreen = () => {
 
   return (
     <>
-      <Header title="Company Details" />
+      <Header
+        title="Company Details"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <ScrollView style={styles.container}>
         <ScreenWraper>
           <View style={styles.header}>

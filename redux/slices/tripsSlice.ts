@@ -1,16 +1,18 @@
-import { Trip } from "@/types/trip";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Trip, TripDetailes } from "@/types/trip";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TripsState {
   trips: Trip[];
   isLoading: boolean;
   isError: boolean;
+  previousTrips: TripDetailes[];
 }
 
 const initialState: TripsState = {
   trips: [],
   isLoading: false,
   isError: false,
+  previousTrips: [],
 };
 
 const tripsSlice = createSlice({
@@ -69,6 +71,25 @@ const tripsSlice = createSlice({
     //   }
     // },
 
+    moveTripToPrevious: (state, action: PayloadAction<TripDetailes>) => {
+      const ratedTrip = action.payload;
+      console.log("Moving rated trip to previous trips:", ratedTrip);
+      const tripExists = state.previousTrips.some(
+        (trip) => trip.id === ratedTrip.id,
+      );
+
+      if (!tripExists) {
+        state.previousTrips.push(ratedTrip);
+        // console.log("Trip added to Previous Trips:", ratedTrip);
+      } else {
+        console.log(
+          "Trip already exists in Previous Trips, not adding:",
+          ratedTrip,
+        );
+      }
+      // console.log("Updated Previous Trips:", state.previousTrips);
+    },
+
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
@@ -86,6 +107,7 @@ export const selectCompanyTrips = (state: TripsState, companyId: string) =>
   state.trips.filter((t) => t.company_id === companyId);
 export const selectTripById = (state: TripsState, tripId: string) =>
   state.trips.filter((t) => t.trip_id == tripId)[0];
+export const selectPreviousTrips = (state: TripsState) => state.previousTrips;
 
 // Export actions
 export const {
@@ -96,6 +118,7 @@ export const {
   toggleFavorite,
   setLoading,
   setError,
+  moveTripToPrevious,
 } = tripsSlice.actions;
 
 // Export reducer

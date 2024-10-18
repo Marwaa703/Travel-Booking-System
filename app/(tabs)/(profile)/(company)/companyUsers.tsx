@@ -71,7 +71,11 @@ const CompanyUsers = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Company Users" />
+      <Header
+        title="Company Users"
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <View style={styles.addButtonContainer}>
         <View style={styles.addButtonWrapper}>
           <Button
