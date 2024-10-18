@@ -24,7 +24,6 @@ const Search: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { trips: tripImgs } = useAppSelector((state) => state.trips);
-  // console.log(tripImgs);
 
   useEffect(() => {
     const fetchTripsAndLocations = async () => {
@@ -36,7 +35,7 @@ const Search: React.FC = () => {
           tripsData.map((trip) => getLocationsByTripId(trip.id)),
         );
         setLocations(locationsData.flat());
-        console.log(tripsData);
+        // console.log(tripsData);
       } catch (err) {
         setError(err.message);
       } finally {

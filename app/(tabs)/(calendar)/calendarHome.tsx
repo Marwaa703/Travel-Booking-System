@@ -31,6 +31,7 @@ const Calendar = () => {
   const [tripDetails, setTripDetails] = useState([]);
   const userId = user?.id;
   const dispatch = useDispatch();
+  const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
   const fetchBookedTrips = useCallback(async () => {
     try {
@@ -39,10 +40,7 @@ const Calendar = () => {
       const tripsWithDetails = await Promise.all(
         trips.map(async (booking: { trip_id: string }) => {
           const trip = await getTripById(booking.trip_id);
-          console.log(trip);
-          const tripImage = trip.images ? trip.images[0] : null;
-
-          return { ...trip, image_url: tripImage };
+          return { ...trip };
         }),
       );
 
@@ -94,31 +92,41 @@ const Calendar = () => {
             {tripDetails.length === 0 ? (
               <Text style={styles.noTripsText}>No trips booked yet.</Text>
             ) : (
-              tripDetails.map((trip, index) => (
-                <View key={index} style={styles.cardWrapper}>
-                  <TripProfileCard
-                    id={trip.id}
-                    image={trip.image_url}
-                    title={trip.name}
-                    date={<FormatDate dateString={trip.date} />}
-                    rating={4}
-                    price={trip.price}
-                    avatars={[
-                      {
-                        uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
-                      },
-                      {
-                        uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg",
-                      },
-                      {
-                        uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg",
-                      },
-                    ]}
-                    peopleJoined={4}
-                    caller="calendar"
-                  />
-                </View>
-              ))
+              tripDetails.map((trip, index) => {
+                const tripWithImages = tripImgs.find(
+                  (t) => t.trip_id === trip.id,
+                );
+
+                const firstImageUrl =
+                  tripWithImages && tripWithImages.images.length > 0
+                    ? tripWithImages.images[0].image_url
+                    : null;
+                return (
+                  <View key={index} style={styles.cardWrapper}>
+                    <TripProfileCard
+                      id={trip.id}
+                      image={firstImageUrl}
+                      title={trip.name}
+                      date={<FormatDate dateString={trip.date} />}
+                      rating={4}
+                      price={trip.price}
+                      avatars={[
+                        {
+                          uri: "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
+                        },
+                        {
+                          uri: "https://static.vecteezy.com/system/resources/previews/014/212/681/original/female-user-profile-avatar-is-a-woman-a-character-for-a-screen-saver-with-emotions-for-website-and-mobile-app-design-illustration-on-a-white-isolated-background-vector.jpg",
+                        },
+                        {
+                          uri: "https://static.vecteezy.com/system/resources/thumbnails/002/002/257/small_2x/beautiful-woman-avatar-character-icon-free-vector.jpg",
+                        },
+                      ]}
+                      peopleJoined={4}
+                      caller="calendar"
+                    />
+                  </View>
+                );
+              })
             )}
           </View>
         </Padding>

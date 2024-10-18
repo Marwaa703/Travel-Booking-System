@@ -8,7 +8,7 @@ import { router } from "expo-router";
 
 const PerviousTrip = () => {
   const previousTrips = useAppSelector((state) => state.trips.previousTrips);
-  console.log("Previous Trips:", previousTrips);
+  const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
   if (!Array.isArray(previousTrips) || previousTrips.length === 0) {
     return (
@@ -31,17 +31,27 @@ const PerviousTrip = () => {
       <View style={styles.container}>
         <FlatList
           data={previousTrips}
-          renderItem={({ item }) => (
-            <View style={styles.cardContainer}>
-              <Card
-                id={item.trip_id}
-                // image={{ uri: item.}}
-                title={item.name}
-                subtitle={item.description}
-                rating={item.rate}
-              />
-            </View>
-          )}
+          renderItem={({ item }) => {
+            const tripWithImages = tripImgs.find(
+              (trip) => trip.trip_id === item.id,
+            );
+
+            const firstImageUrl =
+              tripWithImages && tripWithImages.images.length > 0
+                ? tripWithImages.images[0].image_url
+                : null;
+            return (
+              <View style={styles.cardContainer}>
+                <Card
+                  id={item.id}
+                  image={firstImageUrl}
+                  title={item.name}
+                  subtitle={item.description}
+                  rating={item.rate}
+                />
+              </View>
+            );
+          }}
           keyExtractor={(item) => item.trip_id}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
