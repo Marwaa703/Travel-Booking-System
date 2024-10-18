@@ -5,6 +5,7 @@ export const COLORS = {
   accent: "#005C78", // Accent color for highlights
   light: "#ffffff", // light color
   bg: "#F1F1F1", // Background color for screens
+  bg_surface: "#e7e7e7", // Background color for screens
   textPrimary: "#333333", // Primary text color
   textSubtitle: "#7D848D", // Primary text color
   textSecondary: "#777777", // Secondary text color

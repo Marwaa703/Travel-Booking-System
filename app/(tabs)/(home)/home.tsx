@@ -23,75 +23,91 @@ import NotificationService from "@/services/NotificationService";
 import Button from "@/components/Buttons";
 import * as Notifications from "expo-notifications";
 import Hero from "@/components/core/Hero";
+import { companyUserRoles } from "@/types/company";
+import { Trip } from "@/types/trip";
+import { travelerImage1, travelerImage2 } from "@/constants/icons";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
   const { isLoading, trips: allTrips } = useAppSelector((state) => state.trips);
-  const avatarImages = avatars.map((avatar) => ({
-    id: avatar.id,
-    uri: avatar.uri,
-  }));
-  const [expoPushToken, setExpoPushToken] = useState("");
+  // const avatarImages = avatars.map((avatar) => ({
+  //   id: avatar.id,
+  //   uri: avatar.uri,
+  // }));
+  // const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
-  useEffect(() => {
-    NotificationService.initialize()
-      .then((token) => setExpoPushToken(token))
-      .catch((error) => console.error(error));
+  // useEffect(() => {
+  //   NotificationService.initialize()
+  //     .then((token) => setExpoPushToken(token))
+  //     .catch((error) => console.error(error));
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
+  //   notificationListener.current =
+  //     Notifications.addNotificationReceivedListener((notification) => {
+  //       setNotification(notification);
+  //     });
 
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+  //   responseListener.current =
+  //     Notifications.addNotificationResponseReceivedListener((response) => {
+  //       console.log(response);
+  //     });
 
-    return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current,
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-  const handleSendNotification = async () => {
-    await NotificationService.sendPushNotification(
-      expoPushToken,
-      "Check this new trip ",
+  //   return () => {
+  //     notificationListener.current &&
+  //       Notifications.removeNotificationSubscription(
+  //         notificationListener.current,
+  //       );
+  //     responseListener.current &&
+  //       Notifications.removeNotificationSubscription(responseListener.current);
+  //   };
+  // }, []);
+  // const handleSendNotification = async () => {
+  //   await NotificationService.sendPushNotification(
+  //     expoPushToken,
+  //     "Check this new trip ",
 
-      "Company x has launched a trip, hurry up to book it",
-    );
-  };
+  //     "Company x has launched a trip, hurry up to book it",
+  //   );
+  // };
   const user = useAppSelector(
     (state) => state.auth.currentUser,
   ) as unknown as User;
 
   // console.log(user?.role);
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    const fetchBookedTrips = async () => {
-      if (user?.id) {
-        const trips = await getBookedTripsByUserId(user.id);
-        trips.forEach((trip: BookedTrip) => {
-          dispatch(addBookedTrip(trip));
-        });
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBookedTrips = async () => {
+  //     if (user?.id) {
+  //       const trips = await getBookedTripsByUserId(user.id);
+  //       trips.forEach((trip: BookedTrip) => {
+  //         dispatch(addBookedTrip(trip));
+  //       });
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchBookedTrips();
-  }, [dispatch, user]);
+  //   fetchBookedTrips();
+  // }, [dispatch, user]);
   // show user activated trips only
-  const trips = allTrips.filter((t) => t.status === "active");
-  console.log({ trips });
+
+  const filterTripsByRole = (trips: Trip[], user: User) => {
+    if (!user) return [];
+
+    if (companyUserRoles.findIndex((u) => u === user?.role) !== -1) {
+      console.log("here");
+      // If the user is a company, show only their trips
+      return trips.filter((trip) => trip.company_id === user.company_id); // Assuming trips have a companyId field
+    } else {
+      // For admin or user, show all active trips
+      return trips.filter((trip) => trip.status === "active");
+    }
+  };
+
+  const trips = filterTripsByRole(allTrips, user);
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
       <ScrollView
@@ -105,6 +121,8 @@ const Home = () => {
           }
         />
         <Hero />
+        <Header />
+        <Hero travelerImage={travelerImage2} />
         <Spacer />
         {/* <Text style={styles.title}>Explore the Beautiful</Text>
         <Text style={styles.span}>World!</Text>
@@ -112,7 +130,7 @@ const Home = () => {
           source={require("../../../assets/Vector.png")}
           style={styles.image}
         /> */}
-        <Button onPress={() => handleSendNotification()} title="Notify" />
+        {/* <Button onPress={() => handleSendNotification()} title="Notify" /> */}
         <View style={styles.trips}>
           <View style={styles.subtitleContainer}>
             <Text style={styles.subtitle}>Best Trips</Text>
@@ -204,8 +222,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   subtitle: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 18,
     color: COLORS.textPrimary,
     // paddingTop: 15,
     flex: 1,

@@ -41,7 +41,7 @@ const companyApi = {
   // Update a company
   updateCompany: async (
     companyId: string,
-    companyData: Company,
+    companyData: Partial<Company>,
   ): Promise<Company> => {
     try {
       const response = await api.put<Company>(

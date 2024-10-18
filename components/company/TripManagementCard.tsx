@@ -11,6 +11,7 @@ import { deleteFullTrip, updateTripStatus } from "@/redux/actions/tripActions";
 import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
 import { getUserBookedByTripId } from "@/api/bookedTrips";
+import { formattedDate } from "@/utils";
 
 const defaultImage = require("@/assets/imgDefault.png");
 
@@ -122,12 +123,18 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
       {/* Text content */}
       <View style={styles.textContainer}>
         <Text style={styles.title}>{name}</Text>
-        {/* <View
+        <View
           style={{ flexDirection: "row", alignItems: "center", columnGap: 4 }}
         >
-          <Text style={styles.rating}>{rating}</Text>
-          <Ionicons name="star" size={14} color={COLORS.primary} />
-        </View> */}
+          <Ionicons name="time-outline" size={14} color={COLORS.primary} />
+          <Text>{formattedDate(trip?.date)}</Text>
+        </View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", columnGap: 4 }}
+        >
+          <Ionicons name="timer-outline" size={14} color={COLORS.primary} />
+          <Text>{formattedDate(trip?.end_date)}</Text>
+        </View>
         {price && <Text style={styles.priceText}>{price} / Person</Text>}
       </View>
 

@@ -4,10 +4,11 @@ import React from "react";
 const ProfileLayout = () => {
   return (
     <Stack>
-      <Stack.Screen name="profile" options={{ headerShown: true }} />
+      {/* <Stack.Screen name="profile" options={{ headerShown: true }} /> */}
       <Stack.Screen name="(user)" options={{ headerShown: false }} />
       <Stack.Screen name="(admin)" options={{ headerShown: false }} />
       <Stack.Screen name="(company)" options={{ headerShown: false }} />
+      <Stack.Screen name="settings" options={{ headerShown: false }} />
     </Stack>
 
     //^After Adding the Roles

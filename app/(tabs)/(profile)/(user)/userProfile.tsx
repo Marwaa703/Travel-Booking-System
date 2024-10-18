@@ -80,7 +80,9 @@ const ProfileScreen: React.FC = () => {
             <Spacer height={16} />
             <SettingCard
               title="Other Setting"
-              onPress={() => {}}
+              onPress={() => {
+                router.push("/(profile)/settings");
+              }}
               leftIconName="tune"
             />
             <Spacer height={16} />

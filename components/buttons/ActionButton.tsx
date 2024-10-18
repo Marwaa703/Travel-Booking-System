@@ -31,7 +31,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.container, style, styles[variant]]}
+      style={[styles.container, styles[variant], style]}
     >
       <Text style={[styles.text, { color: textColor }]}>{text}</Text>
     </Pressable>

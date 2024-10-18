@@ -13,12 +13,13 @@ import Header from "@/components/core/Header";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { selectCompanyById } from "@/redux/slices/companiesSlice";
-import { Company, CompanyUser } from "@/types/company";
+import { Company, CompanyApproveStatus, CompanyUser } from "@/types/company";
 import useLogout from "@/hooks/useLogout";
 import { fetchTrips } from "@/redux/actions/tripActions";
-import ApprovedState from "@/components/company/ApprovedState";
+import CompanyStatus from "@/components/company/CompanyStatus";
 import Spacer from "@/components/Spacer";
 import Toast from "react-native-toast-message";
+import { adminMsgSpliter } from "@/constants/admin";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   const user = useAppSelector(
@@ -33,15 +34,21 @@ const CompanyProfile: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // admin from company
-    dispatch(fetchTrips()); //select companyTrips only from trips
+    dispatch(fetchTrips());
   }, [dispatch]);
+
   const approved = currentCompany?.approved;
+  const status: CompanyApproveStatus =
+    currentCompany?.status as CompanyApproveStatus;
+
   useEffect(() => {
-    console.log({ token });
     if (!token) logout();
-    console.log({ auth: "no " });
   }, [token, logout]);
+
+  // Safely split admin message
+  const adminMessage = currentCompany?.admin_msg || ""; // Fallback to empty string
+  const [section, msg] = adminMessage.split(adminMsgSpliter);
+
   return (
     <>
       <Header
@@ -49,6 +56,9 @@ const CompanyProfile: React.FC = () => {
         rightIcon="exit-outline"
         onRightIconPress={() => logout()}
         onLeftIconPress={() => () => {}}
+        leftIcon="arrow-back"
+        onRightIconPress={logout}
+        onLeftIconPress={router.back}
       />
       <Toast />
       {currentCompany && (
@@ -62,36 +72,57 @@ const CompanyProfile: React.FC = () => {
                 />
                 <Text style={styles.companyName}>{currentCompany?.name}</Text>
                 <Text style={styles.companyEmail}>
-                  <ApprovedState approved={approved as boolean} />
+                  <CompanyStatus status={status as CompanyApproveStatus} />
                 </Text>
               </View>
               <Spacer height={24} />
+              {/* improved: should be displayed once */}
+              {/* {approved === true && status === "approved" && (
+                <>
+                  <Text>{adminMessage}</Text>
+                  <Text style={{ textAlign: "center" }}>
+                    Start adding trips
+                  </Text>
+                  <Spacer height={16} />
+                </>
+              )} */}
+              {approved === false && status === "rejected" && (
+                <>
+                  <Text>Rejection Note: {msg && msg}</Text>
+                  <Spacer height={16} />
+                  <SettingCard
+                    title={`Edit Company ${section}`}
+                    onPress={() =>
+                      router.push(
+                        `/editCompany?section=${section}&data=${encodeURIComponent(JSON.stringify(currentCompany))}`,
+                      )
+                    }
+                    leftIconName="business"
+                  />
+                  <Spacer height={16} />
+                </>
+              )}
               <SettingCard
                 title="Details"
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
               <Spacer height={16} />
-              {/* disable if not approved */}
-              {approved && (
+              {approved && status === "approved" && (
                 <>
                   <SettingCard
                     title="Trips"
-                    onPress={() => {
-                      router.push(
-                        `companyTrips/?companyId=${user?.company_id}`,
-                      );
-                    }}
+                    onPress={() =>
+                      router.push(`companyTrips/?companyId=${user?.company_id}`)
+                    }
                     leftIconName="air"
                   />
                   <Spacer height={16} />
                   <SettingCard
                     title="Manage Employees"
-                    onPress={() => {
-                      router.push(
-                        `companyUsers/?companyId=${user?.company_id}`,
-                      );
-                    }}
+                    onPress={() =>
+                      router.push(`companyUsers/?companyId=${user?.company_id}`)
+                    }
                     leftIconName="people"
                   />
                   <Spacer height={16} />
@@ -102,11 +133,12 @@ const CompanyProfile: React.FC = () => {
                   />
                 </>
               )}
-              {/* todo: {rejectd will show edit card and admin msg} */}
               <Spacer height={16} />
               <SettingCard
                 title="Other Settings"
-                onPress={() => {}}
+                onPress={() => {
+                  router.push("/(profile)/settings");
+                }}
                 leftIconName="tune"
               />
             </View>

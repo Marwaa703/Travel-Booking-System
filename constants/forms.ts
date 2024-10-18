@@ -64,6 +64,7 @@ export const addTripSchema = Yup.object().shape({
     .integer("Must be an integer")
     .min(1, "At least 1 reservation is required"),
   date: tripDateSchema,
+  end_date: tripDateSchema,
 });
 
 // Company Details Schema
@@ -139,7 +140,8 @@ export type AddTripFormFields =
   | "description"
   | "price"
   | "max_reservations"
-  | "date";
+  | "date"
+  | "end_date";
 export type CompanyUserFormFields = SignupFormFields;
 export type CompanyNewUserFormFields = SignupFormFields | "role";
 export type CompanyDetailsFormFields =
@@ -271,6 +273,12 @@ export const addTripInputs: InputFieldProps<AddTripFormFields>[] = [
   },
   {
     name: "date",
+    icon: "time-outline",
+    keyboardType: "default",
+    trim: true,
+  },
+  {
+    name: "end_date",
     icon: "time-outline",
     keyboardType: "default",
     trim: true,

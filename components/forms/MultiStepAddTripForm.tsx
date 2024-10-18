@@ -96,9 +96,9 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
           {addTripInputs.map(
             ({ icon, name, autoCapitalize, keyboardType, trim }) => (
               <Fragment key={name}>
-                {name === "date" ? (
+                {name === "date" || name === "end_date" ? (
                   <DateInputPicker
-                    name="date"
+                    name={name}
                     onSelectDate={(date) => setValue(name, date)}
                     error={errors.date?.message}
                     icon="calendar"

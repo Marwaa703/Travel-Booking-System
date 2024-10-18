@@ -17,34 +17,34 @@ import Spacer from "@/components/Spacer";
 import papersApi from "@/api/companyPapers";
 import { hashTextPercent } from "@/utils";
 import FullScreenImage from "@/components/FullScreenImage";
-import { router } from "expo-router";
+import CompanyStatus from "@/components/admin/UpdateCompanyStatus";
+import UpdateCompanyStatus from "@/components/admin/UpdateCompanyStatus";
 
 const Pending = () => {
   const dispatch = useAppDispatch();
+
   const pendingCompanies = useAppSelector((state) =>
     state.companies.companies.filter((c) => !c.approved),
   );
   console.log({ pendingCompanies });
+
   const [papers, setPapers] = useState<CompanyPaper[]>([]);
   const [companies, setCompanies] = useState(pendingCompanies);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [isModalVisible, setModalVisible] = useState(false);
 
-  const handleApprove = (c: Company) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [imageModal, setImageModal] = useState(false);
+
+  const handleApprove = (id: string) => {
     // update server
-    dispatch(updateCompanyDetails({ ...c, approved: true }));
-    // console.log(`Company with ID ${company.name} approved!`);
+
+    // console.log(`Company with ID ${company?.name} approved!`);
 
     setCompanies((prevCompanies) =>
-      prevCompanies.filter((company) => company.id !== c.id),
+      prevCompanies.filter((company) => company?.id !== id),
     );
   };
-
-  const handleDeny = (companyId: string) => {
-    // alert user to update the company information
-    // delete company papers from database
-    console.log(`Company with ID ${companyId} denied!`);
-  };
+  // handle deny is don on UpdateCompanyStatus
 
   const getCompanyPapers = async (id: string) => {
     try {
@@ -60,35 +60,34 @@ const Pending = () => {
 
   const handleImagePress = (imageUrl: string) => {
     setSelectedImage(imageUrl);
-    setModalVisible(true);
+    setImageModal(true);
   };
   console.log(companies[0]);
   return (
     <>
-      <Header
-        title={`Pending Requests ${pendingCompanies.length}`}
-        leftIcon="arrow-back"
-        onLeftIconPress={() => router.back()}
-      />
+      <Header title={`Pending Requests ${pendingCompanies.length}`} />
 
       <ScrollView style={styles.container}>
         {!companies.length && <Text>No pending companies!</Text>}
         {companies &&
           companies.map((company) => (
-            <View key={company.id} style={styles.card}>
+            <View key={company?.id} style={styles.card}>
               <View style={styles.row}>
-                <Image source={{ uri: company.logo }} style={styles.logo} />
+                <Image source={{ uri: company?.logo }} style={styles.logo} />
                 <View>
-                  <Text style={styles.companyName}>{company.name}</Text>
-                  <Text style={styles.detail}>{company.address}</Text>
+                  <Text style={styles.companyName}>{company?.name}</Text>
+                  <Text style={styles.detail}>{company?.address}</Text>
+                  <Text style={styles.detail}>{company?.status}</Text>
                 </View>
               </View>
-              {/* <Text style={styles.detail}>Required Papers: {company.papers}</Text> */}
+              {/* <Text style={styles.detail}>Required Papers: {company?.papers}</Text> */}
 
               <Text style={styles.detail}>
                 {hashTextPercent(company?.wallet as string, "#")}
               </Text>
-              <Pressable onPress={() => getCompanyPapers(company.id as string)}>
+              <Pressable
+                onPress={() => getCompanyPapers(company?.id as string)}
+              >
                 <Text style={{ color: COLORS.accent }}>Get Papers</Text>
               </Pressable>
               {papers && papers[0]?.company_id == company?.id && (
@@ -109,25 +108,32 @@ const Pending = () => {
                     ))}
                   </ScrollView>
                   <FullScreenImage
-                    visible={isModalVisible}
+                    visible={imageModal}
                     imageUrl={selectedImage || ""}
-                    onClose={() => setModalVisible(false)}
+                    onClose={() => setImageModal(false)}
                   />
                 </View>
               )}
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.approveButton}
-                  onPress={() => handleApprove(company)}
+                  onPress={() => setModalVisible(true)}
                 >
-                  <Text style={styles.buttonText}>Approve</Text>
+                  <Text style={styles.buttonText}>Change Company Status</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                <UpdateCompanyStatus
+                  company={company}
+                  onClose={() => setModalVisible(false)}
+                  visible={isModalVisible}
+                  onApprove={(id) => handleApprove(id)}
+                />
+
+                {/* <TouchableOpacity
                   style={styles.denyButton}
-                  onPress={() => handleDeny(company.id as string)}
+                  onPress={() => setModalVisible(true)}
                 >
                   <Text style={styles.buttonText}>Reject</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
               <Spacer />
             </View>
@@ -160,6 +166,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 3,
+    marginBottom: 14,
   },
   logo: {
     width: 100,

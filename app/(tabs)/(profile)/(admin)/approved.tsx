@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Company } from "@/types/company";
 import { editCompany, removeCompany } from "@/redux/slices/companiesSlice";
 import { router } from "expo-router";
+import { updateCompanyDetails } from "@/redux/actions/companiesActions";
 
 const ApprovedCompaniesScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,7 +51,22 @@ const ApprovedCompaniesScreen: React.FC = () => {
     setSelectedCompany(null);
     setEditData({ name: "", address: "" });
   };
-
+  const handleUpdateCompany = (c: Company) => {
+    // update server
+    dispatch(
+      updateCompanyDetails({
+        ...c,
+        approved: true,
+        admin_msg: "Congratulations! your company has been approved",
+        status: "approved",
+      }),
+    )
+      .then(() => {
+        setSelectedCompany(null);
+        setEditData({ name: "", address: "" });
+      })
+      .catch((e) => console.log({ e }));
+  };
   return (
     <>
       <Header
@@ -127,7 +143,7 @@ const ApprovedCompaniesScreen: React.FC = () => {
                       style={styles.input}
                     />
                     <TouchableOpacity
-                      onPress={() => updateCompany(item.id as string)}
+                      onPress={() => handleUpdateCompany(item)}
                       style={styles.iconButton}
                     >
                       <Ionicons

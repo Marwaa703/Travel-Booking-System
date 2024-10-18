@@ -15,6 +15,5 @@ const styles = StyleSheet.create({
   label: {
     fontSize: FONTS.normal,
     color: COLORS.textPrimary,
-    fontWeight: "500",
   },
 });

@@ -34,7 +34,7 @@ export const createCompany =
   };
 
 export const updateCompanyDetails =
-  (payload: Company) => async (dispatch: AppDispatch) => {
+  (payload: Partial<Company>) => async (dispatch: AppDispatch) => {
     dispatch(setLoading(true));
     try {
       const updatedCompany = await companyApi.updateCompany(
