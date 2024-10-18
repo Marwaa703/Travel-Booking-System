@@ -59,8 +59,6 @@ const CompanyProfile: React.FC = () => {
         onRightIconPress={() => logout()}
         onLeftIconPress={() => () => {}}
         leftIcon="arrow-back"
-        onRightIconPress={logout}
-        onLeftIconPress={router.back}
       />
       <Toast />
       {currentCompany && (

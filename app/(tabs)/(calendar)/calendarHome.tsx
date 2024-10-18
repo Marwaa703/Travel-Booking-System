@@ -70,11 +70,7 @@ const Calendar = () => {
 
   return (
     <View style={styles.container}>
-      <Header
-        title="Schedule"
-        leftIcon="home-outline"
-        onLeftIconPress={() => router.push("home")}
-      />
+      <Header title="Schedule" leftIcon="" onLeftIconPress={() => {}} />
       <View style={styles.calendar}>
         <WeeklyCalendar tripStartDates={tripStartDates} />
       </View>

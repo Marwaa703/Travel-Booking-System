@@ -110,13 +110,7 @@ const Home = () => {
   const trips = filterTripsByRole(allTrips, user);
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
-      <Header
-        onLeftIconPress={() =>
-          router.navigate(
-            `(tabs)/(profile)/(${user?.role ? user?.role.toLowerCase() : "defaultRole"})`,
-          )
-        }
-      />
+      <Header onLeftIconPress={() => {}} leftIcon="" title="Home" />
       <ScrollView
         contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
       >

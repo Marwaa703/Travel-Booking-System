@@ -56,10 +56,9 @@ const Search: React.FC = () => {
     <View style={styles.container}>
       <Header
         title={"Search"}
-        leftIcon="home-outline"
-        onLeftIconPress={() => {
-          router.push("home");
-        }}
+        leftIcon=""
+        onLeftIconPress={() => {}}
+        rightIcon=""
       />
 
       <View style={styles.searchContainer}>

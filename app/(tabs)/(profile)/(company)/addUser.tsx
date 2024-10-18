@@ -18,6 +18,7 @@ const AddUser = () => {
       <Header
         title="Add Company Users"
         leftIcon="arrow-back"
+        rightIcon=""
         onLeftIconPress={() => router.back()}
       />
       <Padding>

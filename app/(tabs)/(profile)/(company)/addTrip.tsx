@@ -18,6 +18,7 @@ const AddTrip = () => {
       <Header
         title="Add Trip"
         leftIcon="arrow-back"
+        rightIcon=""
         onLeftIconPress={() => router.back()}
       />
       <Spacer height={28} />

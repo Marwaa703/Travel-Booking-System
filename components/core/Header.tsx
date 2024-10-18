@@ -14,7 +14,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({
   leftIcon = "person-circle-outline",
-  rightIcon = "notifications-outline",
+  rightIcon = "",
   title = "",
   onLeftIconPress,
   onRightIconPress,
