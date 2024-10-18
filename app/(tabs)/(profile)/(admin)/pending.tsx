@@ -6,22 +6,32 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
+  RefreshControl,
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONTS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Company, CompanyPaper } from "@/types/company";
-import { updateCompanyDetails } from "@/redux/actions/companiesActions";
+import {
+  fetchCompanies,
+  updateCompanyDetails,
+} from "@/redux/actions/companiesActions";
 import Spacer from "@/components/Spacer";
 import papersApi from "@/api/companyPapers";
 import { hashTextPercent } from "@/utils";
 import FullScreenImage from "@/components/FullScreenImage";
 import CompanyStatus from "@/components/admin/UpdateCompanyStatus";
 import UpdateCompanyStatus from "@/components/admin/UpdateCompanyStatus";
+import useRefreshControl from "@/hooks/useRefreshControl";
 
 const Pending = () => {
   const dispatch = useAppDispatch();
+  const onRefresh = async () => {
+    await dispatch(fetchCompanies());
+  };
+
+  const { refreshControl } = useRefreshControl({ onRefresh });
 
   const pendingCompanies = useAppSelector((state) =>
     state.companies.companies.filter((c) => !c.approved),
@@ -67,7 +77,10 @@ const Pending = () => {
     <>
       <Header title={`Pending Requests ${pendingCompanies.length}`} />
 
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={<RefreshControl {...refreshControl} />}
+      >
         {!companies.length && <Text>No pending companies!</Text>}
         {companies &&
           companies.map((company) => (

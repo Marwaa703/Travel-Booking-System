@@ -80,7 +80,7 @@ const CompanyNewUserForm: React.FC<CompanyNewUserFormProps> = ({
       {companyNewUserSignupInputs.map(
         ({ trim, icon, name, autoCapitalize, keyboardType }) => (
           <Fragment key={name}>
-            {name === "role" && user.role !== "Representative" ? (
+            {name === "role" && user?.role !== "Representative" ? (
               <DropdownRolePicker
                 items={companySubRoles}
                 onSelect={(item) => setValue("role", item)}

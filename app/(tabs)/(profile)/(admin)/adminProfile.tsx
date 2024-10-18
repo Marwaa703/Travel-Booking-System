@@ -57,12 +57,13 @@ const AdminProfile: React.FC = () => {
           }}
           leftIconName="person-add"
         />
+        <Spacer height={16} />
         <SettingCard
           title="Settings"
           onPress={() => {
             router.push("/(profile)/settings");
           }}
-          leftIconName="person-add"
+          leftIconName="tune"
         />
         <Spacer height={16} />
       </Padding>

@@ -100,28 +100,26 @@ const Home = () => {
     if (companyUserRoles.findIndex((u) => u === user?.role) !== -1) {
       console.log("here");
       // If the user is a company, show only their trips
-      return trips.filter((trip) => trip.company_id === user.company_id); // Assuming trips have a companyId field
+      return trips.filter((trip) => trip?.company_id === user?.company_id); // Assuming trips have a companyId field
     } else {
       // For admin or user, show all active trips
-      return trips.filter((trip) => trip.status === "active");
+      return trips.filter((trip) => trip?.status === "active");
     }
   };
 
   const trips = filterTripsByRole(allTrips, user);
   return (
     <SafeAreaView style={{ flex: 1, marginBottom: 70 }}>
+      <Header
+        onLeftIconPress={() =>
+          router.navigate(
+            `(tabs)/(profile)/(${user?.role ? user?.role.toLowerCase() : "defaultRole"})`,
+          )
+        }
+      />
       <ScrollView
         contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
       >
-        <Header
-          onLeftIconPress={() =>
-            router.navigate(
-              `(tabs)/(profile)/(${user.role ? user.role.toLowerCase() : "defaultRole"})`,
-            )
-          }
-        />
-        <Hero />
-        <Header />
         <Hero travelerImage={travelerImage2} />
         <Spacer />
         {/* <Text style={styles.title}>Explore the Beautiful</Text>
@@ -133,7 +131,7 @@ const Home = () => {
         {/* <Button onPress={() => handleSendNotification()} title="Notify" /> */}
         <View style={styles.trips}>
           <View style={styles.subtitleContainer}>
-            <Text style={styles.subtitle}>Best Trips</Text>
+            <Text style={styles.subtitle}>Popular Trips</Text>
             <Text
               style={styles.viewAll}
               onPress={() => router.push("/popularTrips")}
@@ -170,7 +168,7 @@ const Home = () => {
         </View>
         <Spacer />
 
-        {(user.role === "Admin" || user.role === "User") && (
+        {(user?.role === "Admin" || user?.role === "User") && (
           <View style={styles.company}>
             <View style={styles.subtitleContainer}>
               <Text style={styles.subtitle}>Popular Companies</Text>

@@ -81,9 +81,9 @@ const Calendar = () => {
       <Spacer />
       <View style={styles.subtitleContainer}>
         <Text style={styles.subtitle}>My Schedule</Text>
-        <Text style={styles.viewAll} onPress={() => {}}>
+        {/* <Text style={styles.viewAll} onPress={() => {}}>
           View All
-        </Text>
+        </Text> */}
       </View>
       <Spacer />
       <ScrollView refreshControl={<RefreshControl {...refreshControl} />}>

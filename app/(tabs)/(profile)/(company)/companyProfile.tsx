@@ -20,6 +20,7 @@ import CompanyStatus from "@/components/company/CompanyStatus";
 import Spacer from "@/components/Spacer";
 import Toast from "react-native-toast-message";
 import { adminMsgSpliter } from "@/constants/admin";
+import { fetchCompanies } from "@/redux/actions/companiesActions";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   const user = useAppSelector(
@@ -35,6 +36,7 @@ const CompanyProfile: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchTrips());
+    dispatch(fetchCompanies());
   }, [dispatch]);
 
   const approved = currentCompany?.approved;
@@ -107,9 +109,9 @@ const CompanyProfile: React.FC = () => {
                 onPress={() => router.push("companyDetails")}
                 leftIconName="business"
               />
-              <Spacer height={16} />
               {approved && status === "approved" && (
                 <>
+                  <Spacer height={16} />
                   <SettingCard
                     title="Trips"
                     onPress={() =>
