@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
 import Hero from "@/components/core/Hero";
 import { travelerImage1, travelerImage2 } from "@/constants/icons";
+import Header from "@/components/core/Header";
 
 interface Blog {
   id: number;
@@ -94,6 +95,7 @@ const Blogs: React.FC = () => {
         ListHeaderComponent={
           <>
             {/* Header Section */}
+            <Header title="Our Blogs" rightIcon="" leftIcon="" />
             <View style={styles.headerContainer}>
               {/* <View style={styles.header}>
                 <Ionicons

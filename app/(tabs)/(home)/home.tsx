@@ -113,15 +113,7 @@ const Home = () => {
       <ScrollView
         contentContainerStyle={{ padding: 20, backgroundColor: "#f5f5f5" }}
       >
-        <Header
-          onLeftIconPress={() =>
-            router.navigate(
-              `(tabs)/(profile)/(${user.role ? user.role.toLowerCase() : "defaultRole"})`,
-            )
-          }
-        />
-        <Hero />
-        <Header />
+        <Header onLeftIconPress={() => {}} leftIcon="" title="Home" />
         <Hero travelerImage={travelerImage2} />
         <Spacer />
         {/* <Text style={styles.title}>Explore the Beautiful</Text>
