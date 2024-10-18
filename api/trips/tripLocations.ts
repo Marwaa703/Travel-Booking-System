@@ -110,3 +110,26 @@ export const deleteLocation = async (locationId: string) => {
     }
   }
 };
+
+// Search for TripLocations by name
+export const searchLocationsByName = async (name: string) => {
+  try {
+    const res = await api.get(`/tripLocations/search?name=${name}`);
+    return res.data;
+  } catch (error: any) {
+    if (error.response) {
+      const errorMessage =
+        error.response.data?.message ||
+        error.response.statusText ||
+        "Failed to search locations";
+      console.error(
+        "Search locations failed with server response:",
+        errorMessage,
+      );
+      throw new Error(errorMessage);
+    } else {
+      console.error("Search locations failed with error:", error.message);
+      throw new Error(error.message || "Failed to search locations");
+    }
+  }
+};

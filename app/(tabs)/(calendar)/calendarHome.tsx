@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
-    marginBottom: 100,
+    marginBottom: 80,
   },
   calendar: {
     width: "100%",
