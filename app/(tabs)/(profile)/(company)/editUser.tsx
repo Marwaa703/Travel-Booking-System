@@ -10,14 +10,15 @@ import { User } from "@/types/user";
 const EditUser = () => {
   const route = useRoute();
   const { user } = route.params as { user: string };
-
+  const userData = JSON.parse(user);
+  console.log(userData.role);
   return (
     <ScreenWraper>
       <Padding>
         <Spacer />
         <CompanyNewUserForm
-          user={JSON.parse(user)}
-          companyId={user?.company_id as string}
+          user={userData}
+          companyId={userData?.company_id as string}
           type="update"
         />
       </Padding>

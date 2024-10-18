@@ -76,10 +76,11 @@ const CompanyNewUserForm: React.FC<CompanyNewUserFormProps> = ({
   console.log({ loading, error, users: users.length });
   return (
     <>
+      {/* fix: remove represenetative from edit user role */}
       {companyNewUserSignupInputs.map(
         ({ trim, icon, name, autoCapitalize, keyboardType }) => (
           <Fragment key={name}>
-            {name === "role" ? (
+            {name === "role" && user.role !== "Representative" ? (
               <DropdownRolePicker
                 items={companySubRoles}
                 onSelect={(item) => setValue("role", item)}
