@@ -35,7 +35,6 @@ const Search: React.FC = () => {
           tripsData.map((trip) => getLocationsByTripId(trip.id)),
         );
         setLocations(locationsData.flat());
-        // console.log(tripsData);
       } catch (err) {
         setError(err.message);
       } finally {
