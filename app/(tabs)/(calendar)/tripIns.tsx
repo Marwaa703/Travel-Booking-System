@@ -23,7 +23,6 @@ const TripInstructions: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const trip = useAppSelector((state) => selectTripById(state.trips, tripId));
-
   useEffect(() => {
     const fetchInstructions = async () => {
       setLoading(true);

@@ -32,7 +32,7 @@ export const makePayment = async (
       amountInWei,
     });
 
-    const res = await axios.post("http://192.168.1.7:3002/payment", {
+    const res = await axios.post("http://192.168.1.4:3002/payment", {
       companyId,
       tripId,
       userWalletAddress,
