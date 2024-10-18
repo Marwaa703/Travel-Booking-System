@@ -21,6 +21,7 @@ import {
   fetchCompanyUsers,
 } from "@/redux/actions/companiesActions";
 import Toast from "react-native-toast-message"; // Import if needed for typing
+import TextNote from "@/components/forms/TextNote";
 
 const CompanyUsers = () => {
   const route = useRoute();
@@ -90,11 +91,9 @@ const CompanyUsers = () => {
 
       {loading ? (
         <Padding>
-          <Text>Loading users...</Text>
+          <TextNote note="Loading users..." />
           <ActivityIndicator size={"large"} color={COLORS.primary} />
         </Padding>
-      ) : users.length === 0 ? (
-        <Text>No users to display. Add one!</Text>
       ) : (
         <>
           <Text style={styles.sectionTitle}>Current Users</Text>
@@ -130,8 +129,8 @@ const CompanyUsers = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    marginBottom: 90,
+    backgroundColor: COLORS.bg,
+    paddingBottom: 90,
   },
   addButtonContainer: {
     justifyContent: "center",
@@ -145,6 +144,7 @@ const styles = StyleSheet.create({
     fontSize: FONTS.large,
     fontWeight: "500",
     marginLeft: 18,
+    color: COLORS.textPrimary,
   },
   cardContainer: {
     flexDirection: "row",

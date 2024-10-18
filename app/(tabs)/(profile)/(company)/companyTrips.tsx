@@ -13,6 +13,8 @@ import { fetchTrips } from "@/redux/actions/tripActions";
 import TripManagementCard from "@/components/company/TripManagementCard";
 import { Trip, TripStatus } from "@/types/trip";
 import Toast from "react-native-toast-message";
+import TextNote from "@/components/forms/TextNote";
+import ScreenWraper from "@/components/containers/ScreenWraper";
 
 const CompanyHome = () => {
   const route = useRoute();
@@ -47,40 +49,44 @@ const CompanyHome = () => {
 
   return (
     <View style={styles.container}>
-      <Header
-        title="Trips"
-        leftIcon="arrow-back"
-        onLeftIconPress={() => router.back()}
-      />
-      <Padding>
-        <View style={styles.addButtonContainer}>
-          <View style={styles.addButtonWrapper}>
-            <Button
-              title="Add new trip"
-              onPress={() => {
-                router.push(`/addTrip/?companyId=${companyId}`);
-              }}
-            />
-          </View>
-        </View>
-        <Text style={styles.sectionTitle}>Current trips</Text>
-        {isLoading ? (
-          <Text>Loading trips...</Text>
-        ) : trips.length === 0 ? (
-          <Text>No trips to display. Add one!</Text>
-        ) : (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Spacer />
-            <View style={styles.cardContainer}>
-              {trips.map((trip) => (
-                <View key={trip.trip_id} style={styles.cardWrapper}>
-                  <TripManagementCard trip={trip} />
-                </View>
-              ))}
+      <ScreenWraper>
+        <Header
+          title="Trips"
+          leftIcon="arrow-back"
+          onLeftIconPress={() => router.back()}
+        />
+        <Padding>
+          <View style={styles.addButtonContainer}>
+            <View style={styles.addButtonWrapper}>
+              <Button
+                title="Add new trip"
+                onPress={() => {
+                  router.push(`/addTrip/?companyId=${companyId}`);
+                }}
+              />
             </View>
-          </ScrollView>
-        )}
-      </Padding>
+          </View>
+          <Text style={styles.sectionTitle}>Current trips</Text>
+          {isLoading || (trips.length === 0 && <Spacer />)}
+
+          {isLoading ? (
+            <TextNote note="Loading trips..." />
+          ) : trips.length === 0 ? (
+            <TextNote note="No trips to display. Add one!" />
+          ) : (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Spacer />
+              <View style={styles.cardContainer}>
+                {trips.map((trip) => (
+                  <View key={trip.trip_id} style={styles.cardWrapper}>
+                    <TripManagementCard trip={trip} />
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          )}
+        </Padding>
+      </ScreenWraper>
     </View>
   );
 };
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.bg,
-    marginBottom: 90,
+    // marginBottom: 90,
   },
   addButtonContainer: {
     justifyContent: "center",
@@ -101,6 +107,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FONTS.large,
+    color: COLORS.textPrimary,
   },
   cardWrapper: {
     width: "100%",

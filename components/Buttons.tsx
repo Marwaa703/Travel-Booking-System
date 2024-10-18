@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginLeft: 10, // Space between spinner and text
-    color: COLORS.bg,
+    color: COLORS.textPrimary,
     textAlign: "center",
     fontSize: FONTS.medium,
   },

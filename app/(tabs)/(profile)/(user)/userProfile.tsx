@@ -72,12 +72,7 @@ const ProfileScreen: React.FC = () => {
               leftIconName="history"
             />
             <Spacer height={16} />
-            <SettingCard
-              title="Settings"
-              onPress={() => {}}
-              leftIconName="settings"
-            />
-            <Spacer height={16} />
+
             <SettingCard
               title="Setting"
               onPress={() => {
@@ -110,6 +105,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
+    backgroundColor: COLORS.bg,
   },
   cardlist: {
     justifyContent: "center",

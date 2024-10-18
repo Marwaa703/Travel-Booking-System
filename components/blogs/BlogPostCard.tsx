@@ -41,7 +41,7 @@ const BlogPostCard: React.FC<BlogPostProps> = ({
       <Image source={{ uri: image }} style={styles.image} />
       <View style={styles.content}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.description} numberOfLines={3}>
+        <Text style={styles.description} numberOfLines={2}>
           {description}
         </Text>
         <Text style={styles.meta}>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 10,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 10,
     elevation: 2,
   },
@@ -74,18 +74,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    // fontWeight: "bold",
     marginBottom: 5,
+    color: COLORS.textPrimary,
   },
   description: {
-    fontSize: 14,
-    color: COLORS.textPrimary,
+    fontSize: 12,
+    color: COLORS.textSecondary,
     marginBottom: 10,
   },
   meta: {
     fontSize: 12,
-    color: COLORS.textSecondary,
+    color: COLORS.textSubtitle,
   },
 });
 

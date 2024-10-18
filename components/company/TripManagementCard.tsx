@@ -127,13 +127,13 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
           style={{ flexDirection: "row", alignItems: "center", columnGap: 4 }}
         >
           <Ionicons name="time-outline" size={14} color={COLORS.primary} />
-          <Text>{formattedDate(trip?.date)}</Text>
+          <Text style={styles.date}>{formattedDate(trip?.date)}</Text>
         </View>
         <View
           style={{ flexDirection: "row", alignItems: "center", columnGap: 4 }}
         >
           <Ionicons name="timer-outline" size={14} color={COLORS.primary} />
-          <Text>{formattedDate(trip?.end_date)}</Text>
+          <Text style={styles.date}>{formattedDate(trip?.end_date)}</Text>
         </View>
         {price && <Text style={styles.priceText}>{price} / Person</Text>}
       </View>
@@ -185,7 +185,7 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
 const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 10,
     elevation: 2,
     shadowColor: "#000",
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "400",
-    color: "#000",
+    color: COLORS.textPrimary,
   },
   // rating: {
   //   fontSize: 12,
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   // },
   priceText: {
     fontSize: 14,
-    color: "#005c78",
+    color: COLORS.accent,
     fontWeight: "400",
   },
   statusContainer: {
@@ -246,6 +246,9 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     flex: 1,
+  },
+  date: {
+    color: COLORS.textSecondary,
   },
 });
 

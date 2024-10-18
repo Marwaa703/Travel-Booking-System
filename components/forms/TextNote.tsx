@@ -13,7 +13,10 @@ const TextNote = ({
     <>
       {note && (
         <Text
-          style={[{ fontSize: FONTS.small, color: COLORS.textPrimary }, style]}
+          style={[
+            { fontSize: FONTS.small, color: COLORS.textSecondary },
+            style,
+          ]}
         >
           {note}
         </Text>

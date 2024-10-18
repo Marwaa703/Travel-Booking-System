@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingHorizontal: 14,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg,
     alignItems: "center",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -92,14 +92,15 @@ const styles = StyleSheet.create({
     fontSize: FONTS.xxlarge,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 18,
+    marginTop: 12,
+    color: COLORS.textPrimary,
   },
   exploreText: {
     color: "#FF6F3D",
   },
   subtitle: {
     fontSize: 16,
-    color: "#7a7a7a",
+    color: COLORS.textSecondary,
     textAlign: "center",
   },
   buttonContainer: {

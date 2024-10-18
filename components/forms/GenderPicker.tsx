@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.accent, // Blue for male
   },
   text: {
-    color: "#000", // Default text color
+    color: COLORS.textPrimary, // Default text color
     // marginTop: 5,
   },
   selectedText: {

@@ -10,15 +10,16 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 const Signup = () => {
   return (
     <>
-      <Header title="Sign Up Now" rightIcon="" leftIcon="" />
-      <ScrollView>
+      {/* need return button here */}
+      <Header title="Signup" rightIcon="" leftIcon="" />
+      <ScrollView style={{ backgroundColor: COLORS.bg }}>
         <Padding>
           <View style={styles.container}>
             {/* header */}
             <View style={styles.top}>
               <View style={styles.header}>
                 {/* <Text style={styles.title}>Sign Up now</Text> */}
-                <Spacer />
+                <Spacer height={24} />
                 <Text style={styles.subTitle}>
                   Please fill the details and create account
                 </Text>

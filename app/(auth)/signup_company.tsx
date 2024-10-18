@@ -8,7 +8,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 const SignupCompany = () => {
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: COLORS.bg }}>
       <Header title="Register your company now" rightIcon="" leftIcon="" />
       <Padding>
         <View style={styles.container}>

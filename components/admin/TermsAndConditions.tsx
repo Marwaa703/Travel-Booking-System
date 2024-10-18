@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    backgroundColor: COLORS.bg,
   },
   termsContainer: {
     flexDirection: "row",
@@ -255,6 +256,7 @@ const styles = StyleSheet.create({
   fullScreenModal: {
     flex: 1,
     padding: 20,
+    backgroundColor: COLORS.bg,
   },
   scrollViewContent: {
     paddingBottom: 20,
@@ -265,18 +267,20 @@ const styles = StyleSheet.create({
     margin: 20,
     textAlign: "center",
     letterSpacing: 2,
+    color: COLORS.textPrimary,
   },
   sectionHeader: {
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginVertical: 10,
+    color: COLORS.textPrimary,
   },
   text: {
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 10,
     textAlign: "justify",
-    color: "#444",
+    color: COLORS.textSecondary,
   },
   boldText: {
     fontWeight: "bold",

@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 18,
     padding: 16,
-    marginBottom: 1,
+    marginBottom: -2,
+    backgroundColor: COLORS.bg,
   },
   title: {
     fontSize: 18,

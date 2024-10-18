@@ -173,7 +173,7 @@ export default TripInstructions;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: COLORS.bg,
     padding: 10,
     marginBottom: 90,
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   bottomTextContainer: {
     alignItems: "center",
     padding: 10,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: COLORS.bg,
   },
   bottomText: {
     fontSize: 14,

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: COLORS.opacity,
+    backgroundColor: COLORS.bg_surface,
     padding: 15,
     borderRadius: 10,
   },
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     flex: 1, // Takes up available space
     marginLeft: 15,
     fontSize: 16,
+    letterSpacing: 0.5,
     color: COLORS.textSecondary, // Text color
   },
 });

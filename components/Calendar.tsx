@@ -90,12 +90,13 @@ const WeeklyCalendar = ({ tripStartDates }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: COLORS.bg_surface,
+    // backgroundColor: COLORS.bg_surface,
   },
   currentDateText: {
     fontSize: FONTS.large,
     textAlign: "center",
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    color: COLORS.textPrimary,
     marginBottom: 16,
   },
   navContainer: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   },
   dayLetter: {
     fontSize: 16,
-    color: "#000",
+    color: COLORS.textPrimary,
   },
   selectedDayLetter: {
     color: "#FF6200",
@@ -128,8 +129,8 @@ const styles = StyleSheet.create({
   },
   dayNumber: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
+    // fontWeight: "bold",
+    color: COLORS.textSecondary,
   },
   selectedDayNumber: {
     color: "#FF6200",

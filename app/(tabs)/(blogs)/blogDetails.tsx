@@ -83,15 +83,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 13,
-    backgroundColor: "#fff",
-    marginBottom: 50,
+    backgroundColor: COLORS.bg,
+    paddingBottom: 50,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontSize: 26,
+    // fontWeight: "bold",
     textAlign: "center",
     // marginBottom: 2,
-    color: COLORS.secondary,
+    color: COLORS.textPrimary,
   },
   imageContainer: {
     alignItems: "center",
@@ -117,8 +117,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   description: {
+    letterSpacing: 0.5,
     fontSize: 16,
-    lineHeight: 22,
+    lineHeight: 26,
     color: COLORS.textPrimary,
   },
   loadingContainer: {
@@ -129,18 +130,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 25,
+    // marginVertical: 25,
     marginBottom: 1,
   },
   headerContainer: {
     paddingVertical: 20,
     paddingHorizontal: 15,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg,
   },
   welcomeContainer: {
+    // backgroundColor: COLORS.bg_surface,
     marginTop: 30,
     paddingHorizontal: 10,
-    backgroundColor: "#fff",
     shadowColor: SHADOWS.large.shadowColor,
     shadowOffset: SHADOWS.large.shadowOffset,
     shadowOpacity: SHADOWS.large.shadowOpacity,

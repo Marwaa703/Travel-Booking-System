@@ -82,7 +82,7 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
       </View>
       {/* Price Tag */}
       <View style={styles.priceContainer}>
-        <Text style={styles.priceText}>WEI {price}</Text>
+        <Text style={styles.priceText}>EGP {price}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 10,
     padding: 10,
     elevation: 3, // Shadow for Android
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONTS.normal,
-    fontWeight: "bold",
-    color: "#000",
+    // fontWeight: "bold",
+    color: COLORS.textPrimary,
   },
   dateContainer: {
     flexDirection: "row",
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   peopleText: {
     fontSize: FONTS.small,
-    color: COLORS.textSecondary,
+    color: COLORS.textSubtitle,
   },
   priceContainer: {
     backgroundColor: COLORS.priceTag,

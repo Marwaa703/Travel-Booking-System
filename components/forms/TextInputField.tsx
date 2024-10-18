@@ -42,6 +42,7 @@ const TextInputField = ({
         onBlur={onBlur}
         value={trim ? trimWhitespace(value) : value}
         placeholder={captalizeFirstLetter(name)}
+        placeholderTextColor={COLORS.textSecondary}
         style={styles.input}
         // note :show password is handled here only
         secureTextEntry={shown}
@@ -67,7 +68,7 @@ export default TextInputField;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: COLORS.bg,
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 25,
     paddingVertical: 8,
     paddingHorizontal: 14,
@@ -79,5 +80,6 @@ const styles = StyleSheet.create({
   input: {
     fontSize: FONTS.small,
     width: "95%",
+    color: COLORS.textPrimary,
   },
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { FONTS } from "@/constants/theme";
+import { COLORS, FONTS } from "@/constants/theme";
 
 interface RatingProps {
   rate: number | null;
@@ -17,7 +17,7 @@ const Rating = ({ rate }: RatingProps) => {
             key={index}
             name="star-outline"
             size={FONTS.normal}
-            color="gray"
+            color={COLORS.textSecondary}
           />
         ))}
       </View>
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   rate: {
     fontSize: FONTS.small,
     marginLeft: 8,
+    color: COLORS.textSubtitle,
   },
 });
 

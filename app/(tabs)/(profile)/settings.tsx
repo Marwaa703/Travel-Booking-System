@@ -6,18 +6,23 @@ import Spacer from "@/components/Spacer";
 import Padding from "@/components/containers/Padding";
 import { COLORS, dark, FONTS, light } from "@/constants/theme";
 import ToggleSwitch from "@/components/forms/FullToggleSwitch";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { setTheme } from "@/redux/slices/themeSlice";
 
 const Settings = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const themes = {
-    light,
-    dark,
+  const dispatch = useAppDispatch();
+  const themeColor = useAppSelector((state) => state.theme.color);
+
+  // const [theme, setTheme] = useState<"light" | "dark">("light");
+  const toggleSwitch = (color: "light" | "dark") => {
+    dispatch(setTheme(color));
   };
+
+  console.log({ themeColor });
   return (
-    <ScreenWraper>
-      <Spacer height={24} />
-      <Spacer height={24} />
+    <View style={styles.main}>
       <Padding>
+        <Spacer height={36} />
         <View style={styles.container}>
           <View
             style={[
@@ -33,14 +38,14 @@ const Settings = () => {
               <Text style={styles.key}>Theme</Text>
               <View>
                 <ToggleSwitch
-                  onToggle={(value) => console.log({ value })}
+                  onToggle={(value) => toggleSwitch(value)}
                   options={["dark", "light"]}
                   selectedOption="light"
                 />
               </View>
             </View>
           </View>
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <View style={styles.row}>
               <Text style={styles.key}>Notifications</Text>
               <View>
@@ -51,23 +56,29 @@ const Settings = () => {
                 />
               </View>
             </View>
-          </View>
+          </View> */}
         </View>
       </Padding>
-    </ScreenWraper>
+      {/* </ScreenWraper> */}
+    </View>
   );
 };
 
 export default Settings;
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    // height: "100%",
+  },
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
+    // justifyContent: "space-evenly",
     alignItems: "center",
     rowGap: 16,
     elevation: 10,
     shadowOffset: { height: 0, width: 1 },
+    paddingBottom: 180,
   },
   section: {
     width: "100%",
@@ -92,10 +103,10 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontSize: FONTS.large,
-    color: COLORS.primary,
+    color: COLORS.textPrimary,
   },
   key: {
     fontSize: FONTS.normal,
-    color: COLORS.secondary,
+    color: COLORS.textPrimary,
   },
 });

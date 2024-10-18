@@ -12,6 +12,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { TripInstruction } from "@/types/trip";
 import TextInputField from "@/components/forms/TextInputField";
 import { router } from "expo-router";
+import { COLORS } from "@/constants/theme";
+import Label from "@/components/forms/Label";
+import Spacer from "@/components/Spacer";
 
 const TripEdit: React.FC = () => {
   const [instruction, setInstruction] = useState("");
@@ -115,7 +118,8 @@ const TripEdit: React.FC = () => {
         onLeftIconPress={() => router.back()}
       />
       <View style={styles.container}>
-        <Text>Instruction</Text>
+        <Label text="Instruction" />
+        <Spacer height={4} />
         <TextInputField
           name={"Trip instruction"}
           onChangeText={setInstruction}
@@ -125,22 +129,23 @@ const TripEdit: React.FC = () => {
           trim={false}
         />
 
-        <Text>Select display time</Text>
+        <Spacer />
+
+        <Label text="Select display date & time" />
+        {/* <Text>Select display time</Text> */}
         <View style={styles.dateTimeContainer}>
           <Button
-            title={
-              displayTime ? displayTime.toLocaleDateString() : "Select Date"
-            }
+            title={displayTime ? displayTime.toLocaleDateString() : "Date"}
             onPress={() => setShowDatePicker(true)}
             type="secondary"
             width="80%"
             align="center"
+            fontSize={14}
           />
           {Platform.OS === "android" && (
             <Button
-              title={
-                displayTime ? displayTime.toLocaleTimeString() : "Select Time"
-              }
+              fontSize={14}
+              title={displayTime ? displayTime.toLocaleTimeString() : "Time"}
               onPress={() => setShowTimePicker(true)}
               type="secondary"
               width="80%"
@@ -172,14 +177,15 @@ const TripEdit: React.FC = () => {
           disabled={loading}
           align="center"
         />
-        <View style={styles.error}>
-          {alertMessage && alertType && (
+        <Spacer />
+        {alertMessage && alertType && (
+          <View style={styles.error}>
             <Alert message={alertMessage} type={alertType} />
-          )}
-        </View>
+          </View>
+        )}
         {/* Display Instructions in a Table */}
         <Text style={styles.tableHeader}>Instructions List</Text>
-        <View style={styles.table}>
+        <View>
           <View style={styles.tableRow}>
             <Text style={styles.tableHeaderCell}>Instruction</Text>
             <Text style={styles.tableHeaderCell}>Display Time</Text>
@@ -197,40 +203,42 @@ const TripEdit: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: COLORS.bg,
   },
   error: {
     padding: 20,
   },
   dateTimeContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 10,
-  },
-  table: {
-    marginTop: 20,
+    justifyContent: "space-between",
+    marginVertical: 16,
   },
   tableRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 10,
+    paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: COLORS.textSecondary,
   },
   tableCell: {
     width: "50%",
     textAlign: "left",
     flexWrap: "wrap",
+    color: COLORS.textSubtitle,
+    fontSize: 12,
   },
   tableHeader: {
     fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginVertical: 10,
+    color: COLORS.textPrimary,
   },
   tableHeaderCell: {
-    fontWeight: "bold",
+    fontWeight: "400",
     width: "50%",
+    color: COLORS.textPrimary,
   },
 });
 

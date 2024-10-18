@@ -12,6 +12,8 @@ import { NavigationProp } from "@react-navigation/native";
 import Hero from "@/components/core/Hero";
 import { travelerImage1, travelerImage2 } from "@/constants/icons";
 import Header from "@/components/core/Header";
+import ScreenWraper from "@/components/containers/ScreenWraper";
+import { bottomTabsHeight } from "@/constants/dimentions";
 
 interface Blog {
   id: number;
@@ -171,32 +173,33 @@ const Blogs: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 80,
+    backgroundColor: COLORS.bg,
+    paddingBottom: bottomTabsHeight,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    marginVertical: 10,
-  },
+  // header: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   paddingHorizontal: 10,
+  //   marginVertical: 10,
+  // },
   headerContainer: {
     paddingVertical: 20,
     paddingHorizontal: 15,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg,
   },
-  welcomeContainer: {
-    marginBottom: 30,
-    paddingHorizontal: 10,
-    backgroundColor: "#fff",
-    shadowColor: SHADOWS.large.shadowColor,
-    shadowOffset: SHADOWS.large.shadowOffset,
-    shadowOpacity: SHADOWS.large.shadowOpacity,
-  },
-  welcomeText: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
+  // welcomeContainer: {
+  //   marginBottom: 30,
+  //   paddingHorizontal: 10,
+  //   backgroundColor: "#fff",
+  //   shadowColor: SHADOWS.large.shadowColor,
+  //   shadowOffset: SHADOWS.large.shadowOffset,
+  //   shadowOpacity: SHADOWS.large.shadowOpacity,
+  // },
+  // welcomeText: {
+  //   fontSize: 35,
+  //   fontWeight: "bold",
+  //   color: COLORS.textPrimary,
+  // },
   scrollView: {
     marginVertical: 20,
   },
@@ -205,7 +208,7 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
     marginVertical: 10,
     paddingHorizontal: 10,
-    color: COLORS.primary,
+    color: COLORS.textPrimary,
     marginBottom: 10,
   },
   emptyStateContainer: {

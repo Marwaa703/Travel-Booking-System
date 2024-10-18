@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { CompanyUser, CompanyUserRoles } from "@/types/company";
 import { getRandomColor } from "@/utils";
 import ActionButton from "../buttons/ActionButton";
-import { FONTS } from "@/constants/theme";
+import { COLORS, FONTS } from "@/constants/theme";
 
 interface UserCardProps {
   user: CompanyUser;
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     padding: 15,
     position: "relative",
     borderRadius: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.bg,
     elevation: 4, // Use elevation for Android shadow
     shadowColor: "#000", // Shadow color for iOS
     shadowOffset: {
@@ -151,13 +151,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: FONTS.normal,
-    fontWeight: "500",
     letterSpacing: 1,
+    color: COLORS.textPrimary,
   },
   details: {
     fontSize: FONTS.small,
-    color: "#666",
     letterSpacing: 0.5,
+    color: COLORS.textSecondary,
   },
   roleBadge: {
     position: "absolute",

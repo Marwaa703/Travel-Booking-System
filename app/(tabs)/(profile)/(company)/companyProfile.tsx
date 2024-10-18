@@ -21,6 +21,7 @@ import Spacer from "@/components/Spacer";
 import Toast from "react-native-toast-message";
 import { adminMsgSpliter } from "@/constants/admin";
 import { fetchCompanies } from "@/redux/actions/companiesActions";
+import ScreenWraper from "@/components/containers/ScreenWraper";
 const CompanyProfile: React.FC = () => {
   const logout = useLogout();
   const user = useAppSelector(
@@ -52,32 +53,33 @@ const CompanyProfile: React.FC = () => {
   const [section, msg] = adminMessage.split(adminMsgSpliter);
 
   return (
-    <>
-      <Header
-        title="Company Profile"
-        rightIcon="exit-outline"
-        onRightIconPress={() => logout()}
-        onLeftIconPress={() => () => {}}
-        leftIcon="arrow-back"
-      />
-      <Toast />
-      {currentCompany && (
+    <View style={{ backgroundColor: COLORS.bg, flex: 1 }}>
+      <ScreenWraper>
+        <Header
+          title="Company Profile"
+          rightIcon="exit-outline"
+          onRightIconPress={() => logout()}
+          onLeftIconPress={() => () => {}}
+          leftIcon="arrow-back"
+        />
+        <Toast />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <SafeAreaView style={styles.container}>
-            <View>
-              <View style={styles.headerContainer}>
-                <Image
-                  source={{ uri: currentCompany?.logo }}
-                  style={styles.companyLogo}
-                />
-                <Text style={styles.companyName}>{currentCompany?.name}</Text>
-                <Text style={styles.companyEmail}>
-                  <CompanyStatus status={status as CompanyApproveStatus} />
-                </Text>
-              </View>
-              <Spacer height={24} />
-              {/* improved: should be displayed once */}
-              {/* {approved === true && status === "approved" && (
+          {currentCompany && (
+            <SafeAreaView style={styles.container}>
+              <View>
+                <View style={styles.headerContainer}>
+                  <Image
+                    source={{ uri: currentCompany?.logo }}
+                    style={styles.companyLogo}
+                  />
+                  <Text style={styles.companyName}>{currentCompany?.name}</Text>
+                  <Text style={styles.companyEmail}>
+                    <CompanyStatus status={status as CompanyApproveStatus} />
+                  </Text>
+                </View>
+                <Spacer height={24} />
+                {/* improved: should be displayed once */}
+                {/* {approved === true && status === "approved" && (
                 <>
                   <Text>{adminMessage}</Text>
                   <Text style={{ textAlign: "center" }}>
@@ -86,66 +88,71 @@ const CompanyProfile: React.FC = () => {
                   <Spacer height={16} />
                 </>
               )} */}
-              {approved === false && status === "rejected" && (
-                <>
-                  <Text>Rejection Note: {msg && msg}</Text>
-                  <Spacer height={16} />
-                  <SettingCard
-                    title={`Edit Company ${section}`}
-                    onPress={() =>
-                      router.push(
-                        `/editCompany?section=${section}&data=${encodeURIComponent(JSON.stringify(currentCompany))}`,
-                      )
-                    }
-                    leftIconName="business"
-                  />
-                  <Spacer height={16} />
-                </>
-              )}
-              <SettingCard
-                title="Details"
-                onPress={() => router.push("companyDetails")}
-                leftIconName="business"
-              />
-              {approved && status === "approved" && (
-                <>
-                  <Spacer height={16} />
-                  <SettingCard
-                    title="Trips"
-                    onPress={() =>
-                      router.push(`companyTrips/?companyId=${user?.company_id}`)
-                    }
-                    leftIconName="air"
-                  />
-                  <Spacer height={16} />
-                  <SettingCard
-                    title="Manage Employees"
-                    onPress={() =>
-                      router.push(`companyUsers/?companyId=${user?.company_id}`)
-                    }
-                    leftIconName="people"
-                  />
-                  <Spacer height={16} />
-                  <SettingCard
-                    title="Company Settings"
-                    onPress={() => {}}
-                    leftIconName="settings"
-                  />
-                </>
-              )}
-              <Spacer height={16} />
-              <SettingCard
-                title="Settings"
-                onPress={() => {
-                  router.push("/(profile)/settings");
-                }}
-                leftIconName="tune"
-              />
-            </View>
-          </SafeAreaView>
+                {approved === false && status === "rejected" && (
+                  <>
+                    <Text>Rejection Note: {msg && msg}</Text>
+                    <Spacer height={16} />
+                    <SettingCard
+                      title={`Edit Company ${section}`}
+                      onPress={() =>
+                        router.push(
+                          `/editCompany?section=${section}&data=${encodeURIComponent(JSON.stringify(currentCompany))}`,
+                        )
+                      }
+                      leftIconName="business"
+                    />
+                    <Spacer height={16} />
+                  </>
+                )}
+                <SettingCard
+                  title="Details"
+                  onPress={() => router.push("companyDetails")}
+                  leftIconName="business"
+                />
+                {approved && status === "approved" && (
+                  <>
+                    <Spacer height={16} />
+                    <SettingCard
+                      title="Trips"
+                      onPress={() =>
+                        router.push(
+                          `companyTrips/?companyId=${user?.company_id}`,
+                        )
+                      }
+                      leftIconName="air"
+                    />
+                    <Spacer height={16} />
+                    <SettingCard
+                      title="Manage Employees"
+                      onPress={() =>
+                        router.push(
+                          `companyUsers/?companyId=${user?.company_id}`,
+                        )
+                      }
+                      leftIconName="people"
+                    />
+                    {/* <Spacer height={16} />
+                    <SettingCard
+                      title="Company Settings"
+                      onPress={() => {}}
+                      leftIconName="settings"
+                    /> */}
+                  </>
+                )}
+                <Spacer height={16} />
+                <SettingCard
+                  title="Settings"
+                  onPress={() => {
+                    router.push("/(profile)/settings");
+                  }}
+                  leftIconName="tune"
+                />
+              </View>
+            </SafeAreaView>
+          )}
         </ScrollView>
-      )}
-    </>
+      </ScreenWraper>
+    </View>
   );
 };
 
@@ -153,10 +160,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    marginBottom: 100,
+    // paddingBottom: 100,
+    backgroundColor: COLORS.bg,
   },
   scrollContainer: {
-    flexGrow: 1,
+    // flexGrow: 1,
     justifyContent: "center",
     backgroundColor: COLORS.bg,
   },
@@ -168,11 +176,12 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: COLORS.opacity,
+    backgroundColor: COLORS.bg_surface,
   },
   companyName: {
     fontSize: 20,
-    fontWeight: "500",
+    // fontWeight: "500",
+    letterSpacing: 0.5,
     marginTop: 8,
     color: COLORS.textPrimary,
   },

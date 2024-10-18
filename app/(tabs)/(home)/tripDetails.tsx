@@ -114,17 +114,24 @@ const TripDetails: React.FC = () => {
                 <Like tripId={trip.trip_id as string} />
               </View>
             </View>
-            <Text style={styles.companyName}>{company.name}</Text>
+            <View style={styles.item}>
+              <Ionicons
+                name="business"
+                size={14}
+                color={COLORS.textSecondary}
+              />
+              <Text style={styles.companyName}>{company.name}</Text>
+            </View>
+            <Spacer />
             <View style={styles.detailRow}>
-              {/* update todo */}
-              {/* <CardSubtitle
-                text={"locationNames"}
-                icon={icons.location}
-                iconColor={COLORS.textSecondary}
-              /> */}
               <Rating rate={trip?.rate as number} />
+            </View>
+            <Spacer />
+            <View style={styles.item}>
+              <Ionicons name="logo-euro" size={14} color={COLORS.accent} />
               <Text style={styles.price}>{trip?.price}/Person</Text>
             </View>
+            <Spacer />
             <Text style={styles.sectionTitle}>About Trip</Text>
             {/* Description container */}
             <View style={styles.descriptionContainer}>
@@ -161,7 +168,7 @@ const TripDetails: React.FC = () => {
                 <Button
                   title="Book Now"
                   align="center"
-                  width={"120%"}
+                  width={"100%"}
                   onPress={() => {
                     router.push(`/payment?tripId=${id}`);
                   }}
@@ -186,7 +193,7 @@ const styles = StyleSheet.create({
   },
   arrowsContainer: {
     backgroundColor: "rgba(0,0,0,0.5)",
-    borderRadius: 15,
+    borderRadius: 5,
     width: 30,
     height: 30,
     justifyContent: "center",
@@ -211,7 +218,7 @@ const styles = StyleSheet.create({
     width: "100%",
     textAlign: "center",
     color: "#fff",
-    fontWeight: "bold",
+    // fontWeight: "bold",
     padding: 10,
     backgroundColor: "rgba(0, 0, 0, 0.3)",
     textShadowColor: "rgba(0, 0, 0, 0.9)",
@@ -237,10 +244,10 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     backgroundColor: COLORS.bg,
-    borderTopLeftRadius: 60,
-    borderTopRightRadius: 60,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     paddingHorizontal: 30,
-    paddingVertical: 40,
+    paddingVertical: 18,
     marginTop: -80,
     flexGrow: 1,
     justifyContent: "space-between",
@@ -252,19 +259,18 @@ const styles = StyleSheet.create({
   },
   tripTitle: {
     fontSize: FONTS.large,
-    fontWeight: "bold",
-    color: "#000",
+    // fontWeight: "bold",
+    color: COLORS.textPrimary,
   },
   companyName: {
     fontSize: FONTS.medium,
     color: COLORS.textSecondary,
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   detailRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 30,
   },
   price: {
     fontSize: 16,
@@ -273,8 +279,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FONTS.medium,
-    color: "#000",
-    fontWeight: "bold",
+    color: COLORS.textPrimary,
     marginBottom: 10,
   },
   descriptionContainer: {
@@ -299,7 +304,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: "center",
     marginTop: "auto", //^Change that to auto
-    width: "50%",
+    width: "100%",
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 4,
   },
 });
 

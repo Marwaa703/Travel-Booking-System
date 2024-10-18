@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
     padding: SPACING.medium,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 80,
+    backgroundColor: COLORS.bg,
   },
   noTripsText: {
     textAlign: "center",
     marginTop: SPACING.xlarge,
     fontSize: 24,
-    color: COLORS.primary,
+    color: COLORS.accent,
   },
   cardContainer: {
     marginRight: SPACING.small,

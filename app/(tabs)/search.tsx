@@ -7,6 +7,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import Card from "@/components/Card";
 import Header from "@/components/core/Header";
@@ -66,6 +67,7 @@ const Search: React.FC = () => {
           style={styles.searchInput}
           placeholder="Search for trip locations..."
           value={searchQuery}
+          placeholderTextColor={COLORS.textSecondary}
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity>
@@ -88,8 +90,12 @@ const Search: React.FC = () => {
         </View>
       ) : searchQuery === "" ? (
         <View style={styles.iconContainer}>
-          <Text style={styles.searchText}>Search For Trip Locations Here</Text>
-          <Ionicons name="search" size={70} color={COLORS.secondary} />
+          <Image
+            source={require("@/assets/vectors/search.png")}
+            style={styles.search}
+          />
+          {/* <Text style={styles.searchText}>Search For Trip Locations Here</Text>
+          <Ionicons name="search" size={70} color={COLORS.secondary} /> */}
         </View>
       ) : filteredTrips.length === 0 ? (
         <View style={styles.iconContainer}>
@@ -135,6 +141,7 @@ const Search: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.bg,
   },
   searchContainer: {
     flexDirection: "row",
@@ -151,6 +158,10 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     marginLeft: 10,
+  },
+  search: {
+    objectFit: "contain",
+    width: "80%",
   },
   iconContainer: {
     flex: 1,

@@ -26,6 +26,8 @@ import Hero from "@/components/core/Hero";
 import { companyUserRoles } from "@/types/company";
 import { Trip } from "@/types/trip";
 import { travelerImage1, travelerImage2 } from "@/constants/icons";
+import ScreenWraper from "@/components/containers/ScreenWraper";
+import TextNote from "@/components/forms/TextNote";
 
 const Home = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
@@ -109,92 +111,94 @@ const Home = () => {
 
   const trips = filterTripsByRole(allTrips, user);
   return (
-    <SafeAreaView
-      style={{ flex: 1, marginBottom: 70, backgroundColor: COLORS.bg }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
       <Header onLeftIconPress={() => {}} leftIcon="" title="Home" />
-      <ScrollView
-        contentContainerStyle={{ padding: 20, backgroundColor: COLORS.bg }}
-      >
-        <Hero travelerImage={travelerImage2} />
-        <Spacer />
-        {/* <Text style={styles.title}>Explore the Beautiful</Text>
+      <ScreenWraper>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ padding: 20, backgroundColor: COLORS.bg }}
+        >
+          <Hero travelerImage={travelerImage2} />
+          <Spacer />
+          {/* <Text style={styles.title}>Explore the Beautiful</Text>
         <Text style={styles.span}>World!</Text>
         <Image
           source={require("../../../assets/Vector.png")}
           style={styles.image}
         /> */}
-        {/* <Button onPress={() => handleSendNotification()} title="Notify" /> */}
-        <View style={styles.trips}>
-          <View style={styles.subtitleContainer}>
-            <Text style={styles.subtitle}>Popular Trips</Text>
-            <Text
-              style={styles.viewAll}
-              onPress={() => router.push("/popularTrips")}
-            >
-              View All
-            </Text>
-          </View>
-
-          {/* Horizontal ScrollView for Trip Profile Cards */}
-          {isLoading ? (
-            <Text>Loading trips...</Text>
-          ) : trips?.length === 0 ? (
-            <Text>No trips to display. Add one!</Text>
-          ) : (
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.horizontalScroll}
-            >
-              {trips?.map((trip) => (
-                <View key={trip.trip_id} style={styles.cardWrapper}>
-                  <Card
-                    id={trip.trip_id as string}
-                    image={trip.images[1]?.image_url || "default_image_uri"}
-                    title={trip.name}
-                    subtitle={"Egypt"}
-                    rating={null}
-                    price={`$${trip.price}`}
-                  />
-                </View>
-              ))}
-            </ScrollView>
-          )}
-        </View>
-        <Spacer />
-
-        {(user?.role === "Admin" || user?.role === "User") && (
-          <View style={styles.company}>
+          {/* <Button onPress={() => handleSendNotification()} title="Notify" /> */}
+          <View style={styles.trips}>
             <View style={styles.subtitleContainer}>
-              <Text style={styles.subtitle}>Popular Companies</Text>
+              <Text style={styles.subtitle}>Popular Trips</Text>
               <Text
                 style={styles.viewAll}
-                onPress={() => router.push("/popularCompanies")}
+                onPress={() => router.push("/popularTrips")}
               >
                 View All
               </Text>
             </View>
-            <Spacer />
-            <View style={styles.cardContainer}>
-              {popularCompanies &&
-                popularCompanies.slice(0, 6).map((company, index) => (
-                  <View key={company.id} style={styles.companyCardWrapper}>
+
+            {/* Horizontal ScrollView for Trip Profile Cards */}
+            {isLoading || (trips?.length === 0 && <Spacer />)}
+            {isLoading ? (
+              <TextNote note="Loading trips..." />
+            ) : trips?.length === 0 ? (
+              <TextNote note="No trips to display. Add one!" />
+            ) : (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.horizontalScroll}
+              >
+                {trips?.map((trip) => (
+                  <View key={trip.trip_id} style={styles.cardWrapper}>
                     <Card
-                      id={company.id as string}
-                      image={company.logo as string}
-                      title={company.name}
-                      subtitle={company.address.slice(0, 20)}
-                      rating={4}
-                      buttonText={"Subscribe"}
+                      id={trip.trip_id as string}
+                      image={trip.images[1]?.image_url || "default_image_uri"}
+                      title={trip.name}
+                      subtitle={"Egypt"}
+                      rating={null}
+                      price={trip.price}
                     />
                   </View>
                 ))}
-            </View>
-            <Spacer height={SPACING.large} />
+              </ScrollView>
+            )}
           </View>
-        )}
-      </ScrollView>
+          <Spacer />
+
+          {(user?.role === "Admin" || user?.role === "User") && (
+            <View style={styles.company}>
+              <View style={styles.subtitleContainer}>
+                <Text style={styles.subtitle}>Popular Companies</Text>
+                <Text
+                  style={styles.viewAll}
+                  onPress={() => router.push("/popularCompanies")}
+                >
+                  View All
+                </Text>
+              </View>
+              <Spacer />
+              <View style={styles.cardContainer}>
+                {popularCompanies &&
+                  popularCompanies.slice(0, 6).map((company, index) => (
+                    <View key={company.id} style={styles.companyCardWrapper}>
+                      <Card
+                        id={company.id as string}
+                        image={company.logo as string}
+                        title={company.name}
+                        subtitle={company.address.slice(0, 20)}
+                        rating={4}
+                        buttonText={"Subscribe"}
+                      />
+                    </View>
+                  ))}
+              </View>
+              <Spacer height={SPACING.large} />
+            </View>
+          )}
+        </ScrollView>
+      </ScreenWraper>
     </SafeAreaView>
   );
 };

@@ -29,7 +29,7 @@ interface CardProps {
   title: string;
   subtitle: string;
   rating: number | null;
-  price?: string; // Optional price prop
+  price?: number; // Optional price prop
   buttonText?: string; // Optional button text
 }
 
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   title: {
-    fontSize: FONTS.normal,
+    fontSize: FONTS.medium,
     // fontWeight: "bold",
     color: COLORS.textPrimary,
   },
@@ -153,11 +153,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   priceText: {
-    fontSize: 12,
+    fontSize: 16,
     color: COLORS.accent,
-    fontWeight: "bold",
-    marginBottom: 10,
-    marginHorizontal: 10,
+    // fontWeight: "bold",
+    // marginBottom: 10,
+    // marginHorizontal: 10,
   },
   iconContainer: {
     position: "absolute",

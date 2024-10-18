@@ -67,6 +67,8 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
   return (
     <>
       <Fragment>
+        <TextNote note="Provide tax papers, and commercial register!" />
+        <Spacer />
         <TextInputField
           trim={false}
           name={"paper Name"}
