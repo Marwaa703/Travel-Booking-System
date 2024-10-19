@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-unused-styles */
 import { View, Text, Dimensions, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import Header from "@/components/core/Header";
@@ -12,13 +11,24 @@ const PerviousTrip = () => {
   // configure styles
   const theme = useTheme();
   const styles = stylesObj(theme);
+  const user = useAppSelector((state) => state.auth);
+  const bookedTripsForUser = useAppSelector((state) => state.bookedTrips);
+  const currentUser = user?.currentUser?.id;
   const previousTrips = useAppSelector((state) => state.trips.previousTrips);
   const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
-  if (!Array.isArray(previousTrips) || previousTrips.length === 0) {
+  const userTrips = bookedTripsForUser.trips
+    .filter((booking) => booking.user_id === currentUser)
+    .map((booking) => previousTrips.find((trip) => trip.id === booking.trip_id))
+    .filter((trip) => trip);
+  if (!Array.isArray(userTrips) || userTrips.length === 0) {
     return (
       <>
-        <Header title="Previous Trips" />
+        <Header
+          title="Previous Trips"
+          leftIcon="arrow-back"
+          onLeftIconPress={() => router.back()}
+        />
         <View style={styles.container}>
           <Text style={styles.noTripsText}>No previous trips found.</Text>
         </View>
@@ -35,7 +45,7 @@ const PerviousTrip = () => {
       />
       <View style={styles.container}>
         <FlatList
-          data={previousTrips}
+          data={userTrips}
           renderItem={({ item }) => {
             const tripWithImages = tripImgs.find(
               (trip) => trip.trip_id === item.id,
@@ -57,7 +67,7 @@ const PerviousTrip = () => {
               </View>
             );
           }}
-          keyExtractor={(item) => item.trip_id}
+          keyExtractor={(item) => item.id.toString()}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.scrollContainer}

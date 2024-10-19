@@ -116,7 +116,7 @@ const Payment: React.FC = () => {
         tripDetails.company_id,
         tripId,
         userWalletAddress,
-        tripDetails?.price, // Assuming this is in Wei
+        tripDetails?.price,
       );
       const { transactionHash } = paymentResponse;
 

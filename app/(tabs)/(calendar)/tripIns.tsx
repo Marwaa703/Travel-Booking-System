@@ -38,7 +38,6 @@ const TripInstructions: React.FC = () => {
   const dispatch = useDispatch();
 
   const hasTripEnded = trip.end_date && new Date(trip.end_date) <= new Date();
-
   useEffect(() => {
     if (!hasTripEnded) {
       const fetchInstructions = async () => {
