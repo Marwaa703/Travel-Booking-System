@@ -12,68 +12,74 @@ import Spacer from "@/components/Spacer";
 const AdminProfile: React.FC = () => {
   const handleLogout = useLogout();
   return (
-    <ScreenWraper>
-      <Padding>
-        <Header rightIcon="exit-outline" onRightIconPress={handleLogout} />
-        <View style={styles.profileImageContainer}>
-          <Image
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/7816/7816916.png",
+    <View style={styles.main}>
+      <ScreenWraper>
+        <Padding>
+          <Header rightIcon="exit-outline" onRightIconPress={handleLogout} />
+          <View style={styles.profileImageContainer}>
+            <Image
+              source={{
+                uri: "https://cdn-icons-png.flaticon.com/512/7816/7816916.png",
+              }}
+              style={styles.profileImage}
+            />
+          </View>
+          <Text style={styles.greetingText}>Hello, Admin</Text>
+          <Spacer />
+          <SettingCard
+            title="Pending Requests"
+            onPress={() => {
+              router.push("pending");
             }}
-            style={styles.profileImage}
+            leftIconName="pending-actions"
           />
-        </View>
-        <Text style={styles.greetingText}>Hello, Admin</Text>
-        <Spacer />
-        <SettingCard
-          title="Pending Requests"
-          onPress={() => {
-            router.push("pending");
-          }}
-          leftIconName="pending-actions"
-        />
 
-        <Spacer height={16} />
-        <SettingCard
-          title="Companies Approved"
-          onPress={() => {
-            router.push("approved");
-          }}
-          leftIconName="verified"
-        />
-        <Spacer height={16} />
-        <SettingCard
-          title="Trips Analysis"
-          onPress={() => {
-            router.push("tripAnalysis");
-          }}
-          leftIconName="bar-chart"
-        />
-        <Spacer height={16} />
-        <SettingCard
-          title="Register Users"
-          onPress={() => {
-            router.push("registerUser");
-          }}
-          leftIconName="person-add"
-        />
-        <Spacer height={16} />
-        <SettingCard
-          title="Settings"
-          onPress={() => {
-            router.push("/(profile)/settings");
-          }}
-          leftIconName="tune"
-        />
-        <Spacer height={16} />
-      </Padding>
-    </ScreenWraper>
+          <Spacer height={16} />
+          <SettingCard
+            title="Companies Approved"
+            onPress={() => {
+              router.push("approved");
+            }}
+            leftIconName="verified"
+          />
+          <Spacer height={16} />
+          <SettingCard
+            title="Trips Analysis"
+            onPress={() => {
+              router.push("tripAnalysis");
+            }}
+            leftIconName="bar-chart"
+          />
+          <Spacer height={16} />
+          <SettingCard
+            title="Register Users"
+            onPress={() => {
+              router.push("registerUser");
+            }}
+            leftIconName="person-add"
+          />
+          <Spacer height={16} />
+          <SettingCard
+            title="Settings"
+            onPress={() => {
+              router.push("/(profile)/settings");
+            }}
+            leftIconName="tune"
+          />
+          <Spacer height={16} />
+        </Padding>
+      </ScreenWraper>
+    </View>
   );
 };
 
 export default AdminProfile;
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    backgroundColor: COLORS.bg,
+  },
   profileImageContainer: {
     alignItems: "center",
     marginVertical: 10,

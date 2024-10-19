@@ -1,4 +1,28 @@
-export const COLORSs = {
+import { useTheme } from "@/hooks/useTheme";
+// types/colors.ts
+
+export type ColorPalette = {
+  primary: string; // Primary color for app elements
+  secondary: string; // Secondary color for headers, buttons, etc.
+  accent: string; // Accent color for highlights
+  light: string; // Light color
+  bg: string; // Background color for screens
+  bg_surface: string; // Surface background color
+  textPrimary: string; // Primary text color
+  textSubtitle: string; // Subtitle text color
+  textSecondary: string; // Secondary text color
+  error: string; // Error color
+  success: string; // Success color
+  warning: string; // Warning color
+  priceTag: string; // Color for price tags
+  calendarSelected: string; // Calendar selected date color
+  opacity: string; // Opacity value
+  link: string; // Link color
+};
+
+// You can now use this type for your COLORSs object
+
+export const COLORSs: ColorPalette = {
   primary: "#E88D67", // Primary color for app elements
   secondary: "#006989", // Secondary color for headers, buttons, etc.
   accent: "#005C78", // Accent color for highlights
@@ -16,7 +40,7 @@ export const COLORSs = {
   opacity: "rgba(255, 255, 255, 0.7)",
   link: "#0D6EFD",
 };
-export const COLORS = {
+export const COLORS: ColorPalette = {
   primary: "#FF9756", // Primary color for app elements
   secondary: "#65BFD3", // Secondary color for headers, buttons, etc.
   accent: "#61B5C6", // Accent color for highlights
@@ -32,9 +56,10 @@ export const COLORS = {
   priceTag: "#FFBA54", // Color for price tags
   calendarSelected: "#F1F1F1", // Calendar selected date color
   opacity: "rgba(255, 255, 255, 0.7)",
+  link: "#0D6EFD",
 };
 
-export const light = {
+export const light: ColorPalette = {
   primary: "#E88D67", // Primary color for app elements
   secondary: "#006989", // Secondary color for headers, buttons, etc.
   accent: "#005C78", // Accent color for highlights
@@ -52,7 +77,7 @@ export const light = {
   opacity: "rgba(255, 255, 255, 0.7)",
   link: "#0D6EFD",
 };
-export const dark = {
+export const dark: ColorPalette = {
   primary: "#FF9756", // Primary color for app elements
   link: "#0D6EFD",
   secondary: "#65BFD3", // Secondary color for headers, buttons, etc.

@@ -24,6 +24,7 @@ import FullScreenImage from "@/components/FullScreenImage";
 import CompanyStatus from "@/components/admin/UpdateCompanyStatus";
 import UpdateCompanyStatus from "@/components/admin/UpdateCompanyStatus";
 import useRefreshControl from "@/hooks/useRefreshControl";
+import Padding from "@/components/containers/Padding";
 
 const Pending = () => {
   const dispatch = useAppDispatch();
@@ -76,91 +77,107 @@ const Pending = () => {
   return (
     <>
       <Header title={`Pending Requests ${pendingCompanies.length}`} />
+      <View style={styles.main}>
+        <Padding>
+          <ScrollView
+            style={styles.container}
+            refreshControl={<RefreshControl {...refreshControl} />}
+          >
+            {!companies.length && <Text>No pending companies!</Text>}
+            {companies &&
+              companies.map((company) => (
+                <View key={company?.id} style={styles.card}>
+                  <View style={styles.row}>
+                    <Image
+                      source={{ uri: company?.logo }}
+                      style={styles.logo}
+                    />
+                    <View>
+                      <Text style={styles.companyName}>{company?.name}</Text>
+                      <Text style={styles.detail}>{company?.address}</Text>
+                      <Text style={styles.detail}>{company?.status}</Text>
+                    </View>
+                  </View>
+                  {/* <Text style={styles.detail}>Required Papers: {company?.papers}</Text> */}
 
-      <ScrollView
-        style={styles.container}
-        refreshControl={<RefreshControl {...refreshControl} />}
-      >
-        {!companies.length && <Text>No pending companies!</Text>}
-        {companies &&
-          companies.map((company) => (
-            <View key={company?.id} style={styles.card}>
-              <View style={styles.row}>
-                <Image source={{ uri: company?.logo }} style={styles.logo} />
-                <View>
-                  <Text style={styles.companyName}>{company?.name}</Text>
-                  <Text style={styles.detail}>{company?.address}</Text>
-                  <Text style={styles.detail}>{company?.status}</Text>
-                </View>
-              </View>
-              {/* <Text style={styles.detail}>Required Papers: {company?.papers}</Text> */}
+                  <Text style={styles.detail}>
+                    {hashTextPercent(company?.wallet as string, "#")}
+                  </Text>
+                  <Pressable
+                    onPress={() => getCompanyPapers(company?.id as string)}
+                  >
+                    <Text style={{ color: COLORS.accent }}>Get Papers</Text>
+                  </Pressable>
+                  {papers && papers[0]?.company_id == company?.id && (
+                    <View>
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                      >
+                        {papers.map((paper) => (
+                          <View key={paper.paper_id} style={styles.paperItem}>
+                            <Text style={styles.paperTitle}>{paper.title}</Text>
+                            <TouchableOpacity
+                              onPress={() => handleImagePress(paper.image_url)}
+                            >
+                              <Image
+                                source={{ uri: paper.image_url }}
+                                style={styles.paperImage}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        ))}
+                      </ScrollView>
+                      <FullScreenImage
+                        visible={imageModal}
+                        imageUrl={selectedImage || ""}
+                        onClose={() => setImageModal(false)}
+                      />
+                    </View>
+                  )}
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                      style={styles.approveButton}
+                      onPress={() => setModalVisible(true)}
+                    >
+                      <Text style={styles.buttonText}>
+                        Change Company Status
+                      </Text>
+                    </TouchableOpacity>
+                    <UpdateCompanyStatus
+                      company={company}
+                      onClose={() => setModalVisible(false)}
+                      visible={isModalVisible}
+                      onApprove={(id) => handleApprove(id)}
+                    />
 
-              <Text style={styles.detail}>
-                {hashTextPercent(company?.wallet as string, "#")}
-              </Text>
-              <Pressable
-                onPress={() => getCompanyPapers(company?.id as string)}
-              >
-                <Text style={{ color: COLORS.accent }}>Get Papers</Text>
-              </Pressable>
-              {papers && papers[0]?.company_id == company?.id && (
-                <View>
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {papers.map((paper) => (
-                      <View key={paper.paper_id} style={styles.paperItem}>
-                        <Text style={styles.paperTitle}>{paper.title}</Text>
-                        <TouchableOpacity
-                          onPress={() => handleImagePress(paper.image_url)}
-                        >
-                          <Image
-                            source={{ uri: paper.image_url }}
-                            style={styles.paperImage}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ))}
-                  </ScrollView>
-                  <FullScreenImage
-                    visible={imageModal}
-                    imageUrl={selectedImage || ""}
-                    onClose={() => setImageModal(false)}
-                  />
-                </View>
-              )}
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.approveButton}
-                  onPress={() => setModalVisible(true)}
-                >
-                  <Text style={styles.buttonText}>Change Company Status</Text>
-                </TouchableOpacity>
-                <UpdateCompanyStatus
-                  company={company}
-                  onClose={() => setModalVisible(false)}
-                  visible={isModalVisible}
-                  onApprove={(id) => handleApprove(id)}
-                />
-
-                {/* <TouchableOpacity
+                    {/* <TouchableOpacity
                   style={styles.denyButton}
                   onPress={() => setModalVisible(true)}
-                >
+                  >
                   <Text style={styles.buttonText}>Reject</Text>
-                </TouchableOpacity> */}
-              </View>
-              <Spacer />
-            </View>
-          ))}
-      </ScrollView>
+                  </TouchableOpacity> */}
+                  </View>
+                  <Spacer />
+                </View>
+              ))}
+          </ScrollView>
+        </Padding>
+      </View>
     </>
   );
 };
 
 // Styles for the Pending component
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    backgroundColor: COLORS.bg,
+  },
   container: {
     marginBottom: 90,
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
+    backgroundColor: COLORS.bg,
   },
   row: {
     flexDirection: "row",
@@ -168,7 +185,7 @@ const styles = StyleSheet.create({
     columnGap: 10,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 8,
     padding: 15,
     shadowColor: "#000",

@@ -126,6 +126,7 @@ const TripAnalysisScreen: React.FC = () => {
           selectedMonthYear={selectedMonthYear}
           data={getMonthlyData(monthlyTrips)}
         />
+        <Spacer height={80} />
       </ScrollView>
     </>
   );
@@ -135,8 +136,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#f0f0f0",
-    marginBottom: 90,
+    backgroundColor: COLORS.bg,
   },
 
   datePickerText: {

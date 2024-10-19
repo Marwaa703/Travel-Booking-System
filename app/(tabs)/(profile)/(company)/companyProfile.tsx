@@ -122,15 +122,17 @@ const CompanyProfile: React.FC = () => {
                       leftIconName="air"
                     />
                     <Spacer height={16} />
-                    <SettingCard
-                      title="Manage Employees"
-                      onPress={() =>
-                        router.push(
-                          `companyUsers/?companyId=${user?.company_id}`,
-                        )
-                      }
-                      leftIconName="people"
-                    />
+                    {user?.role === "Representative" && (
+                      <SettingCard
+                        title="Manage Employees"
+                        onPress={() =>
+                          router.push(
+                            `companyUsers/?companyId=${user?.company_id}`,
+                          )
+                        }
+                        leftIconName="people"
+                      />
+                    )}
                     {/* <Spacer height={16} />
                     <SettingCard
                       title="Company Settings"

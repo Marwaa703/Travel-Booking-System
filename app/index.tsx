@@ -1,6 +1,9 @@
+/* eslint-disable react-native/no-unused-styles */
 import Button from "@/components/Buttons";
 import Spacer from "@/components/Spacer";
-import { COLORS, FONTS, SPACING } from "@/constants/theme";
+import { ColorPalette, FONTS, SPACING } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
+
 import {
   fetchCompanies,
   fetchCompanyUsers,
@@ -16,7 +19,9 @@ const { height } = Dimensions.get("window");
 
 const ExploreScreen = () => {
   // get initial data from server;
-
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   return (
     <View style={styles.container}>
       <Toast />
@@ -61,52 +66,53 @@ const ExploreScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-  },
-  topImage: {
-    width: "100%",
-    height: height * 0.7,
-  },
-  bottom: {
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: height * 0.3,
-    width: "100%",
-    paddingBottom: 16, // Add padding to the bottom for some spacing
-  },
-  textContainer: {
-    paddingHorizontal: 14,
-    backgroundColor: COLORS.bg,
-    alignItems: "center",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    overflow: "hidden",
-    marginTop: -30,
-    width: "100%",
-  },
-  title: {
-    fontSize: FONTS.xxlarge,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 12,
-    color: COLORS.textPrimary,
-  },
-  exploreText: {
-    color: "#FF6F3D",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: COLORS.textSecondary,
-    textAlign: "center",
-  },
-  buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+    },
+    topImage: {
+      width: "100%",
+      height: height * 0.7,
+    },
+    bottom: {
+      flex: 1,
+      justifyContent: "space-between",
+      alignItems: "center",
+      height: height * 0.3,
+      width: "100%",
+      paddingBottom: 16, // Add padding to the bottom for some spacing
+    },
+    textContainer: {
+      paddingHorizontal: 14,
+      backgroundColor: COLORS.bg,
+      alignItems: "center",
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      overflow: "hidden",
+      marginTop: -30,
+      width: "100%",
+    },
+    title: {
+      fontSize: FONTS.xxlarge,
+      fontWeight: "bold",
+      textAlign: "center",
+      marginTop: 12,
+      color: COLORS.textPrimary,
+    },
+    exploreText: {
+      color: "#FF6F3D",
+    },
+    subtitle: {
+      fontSize: 16,
+      color: COLORS.textSecondary,
+      textAlign: "center",
+    },
+    buttonContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  });
 
 export default ExploreScreen;

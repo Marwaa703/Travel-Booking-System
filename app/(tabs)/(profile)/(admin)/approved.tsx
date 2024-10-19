@@ -18,6 +18,9 @@ import { Company } from "@/types/company";
 import { editCompany, removeCompany } from "@/redux/slices/companiesSlice";
 import { router } from "expo-router";
 import { updateCompanyDetails } from "@/redux/actions/companiesActions";
+import Spacer from "@/components/Spacer";
+import { bottomTabsHeight } from "@/constants/dimentions";
+import TextNote from "@/components/forms/TextNote";
 
 const ApprovedCompaniesScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -119,8 +122,8 @@ const ApprovedCompaniesScreen: React.FC = () => {
                     </View>
                   </View>
                   <Text style={styles.companySubtitle}>{item.address}</Text>
-                  <Text>Rating: {0}</Text>
-                  <Text>Trips: {0}</Text>
+                  <TextNote note={`Rating: ${0}`} />
+                  <TextNote note={`Trips: ${0}`} />
                 </View>
               </View>
               <View>
@@ -158,6 +161,7 @@ const ApprovedCompaniesScreen: React.FC = () => {
             </View>
           )}
         />
+        <Spacer height={bottomTabsHeight} />
       </View>
     </>
   );
@@ -169,7 +173,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginBottom: 70,
+    // marginBottom: 70,
+    backgroundColor: COLORS.bg,
   },
   title: {
     fontSize: 24,
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     // flexDirection: "row",
     marginBottom: 20,
     padding: 15,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -195,22 +200,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   companyImage: {
-    width: 100,
-    height: 100,
-    marginRight: 20,
+    width: 80,
+    height: 80,
+    marginRight: 8,
     borderRadius: 8,
   },
   companyDetails: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   companyHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
+    color: COLORS.textPrimary,
   },
   companyId: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 14,
+    // fontWeight: "bold",
+    color: COLORS.textPrimary,
   },
   iconGroup: {
     flexDirection: "row",

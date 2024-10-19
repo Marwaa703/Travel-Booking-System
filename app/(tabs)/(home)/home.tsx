@@ -112,7 +112,8 @@ const Home = () => {
   const trips = filterTripsByRole(allTrips, user);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
-      <Header onLeftIconPress={() => {}} leftIcon="" title="Home" />
+      {/* <Header onLeftIconPress={() => {}} leftIcon="" title="" /> */}
+      <Spacer height={24} />
       <ScreenWraper>
         <ScrollView
           showsVerticalScrollIndicator={false}

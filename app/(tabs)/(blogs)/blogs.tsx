@@ -97,7 +97,7 @@ const Blogs: React.FC = () => {
         ListHeaderComponent={
           <>
             {/* Header Section */}
-            <Header title="Our Blogs" rightIcon="" leftIcon="" />
+            {/* <Header title="Our Blogs" rightIcon="" leftIcon="" /> */}
             <View style={styles.headerContainer}>
               {/* <View style={styles.header}>
                 <Ionicons

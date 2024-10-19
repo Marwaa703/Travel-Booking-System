@@ -270,7 +270,7 @@ export default Payment;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.opacity,
+    backgroundColor: COLORS.bg,
   },
   loadingContainer: {
     flex: 1,
@@ -287,9 +287,10 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   section: {
-    backgroundColor: COLORS.opacity,
+    backgroundColor: COLORS.bg_surface,
     flexGrow: 1,
     justifyContent: "space-between",
+    padding: 5,
   },
   infoSection: {
     flexDirection: "row",

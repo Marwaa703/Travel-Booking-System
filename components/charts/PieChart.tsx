@@ -48,14 +48,14 @@ const chartConfig = {
 const styles = StyleSheet.create({
   pieContainer: {
     marginBottom: 30,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.bg_surface,
     borderRadius: 10,
     elevation: 3,
     padding: 5,
   },
   chartTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
+    fontSize: 18,
+    // fontWeight: "bold",
     marginTop: 20,
     color: COLORS.textPrimary,
     paddingLeft: 20,
