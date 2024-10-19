@@ -7,7 +7,7 @@ import Card from "@/components/Card";
 import { ColorPalette, COLORS, SPACING } from "@/constants/theme";
 import { selectFavoriteTrips } from "@/redux/slices/tripsSlice";
 import { useAppSelector } from "@/redux/store";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -20,7 +20,11 @@ const FavTrip = () => {
   if (trips.length === 0) {
     return (
       <>
-        <Header title="Favorite Trips" />
+        <Header
+          leftIcon="arrow-back"
+          title="Favourite Trips"
+          onLeftIconPress={() => router.back()}
+        />
         <View style={styles.container}>
           <Text style={styles.noTripsText}>You Do Not Like Our Trips Yet</Text>
         </View>
@@ -30,12 +34,13 @@ const FavTrip = () => {
 
   return (
     <>
+      <Header
+        leftIcon="arrow-back"
+        title="Favourite Trips"
+        onLeftIconPress={() => router.back()}
+      />
+
       <ScreenWraper>
-        <Header
-          title="Favorite Trips"
-          leftIcon="arrow-back"
-          onLeftIconPress={() => router.back()}
-        />
         <View style={styles.container}>
           <FlatList
             data={trips}

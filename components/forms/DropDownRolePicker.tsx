@@ -122,7 +122,7 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     selectorButton: {
       alignItems: "center",
-      backgroundColor: COLORS.light,
+      backgroundColor: COLORS.bg_surface,
       borderRadius: 25,
       paddingVertical: 8,
       paddingHorizontal: 14,
@@ -143,7 +143,7 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     modalContent: {
       width: "80%",
-      backgroundColor: "#fff",
+      backgroundColor: COLORS.bg_surface,
       borderRadius: 10,
       padding: 20,
     },
@@ -152,6 +152,7 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     itemText: {
       fontSize: 16,
+      color: COLORS.textPrimary,
     },
     closeButton: {
       padding: 10,

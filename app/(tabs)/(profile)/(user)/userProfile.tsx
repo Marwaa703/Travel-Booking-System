@@ -40,6 +40,7 @@ const ProfileScreen: React.FC = () => {
         onLeftIconPress={() => {}}
       />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Spacer height={16} />
         <SafeAreaView style={styles.container}>
           <View style={styles.cardlist}>
             {/* Profile Header */}

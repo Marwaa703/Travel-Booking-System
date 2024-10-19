@@ -160,6 +160,8 @@ const stylesObject = (COLORS: ColorPalette) =>
     searchInput: {
       flex: 1,
       height: 40,
+      width: "80%",
+      color: COLORS.textPrimary,
     },
     searchIcon: {
       marginLeft: 10,

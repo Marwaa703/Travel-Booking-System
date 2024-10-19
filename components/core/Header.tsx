@@ -16,7 +16,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  leftIcon = "person-circle-outline",
+  leftIcon = "",
   rightIcon = "",
   title = "",
   onLeftIconPress,
@@ -57,8 +57,8 @@ const stylesObj = (COLORS: ColorPalette) =>
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      marginVertical: 18,
-      padding: 16,
+      paddingTop: 32,
+      paddingHorizontal: 16,
       marginBottom: -2,
       backgroundColor: COLORS.bg,
     },

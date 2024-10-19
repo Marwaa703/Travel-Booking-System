@@ -23,21 +23,13 @@ const SettingCard: React.FC<SettingCardProps> = ({
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       {/* Icon on the left */}
-      <MaterialIcons
-        name={leftIconName}
-        size={20}
-        color={COLORS.textSecondary}
-      />
+      <MaterialIcons name={leftIconName} size={20} color={theme.textPrimary} />
 
       {/* Title in the middle */}
       <Text style={styles.titleText}>{title}</Text>
 
       {/* Right arrow icon */}
-      <MaterialIcons
-        name="chevron-right"
-        size={20}
-        color={COLORS.textSecondary}
-      />
+      <MaterialIcons name="chevron-right" size={20} color={theme.textPrimary} />
     </TouchableOpacity>
   );
 };
@@ -56,7 +48,7 @@ const stylesObj = (COLORS: ColorPalette) =>
       marginLeft: 15,
       fontSize: 16,
       letterSpacing: 0.5,
-      color: COLORS.textSecondary, // Text color
+      color: COLORS.textPrimary, // Text color
     },
   });
 

@@ -21,6 +21,7 @@ import Header from "@/components/core/Header";
 import { router } from "expo-router";
 import { ColorPalette, COLORS } from "@/constants/theme";
 import { useTheme } from "@/hooks/useTheme";
+import { hashTextPercent } from "@/utils";
 
 const CompanyProfileScreen = () => {
   // configure styles
@@ -82,7 +83,7 @@ const CompanyProfileScreen = () => {
             <View style={styles.details}>
               <Text style={styles.sectionTitle}>Company Details</Text>
               <Text style={styles.detailText}>
-                Wallet: {company.wallet || "N/A"}
+                Wallet: {hashTextPercent(company.wallet, "#", 70) || "N/A"}
               </Text>
             </View>
 
@@ -97,13 +98,13 @@ const CompanyProfileScreen = () => {
               <View style={styles.papersSection}>
                 <Text style={styles.sectionTitle}>Company Papers</Text>
                 {papers.map((paper) => (
-                  <View key={paper.paper_id} style={styles.paperItem}>
-                    <Text style={styles.paperTitle}>{paper.title}</Text>
+                  <View key={paper?.paper_id} style={styles.paperItem}>
+                    <Text style={styles.paperTitle}>{paper?.title}</Text>
                     <TouchableOpacity
-                      onPress={() => handleImagePress(paper.image_url)}
+                      onPress={() => handleImagePress(paper?.image_url)}
                     >
                       <Image
-                        source={{ uri: paper.image_url }}
+                        source={{ uri: paper?.image_url }}
                         style={styles.paperImage}
                       />
                     </TouchableOpacity>
@@ -130,7 +131,6 @@ const stylesObj = (COLORS: ColorPalette) =>
     container: {
       flex: 1,
       padding: 20,
-      // backgroundColor: "#fff",
     },
     header: {
       alignItems: "center",
@@ -160,11 +160,12 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     sectionTitle: {
       fontSize: 18,
-
+      color: COLORS.textPrimary,
       marginBottom: 10,
     },
     detailText: {
-      fontSize: 16,
+      color: COLORS.textSubtitle,
+      fontSize: 14,
     },
     papersSection: {
       marginTop: 20,

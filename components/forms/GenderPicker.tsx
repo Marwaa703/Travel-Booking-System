@@ -73,6 +73,7 @@ const stylesObj = (COLORS: ColorPalette) =>
       overflow: "hidden",
       borderWidth: 1,
       borderColor: COLORS.light,
+      backgroundColor: COLORS.bg_surface,
     },
     button: {
       flex: 1,

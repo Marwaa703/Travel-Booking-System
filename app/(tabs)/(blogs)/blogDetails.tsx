@@ -51,7 +51,7 @@ const BlogDetails: React.FC = () => {
       <ScrollView>
         {/* Header Section */}
         <View style={styles.headerContainer}>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <Ionicons
               name="person-circle-outline"
               size={30}
@@ -62,7 +62,7 @@ const BlogDetails: React.FC = () => {
               size={30}
               color={COLORS.primary}
             />
-          </View>
+          </View> */}
           <View style={styles.welcomeContainer}>
             <Text style={styles.title}>{blog.title}</Text>
           </View>

@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import SettingCard from "@/components/SettingContainer";
-import { ColorPalette, COLORS } from "@/constants/theme";
+import { ColorPalette } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -59,16 +59,17 @@ const CompanyProfile: React.FC = () => {
   const [section, msg] = adminMessage.split(adminMsgSpliter);
 
   return (
-    <View style={{ backgroundColor: COLORS.bg, flex: 1 }}>
+    <View style={{ backgroundColor: theme.bg, flex: 1 }}>
       <ScreenWraper>
         <Header
           title="Company Profile"
           rightIcon="exit-outline"
           onRightIconPress={() => logout()}
           onLeftIconPress={() => () => {}}
-          leftIcon="arrow-back"
+          // leftIcon="arrow-back"
         />
         <Toast />
+        <Spacer />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {currentCompany && (
             <SafeAreaView style={styles.container}>
@@ -169,7 +170,6 @@ const stylesObj = (COLORS: ColorPalette) =>
     container: {
       flex: 1,
       paddingHorizontal: 20,
-      // paddingBottom: 100,
       backgroundColor: COLORS.bg,
     },
     scrollContainer: {

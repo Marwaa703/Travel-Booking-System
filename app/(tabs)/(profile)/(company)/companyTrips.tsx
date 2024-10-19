@@ -93,6 +93,7 @@ const CompanyHome = () => {
           )}
         </Padding>
       </ScreenWraper>
+      <Spacer />
     </View>
   );
 };

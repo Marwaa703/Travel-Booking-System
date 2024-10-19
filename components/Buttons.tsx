@@ -60,7 +60,7 @@ const Button: React.FC<ButtonProps> = ({
       >
         {loading ? (
           <>
-            <ActivityIndicator color={theme.bg} />
+            <ActivityIndicator color={theme.textPrimary} />
             <Text style={[styles.loadingText, { fontSize }]}>
               {loadingMessage}
             </Text>
@@ -97,7 +97,7 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     primaryText: {
       fontSize: FONTS.medium,
-      color: COLORS.bg,
+      color: "white",
       fontWeight: "bold",
       textAlign: "center",
     },
@@ -107,7 +107,7 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     secondaryText: {
       fontSize: FONTS.small,
-      color: COLORS.bg,
+      color: "white",
       fontWeight: "bold",
       textAlign: "center",
     },
