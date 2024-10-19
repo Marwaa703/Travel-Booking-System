@@ -6,6 +6,8 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Linking,
+  Alert,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
@@ -120,6 +122,17 @@ const TripInstructions: React.FC = () => {
       </View>
     );
   }
+  // console.log({ user });
+  const handleCall = async () => {
+    const url = `tel:01205175195`;
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Error", "Phone call is not supported on this device");
+    }
+  };
 
   return (
     <>
@@ -127,7 +140,7 @@ const TripInstructions: React.FC = () => {
         title={trip.name}
         rightIcon="call-outline"
         leftIcon="arrow-back"
-        onRightIconPress={() => {}}
+        onRightIconPress={handleCall}
         onLeftIconPress={() => {
           router.back();
         }}

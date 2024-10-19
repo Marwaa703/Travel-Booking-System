@@ -30,7 +30,7 @@ const Map: React.FC = () => {
     () => (places ? JSON.parse(decodeURIComponent(places)) : []),
     [places],
   );
-  console.log({ locations: locations?.length });
+  console.log({ locations });
   // const locations = places;
   const initialRegion = useMemo(
     () => calculateInitialRegion(locations),

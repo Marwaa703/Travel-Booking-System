@@ -29,6 +29,7 @@ import { ExchangeRatesResponse, getExchangeRates } from "@/api/etherRateApi";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
 import { useTheme } from "@/hooks/useTheme";
+import TextNote from "@/components/forms/TextNote";
 
 const Payment: React.FC = () => {
   // configure styles
@@ -39,7 +40,7 @@ const Payment: React.FC = () => {
   const [rates, setRates] = useState<ExchangeRatesResponse | undefined>(
     undefined,
   );
-  const [tripCostUSD, setTripCostUSD] = useState<number>(0);
+  const [tripCostEGP, setTripCostEGP] = useState<number>(0);
   const [tripCostEther, setTripCostEther] = useState<number>(0);
   const [lastUpdateTime, setLastUpdateTime] = useState<string>("");
 
@@ -47,6 +48,7 @@ const Payment: React.FC = () => {
   const { tripId } = route.params as { tripId: string };
   const [userWalletAddress, setUserWalletAddress] = useState<string>("");
   const [tripDetails, setTripDetails] = useState<any>(null);
+  console.log("price", tripDetails?.price);
   const [alert, setAlert] = useState<{
     message: string;
     type: "success" | "error" | "info";
@@ -57,26 +59,26 @@ const Payment: React.FC = () => {
   const userId = user.id?.toString();
   const trip = useAppSelector((state) => selectTripById(state.trips, tripId));
   const image = trip?.images[0].image_url;
+
   const paymentState = [
     "Processing your payment...",
     "waiting for confirmation from the network..",
   ];
-
+  console.log({ rates });
   useEffect(() => {
     const calculateRates = async () => {
       try {
         const data = await getExchangeRates();
         setRates(data);
         setLastUpdateTime(data.date);
-
-        // Assuming tripDetails.price is in USD
-        const tripCostInUSD = tripDetails?.price; // This should be the trip price in USD
-        setTripCostUSD(tripCostInUSD);
+        // Assuming tripDetails?.price is in USD
+        const tripCostInEGP = tripDetails?.price; // This should be the trip price in USD
+        setTripCostEGP(tripCostInEGP);
 
         // Calculate the equivalent amount in Ether
-        const etherRate = data.rates.ETH; // Get the ETH rate from the API
+        const etherRate = data.rates.ETH / data.rates.EGP; // Get the ETH rate from the API
         if (etherRate > 0) {
-          const etherAmount = tripCostInUSD * etherRate; // Convert USD to ETH
+          const etherAmount = tripCostInEGP * etherRate; // Convert USD to ETH
           setTripCostEther(etherAmount);
         }
       } catch (err) {
@@ -113,7 +115,7 @@ const Payment: React.FC = () => {
     setLoading(true);
     try {
       const paymentResponse = await makePayment(
-        tripDetails.company_id,
+        tripDetails?.company_id,
         tripId,
         userWalletAddress,
         tripDetails?.price,
@@ -156,19 +158,23 @@ const Payment: React.FC = () => {
   if (!tripDetails) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#ff5b00" />
-        <Text>Loading Trip Details...</Text>
+        <ActivityIndicator size="large" color={theme.primary} />
+        <TextNote note="Loading Trip Details..." />
       </View>
     );
   }
+  const ethEgpRate =
+    (rates?.rates.ETH as number) / (rates?.rates.EGP as number);
+  const ethUsdRate =
+    (rates?.rates.ETH as number) / (rates?.rates.USD as number);
   return (
     <>
-      <Header
-        title="Payment"
-        leftIcon="arrow-back"
-        onLeftIconPress={() => router.navigate(`tripDetails?id=${tripId}`)}
-      />
       <View style={styles.main}>
+        <Header
+          title="Payment"
+          leftIcon="arrow-back"
+          onLeftIconPress={() => router.navigate(`tripDetails?id=${tripId}`)}
+        />
         <ScreenWraper>
           <ScrollView contentContainerStyle={styles.container}>
             <Padding>
@@ -193,21 +199,23 @@ const Payment: React.FC = () => {
                         size={18}
                         color={COLORS.primary}
                       />
-                      <Text style={styles.tripText}>{tripDetails.name}</Text>
+                      <Text style={styles.tripText}>{tripDetails?.name}</Text>
                     </View>
                     <View style={styles.row}>
                       <Ionicons name="time" size={18} color={COLORS.primary} />
                       <Text style={styles.tripText}>
-                        {<FormatDate dateString={tripDetails.date} />}
+                        {<FormatDate dateString={tripDetails?.date} />}
                       </Text>
                     </View>
                     <View style={styles.row}>
-                      <Ionicons
-                        name="logo-usd"
-                        size={18}
-                        color={COLORS.primary}
+                      <TextNote
+                        note="EGP"
+                        style={[
+                          styles.tripText,
+                          { color: theme.primary, fontWeight: "600" },
+                        ]}
                       />
-                      <Text style={styles.tripText}>{tripCostUSD} USD</Text>
+                      <Text style={styles.tripText}>{tripCostEGP}</Text>
                     </View>
                     <View style={styles.row}>
                       <Ionicons name="card" size={18} color={COLORS.primary} />
@@ -231,7 +239,19 @@ const Payment: React.FC = () => {
                       color={COLORS.primary}
                     />
                     <Text style={styles.tripText}>
-                      Rate: {rates?.rates.ETH}{" "}
+                      Rate: {ethEgpRate.toFixed(10)}{" "}
+                      <Text style={{ color: COLORS.primary }}>EGP/ETH</Text>
+                    </Text>
+                  </View>
+                  <Spacer />
+                  <View style={styles.row}>
+                    <Ionicons
+                      name="analytics"
+                      size={18}
+                      color={COLORS.primary}
+                    />
+                    <Text style={styles.tripText}>
+                      Rate: {ethUsdRate.toFixed(10)}{" "}
                       <Text style={{ color: COLORS.primary }}>USD/ETH</Text>
                     </Text>
                   </View>
@@ -284,7 +304,7 @@ export default Payment;
 
 const stylesObj = (COLORS: ColorPalette) =>
   StyleSheet.create({
-    main: { flex: 1 },
+    main: { flex: 1, backgroundColor: COLORS.bg },
     container: {
       flex: 1,
       backgroundColor: COLORS.bg,

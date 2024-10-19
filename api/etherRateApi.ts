@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const API_KEY = "c8db12b2c4b1464eadb85e758e4a751e";
-// https://api.currencyfreaks.com/v2.0/rates/latest?apikey=c8db12b2c4b1464eadb85e758e4a751e&base=USD&symbols=ETH
+// https://api.currencyfreaks.com/v2.0/rates/latest?apikey=c8db12b2c4b1464eadb85e758e4a751e&base=EGP&symbols=ETH
 export const payRateApi: AxiosInstance = axios.create({
   baseURL: "https://api.currencyfreaks.com/v2.0",
   timeout: 10000,
