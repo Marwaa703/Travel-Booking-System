@@ -1,9 +1,10 @@
+/* eslint-disable react-native/no-unused-styles */
 import useLocationSearch, { LocationResult } from "@/hooks/useLocationSearch";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextInputField from "./forms/TextInputField";
-import { COLORS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Location {
   name: string;
@@ -22,6 +23,8 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
   placeholder,
   setPlaceholder,
 }) => {
+  // configure styles
+  const theme = useTheme();
   const [query, setQuery] = useState<string>("");
 
   const { results, loading, error, searchLocations, setResults } =
@@ -63,7 +66,7 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
           <TouchableOpacity
             key={item.place_id}
             style={{
-              borderBottomColor: COLORS.accent,
+              borderBottomColor: theme.accent,
               borderBottomWidth: 1,
               paddingVertical: 4,
             }}

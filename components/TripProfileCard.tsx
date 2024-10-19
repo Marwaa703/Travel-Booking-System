@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import {
   View,
@@ -8,12 +9,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Rating from "./Rating";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CardSubtitle from "./CardSubtitle";
 import { useNavigation, useRouter } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import { useTheme } from "@/hooks/useTheme";
 const defaultImage = require("../assets/imgDefault.png");
 interface TripProfileCardProps {
   id: number;
@@ -38,6 +40,9 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
   avatars,
   caller,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute();
   const router = useRouter();
@@ -88,77 +93,78 @@ const TripProfileCard: React.FC<TripProfileCardProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 10,
-    padding: 10,
-    elevation: 3, // Shadow for Android
-    shadowColor: "#000", // Shadow for iOS
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
-    position: "relative",
-  },
-  image: {
-    width: 100,
-    height: 120,
-    borderRadius: 10,
-  },
-  infoContainer: {
-    flex: 1,
-    marginLeft: 15,
-  },
-  title: {
-    fontSize: FONTS.normal,
-    // fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
-  dateContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 5,
-  },
-  ratingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: 10,
-  },
-  peopleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 15,
-  },
-  avatarsContainer: {
-    flexDirection: "row",
-    marginRight: 15,
-  },
-  avatar: {
-    width: 25,
-    height: 25,
-    borderRadius: 12.5,
-    marginRight: -10, // Overlap avatars
-  },
-  peopleText: {
-    fontSize: FONTS.small,
-    color: COLORS.textSubtitle,
-  },
-  priceContainer: {
-    backgroundColor: COLORS.priceTag,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 15,
-    position: "absolute",
-    right: 10,
-    top: 10,
-  },
-  priceText: {
-    color: "#fff",
-    fontSize: 10,
-    fontWeight: "bold",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    cardContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 10,
+      padding: 10,
+      elevation: 3, // Shadow for Android
+      shadowColor: "#000", // Shadow for iOS
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 4,
+      position: "relative",
+    },
+    image: {
+      width: 100,
+      height: 120,
+      borderRadius: 10,
+    },
+    infoContainer: {
+      flex: 1,
+      marginLeft: 15,
+    },
+    title: {
+      fontSize: FONTS.normal,
+      // fontWeight: "bold",
+      color: COLORS.textPrimary,
+    },
+    dateContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginVertical: 5,
+    },
+    ratingContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingTop: 10,
+    },
+    peopleContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 15,
+    },
+    avatarsContainer: {
+      flexDirection: "row",
+      marginRight: 15,
+    },
+    avatar: {
+      width: 25,
+      height: 25,
+      borderRadius: 12.5,
+      marginRight: -10, // Overlap avatars
+    },
+    peopleText: {
+      fontSize: FONTS.small,
+      color: COLORS.textSubtitle,
+    },
+    priceContainer: {
+      backgroundColor: COLORS.priceTag,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      borderRadius: 15,
+      position: "absolute",
+      right: 10,
+      top: 10,
+    },
+    priceText: {
+      color: "#fff",
+      fontSize: 10,
+      fontWeight: "bold",
+    },
+  });
 
 export default TripProfileCard;

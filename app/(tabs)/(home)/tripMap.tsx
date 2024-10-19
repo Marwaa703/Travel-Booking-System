@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useEffect, useMemo, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
@@ -12,8 +14,14 @@ import {
 } from "@/utils/maps";
 
 import { useRoute } from "@react-navigation/native";
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const Map: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const mapRef = useRef<MapView>(null);
   const route = useRoute();
   const { places } = route.params as { places: string };
@@ -97,13 +105,14 @@ const Map: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      ...StyleSheet.absoluteFillObject,
+    },
+    map: {
+      ...StyleSheet.absoluteFillObject,
+    },
+  });
 
 export default Map;

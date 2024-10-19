@@ -1,4 +1,6 @@
-import { COLORS } from "@/constants/theme";
+/* eslint-disable react-native/no-unused-styles */
+import { ColorPalette, COLORS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
@@ -19,6 +21,9 @@ interface PieChartProps {
 }
 
 const PieChartComponent: React.FC<PieChartProps> = ({ title, data }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   return (
     <View style={styles.pieContainer}>
       <Text style={styles.chartTitle}>{title}</Text>
@@ -45,24 +50,25 @@ const chartConfig = {
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
 };
 
-const styles = StyleSheet.create({
-  pieContainer: {
-    marginBottom: 30,
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 10,
-    elevation: 3,
-    padding: 5,
-  },
-  chartTitle: {
-    fontSize: 18,
-    // fontWeight: "bold",
-    marginTop: 20,
-    color: COLORS.textPrimary,
-    paddingLeft: 20,
-  },
-  chartContainer: {
-    alignItems: "center",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    pieContainer: {
+      marginBottom: 30,
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 10,
+      elevation: 3,
+      padding: 5,
+    },
+    chartTitle: {
+      fontSize: 18,
+      // fontWeight: "bold",
+      marginTop: 20,
+      color: COLORS.textPrimary,
+      paddingLeft: 20,
+    },
+    chartContainer: {
+      alignItems: "center",
+    },
+  });
 
 export default PieChartComponent;

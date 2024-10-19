@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import {
   ScrollView,
   Text,
@@ -12,7 +13,7 @@ import Header from "@/components/core/Header";
 import UserCard from "@/components/company/UserCard"; // New reusable component
 import Padding from "@/components/containers/Padding";
 import Spacer from "@/components/Spacer";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -22,8 +23,12 @@ import {
 } from "@/redux/actions/companiesActions";
 import Toast from "react-native-toast-message"; // Import if needed for typing
 import TextNote from "@/components/forms/TextNote";
+import { useTheme } from "@/hooks/useTheme";
 
 const CompanyUsers = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const route = useRoute();
   const dispatch = useAppDispatch();
 
@@ -126,31 +131,32 @@ const CompanyUsers = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-    paddingBottom: 90,
-  },
-  addButtonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 20,
-  },
-  addButtonWrapper: {
-    width: "70%",
-  },
-  sectionTitle: {
-    fontSize: FONTS.large,
-    fontWeight: "500",
-    marginLeft: 18,
-    color: COLORS.textPrimary,
-  },
-  cardContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+      paddingBottom: 90,
+    },
+    addButtonContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginVertical: 20,
+    },
+    addButtonWrapper: {
+      width: "70%",
+    },
+    sectionTitle: {
+      fontSize: FONTS.large,
+      fontWeight: "500",
+      marginLeft: 18,
+      color: COLORS.textPrimary,
+    },
+    cardContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+    },
+  });
 
 export default CompanyUsers;

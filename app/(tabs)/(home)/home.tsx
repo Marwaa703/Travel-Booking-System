@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import {
   View,
   Text,
@@ -10,7 +11,8 @@ import {
 import React, { useEffect, useState, useRef } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
-import { COLORS, SPACING } from "@/constants/theme";
+import { ColorPalette, SPACING } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import Card from "@/components/Card";
 import { avatars } from "@/DummyData/trips.json";
 import Spacer from "@/components/Spacer";
@@ -68,6 +70,10 @@ const Home = () => {
   //   };
   // }, []);
   // const handleSendNotification = async () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   //   await NotificationService.sendPushNotification(
   //     expoPushToken,
   //     "Check this new trip ",
@@ -111,13 +117,13 @@ const Home = () => {
 
   const trips = filterTripsByRole(allTrips, user);
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.bg }}>
       {/* <Header onLeftIconPress={() => {}} leftIcon="" title="" /> */}
       <Spacer height={24} />
       <ScreenWraper>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 20, backgroundColor: COLORS.bg }}
+          contentContainerStyle={{ padding: 20, backgroundColor: theme.bg }}
         >
           <Hero travelerImage={travelerImage2} />
           <Spacer />
@@ -204,64 +210,65 @@ const Home = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  // title: {
-  //   fontSize: 35,
-  //   fontWeight: "bold",
-  //   color: COLORS.textPrimary,
-  // },
-  // span: {
-  //   fontSize: 35,
-  //   fontWeight: "bold",
-  //   color: COLORS.primary,
-  // },
-  // image: {
-  //   width: 95,
-  //   marginBottom: 20,
-  //   marginLeft: 40,
-  // },
-  subtitle: {
-    fontSize: 18,
-    color: COLORS.textPrimary,
-    // paddingTop: 15,
-    flex: 1,
-  },
-  subtitleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  viewAll: {
-    fontSize: 15,
-    color: COLORS.secondary,
-    // padding: 15,
-  },
-  trips: {},
-  company: {
-    // marginTop: 20,
-  },
-  cardContainer: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-between",
-    rowGap: 14,
-    columnGap: 5,
-  },
-  companyCardWrapper: {
-    width: "48%",
-  },
-  horizontalScroll: {
-    marginVertical: 15,
-    overflow: "visible",
-    columnGap: 15,
-  },
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    // title: {
+    //   fontSize: 35,
+    //   fontWeight: "bold",
+    //   color: COLORS.textPrimary,
+    // },
+    // span: {
+    //   fontSize: 35,
+    //   fontWeight: "bold",
+    //   color: COLORS.primary,
+    // },
+    // image: {
+    //   width: 95,
+    //   marginBottom: 20,
+    //   marginLeft: 40,
+    // },
+    subtitle: {
+      fontSize: 18,
+      color: COLORS.textPrimary,
+      // paddingTop: 15,
+      flex: 1,
+    },
+    subtitleContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    viewAll: {
+      fontSize: 15,
+      color: COLORS.secondary,
+      // padding: 15,
+    },
+    trips: {},
+    company: {
+      // marginTop: 20,
+    },
+    cardContainer: {
+      flex: 1,
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "space-between",
+      rowGap: 14,
+      columnGap: 5,
+    },
+    companyCardWrapper: {
+      width: "48%",
+    },
+    horizontalScroll: {
+      marginVertical: 15,
+      overflow: "visible",
+      columnGap: 15,
+    },
 
-  cardWrapper: {
-    marginRight: SPACING.small + 2,
-    width: Dimensions.get("screen").width * 0.45,
-  },
-});
+    cardWrapper: {
+      marginRight: SPACING.small + 2,
+      width: Dimensions.get("screen").width * 0.45,
+    },
+  });
 
 export default Home;

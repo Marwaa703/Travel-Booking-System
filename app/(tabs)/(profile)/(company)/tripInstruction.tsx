@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet, Platform } from "react-native";
 import Alert from "@/components/core/Alert";
@@ -7,16 +8,19 @@ import {
   addInstruction,
   getInstructionsByTripId,
 } from "@/api/trips/tripInstruction";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TripInstruction } from "@/types/trip";
 import TextInputField from "@/components/forms/TextInputField";
 import { router } from "expo-router";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import Label from "@/components/forms/Label";
 import Spacer from "@/components/Spacer";
 
 const TripEdit: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [instruction, setInstruction] = useState("");
   const [displayTime, setDisplayTime] = useState<Date | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -201,45 +205,46 @@ const TripEdit: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: COLORS.bg,
-  },
-  error: {
-    padding: 20,
-  },
-  dateTimeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 16,
-  },
-  tableRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.textSecondary,
-  },
-  tableCell: {
-    width: "50%",
-    textAlign: "left",
-    flexWrap: "wrap",
-    color: COLORS.textSubtitle,
-    fontSize: 12,
-  },
-  tableHeader: {
-    fontSize: 18,
-    // fontWeight: "bold",
-    marginVertical: 10,
-    color: COLORS.textPrimary,
-  },
-  tableHeaderCell: {
-    fontWeight: "400",
-    width: "50%",
-    color: COLORS.textPrimary,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: COLORS.bg,
+    },
+    error: {
+      padding: 20,
+    },
+    dateTimeContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginVertical: 16,
+    },
+    tableRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: COLORS.textSecondary,
+    },
+    tableCell: {
+      width: "50%",
+      textAlign: "left",
+      flexWrap: "wrap",
+      color: COLORS.textSubtitle,
+      fontSize: 12,
+    },
+    tableHeader: {
+      fontSize: 18,
+      // fontWeight: "bold",
+      marginVertical: 10,
+      color: COLORS.textPrimary,
+    },
+    tableHeaderCell: {
+      fontWeight: "400",
+      width: "50%",
+      color: COLORS.textPrimary,
+    },
+  });
 
 export default TripEdit;

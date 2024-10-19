@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import SettingCard from "@/components/SettingContainer";
 import { router } from "expo-router";
@@ -8,8 +9,12 @@ import Padding from "@/components/containers/Padding";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import useLogout from "@/hooks/useLogout";
 import Spacer from "@/components/Spacer";
+import { useTheme } from "@/hooks/useTheme";
 
 const AdminProfile: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const handleLogout = useLogout();
   return (
     <View style={styles.main}>
@@ -74,28 +79,28 @@ const AdminProfile: React.FC = () => {
 };
 
 export default AdminProfile;
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-  },
-  profileImageContainer: {
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderColor: COLORS.primary,
-    borderWidth: 2,
-  },
-  greetingText: {
-    color: COLORS.primary,
-    textAlign: "center",
-    fontSize: FONTS.xlarge,
-    fontWeight: "bold",
-    marginBottom: 30,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    main: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+    },
+    profileImageContainer: {
+      alignItems: "center",
+      marginVertical: 10,
+    },
+    profileImage: {
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      borderColor: COLORS.primary,
+      borderWidth: 2,
+    },
+    greetingText: {
+      color: COLORS.primary,
+      textAlign: "center",
+      fontSize: FONTS.xlarge,
+      fontWeight: "bold",
+      marginBottom: 30,
+    },
+  });

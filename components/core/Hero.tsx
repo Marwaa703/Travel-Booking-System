@@ -1,7 +1,10 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 // Image imports
 const octaLg = require("@/assets/vectors/octa-lg.png");
@@ -13,6 +16,9 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ travelerImage }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   console.log({ travelerImage });
   return (
     <LinearGradient
@@ -37,61 +43,61 @@ const Hero: React.FC<HeroProps> = ({ travelerImage }) => {
 };
 
 export default Hero;
-
-const styles = StyleSheet.create({
-  gradient: {
-    flex: 1, // Ensures the gradient covers the entire view
-    width: "100%",
-    height: 150,
-    borderRadius: 12,
-    position: "relative",
-    overflow: "hidden",
-  },
-  octaSmall: {
-    overflow: "hidden",
-    width: 100,
-    height: 140,
-    position: "absolute",
-    zIndex: 20,
-    top: -50,
-    left: 0,
-    transform: "rotate(20deg)",
-  },
-  octaLarge: {
-    position: "absolute",
-    width: 130,
-    height: 120,
-    right: 0,
-    bottom: 0,
-  },
-  hero: {
-    fontSize: FONTS.xlarge,
-    color: COLORS.light,
-    zIndex: 100,
-  },
-  subtitle: {
-    fontSize: FONTS.small,
-    color: COLORS.light,
-    zIndex: 100,
-    width: "70%",
-  },
-  container: {
-    paddingHorizontal: 12,
-    width: "100%",
-    height: "100%",
-    paddingTop: 15,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "flex-start",
-  },
-  content: {
-    width: "65%",
-    zIndex: 22,
-  },
-  traveller: {
-    zIndex: 22,
-    width: "38%",
-    height: "100%",
-    objectFit: "cover",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    gradient: {
+      flex: 1, // Ensures the gradient covers the entire view
+      width: "100%",
+      height: 150,
+      borderRadius: 12,
+      position: "relative",
+      overflow: "hidden",
+    },
+    octaSmall: {
+      overflow: "hidden",
+      width: 100,
+      height: 140,
+      position: "absolute",
+      zIndex: 20,
+      top: -50,
+      left: 0,
+      transform: "rotate(20deg)",
+    },
+    octaLarge: {
+      position: "absolute",
+      width: 130,
+      height: 120,
+      right: 0,
+      bottom: 0,
+    },
+    hero: {
+      fontSize: FONTS.xlarge,
+      color: COLORS.light,
+      zIndex: 100,
+    },
+    subtitle: {
+      fontSize: FONTS.small,
+      color: COLORS.light,
+      zIndex: 100,
+      width: "70%",
+    },
+    container: {
+      paddingHorizontal: 12,
+      width: "100%",
+      height: "100%",
+      paddingTop: 15,
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "flex-start",
+    },
+    content: {
+      width: "65%",
+      zIndex: 22,
+    },
+    traveller: {
+      zIndex: 22,
+      width: "38%",
+      height: "100%",
+      objectFit: "cover",
+    },
+  });

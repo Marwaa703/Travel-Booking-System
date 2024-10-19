@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import {
   View,
   StyleSheet,
@@ -7,9 +9,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 import Button from "@/components/Buttons";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import { fetchTripDetails, makePayment, bookTrip } from "@/api/payment";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
@@ -28,6 +30,10 @@ import Header from "@/components/core/Header";
 import { router } from "expo-router";
 
 const Payment: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const [rates, setRates] = useState<ExchangeRatesResponse | undefined>(
     undefined,
@@ -267,57 +273,57 @@ const Payment: React.FC = () => {
 };
 
 export default Payment;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: COLORS.bg,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  ethLogo: {
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
-  section: {
-    backgroundColor: COLORS.bg_surface,
-    flexGrow: 1,
-    justifyContent: "space-between",
-    padding: 5,
-  },
-  infoSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  tripDetailsColumn: {
-    flex: 1,
-    paddingRight: 20,
-    justifyContent: "space-between",
-  },
-  tripText: {
-    fontSize: FONTS.normal,
-    color: COLORS.textPrimary,
-  },
-  imageColumn: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  tripImage: {
-    width: 120,
-    height: 120,
-    resizeMode: "cover",
-    borderRadius: 10,
-  },
-  row: {
-    flexDirection: "row",
-    columnGap: 6,
-    paddingRight: 6,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: COLORS.bg,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    logoContainer: {
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    ethLogo: {
+      width: 50,
+      height: 50,
+      resizeMode: "contain",
+    },
+    section: {
+      backgroundColor: COLORS.bg_surface,
+      flexGrow: 1,
+      justifyContent: "space-between",
+      padding: 5,
+    },
+    infoSection: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    tripDetailsColumn: {
+      flex: 1,
+      paddingRight: 20,
+      justifyContent: "space-between",
+    },
+    tripText: {
+      fontSize: FONTS.normal,
+      color: COLORS.textPrimary,
+    },
+    imageColumn: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    tripImage: {
+      width: 120,
+      height: 120,
+      resizeMode: "cover",
+      borderRadius: 10,
+    },
+    row: {
+      flexDirection: "row",
+      columnGap: 6,
+      paddingRight: 6,
+    },
+  });

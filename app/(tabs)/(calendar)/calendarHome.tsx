@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import {
   Text,
   View,
@@ -8,7 +9,8 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { router } from "expo-router";
 import Header from "@/components/core/Header";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import Spacer from "@/components/Spacer";
 import TripProfileCard from "@/components/TripProfileCard";
 import Padding from "@/components/containers/Padding";
@@ -26,6 +28,8 @@ import useRefreshControl from "@/hooks/useRefreshControl";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 
 const Calendar = () => {
+  // configure styles
+
   const user = useAppSelector(
     (state) => state.auth.currentUser,
   ) as unknown as User;
@@ -34,7 +38,11 @@ const Calendar = () => {
   const dispatch = useDispatch();
   const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const fetchBookedTrips = useCallback(async () => {
+    // configure styl
     try {
       const trips = await getBookedTripsByUserId(userId!);
       dispatch(setBookedTrips(trips));
@@ -46,7 +54,7 @@ const Calendar = () => {
       );
 
       const activeTrips = tripsWithDetails.filter(
-        (trip) => trip.status !== "completed",
+        (trip) => trip?.status !== "completed",
       );
 
       setTripDetails(activeTrips);
@@ -62,7 +70,7 @@ const Calendar = () => {
   }, [userId, fetchBookedTrips]);
 
   const tripStartDates = useMemo(() => {
-    return tripDetails.map((trip) => moment(trip.date).format("YYYY-MM-DD"));
+    return tripDetails.map((trip) => moment(trip?.date).format("YYYY-MM-DD"));
   }, [tripDetails]);
 
   const { refreshControl } = useRefreshControl({
@@ -92,7 +100,7 @@ const Calendar = () => {
               ) : (
                 tripDetails.map((trip, index) => {
                   const tripWithImages = tripImgs.find(
-                    (t) => t.trip_id === trip.id,
+                    (t) => t.trip_id === trip?.id,
                   );
 
                   const firstImageUrl =
@@ -134,41 +142,42 @@ const Calendar = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: COLORS.bg,
-    flex: 1,
-  },
-  calendar: {
-    width: "100%",
-    paddingHorizontal: 20,
-    marginVertical: 25,
-  },
-  subtitle: {
-    fontSize: FONTS.large,
-    fontWeight: "bold",
-    color: COLORS.textPrimary,
-    flex: 1,
-  },
-  subtitleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  // viewAll: {
-  //   fontSize: FONTS.normal,
-  //   color: COLORS.secondary,
-  // },
-  cardWrapper: {
-    marginBottom: 20,
-  },
-  noTripsText: {
-    textAlign: "center",
-    fontSize: FONTS.normal,
-    color: COLORS.textSecondary,
-    marginVertical: 20,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: COLORS.bg,
+      flex: 1,
+    },
+    calendar: {
+      width: "100%",
+      paddingHorizontal: 20,
+      marginVertical: 25,
+    },
+    subtitle: {
+      fontSize: FONTS.large,
+      fontWeight: "bold",
+      color: COLORS.textPrimary,
+      flex: 1,
+    },
+    subtitleContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 20,
+    },
+    // viewAll: {
+    //   fontSize: FONTS.normal,
+    //   color: COLORS.secondary,
+    // },
+    cardWrapper: {
+      marginBottom: 20,
+    },
+    noTripsText: {
+      textAlign: "center",
+      fontSize: FONTS.normal,
+      color: COLORS.textSecondary,
+      marginVertical: 20,
+    },
+  });
 
 export default Calendar;

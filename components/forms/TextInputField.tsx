@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import {
   NativeSyntheticEvent,
@@ -9,9 +10,10 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import { captalizeFirstLetter, trimWhitespace } from "@/utils";
 import Spacer from "../Spacer";
+import { useTheme } from "@/hooks/useTheme";
 
 interface TextInputFieldProps extends TextInputProps {
   icon?: string;
@@ -34,6 +36,9 @@ const TextInputField = ({
   value,
   ...rest
 }: TextInputFieldProps) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [shown, setShown] = useState(name === "password" ? true : false);
   return (
     <View style={styles.container}>
@@ -65,21 +70,22 @@ const TextInputField = ({
 
 export default TextInputField;
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 25,
+      paddingVertical: 8,
+      paddingHorizontal: 14,
 
-    marginVertical: 2,
-    flexDirection: "row",
-    width: "100%",
-  },
-  input: {
-    fontSize: FONTS.small,
-    width: "95%",
-    color: COLORS.textPrimary,
-  },
-});
+      marginVertical: 2,
+      flexDirection: "row",
+      width: "100%",
+    },
+    input: {
+      fontSize: FONTS.small,
+      width: "95%",
+      color: COLORS.textPrimary,
+    },
+  });

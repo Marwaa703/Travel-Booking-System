@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import { StyleSheet } from "react-native";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
@@ -13,8 +15,13 @@ import CompanyUserForm from "@/components/forms/CompanyUserForm";
 import { useAppDispatch } from "@/redux/store";
 import { updateCompanyDetails } from "@/redux/actions/companiesActions";
 import { useRouter } from "expo-router";
+import { useTheme } from "@/hooks/useTheme";
+import { ColorPalette } from "@/constants/theme";
 
 const EditCompany = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const route = useRoute();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -59,4 +66,4 @@ const EditCompany = () => {
 
 export default EditCompany;
 
-const styles = StyleSheet.create({});
+const stylesObj = (COLORS: ColorPalette) => StyleSheet.create({});

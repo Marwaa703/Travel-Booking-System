@@ -1,16 +1,22 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import Spacer from "@/components/Spacer";
 import TextInputField from "@/components/forms/TextInputField";
 import Padding from "@/components/containers/Padding";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import { SPACING, FONTS, COLORS } from "@/constants/theme";
+import { SPACING, FONTS, ColorPalette } from "@/constants/theme"; // Import ColorPalette
 import Button from "@/components/Buttons";
 import FieldErrorMessage from "@/components/forms/FieldErrorMessage";
 import { useRouter } from "expo-router";
 import { emailRegex } from "@/constants/regext";
 import Header from "@/components/core/Header";
+import { useTheme } from "@/hooks/useTheme"; // Import useTheme
 
 const ForgetPass = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const router = useRouter();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
@@ -44,15 +50,14 @@ const ForgetPass = () => {
       // todo: navigate back
     }
   };
+
   return (
     <>
       <Header title="Forget Password" rightIcon="" leftIcon="" />
       <Padding>
         <View style={styles.container}>
           {/* header */}
-          {/* <View style={styles.top}> */}
           <View style={styles.header}>
-            {/* <Text style={styles.title}>Forget Password</Text> */}
             <Spacer />
             <Text style={styles.subTitle}>
               Enter your email address to reset your password
@@ -81,31 +86,31 @@ const ForgetPass = () => {
   );
 };
 
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      marginTop: "12%",
+      justifyContent: "flex-start",
+      rowGap: SPACING.xxlarge,
+      marginBottom: SPACING.large,
+    },
+    header: {
+      textAlign: "center",
+      alignItems: "center",
+      height: "15%",
+    },
+    title: {
+      fontSize: FONTS.xlarge,
+    },
+    subTitle: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSubtitle,
+      textAlign: "center",
+    },
+    btnContainer: {
+      width: "100%",
+    },
+  });
+
 export default ForgetPass;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: "12%",
-    justifyContent: "flex-start",
-    rowGap: SPACING.xxlarge,
-    marginBottom: SPACING.large,
-  },
-
-  header: {
-    textAlign: "center",
-    alignItems: "center",
-    height: "15%",
-  },
-  title: {
-    fontSize: FONTS.xlarge,
-  },
-  subTitle: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSubtitle,
-    textAlign: "center",
-  },
-  btnContainer: {
-    width: "100%",
-  },
-});

@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React from "react";
 import {
   Text,
@@ -7,7 +9,8 @@ import {
   DimensionValue,
   ActivityIndicator,
 } from "react-native";
-import { COLORS, FONTS, BORDER_RADIUS } from "../constants/theme";
+import { FONTS, BORDER_RADIUS, ColorPalette } from "../constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface ButtonProps {
   title: string;
@@ -32,6 +35,9 @@ const Button: React.FC<ButtonProps> = ({
   loading,
   disabled,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const buttonStyle = {
     width,
     backgroundColor: disabled
@@ -54,7 +60,7 @@ const Button: React.FC<ButtonProps> = ({
       >
         {loading ? (
           <>
-            <ActivityIndicator color={COLORS.bg} />
+            <ActivityIndicator color={theme.bg} />
             <Text style={[styles.loadingText, { fontSize }]}>
               {loadingMessage}
             </Text>
@@ -74,42 +80,43 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-  },
-  button: {
-    paddingVertical: 10,
-    borderRadius: BORDER_RADIUS.large,
-    flexDirection: "row",
-    textAlign: "center",
-    justifyContent: "center",
-  },
-  primaryButton: {
-    backgroundColor: COLORS.primary,
-  },
-  primaryText: {
-    fontSize: FONTS.medium,
-    color: COLORS.bg,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  secondaryButton: {
-    backgroundColor: COLORS.secondary,
-    width: 15,
-  },
-  secondaryText: {
-    fontSize: FONTS.small,
-    color: COLORS.bg,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  loadingText: {
-    marginLeft: 10, // Space between spinner and text
-    color: COLORS.textPrimary,
-    textAlign: "center",
-    fontSize: FONTS.medium,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      justifyContent: "center",
+    },
+    button: {
+      paddingVertical: 10,
+      borderRadius: BORDER_RADIUS.large,
+      flexDirection: "row",
+      textAlign: "center",
+      justifyContent: "center",
+    },
+    primaryButton: {
+      backgroundColor: COLORS.primary,
+    },
+    primaryText: {
+      fontSize: FONTS.medium,
+      color: COLORS.bg,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+    secondaryButton: {
+      backgroundColor: COLORS.secondary,
+      width: 15,
+    },
+    secondaryText: {
+      fontSize: FONTS.small,
+      color: COLORS.bg,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+    loadingText: {
+      marginLeft: 10, // Space between spinner and text
+      color: COLORS.textPrimary,
+      textAlign: "center",
+      fontSize: FONTS.medium,
+    },
+  });
 
 export default Button;

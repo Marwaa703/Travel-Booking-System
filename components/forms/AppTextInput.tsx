@@ -1,10 +1,9 @@
-import { Text, TextInputProps, View } from "react-native";
+import { TextInputProps, View } from "react-native";
 import React from "react";
 import { Control, Controller, FieldValues } from "react-hook-form";
 import { captalizeFirstLetter } from "@/utils";
 import TextInputField from "./TextInputField";
 import FieldErrorMessage from "./FieldErrorMessage";
-import { COLORS, FONTS } from "@/constants/theme";
 import Spacer from "../Spacer";
 import TextNote from "./TextNote";
 

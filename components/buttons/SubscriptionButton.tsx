@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import { subscribe, unsubscribe } from "@/redux/slices/authSlice";
 import React from "react";
 import { TouchableOpacity, Text, ViewStyle, StyleSheet } from "react-native";

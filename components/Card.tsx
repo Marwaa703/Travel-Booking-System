@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React from "react";
 import {
   View,
@@ -10,7 +12,7 @@ import {
 import Like from "@/components/Like";
 import CardSubtitle from "./CardSubtitle";
 import icons from "@/constants/icons";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, FONTS } from "@/constants/theme";
 import Rating from "./Rating";
 import Spacer from "./Spacer";
 import { useRouter } from "expo-router";
@@ -18,6 +20,7 @@ import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
 import { subscribe, unsubscribe } from "@/redux/slices/authSlice";
 import SubscribeButton from "./buttons/SubscriptionButton";
+import { useTheme } from "@/hooks/useTheme";
 const defaultImage = require("../assets/imgDefault.png");
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.44;
@@ -42,6 +45,9 @@ const Card: React.FC<CardProps> = ({
   price,
   buttonText,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   // const navigation = useNavigation<NavigationProp<any>>();
   const router = useRouter();
   console.log("card trip id ", id);
@@ -75,7 +81,7 @@ const Card: React.FC<CardProps> = ({
         <CardSubtitle
           text={subtitle}
           icon={icons.location}
-          iconColor={COLORS.textSecondary}
+          iconColor={theme.textSecondary}
         />
 
         {/* Rating */}
@@ -111,60 +117,61 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    width: "100%",
-    height: CARD_HEIGHT,
-    borderRadius: 10,
-    overflow: "hidden",
-    backgroundColor: COLORS.bg_surface,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.9,
-    shadowRadius: 2,
-    position: "relative",
-    padding: 10,
-    justifyContent: "space-between",
-  },
-  imageContainer: {
-    width: "100%",
-    height: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-    borderRadius: 10,
-  },
-  textContainer: {
-    paddingTop: 8,
-  },
-  title: {
-    fontSize: FONTS.medium,
-    // fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
-  ratingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  priceText: {
-    fontSize: 16,
-    color: COLORS.accent,
-    // fontWeight: "bold",
-    // marginBottom: 10,
-    // marginHorizontal: 10,
-  },
-  iconContainer: {
-    position: "absolute",
-    top: 15,
-    right: 15,
-    borderRadius: 50,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    cardContainer: {
+      width: "100%",
+      height: CARD_HEIGHT,
+      borderRadius: 10,
+      overflow: "hidden",
+      backgroundColor: COLORS.bg_surface,
+      elevation: 2,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.9,
+      shadowRadius: 2,
+      position: "relative",
+      padding: 10,
+      justifyContent: "space-between",
+    },
+    imageContainer: {
+      width: "100%",
+      height: "50%",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    image: {
+      width: "100%",
+      height: "100%",
+      alignSelf: "center",
+      borderRadius: 10,
+    },
+    textContainer: {
+      paddingTop: 8,
+    },
+    title: {
+      fontSize: FONTS.medium,
+      // fontWeight: "bold",
+      color: COLORS.textPrimary,
+    },
+    ratingContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 10,
+    },
+    priceText: {
+      fontSize: 16,
+      color: COLORS.accent,
+      // fontWeight: "bold",
+      // marginBottom: 10,
+      // marginHorizontal: 10,
+    },
+    iconContainer: {
+      position: "absolute",
+      top: 15,
+      right: 15,
+      borderRadius: 50,
+    },
+  });
 
 export default Card;

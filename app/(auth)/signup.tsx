@@ -1,18 +1,24 @@
+/* eslint-disable react-native/no-unused-styles */
 import Padding from "@/components/containers/Padding";
 import Header from "@/components/core/Header";
 import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
-import { COLORS, FONTS } from "@/constants/theme";
+import { FONTS, ColorPalette } from "@/constants/theme"; // Import ColorPalette
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useTheme } from "@/hooks/useTheme"; // Import useTheme
 
 const Signup = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   return (
     <>
       {/* need return button here */}
       <Header title="Signup" rightIcon="" leftIcon="" />
-      <ScrollView style={{ backgroundColor: COLORS.bg }}>
+      <ScrollView style={{ backgroundColor: theme.bg }}>
         <Padding>
           <View style={styles.container}>
             {/* header */}
@@ -53,39 +59,40 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    top: {
+      flex: 3,
+      justifyContent: "space-evenly",
+    },
+    center: {
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      columnGap: 6,
+    },
+    company: {
+      color: COLORS.accent,
+      fontSize: FONTS.medium,
+    },
+    header: {
+      textAlign: "center",
+      alignItems: "center",
+      height: "15%",
+    },
+    title: {
+      fontSize: FONTS.xlarge,
+    },
+    subTitle: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSubtitle,
+    },
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  top: {
-    flex: 3,
-    justifyContent: "space-evenly",
-  },
-  center: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    columnGap: 6,
-  },
-  company: {
-    color: COLORS.accent,
-    fontSize: FONTS.medium,
-  },
-  header: {
-    textAlign: "center",
-    alignItems: "center",
-    height: "15%",
-  },
-  title: {
-    fontSize: FONTS.xlarge,
-  },
-  subTitle: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSubtitle,
-  },
-});
+export default Signup;

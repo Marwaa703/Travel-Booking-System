@@ -10,36 +10,37 @@ import ToggleSwitch from "@/components/forms/FullToggleSwitch";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { setTheme } from "@/redux/slices/themeSlice";
 import { useTheme } from "@/hooks/useTheme";
-let c = "";
 const Settings = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const dispatch = useAppDispatch();
   const themeColor = useAppSelector((state) => state.theme.color);
-  c = themeColor;
+
   // const [theme, setTheme] = useState<"light" | "dark">("light");
   const toggleSwitch = (color: "light" | "dark") => {
     dispatch(setTheme(color));
   };
-  const theme = useTheme();
 
   console.log({ themeColor });
 
   return (
-    <View style={styles(theme).main}>
+    <View style={styles.main}>
       <Padding>
         <Spacer height={36} />
-        <View style={styles(theme).container}>
+        <View style={styles.container}>
           <View
             style={[
-              styles(theme).section,
+              styles.section,
               { backgroundColor: "transparent", elevation: 0, padding: 0 },
             ]}
           >
-            <Text style={styles(theme).sectionHeader}>Preferences</Text>
+            <Text style={styles.sectionHeader}>Preferences</Text>
           </View>
 
-          <View style={styles(theme).section}>
-            <View style={styles(theme).row}>
-              <Text style={styles(theme).key}>Theme</Text>
+          <View style={styles.section}>
+            <View style={styles.row}>
+              <Text style={styles.key}>Theme</Text>
               <View>
                 <ToggleSwitch
                   onToggle={(value) => toggleSwitch(value)}
@@ -49,9 +50,9 @@ const Settings = () => {
               </View>
             </View>
           </View>
-          {/* <View style={styles(theme).section}>
-            <View style={styles(theme).row}>
-              <Text style={styles(theme).key}>Notifications</Text>
+          {/* <View style={styles.section}>
+            <View style={styles.row}>
+              <Text style={styles.key}>Notifications</Text>
               <View>
                 <ToggleSwitch
                   onToggle={(value) => console.log({ value })}
@@ -70,7 +71,7 @@ const Settings = () => {
 
 export default Settings;
 
-const styles = (COLORS: ColorPalette) =>
+const stylesObj = (COLORS: ColorPalette) =>
   StyleSheet.create({
     main: {
       flex: 1,

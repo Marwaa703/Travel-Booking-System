@@ -1,12 +1,18 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React from "react";
 import { Dimensions, View } from "react-native";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 type RouteName = "(home)" | "(calendar)" | "search" | "(blogs)" | "(profile)";
 
 const Layout = () => {
+  // configure styles
+  const theme = useTheme();
+  // const styles = stylesObj(theme);
   return (
     <Tabs
       screenOptions={({ route }) => ({
@@ -38,13 +44,13 @@ const Layout = () => {
           return (
             <View
               style={{
-                backgroundColor: isSearchIcon ? COLORS.accent : "transparent",
+                backgroundColor: isSearchIcon ? theme.accent : "transparent",
                 borderRadius: isSearchIcon ? 28 : 0,
                 width: isSearchIcon ? 58 : "auto",
                 height: isSearchIcon ? 58 : "auto",
                 justifyContent: "center",
                 alignItems: "center",
-                shadowColor: isSearchIcon ? COLORS.accent : "transparent",
+                shadowColor: isSearchIcon ? theme.accent : "transparent",
                 shadowOpacity: isSearchIcon ? 0.6 : 0,
                 shadowOffset: { width: 0, height: 5 },
                 shadowRadius: isSearchIcon ? 10 : 0,
@@ -55,7 +61,7 @@ const Layout = () => {
               <Ionicons
                 name={iconName as never}
                 size={isSearchIcon ? 30 : 25}
-                color={isSearchIcon ? COLORS.bg : color}
+                color={isSearchIcon ? theme.bg : color}
               />
             </View>
           );
@@ -64,7 +70,7 @@ const Layout = () => {
           position: "absolute",
           bottom: 0,
 
-          backgroundColor: COLORS.bg_surface,
+          backgroundColor: theme.bg_surface,
           // height: 80,
           height: 80,
           borderTopLeftRadius: 50,
@@ -76,8 +82,8 @@ const Layout = () => {
           elevation: 5,
           width: Dimensions.get("window").width,
         },
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.textSecondary,
+        tabBarActiveTintColor: theme.primary,
+        tabBarInactiveTintColor: theme.textSecondary,
         tabBarLabelStyle: {
           fontSize: 10,
           paddingBottom: 20,

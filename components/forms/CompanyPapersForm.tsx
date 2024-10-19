@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { Fragment, useState } from "react";
 import Button from "../Buttons";
 import { CompanyPaper } from "@/types/company";
@@ -8,6 +9,8 @@ import TextNote from "./TextNote";
 import Toast from "react-native-toast-message";
 import { imageUrlPattern } from "@/constants/regext";
 import TermsAndConditions from "../admin/TermsAndConditions";
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface CompanyPapersFormProps {
   onSubmit: (data: CompanyPaper[]) => void;
@@ -20,6 +23,9 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
   loading,
   msg,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [agreed, setAgreed] = useState(false);
 
   const [papers, setPapers] = useState<CompanyPaper[]>([]);
@@ -137,37 +143,38 @@ const CompanyPapersForm: React.FC<CompanyPapersFormProps> = ({
 
 export default CompanyPapersForm;
 
-const styles = StyleSheet.create({
-  addButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#e0e0e0",
-    marginHorizontal: "auto",
-  },
-  addedLocationRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    paddingBottom: 8,
-  },
-  locationImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
-    marginRight: 8,
-  },
-  locationName: {
-    flex: 1,
-    marginLeft: 8,
-    maxWidth: 100,
-  },
-  deleteButton: {
-    marginLeft: 8,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    addButton: {
+      justifyContent: "center",
+      alignItems: "center",
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: "#e0e0e0",
+      marginHorizontal: "auto",
+    },
+    addedLocationRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ccc",
+      paddingBottom: 8,
+    },
+    locationImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 5,
+      marginRight: 8,
+    },
+    locationName: {
+      flex: 1,
+      marginLeft: 8,
+      maxWidth: 100,
+    },
+    deleteButton: {
+      marginLeft: 8,
+    },
+  });

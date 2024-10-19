@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-unused-styles */
+
+/* eslint-disable react-native/no-unused-styles */
 import {
   Pressable,
   PressableStateCallbackType,
@@ -8,7 +10,8 @@ import {
   ViewStyle,
 } from "react-native";
 import React from "react";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface ActionButtonProps {
   text: string;
@@ -28,6 +31,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   variant = "primary",
   textColor = "white", // Default text color
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   return (
     <Pressable
       onPress={onPress}
@@ -40,26 +46,27 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 
 export default ActionButton;
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 5,
-    borderRadius: 1,
-    alignItems: "center",
-    width: 80,
-  },
-  action: {
-    backgroundColor: "transparent",
-  },
-  primary: {
-    backgroundColor: "dodgerblue",
-    borderRadius: 1,
-  },
-  // eslint-disable-next-line react-native/no-unused-styles
-  secondary: {
-    backgroundColor: "#6C757D",
-  },
-  text: {
-    letterSpacing: 0.7,
-    fontSize: FONTS.small,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      padding: 5,
+      borderRadius: 1,
+      alignItems: "center",
+      width: 80,
+    },
+    action: {
+      backgroundColor: "transparent",
+    },
+    primary: {
+      backgroundColor: "dodgerblue",
+      borderRadius: 1,
+    },
+    // eslint-disable-next-line react-native/no-unused-styles
+    secondary: {
+      backgroundColor: "#6C757D",
+    },
+    text: {
+      letterSpacing: 0.7,
+      fontSize: FONTS.small,
+    },
+  });

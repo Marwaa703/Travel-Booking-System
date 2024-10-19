@@ -1,9 +1,11 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import Spacer from "../Spacer";
 import { Gender } from "@/types/company";
+import { useTheme } from "@/hooks/useTheme";
 
 interface GenderPickerProps {
   setSelectedGender: React.Dispatch<React.SetStateAction<Gender>>;
@@ -13,6 +15,9 @@ const GenderPicker = ({
   setSelectedGender,
   selectedGender,
 }: GenderPickerProps) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -59,35 +64,36 @@ const GenderPicker = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    borderRadius: 50,
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: COLORS.light,
-  },
-  button: {
-    flex: 1,
-    padding: 8,
-    paddingVertical: 10,
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
-  selectedButton: {
-    backgroundColor: COLORS.accent, // Blue for male
-  },
-  text: {
-    color: COLORS.textPrimary, // Default text color
-    // marginTop: 5,
-  },
-  selectedText: {
-    color: "#fff", // Text color for selected button
-    // marginTop: 5,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      justifyContent: "center",
+      borderRadius: 50,
+      overflow: "hidden",
+      borderWidth: 1,
+      borderColor: COLORS.light,
+    },
+    button: {
+      flex: 1,
+      padding: 8,
+      paddingVertical: 10,
+      flexDirection: "row-reverse",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "transparent",
+    },
+    selectedButton: {
+      backgroundColor: COLORS.accent, // Blue for male
+    },
+    text: {
+      color: COLORS.textPrimary, // Default text color
+      // marginTop: 5,
+    },
+    selectedText: {
+      color: "#fff", // Text color for selected button
+      // marginTop: 5,
+    },
+  });
 
 export default GenderPicker;

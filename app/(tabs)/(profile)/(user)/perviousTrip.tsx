@@ -1,12 +1,17 @@
+/* eslint-disable react-native/no-unused-styles */
 import { View, Text, Dimensions, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import Header from "@/components/core/Header";
 import Card from "@/components/Card";
-import { COLORS, SPACING } from "@/constants/theme";
+import { ColorPalette, COLORS, SPACING } from "@/constants/theme";
 import { useAppSelector } from "@/redux/store";
 import { router } from "expo-router";
+import { useTheme } from "@/hooks/useTheme";
 
 const PerviousTrip = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const previousTrips = useAppSelector((state) => state.trips.previousTrips);
   const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
@@ -62,31 +67,32 @@ const PerviousTrip = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: SPACING.medium,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.bg,
-  },
-  noTripsText: {
-    textAlign: "center",
-    marginTop: SPACING.xlarge,
-    fontSize: 24,
-    color: COLORS.accent,
-  },
-  cardContainer: {
-    marginRight: SPACING.small,
-    width: Dimensions.get("screen").width * 0.44,
-  },
-  columnWrapper: {
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  scrollContainer: {
-    paddingBottom: SPACING.large,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: SPACING.medium,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: COLORS.bg,
+    },
+    noTripsText: {
+      textAlign: "center",
+      marginTop: SPACING.xlarge,
+      fontSize: 24,
+      color: COLORS.accent,
+    },
+    cardContainer: {
+      marginRight: SPACING.small,
+      width: Dimensions.get("screen").width * 0.44,
+    },
+    columnWrapper: {
+      justifyContent: "space-between",
+      marginBottom: 10,
+    },
+    scrollContainer: {
+      paddingBottom: SPACING.large,
+    },
+  });
 
 export default PerviousTrip;

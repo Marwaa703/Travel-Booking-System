@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -9,8 +10,9 @@ import {
 } from "react-native";
 import FieldErrorMessage from "./FieldErrorMessage"; // Assuming you have a FieldErrorMessage component
 import { CompanySubUserRoles } from "@/types/company";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@/hooks/useTheme";
 
 interface DropdownProps {
   items: CompanySubUserRoles[];
@@ -29,6 +31,9 @@ const DropdownRolePicker: React.FC<DropdownProps> = ({
   error,
   icon,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -98,66 +103,67 @@ const DropdownRolePicker: React.FC<DropdownProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 6,
-    marginLeft: 14,
-  },
-  roleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 12,
-  },
-  label: {
-    fontSize: FONTS.normal,
-    color: COLORS.textSubtitle,
-    flex: 1, // Allow label to take available space
-  },
-  selectorButton: {
-    alignItems: "center",
-    backgroundColor: COLORS.light,
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 2, // Allow button to take more space
-  },
-  selectorText: {
-    fontSize: FONTS.normal,
-    color: "#666",
-    flex: 1, // Allow text to take available space
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    width: "80%",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 20,
-  },
-  item: {
-    padding: 15,
-  },
-  itemText: {
-    fontSize: 16,
-  },
-  closeButton: {
-    padding: 10,
-    alignItems: "center",
-    backgroundColor: COLORS.secondary,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  closeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      marginVertical: 6,
+      marginLeft: 14,
+    },
+    roleContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 12,
+    },
+    label: {
+      fontSize: FONTS.normal,
+      color: COLORS.textSubtitle,
+      flex: 1, // Allow label to take available space
+    },
+    selectorButton: {
+      alignItems: "center",
+      backgroundColor: COLORS.light,
+      borderRadius: 25,
+      paddingVertical: 8,
+      paddingHorizontal: 14,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      flex: 2, // Allow button to take more space
+    },
+    selectorText: {
+      fontSize: FONTS.normal,
+      color: "#666",
+      flex: 1, // Allow text to take available space
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    modalContent: {
+      width: "80%",
+      backgroundColor: "#fff",
+      borderRadius: 10,
+      padding: 20,
+    },
+    item: {
+      padding: 15,
+    },
+    itemText: {
+      fontSize: 16,
+    },
+    closeButton: {
+      padding: 10,
+      alignItems: "center",
+      backgroundColor: COLORS.secondary,
+      borderRadius: 5,
+      marginTop: 10,
+    },
+    closeButtonText: {
+      color: "#fff",
+      fontSize: 16,
+    },
+  });
 
 export default DropdownRolePicker;

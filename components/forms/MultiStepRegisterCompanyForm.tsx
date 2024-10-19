@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CompanyUserForm from "./CompanyUserForm";
@@ -17,9 +18,13 @@ import { useAppDispatch } from "@/redux/store";
 import { addCompany } from "@/redux/slices/companiesSlice";
 import useLoadingState from "@/hooks/useLoadingSate";
 import { signupCompany } from "@/api/auth";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const MultiStepRegisterCompanyForm = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -94,9 +99,10 @@ const MultiStepRegisterCompanyForm = () => {
 };
 
 export default MultiStepRegisterCompanyForm;
-const styles = StyleSheet.create({
-  subTitle: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSubtitle,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    subTitle: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSubtitle,
+    },
+  });

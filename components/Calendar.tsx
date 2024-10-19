@@ -1,10 +1,17 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import moment from "moment";
 import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const WeeklyCalendar = ({ tripStartDates }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   // Initialize the selected date to today
   const [selectedDate, setSelectedDate] = useState(moment());
 
@@ -87,61 +94,62 @@ const WeeklyCalendar = ({ tripStartDates }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    // backgroundColor: COLORS.bg_surface,
-  },
-  currentDateText: {
-    fontSize: FONTS.large,
-    textAlign: "center",
-    // fontWeight: "bold",
-    color: COLORS.textPrimary,
-    marginBottom: 16,
-  },
-  navContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  weekContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 1,
-  },
-  dayContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 40,
-    height: 60,
-  },
-  selectedDayContainer: {
-    backgroundColor: COLORS.calendarSelected,
-    borderRadius: 10,
-  },
-  dayLetter: {
-    fontSize: 16,
-    color: COLORS.textPrimary,
-  },
-  selectedDayLetter: {
-    color: "#FF6200",
-    fontWeight: "bold",
-  },
-  dayNumber: {
-    fontSize: 16,
-    // fontWeight: "bold",
-    color: COLORS.textSecondary,
-  },
-  selectedDayNumber: {
-    color: "#FF6200",
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    backgroundColor: "#FF6200",
-    borderRadius: 3,
-    marginTop: 4,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      width: "100%",
+      // backgroundColor: COLORS.bg_surface,
+    },
+    currentDateText: {
+      fontSize: FONTS.large,
+      textAlign: "center",
+      // fontWeight: "bold",
+      color: COLORS.textPrimary,
+      marginBottom: 16,
+    },
+    navContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    weekContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      flex: 1,
+    },
+    dayContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+      width: 40,
+      height: 60,
+    },
+    selectedDayContainer: {
+      backgroundColor: COLORS.calendarSelected,
+      borderRadius: 10,
+    },
+    dayLetter: {
+      fontSize: 16,
+      color: COLORS.textPrimary,
+    },
+    selectedDayLetter: {
+      color: "#FF6200",
+      fontWeight: "bold",
+    },
+    dayNumber: {
+      fontSize: 16,
+      // fontWeight: "bold",
+      color: COLORS.textSecondary,
+    },
+    selectedDayNumber: {
+      color: "#FF6200",
+    },
+    dot: {
+      width: 6,
+      height: 6,
+      backgroundColor: "#FF6200",
+      borderRadius: 3,
+      marginTop: 4,
+    },
+  });
 
 export default WeeklyCalendar;

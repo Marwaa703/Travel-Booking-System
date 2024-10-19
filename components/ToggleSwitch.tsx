@@ -1,5 +1,7 @@
+/* eslint-disable react-native/no-unused-styles */
 // components/ToggleSwitch.tsx
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import { UserTypes } from "@/types/user";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
@@ -9,6 +11,9 @@ type ToggleSwitchProps = {
 };
 
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ onToggle }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [active, setActive] = useState<UserTypes>("User");
 
   const handleToggle = (value: UserTypes) => {
@@ -53,50 +58,51 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ onToggle }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-    overflow: "hidden",
-    width: "60%", // Adjust as necessary
-    height: 40, // Adjust as necessary
-    backgroundColor: "#e0e0e0",
-    position: "relative",
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 5,
-    zIndex: 1,
-  },
-  buttonText: {
-    fontSize: FONTS.small,
-    color: "#666",
-  },
-  activeButton: {
-    // backgroundColor: "#ffffff",
-  },
-  activeText: {
-    color: "#fff",
-  },
-  indicator: {
-    position: "absolute",
-    width: "50%",
-    height: "100%",
-    backgroundColor: COLORS.secondary, // Change color as necessary
-    borderRadius: 20,
-    top: 0,
-    left: 0,
-  },
-  userIndicator: {
-    left: 0,
-  },
-  companyIndicator: {
-    left: "50%",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 20,
+      overflow: "hidden",
+      width: "60%", // Adjust as necessary
+      height: 40, // Adjust as necessary
+      backgroundColor: COLORS.bg_surface,
+      position: "relative",
+    },
+    button: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 5,
+      zIndex: 1,
+    },
+    buttonText: {
+      fontSize: FONTS.small,
+      color: "#666",
+    },
+    activeButton: {
+      // backgroundColor: "#ffffff",
+    },
+    activeText: {
+      color: "#fff",
+    },
+    indicator: {
+      position: "absolute",
+      width: "50%",
+      height: "100%",
+      backgroundColor: COLORS.secondary, // Change color as necessary
+      borderRadius: 20,
+      top: 0,
+      left: 0,
+    },
+    userIndicator: {
+      left: 0,
+    },
+    companyIndicator: {
+      left: "50%",
+    },
+  });
 
 export default ToggleSwitch;

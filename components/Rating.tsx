@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface RatingProps {
   rate: number | null;
@@ -9,6 +11,9 @@ interface RatingProps {
 
 const Rating = ({ rate }: RatingProps) => {
   // If rate is null, display 5 grey stars
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   if (rate === null) {
     return (
       <View style={styles.container}>
@@ -50,17 +55,18 @@ const Rating = ({ rate }: RatingProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  rate: {
-    fontSize: FONTS.small,
-    marginLeft: 8,
-    color: COLORS.textSubtitle,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    rate: {
+      fontSize: FONTS.small,
+      marginLeft: 8,
+      color: COLORS.textSubtitle,
+    },
+  });
 
 export default Rating;

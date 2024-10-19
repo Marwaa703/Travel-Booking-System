@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useState } from "react";
 import {
   View,
@@ -17,10 +19,16 @@ import ZoomableImage from "@/components/FullScreenImage";
 import { Image } from "expo-image";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const CompanyProfileScreen = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const [papers, setPapers] = useState<CompanyPaper[]>([]);
+
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const dispatch = useAppDispatch();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -117,64 +125,65 @@ const CompanyProfileScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    // backgroundColor: "#fff",
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 10,
-  },
-  companyName: {
-    fontSize: 24,
-    // fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
-  address: {
-    fontSize: 14,
-    color: COLORS.textSubtitle,
-  },
-  approvalStatus: {
-    fontSize: 14,
-    color: COLORS.accent,
-  },
-  details: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      // backgroundColor: "#fff",
+    },
+    header: {
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    logo: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      marginBottom: 10,
+    },
+    companyName: {
+      fontSize: 24,
+      // fontWeight: "bold",
+      color: COLORS.textPrimary,
+    },
+    address: {
+      fontSize: 14,
+      color: COLORS.textSubtitle,
+    },
+    approvalStatus: {
+      fontSize: 14,
+      color: COLORS.accent,
+    },
+    details: {
+      marginBottom: 20,
+    },
+    sectionTitle: {
+      fontSize: 18,
 
-    marginBottom: 10,
-  },
-  detailText: {
-    fontSize: 16,
-  },
-  papersSection: {
-    marginTop: 20,
-  },
-  paperItem: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  paperImage: {
-    width: 250,
-    height: 250,
-    borderRadius: 5,
-    marginRight: 10,
-  },
-  paperTitle: {
-    fontSize: 16,
-    flex: 1,
-  },
-});
+      marginBottom: 10,
+    },
+    detailText: {
+      fontSize: 16,
+    },
+    papersSection: {
+      marginTop: 20,
+    },
+    paperItem: {
+      flexDirection: "column",
+      alignItems: "center",
+      marginBottom: 10,
+    },
+    paperImage: {
+      width: 250,
+      height: 250,
+      borderRadius: 5,
+      marginRight: 10,
+    },
+    paperTitle: {
+      fontSize: 16,
+      flex: 1,
+    },
+  });
 
 export default CompanyProfileScreen;

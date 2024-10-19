@@ -1,8 +1,9 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { View, Text, Image, StyleSheet, Alert } from "react-native";
 import { Trip, TripDetailes, TripStatus } from "@/types/trip"; // Importing TripStatus type
 import ActionButton from "../buttons/ActionButton";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import Spacer from "../Spacer";
 import { getStatusStyle } from "@/constants/styles";
@@ -12,6 +13,7 @@ import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
 import { getUserBookedByTripId } from "@/api/bookedTrips";
 import { formattedDate } from "@/utils";
+import { useTheme } from "@/hooks/useTheme";
 
 const defaultImage = require("@/assets/imgDefault.png");
 
@@ -20,6 +22,9 @@ interface TripManagementCardProps {
 }
 
 const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const router = useRouter();
 
   const { status, trip_id, company_id, images, name, price } = trip;
@@ -182,74 +187,75 @@ const TripManagementCard: React.FC<TripManagementCardProps> = ({ trip }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    width: "100%",
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 10,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 1, height: 0 },
-    shadowOpacity: 0.9,
-    shadowRadius: 2,
-    padding: 10,
-    marginBottom: 15,
-    position: "relative",
-  },
-  imageContainer: {
-    width: "100%",
-    height: 80,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-    borderRadius: 10,
-  },
-  textContainer: {
-    paddingVertical: 8,
-    rowGap: 4,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "400",
-    color: COLORS.textPrimary,
-  },
-  // rating: {
-  //   fontSize: 12,
-  //   color: "#999",
-  // },
-  priceText: {
-    fontSize: 14,
-    color: COLORS.accent,
-    fontWeight: "400",
-  },
-  statusContainer: {
-    padding: 6,
-    paddingHorizontal: 8,
-    borderRadius: 50,
-    alignSelf: "flex-start",
-    position: "absolute",
-    top: 16,
-    right: 16,
-  },
-  statusText: {
-    fontSize: 12,
-    fontWeight: "400",
-    letterSpacing: 0.9,
-  },
-  actionContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  actionButton: {
-    flex: 1,
-  },
-  date: {
-    color: COLORS.textSecondary,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    cardContainer: {
+      width: "100%",
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 10,
+      elevation: 2,
+      shadowColor: "#000",
+      shadowOffset: { width: 1, height: 0 },
+      shadowOpacity: 0.9,
+      shadowRadius: 2,
+      padding: 10,
+      marginBottom: 15,
+      position: "relative",
+    },
+    imageContainer: {
+      width: "100%",
+      height: 80,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    image: {
+      width: "100%",
+      height: "100%",
+      alignSelf: "center",
+      borderRadius: 10,
+    },
+    textContainer: {
+      paddingVertical: 8,
+      rowGap: 4,
+    },
+    title: {
+      fontSize: 16,
+      fontWeight: "400",
+      color: COLORS.textPrimary,
+    },
+    // rating: {
+    //   fontSize: 12,
+    //   color: "#999",
+    // },
+    priceText: {
+      fontSize: 14,
+      color: COLORS.accent,
+      fontWeight: "400",
+    },
+    statusContainer: {
+      padding: 6,
+      paddingHorizontal: 8,
+      borderRadius: 50,
+      alignSelf: "flex-start",
+      position: "absolute",
+      top: 16,
+      right: 16,
+    },
+    statusText: {
+      fontSize: 12,
+      fontWeight: "400",
+      letterSpacing: 0.9,
+    },
+    actionContainer: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+    },
+    actionButton: {
+      flex: 1,
+    },
+    date: {
+      color: COLORS.textSecondary,
+    },
+  });
 
 export default TripManagementCard;

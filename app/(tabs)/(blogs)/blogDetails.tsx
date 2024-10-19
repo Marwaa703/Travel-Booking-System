@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -9,9 +10,10 @@ import {
   ScrollView,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { COLORS, SHADOWS } from "@/constants/theme";
+import { ColorPalette, COLORS, SHADOWS } from "@/constants/theme";
 import blogsData from "@/DummyData/blogs.json";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Blog {
   id: number;
@@ -24,6 +26,8 @@ interface Blog {
 }
 
 const BlogDetails: React.FC = () => {
+  const theme = useTheme(); // Use theme for styles
+  const styles = stylesObj(theme); // Define styles using theme
   const route = useRoute();
   const { blogId } = route.params as { blogId: number };
   const [blog, setBlog] = useState<Blog | null>(null);
@@ -79,73 +83,74 @@ const BlogDetails: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 13,
-    backgroundColor: COLORS.bg,
-    paddingBottom: 50,
-  },
-  title: {
-    fontSize: 26,
-    // fontWeight: "bold",
-    textAlign: "center",
-    // marginBottom: 2,
-    color: COLORS.textPrimary,
-  },
-  imageContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    borderRadius: 10,
-    overflow: "hidden",
-    shadowColor: SHADOWS.large.shadowColor,
-    shadowOffset: SHADOWS.large.shadowOffset,
-    shadowOpacity: SHADOWS.large.shadowOpacity,
-    shadowRadius: SHADOWS.large.shadowRadius,
-    elevation: SHADOWS.large.elevation,
-  },
-  image: {
-    width: Dimensions.get("window").width * 0.95,
-    height: Dimensions.get("window").height * 0.4,
-    borderRadius: 10,
-  },
-  meta: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
-    marginBottom: 15,
-    textAlign: "center",
-  },
-  description: {
-    letterSpacing: 0.5,
-    fontSize: 16,
-    lineHeight: 26,
-    color: COLORS.textPrimary,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    // marginVertical: 25,
-    marginBottom: 1,
-  },
-  headerContainer: {
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    backgroundColor: COLORS.bg,
-  },
-  welcomeContainer: {
-    // backgroundColor: COLORS.bg_surface,
-    marginTop: 30,
-    paddingHorizontal: 10,
-    shadowColor: SHADOWS.large.shadowColor,
-    shadowOffset: SHADOWS.large.shadowOffset,
-    shadowOpacity: SHADOWS.large.shadowOpacity,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 13,
+      backgroundColor: COLORS.bg,
+      paddingBottom: 50,
+    },
+    title: {
+      fontSize: 26,
+      // fontWeight: "bold",
+      textAlign: "center",
+      // marginBottom: 2,
+      color: COLORS.textPrimary,
+    },
+    imageContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 10,
+      borderRadius: 10,
+      overflow: "hidden",
+      shadowColor: SHADOWS.large.shadowColor,
+      shadowOffset: SHADOWS.large.shadowOffset,
+      shadowOpacity: SHADOWS.large.shadowOpacity,
+      shadowRadius: SHADOWS.large.shadowRadius,
+      elevation: SHADOWS.large.elevation,
+    },
+    image: {
+      width: Dimensions.get("window").width * 0.95,
+      height: Dimensions.get("window").height * 0.4,
+      borderRadius: 10,
+    },
+    meta: {
+      fontSize: 14,
+      color: COLORS.textSecondary,
+      marginBottom: 15,
+      textAlign: "center",
+    },
+    description: {
+      letterSpacing: 0.5,
+      fontSize: 16,
+      lineHeight: 26,
+      color: COLORS.textPrimary,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      // marginVertical: 25,
+      marginBottom: 1,
+    },
+    headerContainer: {
+      paddingVertical: 20,
+      paddingHorizontal: 15,
+      backgroundColor: COLORS.bg,
+    },
+    welcomeContainer: {
+      // backgroundColor: COLORS.bg_surface,
+      marginTop: 30,
+      paddingHorizontal: 10,
+      shadowColor: SHADOWS.large.shadowColor,
+      shadowOffset: SHADOWS.large.shadowOffset,
+      shadowOpacity: SHADOWS.large.shadowOpacity,
+    },
+  });
 
 export default BlogDetails;

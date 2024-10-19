@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS, FONTS, SHADOWS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS, SHADOWS } from "@/constants/theme";
 import CategoryCard from "@/components/blogs/CategoryCard";
 import { categories, recent_blogs, oldest_blogs } from "@/DummyData/blogs.json";
 import BlogPostCard from "@/components/blogs/BlogPostCard";
@@ -14,6 +16,7 @@ import { travelerImage1, travelerImage2 } from "@/constants/icons";
 import Header from "@/components/core/Header";
 import ScreenWraper from "@/components/containers/ScreenWraper";
 import { bottomTabsHeight } from "@/constants/dimentions";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Blog {
   id: number;
@@ -32,6 +35,9 @@ interface Category {
 }
 
 const Blogs: React.FC = () => {
+  const theme = useTheme(); // Use theme for styles
+  const styles = stylesObj(theme); // Define styles using theme
+
   const navigation = useNavigation<NavigationProp<any>>();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const toggleCategory = (category: string) => {
@@ -170,60 +176,61 @@ const Blogs: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-    paddingBottom: bottomTabsHeight,
-  },
-  // header: {
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   paddingHorizontal: 10,
-  //   marginVertical: 10,
-  // },
-  headerContainer: {
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    backgroundColor: COLORS.bg,
-  },
-  // welcomeContainer: {
-  //   marginBottom: 30,
-  //   paddingHorizontal: 10,
-  //   backgroundColor: "#fff",
-  //   shadowColor: SHADOWS.large.shadowColor,
-  //   shadowOffset: SHADOWS.large.shadowOffset,
-  //   shadowOpacity: SHADOWS.large.shadowOpacity,
-  // },
-  // welcomeText: {
-  //   fontSize: 35,
-  //   fontWeight: "bold",
-  //   color: COLORS.textPrimary,
-  // },
-  scrollView: {
-    marginVertical: 20,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    // fontWeight: "bold",
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    color: COLORS.textPrimary,
-    marginBottom: 10,
-  },
-  emptyStateContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  emptyStateText: {
-    fontSize: 18,
-    color: COLORS.textSecondary,
-  },
-  row: {
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+      paddingBottom: bottomTabsHeight,
+    },
+    // header: {
+    //   flexDirection: "row",
+    //   justifyContent: "space-between",
+    //   paddingHorizontal: 10,
+    //   marginVertical: 10,
+    // },
+    headerContainer: {
+      paddingVertical: 20,
+      paddingHorizontal: 15,
+      backgroundColor: COLORS.bg,
+    },
+    // welcomeContainer: {
+    //   marginBottom: 30,
+    //   paddingHorizontal: 10,
+    //   backgroundColor: "#fff",
+    //   shadowColor: SHADOWS.large.shadowColor,
+    //   shadowOffset: SHADOWS.large.shadowOffset,
+    //   shadowOpacity: SHADOWS.large.shadowOpacity,
+    // },
+    // welcomeText: {
+    //   fontSize: 35,
+    //   fontWeight: "bold",
+    //   color: COLORS.textPrimary,
+    // },
+    scrollView: {
+      marginVertical: 20,
+    },
+    sectionTitle: {
+      fontSize: 24,
+      // fontWeight: "bold",
+      marginVertical: 10,
+      paddingHorizontal: 10,
+      color: COLORS.textPrimary,
+      marginBottom: 10,
+    },
+    emptyStateContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    emptyStateText: {
+      fontSize: 18,
+      color: COLORS.textSecondary,
+    },
+    row: {
+      justifyContent: "space-between",
+      paddingHorizontal: 16,
+    },
+  });
 
 export default Blogs;

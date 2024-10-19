@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import {
   View,
@@ -11,7 +12,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Company } from "@/types/company";
@@ -21,8 +22,12 @@ import { updateCompanyDetails } from "@/redux/actions/companiesActions";
 import Spacer from "@/components/Spacer";
 import { bottomTabsHeight } from "@/constants/dimentions";
 import TextNote from "@/components/forms/TextNote";
+import { useTheme } from "@/hooks/useTheme";
 
 const ApprovedCompaniesScreen: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const dispatch = useAppDispatch();
   const approvedCompanies = useAppSelector((state) =>
     state.companies.companies.filter((c: Company) => c.approved),
@@ -169,79 +174,80 @@ const ApprovedCompaniesScreen: React.FC = () => {
 
 export default ApprovedCompaniesScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    // marginBottom: 70,
-    backgroundColor: COLORS.bg,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: COLORS.textPrimary,
-  },
-  companyContainer: {
-    flexDirection: "column",
-    // flexDirection: "row",
-    marginBottom: 20,
-    padding: 15,
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  companyStaticContainer: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  companyImage: {
-    width: 80,
-    height: 80,
-    marginRight: 8,
-    borderRadius: 8,
-  },
-  companyDetails: {
-    flex: 1,
-    justifyContent: "flex-start",
-  },
-  companyHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    color: COLORS.textPrimary,
-  },
-  companyId: {
-    fontSize: 14,
-    // fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
-  iconGroup: {
-    flexDirection: "row",
-  },
-  companySubtitle: {
-    fontSize: 14,
-    color: COLORS.textSubtitle,
-    marginBottom: 5,
-  },
-  inputContainer: {
-    marginVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: COLORS.textPrimary,
-    padding: 8,
-    marginRight: 10,
-    borderRadius: 5,
-    flex: 1,
-  },
-  iconButton: {
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      // marginBottom: 70,
+      backgroundColor: COLORS.bg,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 20,
+      color: COLORS.textPrimary,
+    },
+    companyContainer: {
+      flexDirection: "column",
+      // flexDirection: "row",
+      marginBottom: 20,
+      padding: 15,
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 10,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 5,
+    },
+    companyStaticContainer: {
+      flexDirection: "row",
+      marginBottom: 10,
+    },
+    companyImage: {
+      width: 80,
+      height: 80,
+      marginRight: 8,
+      borderRadius: 8,
+    },
+    companyDetails: {
+      flex: 1,
+      justifyContent: "flex-start",
+    },
+    companyHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      color: COLORS.textPrimary,
+    },
+    companyId: {
+      fontSize: 14,
+      // fontWeight: "bold",
+      color: COLORS.textPrimary,
+    },
+    iconGroup: {
+      flexDirection: "row",
+    },
+    companySubtitle: {
+      fontSize: 14,
+      color: COLORS.textSubtitle,
+      marginBottom: 5,
+    },
+    inputContainer: {
+      marginVertical: 10,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: COLORS.textPrimary,
+      padding: 8,
+      marginRight: 10,
+      borderRadius: 5,
+      flex: 1,
+    },
+    iconButton: {
+      marginLeft: 10,
+      justifyContent: "center",
+    },
+  });

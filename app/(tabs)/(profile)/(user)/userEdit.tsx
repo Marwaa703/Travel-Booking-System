@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Image, ScrollView } from "react-native";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import UserEditForm from "@/components/forms/UserEditForm";
 import ImagePickerCropper from "@/components/forms/ImagePickerCropper";
@@ -8,8 +9,13 @@ import { User } from "@/types/user";
 import { useAppSelector } from "@/redux/store";
 import { useRouter } from "expo-router";
 import useLogout from "@/hooks/useLogout";
+import { useTheme } from "@/hooks/useTheme";
 
 const EditProfileScreen: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const userEditFormRef = useRef<{ submitData: () => void }>(null);
   const router = useRouter();
   const user = useAppSelector(
@@ -57,29 +63,30 @@ const EditProfileScreen: React.FC = () => {
 //   <Text style={styles.changeProfileText}>Change Profile Picture</Text>
 // </TouchableOpacity>
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    marginTop: 20,
-    marginBottom: 100,
-    flex: 1,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
-    backgroundColor: COLORS.bg,
-  },
-  profileContainer: {
-    alignItems: "center",
-    marginVertical: 20,
-  },
-  profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: COLORS.opacity,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      paddingHorizontal: 20,
+      marginTop: 20,
+      marginBottom: 100,
+      flex: 1,
+    },
+    scrollContainer: {
+      flexGrow: 1,
+      justifyContent: "center",
+      backgroundColor: COLORS.bg,
+    },
+    profileContainer: {
+      alignItems: "center",
+      marginVertical: 20,
+    },
+    profileImage: {
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: COLORS.opacity,
+    },
+  });
 
 export default EditProfileScreen;
 

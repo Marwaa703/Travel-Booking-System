@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Button from "../Buttons";
@@ -7,6 +8,8 @@ import { TripImage } from "@/types/trip";
 import TextNote from "./TextNote";
 import Toast from "react-native-toast-message";
 import { imageUrlPattern } from "@/constants/regext";
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface TripImageFormProps {
   onSubmit: (data: TripImage[]) => void;
@@ -15,7 +18,11 @@ interface TripImageFormProps {
 }
 
 const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [imageUrl, setImageUrl] = useState("");
+
   const [caption, setCaption] = useState("");
   const [images, setImages] = useState<TripImage[]>([]);
 
@@ -122,40 +129,41 @@ const TripImageForm = ({ onSubmit, loading, msg }: TripImageFormProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  addButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#e0e0e0",
-    marginHorizontal: "auto",
-  },
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    addButton: {
+      justifyContent: "center",
+      alignItems: "center",
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: "#e0e0e0",
+      marginHorizontal: "auto",
+    },
 
-  addedLocationRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    paddingBottom: 8,
-  },
-  locationImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
-    marginRight: 8,
-  },
-  locationName: {
-    flex: 1,
-    marginLeft: 8,
-    maxWidth: 100,
-  },
-  deleteButton: {
-    marginLeft: 8,
-  },
-});
+    addedLocationRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ccc",
+      paddingBottom: 8,
+    },
+    locationImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 5,
+      marginRight: 8,
+    },
+    locationName: {
+      flex: 1,
+      marginLeft: 8,
+      maxWidth: 100,
+    },
+    deleteButton: {
+      marginLeft: 8,
+    },
+  });
 
 export default TripImageForm;

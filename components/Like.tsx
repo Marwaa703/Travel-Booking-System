@@ -1,13 +1,18 @@
+/* eslint-disable react-native/no-unused-styles */
 import { StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { COLORS } from "../constants/theme";
+import { ColorPalette } from "../constants/theme";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toggleFavorite } from "@/redux/slices/tripsSlice";
+import { useTheme } from "@/hooks/useTheme";
 interface LikeProps {
   tripId: string;
 }
 const Like = ({ tripId }: LikeProps) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const dispatch = useAppDispatch();
   const isFavorite = useAppSelector(
     (state) => state.trips.trips.find((t) => t.trip_id === tripId)?.isFavorite,
@@ -36,14 +41,15 @@ const Like = ({ tripId }: LikeProps) => {
 
 export default Like;
 
-const styles = StyleSheet.create({
-  container: {
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    backgroundColor: COLORS.opacity,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      width: 30,
+      height: 30,
+      borderRadius: 50,
+      backgroundColor: COLORS.opacity,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  });

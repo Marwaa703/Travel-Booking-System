@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -12,11 +13,12 @@ import {
 import Card from "@/components/Card";
 import Header from "@/components/core/Header";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { COLORS, SPACING } from "@/constants/theme";
+import { ColorPalette, SPACING } from "@/constants/theme"; // Import ColorPalette
 import { router } from "expo-router";
 import { getLocationsByTripId } from "@/api/tripLocations";
 import { getAllTrips } from "@/api/trip";
 import { useAppSelector } from "@/redux/store";
+import { useTheme } from "@/hooks/useTheme"; // Import useTheme
 
 const Search: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +28,9 @@ const Search: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { trips: tripImgs } = useAppSelector((state) => state.trips);
 
+  const theme = useTheme(); // Use theme for styles
+  const styles = stylesObject(theme); // Define styles using theme
+
   useEffect(() => {
     const fetchTripsAndLocations = async () => {
       try {
@@ -33,7 +38,7 @@ const Search: React.FC = () => {
         const tripsData = await getAllTrips();
         setTrips(tripsData);
         const locationsData = await Promise.all(
-          tripsData.map((trip) => getLocationsByTripId(trip.id)),
+          tripsData.map((trip) => getLocationsByTripId(trip?.id)),
         );
         setLocations(locationsData.flat());
       } catch (err) {
@@ -45,6 +50,7 @@ const Search: React.FC = () => {
 
     fetchTripsAndLocations();
   }, []);
+
   const filteredTrips = trips.filter((trip) =>
     locations.some(
       (location) =>
@@ -67,14 +73,14 @@ const Search: React.FC = () => {
           style={styles.searchInput}
           placeholder="Search for trip locations..."
           value={searchQuery}
-          placeholderTextColor={COLORS.textSecondary}
+          placeholderTextColor={theme.textSecondary}
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity>
           <Ionicons
             name="search"
             size={24}
-            color={COLORS.primary}
+            color={theme.primary}
             style={styles.searchIcon}
           />
         </TouchableOpacity>
@@ -94,15 +100,13 @@ const Search: React.FC = () => {
             source={require("@/assets/vectors/search.png")}
             style={styles.search}
           />
-          {/* <Text style={styles.searchText}>Search For Trip Locations Here</Text>
-          <Ionicons name="search" size={70} color={COLORS.secondary} /> */}
         </View>
       ) : filteredTrips.length === 0 ? (
         <View style={styles.iconContainer}>
           <Text style={styles.notFoundText}>
             No trips found with that location
           </Text>
-          <Ionicons name="search" size={70} color={COLORS.secondary} />
+          <Ionicons name="search" size={70} color={theme.secondary} />
         </View>
       ) : (
         <FlatList
@@ -138,53 +142,54 @@ const Search: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-  },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: COLORS.primary,
-    borderWidth: 1,
-    borderRadius: 15,
-    margin: 20,
-    paddingHorizontal: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-  },
-  searchIcon: {
-    marginLeft: 10,
-  },
-  search: {
-    objectFit: "contain",
-    width: "80%",
-  },
-  iconContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  searchText: {
-    fontSize: 16,
-    color: COLORS.secondary,
-    marginBottom: 10,
-  },
-  notFoundText: {
-    fontSize: 16,
-    color: COLORS.secondary,
-  },
-  cardContainer: {
-    flex: 1,
-    margin: SPACING.small,
-    width: Dimensions.get("screen").width * 0.45,
-  },
-  columnWrapper: {
-    justifyContent: "space-between",
-  },
-});
+const stylesObject = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+    },
+    searchContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      borderColor: COLORS.primary,
+      borderWidth: 1,
+      borderRadius: 15,
+      margin: 20,
+      paddingHorizontal: 10,
+    },
+    searchInput: {
+      flex: 1,
+      height: 40,
+    },
+    searchIcon: {
+      marginLeft: 10,
+    },
+    search: {
+      objectFit: "contain",
+      width: "80%",
+    },
+    iconContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    searchText: {
+      fontSize: 16,
+      color: COLORS.secondary,
+      marginBottom: 10,
+    },
+    notFoundText: {
+      fontSize: 16,
+      color: COLORS.secondary,
+    },
+    cardContainer: {
+      flex: 1,
+      margin: SPACING.small,
+      width: Dimensions.get("screen").width * 0.45,
+    },
+    columnWrapper: {
+      justifyContent: "space-between",
+    },
+  });
 
 export default Search;
