@@ -4,6 +4,7 @@ import SignupForm from "@/components/forms/SignupForm";
 import LinkButton from "@/components/LinkButton";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
+import { router } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -11,7 +12,12 @@ const Signup = () => {
   return (
     <>
       {/* need return button here */}
-      <Header title="Signup" rightIcon="" leftIcon="" />
+      <Header
+        title="Signup"
+        rightIcon=""
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <ScrollView style={{ backgroundColor: COLORS.bg }}>
         <Padding>
           <View style={styles.container}>

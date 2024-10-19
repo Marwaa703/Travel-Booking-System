@@ -3,13 +3,19 @@ import Header from "@/components/core/Header";
 import MultiStepRegisterCompanyForm from "@/components/forms/MultiStepRegisterCompanyForm";
 import Spacer from "@/components/Spacer";
 import { COLORS, FONTS } from "@/constants/theme";
+import { router } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 const SignupCompany = () => {
   return (
     <ScrollView style={{ backgroundColor: COLORS.bg }}>
-      <Header title="Register your company now" rightIcon="" leftIcon="" />
+      <Header
+        title="Register your company now"
+        rightIcon=""
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <Padding>
         <View style={styles.container}>
           {/* header */}
