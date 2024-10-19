@@ -7,10 +7,14 @@ import { useAppSelector } from "@/redux/store";
 import { router } from "expo-router";
 
 const PerviousTrip = () => {
+  const user = useAppSelector((state) => state.auth);
+  const currentUser = user?.currentUser?.id;
   const previousTrips = useAppSelector((state) => state.trips.previousTrips);
   const { trips: tripImgs } = useAppSelector((state) => state.trips);
-
-  if (!Array.isArray(previousTrips) || previousTrips.length === 0) {
+  const userTrips = previousTrips.filter(
+    (trip) => trip.user_id === currentUser,
+  );
+  if (!Array.isArray(userTrips) || userTrips.length === 0) {
     return (
       <>
         <Header title="Previous Trips" />
@@ -30,7 +34,7 @@ const PerviousTrip = () => {
       />
       <View style={styles.container}>
         <FlatList
-          data={previousTrips}
+          data={userTrips}
           renderItem={({ item }) => {
             const tripWithImages = tripImgs.find(
               (trip) => trip.trip_id === item.id,
