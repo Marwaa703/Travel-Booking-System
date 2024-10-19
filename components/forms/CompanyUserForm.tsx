@@ -4,15 +4,12 @@ import AppTextInput from "./AppTextInput";
 import GenderPicker from "./GenderPicker";
 import Button from "../Buttons";
 import {
-  companyRoles,
   companyUserSignupInputs,
   companyUserSignupSchema,
 } from "@/constants/forms";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CompanyUser, CompanyUserRoles, Gender } from "@/types/company";
+import { CompanyUser, Gender } from "@/types/company";
 import Spacer from "../Spacer";
-import DropdownRolePicker from "./DropDownRolePicker";
-import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 interface CompanyUserFormProps {
@@ -23,8 +20,6 @@ const CompanyUserForm: React.FC<CompanyUserFormProps> = ({ onNext }) => {
   const {
     control,
     handleSubmit,
-    setValue,
-    setError,
     formState: { errors },
   } = useForm<CompanyUser>({
     resolver: yupResolver(companyUserSignupSchema),

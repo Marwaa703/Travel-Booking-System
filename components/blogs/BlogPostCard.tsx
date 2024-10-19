@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import {
   View,
@@ -9,7 +10,8 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 type BlogPostProps = {
   id: number;
@@ -30,6 +32,9 @@ const BlogPostCard: React.FC<BlogPostProps> = ({
   readingTime,
   publishedTime,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const navigation = useNavigation<NavigationProp<any>>();
 
   const handlePress = () => {
@@ -53,41 +58,42 @@ const BlogPostCard: React.FC<BlogPostProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    flexDirection: "row",
-    padding: 10,
-    marginVertical: 10,
-    marginHorizontal: 10,
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 10,
-    elevation: 2,
-  },
-  image: {
-    width: Dimensions.get("window").width * 0.3,
-    height: 100,
-    borderRadius: 10,
-  },
-  content: {
-    flex: 1,
-    paddingLeft: 15,
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 16,
-    // fontWeight: "bold",
-    marginBottom: 5,
-    color: COLORS.textPrimary,
-  },
-  description: {
-    fontSize: 12,
-    color: COLORS.textSecondary,
-    marginBottom: 10,
-  },
-  meta: {
-    fontSize: 12,
-    color: COLORS.textSubtitle,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    cardContainer: {
+      flexDirection: "row",
+      padding: 10,
+      marginVertical: 10,
+      marginHorizontal: 10,
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 10,
+      elevation: 2,
+    },
+    image: {
+      width: Dimensions.get("window").width * 0.3,
+      height: 100,
+      borderRadius: 10,
+    },
+    content: {
+      flex: 1,
+      paddingLeft: 15,
+      justifyContent: "center",
+    },
+    title: {
+      fontSize: 16,
+      // fontWeight: "bold",
+      marginBottom: 5,
+      color: COLORS.textPrimary,
+    },
+    description: {
+      fontSize: 12,
+      color: COLORS.textSecondary,
+      marginBottom: 10,
+    },
+    meta: {
+      fontSize: 12,
+      color: COLORS.textSubtitle,
+    },
+  });
 
 export default BlogPostCard;

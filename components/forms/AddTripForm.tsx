@@ -8,8 +8,11 @@ import AppTextInput from "./AppTextInput";
 import GenderPicker from "./GenderPicker";
 import Spacer from "../Spacer";
 import { Text } from "react-native";
+import { useTheme } from "@/hooks/useTheme";
 
 const AddTripForm = () => {
+  // configure styles
+  const theme = useTheme();
   //   const [selectedGender, setSelectedGender] = useState("male");
 
   const {

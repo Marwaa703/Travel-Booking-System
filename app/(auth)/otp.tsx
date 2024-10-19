@@ -1,15 +1,21 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import Spacer from "@/components/Spacer";
 import Padding from "@/components/containers/Padding";
 import { StyleSheet, Text, View } from "react-native";
-import { SPACING, FONTS, COLORS } from "@/constants/theme";
+import { SPACING, FONTS, ColorPalette } from "@/constants/theme"; // Import ColorPalette
 import Button from "@/components/Buttons";
 import FieldErrorMessage from "@/components/forms/FieldErrorMessage";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import OTPInput from "@/components/forms/OtpInput";
 import Header from "@/components/core/Header";
+import { useTheme } from "@/hooks/useTheme"; // Import useTheme
 
 const Otp = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const router = useRouter();
   const { email } = useGlobalSearchParams();
 
@@ -37,17 +43,17 @@ const Otp = () => {
       setError("Please enter OTP before verifying.");
     }
   };
+
   return (
     <>
       <Header title="OTP Verification" rightIcon="" leftIcon="" />
       <Padding>
         <View style={styles.container}>
           <View style={styles.header}>
-            {/* <Text style={styles.title}>OTP Verification</Text> */}
             <Spacer />
-            <Text
-              style={styles.subTitle}
-            >{`Please check your email ${email ? email : ""} to see the verification code`}</Text>
+            <Text style={styles.subTitle}>
+              {`Please check your email ${email ? email : ""} to see the verification code`}
+            </Text>
           </View>
           <Spacer height={0} />
           <OTPInput onSubmitOtp={handleOtp} code="511226" />
@@ -65,31 +71,31 @@ const Otp = () => {
   );
 };
 
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      marginTop: "12%",
+      justifyContent: "flex-start",
+      rowGap: SPACING.xxlarge,
+      marginBottom: SPACING.large,
+    },
+    header: {
+      textAlign: "center",
+      alignItems: "center",
+      height: "15%",
+    },
+    title: {
+      fontSize: FONTS.xlarge,
+    },
+    subTitle: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSubtitle,
+      textAlign: "center",
+    },
+    btnContainer: {
+      width: "100%",
+    },
+  });
+
 export default Otp;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: "12%",
-    justifyContent: "flex-start",
-    rowGap: SPACING.xxlarge,
-    marginBottom: SPACING.large,
-  },
-
-  header: {
-    textAlign: "center",
-    alignItems: "center",
-    height: "15%",
-  },
-  title: {
-    fontSize: FONTS.xlarge,
-  },
-  subTitle: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSubtitle,
-    textAlign: "center",
-  },
-  btnContainer: {
-    width: "100%",
-  },
-});

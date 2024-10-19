@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import Card from "@/components/Card";
@@ -5,9 +7,14 @@ import Padding from "@/components/containers/Padding";
 import { useAppSelector } from "@/redux/store";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const PopularCompanies = () => {
   const popularCompanies = useAppSelector((state) => state.companies.companies);
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
 
   return (
     <>
@@ -44,22 +51,22 @@ const PopularCompanies = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    paddingVertical: 20,
-    backgroundColor: "#f5f5f5",
-    alignItems: "center", // Center the content to make it look consistent across devices
-  },
-  gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  cardWrapper: {
-    marginBottom: 15,
-    alignItems: "center", // Center the card within its container
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    scrollContainer: {
+      paddingVertical: 20,
+      backgroundColor: "#f5f5f5",
+      alignItems: "center", // Center the content to make it look consistent across devices
+    },
+    gridContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+    },
+    cardWrapper: {
+      marginBottom: 15,
+      alignItems: "center", // Center the card within its container
+    },
+  });
 
 export default PopularCompanies;

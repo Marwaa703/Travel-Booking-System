@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useState } from "react";
 import { View, ScrollView, Text, StyleSheet } from "react-native";
 import dayjs from "dayjs";
@@ -8,11 +10,15 @@ import BarChartComponent from "@/components/charts/BarChart";
 import Header from "@/components/core/Header";
 import Buttons from "@/components/Buttons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import Spacer from "@/components/Spacer";
 import { router } from "expo-router";
+import { useTheme } from "@/hooks/useTheme";
 
 const TripAnalysisScreen: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const trips = tripsData.trips;
   const companies = companiesData.companies;
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -126,33 +132,34 @@ const TripAnalysisScreen: React.FC = () => {
           selectedMonthYear={selectedMonthYear}
           data={getMonthlyData(monthlyTrips)}
         />
+        <Spacer height={80} />
       </ScrollView>
     </>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#f0f0f0",
-    marginBottom: 90,
-  },
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 10,
+      backgroundColor: COLORS.bg,
+    },
 
-  datePickerText: {
-    fontSize: FONTS.normal,
-    fontWeight: "500",
-    color: COLORS.textPrimary,
-    textAlign: "left",
-  },
+    datePickerText: {
+      fontSize: FONTS.normal,
+      fontWeight: "500",
+      color: COLORS.textPrimary,
+      textAlign: "left",
+    },
 
-  datePickerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 20,
-    paddingHorizontal: 20,
-  },
-});
+    datePickerContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginTop: 20,
+      paddingHorizontal: 20,
+    },
+  });
 
 export default TripAnalysisScreen;

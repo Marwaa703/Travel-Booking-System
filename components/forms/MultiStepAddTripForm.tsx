@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { Fragment, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { addTripInputs, addTripSchema } from "@/constants/forms";
@@ -14,10 +15,14 @@ import useLoadingState from "@/hooks/useLoadingSate";
 import { createTrip } from "@/api/auth";
 import { useAppDispatch } from "@/redux/store";
 import { addTrip } from "@/redux/slices/tripsSlice";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import Button from "../Buttons";
+import { useTheme } from "@/hooks/useTheme";
 
 const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -143,9 +148,10 @@ const MultiStepAddTripForm = ({ companyId }: { companyId: string }) => {
 };
 
 export default MultiStepAddTripForm;
-const styles = StyleSheet.create({
-  subTitle: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSubtitle,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    subTitle: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSubtitle,
+    },
+  });

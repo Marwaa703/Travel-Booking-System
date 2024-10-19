@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Image } from "expo-image";
-import { FONTS } from "@/constants/theme";
+import { ColorPalette, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface FullScreenImageModalProps {
   visible: boolean;
@@ -14,6 +16,9 @@ const FullScreenImage: React.FC<FullScreenImageModalProps> = ({
   imageUrl,
   onClose,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalContainer}>
@@ -31,27 +36,28 @@ const FullScreenImage: React.FC<FullScreenImageModalProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
-  },
-  closeButton: {
-    position: "absolute",
-    top: 40,
-    left: 20,
-    zIndex: 1000,
-  },
-  closeButtonText: {
-    fontSize: FONTS.large,
-    color: "#fff",
-  },
-  fullScreenImage: {
-    width: "100%",
-    height: "100%",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    modalContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+    },
+    closeButton: {
+      position: "absolute",
+      top: 40,
+      left: 20,
+      zIndex: 1000,
+    },
+    closeButtonText: {
+      fontSize: FONTS.large,
+      color: "#fff",
+    },
+    fullScreenImage: {
+      width: "100%",
+      height: "100%",
+    },
+  });
 
 export default FullScreenImage;

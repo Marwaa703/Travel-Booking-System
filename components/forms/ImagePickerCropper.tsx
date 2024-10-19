@@ -1,13 +1,18 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface ImagePickerCropperProps {
   onSelectImage: (uri: string) => void;
 }
 
 const ImagePickerCropper = ({ onSelectImage }: ImagePickerCropperProps) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const pickImage = async () => {
     // Request permission to access the camera roll
     const permissionResult =
@@ -42,18 +47,19 @@ const ImagePickerCropper = ({ onSelectImage }: ImagePickerCropperProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+    },
 
-  changeProfileText: {
-    color: COLORS.secondary,
-    marginTop: 10,
-    fontSize: FONTS.small,
-  },
-});
+    changeProfileText: {
+      color: COLORS.secondary,
+      marginTop: 10,
+      fontSize: FONTS.small,
+    },
+  });
 
 export default ImagePickerCropper;

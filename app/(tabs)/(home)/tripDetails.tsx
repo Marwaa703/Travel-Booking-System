@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import {
   View,
   Text,
@@ -9,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Button from "@/components/Buttons";
 import { useRouter } from "expo-router";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import Rating from "@/components/Rating";
 import { useRoute } from "@react-navigation/native";
 import Like from "@/components/Like";
@@ -23,8 +25,13 @@ import { Company } from "@/types/company";
 import { selectAllBookedTrips } from "@/redux/slices/bookedTripSlice";
 import Alert from "@/components/core/Alert";
 import Spacer from "@/components/Spacer";
+import { useTheme } from "@/hooks/useTheme";
 // upgrade: by swaping
 const TripDetails: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const [index, setIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [locations, setLocations] = useState<Location[] | null>(null);
@@ -181,136 +188,137 @@ const TripDetails: React.FC = () => {
     );
 };
 
-const styles = StyleSheet.create({
-  arrows: {
-    position: "absolute",
-    zIndex: 25,
-    top: "45%",
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  arrowsContainer: {
-    backgroundColor: "rgba(0,0,0,0.5)",
-    borderRadius: 5,
-    width: 30,
-    height: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    paddingBottom: 80,
-  },
-  imageContainer: {
-    position: "relative",
-  },
-  caption: {
-    fontSize: FONTS.xlarge,
-    zIndex: 20,
-    position: "absolute",
-    top: 35,
-    width: "100%",
-    textAlign: "center",
-    color: "#fff",
-    // fontWeight: "bold",
-    padding: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    textShadowColor: "rgba(0, 0, 0, 0.9)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-    letterSpacing: 1.5,
-    fontStyle: "italic",
-  },
-  image: {
-    width: "100%",
-    height: 450,
-    resizeMode: "cover",
-  },
-  mapButtonContainer: {
-    position: "absolute",
-    bottom: "17.5%",
-    right: "14%",
-    width: "75%",
-  },
-  like: {
-    backgroundColor: COLORS.textSubtitle,
-    borderRadius: 50,
-  },
-  infoContainer: {
-    backgroundColor: COLORS.bg,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 30,
-    paddingVertical: 18,
-    marginTop: -80,
-    flexGrow: 1,
-    justifyContent: "space-between",
-  },
-  titleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  tripTitle: {
-    fontSize: FONTS.large,
-    // fontWeight: "bold",
-    color: COLORS.textPrimary,
-  },
-  companyName: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSecondary,
-    // marginBottom: 15,
-  },
-  detailRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  price: {
-    fontSize: 16,
-    color: COLORS.accent,
-    fontWeight: "bold",
-  },
-  sectionTitle: {
-    fontSize: FONTS.medium,
-    color: COLORS.textPrimary,
-    marginBottom: 10,
-  },
-  descriptionContainer: {
-    maxHeight: 120,
-  },
-  scrollableDescription: {
-    maxHeight: 110,
-  },
-  tripDescription: {
-    fontSize: FONTS.medium,
-    color: COLORS.textSecondary,
-    marginBottom: 5,
-  },
-  descriptionTruncated: {
-    overflow: "hidden",
-  },
-  readMore: {
-    color: COLORS.primary,
-    marginTop: 5,
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    alignSelf: "center",
-    marginTop: "auto", //^Change that to auto
-    width: "100%",
-  },
-  item: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 4,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    arrows: {
+      position: "absolute",
+      zIndex: 25,
+      top: "45%",
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    arrowsContainer: {
+      backgroundColor: "rgba(0,0,0,0.5)",
+      borderRadius: 5,
+      width: 30,
+      height: 30,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+    },
+    scrollViewContent: {
+      flexGrow: 1,
+      paddingBottom: 80,
+    },
+    imageContainer: {
+      position: "relative",
+    },
+    caption: {
+      fontSize: FONTS.xlarge,
+      zIndex: 20,
+      position: "absolute",
+      top: 35,
+      width: "100%",
+      textAlign: "center",
+      color: "#fff",
+      // fontWeight: "bold",
+      padding: 10,
+      backgroundColor: "rgba(0, 0, 0, 0.3)",
+      textShadowColor: "rgba(0, 0, 0, 0.9)",
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 3,
+      letterSpacing: 1.5,
+      fontStyle: "italic",
+    },
+    image: {
+      width: "100%",
+      height: 450,
+      resizeMode: "cover",
+    },
+    mapButtonContainer: {
+      position: "absolute",
+      bottom: "17.5%",
+      right: "14%",
+      width: "75%",
+    },
+    like: {
+      backgroundColor: COLORS.textSubtitle,
+      borderRadius: 50,
+    },
+    infoContainer: {
+      backgroundColor: COLORS.bg,
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      paddingHorizontal: 30,
+      paddingVertical: 18,
+      marginTop: -80,
+      flexGrow: 1,
+      justifyContent: "space-between",
+    },
+    titleRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    tripTitle: {
+      fontSize: FONTS.large,
+      // fontWeight: "bold",
+      color: COLORS.textPrimary,
+    },
+    companyName: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSecondary,
+      // marginBottom: 15,
+    },
+    detailRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    price: {
+      fontSize: 16,
+      color: COLORS.accent,
+      fontWeight: "bold",
+    },
+    sectionTitle: {
+      fontSize: FONTS.medium,
+      color: COLORS.textPrimary,
+      marginBottom: 10,
+    },
+    descriptionContainer: {
+      maxHeight: 120,
+    },
+    scrollableDescription: {
+      maxHeight: 110,
+    },
+    tripDescription: {
+      fontSize: FONTS.medium,
+      color: COLORS.textSecondary,
+      marginBottom: 5,
+    },
+    descriptionTruncated: {
+      overflow: "hidden",
+    },
+    readMore: {
+      color: COLORS.primary,
+      marginTop: 5,
+      fontWeight: "bold",
+    },
+    buttonContainer: {
+      alignSelf: "center",
+      marginTop: "auto", //^Change that to auto
+      width: "100%",
+    },
+    item: {
+      flexDirection: "row",
+      alignItems: "center",
+      columnGap: 4,
+    },
+  });
 
 export default TripDetails;

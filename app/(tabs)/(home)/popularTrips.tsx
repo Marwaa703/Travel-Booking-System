@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { Fragment } from "react";
 import { View, Text, FlatList, StyleSheet, RefreshControl } from "react-native";
 import { useDispatch } from "react-redux";
@@ -9,9 +11,13 @@ import { formattedDate } from "@/utils";
 import useRefreshControl from "@/hooks/useRefreshControl";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const PopularTrips: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const dispatch = useDispatch();
   const trips = useAppSelector((state: RootState) => state.trips.trips).filter(
     (t) => t.status === "active",
@@ -86,13 +92,13 @@ const PopularTrips: React.FC = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: COLORS.bg,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: COLORS.bg,
+    },
+  });
 
 export default PopularTrips;

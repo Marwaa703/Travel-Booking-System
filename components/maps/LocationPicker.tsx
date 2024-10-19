@@ -1,10 +1,12 @@
+/* eslint-disable react-native/no-unused-styles */
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Modal, Alert, TouchableOpacity } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import Button from "../Buttons";
 import * as Location from "expo-location";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface LocationPickerProps {
   onLocationSelect: (latitude: number, longitude: number) => void; // Function to return selected location
@@ -15,6 +17,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   onLocationSelect,
   active = false,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{
     latitude: number;
@@ -125,38 +130,39 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContainer: {
-    flex: 1,
-  },
-  map: {
-    flex: 1,
-  },
-  buttonContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    padding: 10,
-    position: "absolute",
-    bottom: 0, // Position buttons at the bottom
-    marginHorizontal: "auto",
-    marginLeft: 10,
-  },
-  myLocation: {
-    width: 40,
-    height: 40,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 25,
-    marginEnd: 10,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContainer: {
+      flex: 1,
+    },
+    map: {
+      flex: 1,
+    },
+    buttonContainer: {
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      padding: 10,
+      position: "absolute",
+      bottom: 0, // Position buttons at the bottom
+      marginHorizontal: "auto",
+      marginLeft: 10,
+    },
+    myLocation: {
+      width: 40,
+      height: 40,
+      backgroundColor: "white",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 25,
+      marginEnd: 10,
+    },
+  });
 
 export default LocationPicker;

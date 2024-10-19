@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
@@ -7,9 +9,13 @@ import Padding from "@/components/containers/Padding";
 import CompanyNewUserForm from "@/components/forms/CompanyNewUserForm";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const AddUser = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const route = useRoute();
   const { companyId } = route.params as { companyId: string };
   console.log({ companyId });
@@ -34,6 +40,7 @@ const AddUser = () => {
 
 export default AddUser;
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.bg },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: COLORS.bg },
+  });

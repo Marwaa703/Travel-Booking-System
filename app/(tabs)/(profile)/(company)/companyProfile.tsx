@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useEffect } from "react";
 import {
   View,
@@ -8,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import SettingCard from "@/components/SettingContainer";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -22,7 +24,11 @@ import Toast from "react-native-toast-message";
 import { adminMsgSpliter } from "@/constants/admin";
 import { fetchCompanies } from "@/redux/actions/companiesActions";
 import ScreenWraper from "@/components/containers/ScreenWraper";
+import { useTheme } from "@/hooks/useTheme";
 const CompanyProfile: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const logout = useLogout();
   const user = useAppSelector(
     (state) => state.auth.currentUser,
@@ -122,15 +128,17 @@ const CompanyProfile: React.FC = () => {
                       leftIconName="air"
                     />
                     <Spacer height={16} />
-                    <SettingCard
-                      title="Manage Employees"
-                      onPress={() =>
-                        router.push(
-                          `companyUsers/?companyId=${user?.company_id}`,
-                        )
-                      }
-                      leftIconName="people"
-                    />
+                    {user?.role === "Representative" && (
+                      <SettingCard
+                        title="Manage Employees"
+                        onPress={() =>
+                          router.push(
+                            `companyUsers/?companyId=${user?.company_id}`,
+                          )
+                        }
+                        leftIconName="people"
+                      />
+                    )}
                     {/* <Spacer height={16} />
                     <SettingCard
                       title="Company Settings"
@@ -156,39 +164,40 @@ const CompanyProfile: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    // paddingBottom: 100,
-    backgroundColor: COLORS.bg,
-  },
-  scrollContainer: {
-    // flexGrow: 1,
-    justifyContent: "center",
-    backgroundColor: COLORS.bg,
-  },
-  headerContainer: {
-    alignItems: "center",
-    marginVertical: 8,
-  },
-  companyLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: COLORS.bg_surface,
-  },
-  companyName: {
-    fontSize: 20,
-    // fontWeight: "500",
-    letterSpacing: 0.5,
-    marginTop: 8,
-    color: COLORS.textPrimary,
-  },
-  companyEmail: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: 20,
+      // paddingBottom: 100,
+      backgroundColor: COLORS.bg,
+    },
+    scrollContainer: {
+      // flexGrow: 1,
+      justifyContent: "center",
+      backgroundColor: COLORS.bg,
+    },
+    headerContainer: {
+      alignItems: "center",
+      marginVertical: 8,
+    },
+    companyLogo: {
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: COLORS.bg_surface,
+    },
+    companyName: {
+      fontSize: 20,
+      // fontWeight: "500",
+      letterSpacing: 0.5,
+      marginTop: 8,
+      color: COLORS.textPrimary,
+    },
+    companyEmail: {
+      fontSize: 14,
+      color: COLORS.textSecondary,
+    },
+  });
 
 export default CompanyProfile;

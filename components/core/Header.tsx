@@ -1,8 +1,10 @@
+/* eslint-disable react-native/no-unused-styles */
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useTheme } from "@/hooks/useTheme";
 
 interface HeaderProps {
   leftIcon?: string;
@@ -19,6 +21,9 @@ const Header: React.FC<HeaderProps> = ({
   onLeftIconPress,
   onRightIconPress,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const defaultLeftIconPress = () => router.push("/profile");
   const defaultRightIconPress = () => router.push("/notification");
 
@@ -28,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({
         <Ionicons
           name={leftIcon as never}
           size={30}
-          color={COLORS.textPrimary}
+          color={theme.textPrimary}
         />
       </TouchableOpacity>
 
@@ -38,28 +43,29 @@ const Header: React.FC<HeaderProps> = ({
         <Ionicons
           name={rightIcon as never}
           size={30}
-          color={COLORS.textPrimary}
+          color={theme.textPrimary}
         />
       </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 18,
-    padding: 16,
-    marginBottom: -2,
-    backgroundColor: COLORS.bg,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "500",
-    color: COLORS.textPrimary,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginVertical: 18,
+      padding: 16,
+      marginBottom: -2,
+      backgroundColor: COLORS.bg,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "500",
+      color: COLORS.textPrimary,
+    },
+  });
 
 export default Header;

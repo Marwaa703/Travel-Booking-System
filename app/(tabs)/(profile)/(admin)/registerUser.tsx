@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -9,14 +10,19 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Header from "@/components/core/Header";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette, COLORS } from "@/constants/theme";
 import userApi from "@/api/userApi";
 import { User } from "@/types/user";
 import { UserTypes } from "@/types/user";
 import Alert from "@/components/core/Alert";
 import { router } from "expo-router";
+import { useTheme } from "@/hooks/useTheme";
 
 const RegisterUsersScreen: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +40,7 @@ const RegisterUsersScreen: React.FC = () => {
       try {
         const fetchedUsers = await userApi.getAllUsers();
         const filteredUsers = fetchedUsers.filter(
-          (user) => user.role === "User",
+          (user) => user?.role === "User",
         );
         setUsers(filteredUsers);
       } catch (error) {
@@ -61,12 +67,12 @@ const RegisterUsersScreen: React.FC = () => {
         });
 
         setUsers((prevUsers) =>
-          prevUsers.map((user) => (user.id === editUser ? updatedUser : user)),
+          prevUsers.map((user) => (user?.id === editUser ? updatedUser : user)),
         );
         resetForm();
       } catch (error) {
         console.error("Error updating user:", error);
-        setError("Failed to update user. Please try again.");
+        setError("Failed to update user?. Please try again.");
       }
     }
   };
@@ -75,10 +81,10 @@ const RegisterUsersScreen: React.FC = () => {
   const deleteUser = async (id: string) => {
     try {
       await userApi.deleteUser(id);
-      setUsers(users.filter((user) => user.id !== id));
+      setUsers(users.filter((user) => user?.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
-      setError("Failed to delete user. Please try again.");
+      setError("Failed to delete user?. Please try again.");
     }
   };
 
@@ -167,41 +173,42 @@ const RegisterUsersScreen: React.FC = () => {
                     <View style={styles.userContainer}>
                       <View>
                         <Text style={styles.userName}>
-                          Name: {user.first_name} {user.last_name}
+                          Name: {user?.first_name} {user?.last_name}
                         </Text>
                         <Text style={styles.userDetails}>
-                          Email: {user.email}
+                          Email: {user?.email}
                         </Text>
                         <Text style={styles.userDetails}>
-                          Birthdate: {user.birth_date?.toString().split("T")[0]}{" "}
+                          Birthdate:{" "}
+                          {user?.birth_date?.toString().split("T")[0]}{" "}
                         </Text>
                         <Text style={styles.userDetails}>
-                          Phone: {user.phone}
+                          Phone: {user?.phone}
                         </Text>
                         <Text style={styles.userDetails}>
-                          Role: {user.role}
+                          Role: {user?.role}
                         </Text>
                       </View>
                       <View style={styles.actionButtons}>
                         <TouchableOpacity
                           style={styles.editButton}
                           onPress={() => {
-                            setEditUser(user.id);
-                            setFirstName(user.first_name);
-                            setLastName(user.last_name);
-                            setEmail(user.email);
+                            setEditUser(user?.id);
+                            setFirstName(user?.first_name);
+                            setLastName(user?.last_name);
+                            setEmail(user?.email);
                             setBirthDate(
-                              user.birth_date?.toString().split("T")[0] || "",
+                              user?.birth_date?.toString().split("T")[0] || "",
                             );
-                            setPhone(user.phone);
-                            setRole(user.role);
+                            setPhone(user?.phone);
+                            setRole(user?.role);
                           }}
                         >
                           <Text style={styles.editButtonText}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={styles.deleteButton}
-                          onPress={() => deleteUser(user.id)}
+                          onPress={() => deleteUser(user?.id)}
                         >
                           <Text style={styles.deleteButtonText}>Delete</Text>
                         </TouchableOpacity>
@@ -220,80 +227,81 @@ const RegisterUsersScreen: React.FC = () => {
 
 export default RegisterUsersScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 190,
-  },
-  loader: {
-    marginTop: 20,
-  },
-  formContainer: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: COLORS.textPrimary,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: COLORS.textSecondary,
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    backgroundColor: "#fff",
-  },
-  updateButton: {
-    backgroundColor: COLORS.secondary,
-    padding: 12,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  updateButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  userContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  userName: {
-    fontSize: 16,
-    color: COLORS.textPrimary,
-    fontWeight: "bold",
-  },
-  userDetails: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
-  },
-  actionButtons: {
-    flexDirection: "row",
-  },
-  editButton: {
-    backgroundColor: COLORS.secondary,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginRight: 10,
-  },
-  editButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  deleteButton: {
-    backgroundColor: COLORS.error,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-  },
-  deleteButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      marginBottom: 190,
+    },
+    loader: {
+      marginTop: 20,
+    },
+    formContainer: {
+      padding: 20,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 20,
+      color: COLORS.textPrimary,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: COLORS.textSecondary,
+      padding: 10,
+      marginBottom: 10,
+      borderRadius: 5,
+      backgroundColor: "#fff",
+    },
+    updateButton: {
+      backgroundColor: COLORS.secondary,
+      padding: 12,
+      borderRadius: 5,
+      alignItems: "center",
+    },
+    updateButtonText: {
+      color: "#fff",
+      fontWeight: "bold",
+    },
+    userContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundColor: "#fff",
+      padding: 15,
+      borderRadius: 8,
+      marginBottom: 10,
+    },
+    userName: {
+      fontSize: 16,
+      color: COLORS.textPrimary,
+      fontWeight: "bold",
+    },
+    userDetails: {
+      fontSize: 14,
+      color: COLORS.textSecondary,
+    },
+    actionButtons: {
+      flexDirection: "row",
+    },
+    editButton: {
+      backgroundColor: COLORS.secondary,
+      paddingVertical: 5,
+      paddingHorizontal: 15,
+      borderRadius: 5,
+      marginRight: 10,
+    },
+    editButtonText: {
+      color: "#fff",
+      fontWeight: "bold",
+    },
+    deleteButton: {
+      backgroundColor: COLORS.error,
+      paddingVertical: 5,
+      paddingHorizontal: 15,
+      borderRadius: 5,
+    },
+    deleteButtonText: {
+      color: "#fff",
+      fontWeight: "bold",
+    },
+  });

@@ -1,3 +1,6 @@
+/* eslint-disable react-native/no-unused-styles */
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import React, { useState, useRef, useEffect } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
@@ -7,6 +10,9 @@ interface OTPInputProps {
 }
 
 const OTPInput: React.FC<OTPInputProps> = ({ code, onSubmitOtp }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const [borderColors, setBorderColors] = useState<string[]>(
     new Array(6).fill("#ccc"),
@@ -82,19 +88,20 @@ const OTPInput: React.FC<OTPInputProps> = ({ code, onSubmitOtp }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  input: {
-    width: 40,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 8,
-    textAlign: "center",
-    fontSize: 24,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    input: {
+      width: 40,
+      height: 50,
+      borderWidth: 1,
+      borderRadius: 8,
+      textAlign: "center",
+      fontSize: 24,
+    },
+  });
 
 export default OTPInput;

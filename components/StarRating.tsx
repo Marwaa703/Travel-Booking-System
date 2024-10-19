@@ -1,6 +1,9 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface StarRatingProps {
   maxStars?: number;
@@ -11,6 +14,9 @@ const StarRating: React.FC<StarRatingProps> = ({
   maxStars = 5,
   onRatingChange,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [rating, setRating] = useState<number>(0);
 
   const handleStarPress = (newRating: number) => {
@@ -43,16 +49,17 @@ const StarRating: React.FC<StarRatingProps> = ({
 
 export default StarRating;
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
 
-  starContainer: {
-    flexDirection: "row",
-  },
-  starIcon: {
-    marginHorizontal: 5,
-  },
-});
+    starContainer: {
+      flexDirection: "row",
+    },
+    starIcon: {
+      marginHorizontal: 5,
+    },
+  });

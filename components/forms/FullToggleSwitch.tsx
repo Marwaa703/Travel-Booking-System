@@ -1,5 +1,8 @@
+/* eslint-disable react-native/no-unused-styles */
+
 // components/ToggleSwitch.tsx
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -14,6 +17,9 @@ const ToggleSwitch = <T extends string>({
   onToggle,
   selectedOption,
 }: ToggleSwitchProps<T>) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [active, setActive] = useState<T>(selectedOption);
 
   const handleToggle = (value: T) => {
@@ -54,42 +60,43 @@ const ToggleSwitch = <T extends string>({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-    overflow: "hidden",
-    width: "100%", // Adjust as necessary
-    height: 40, // Adjust as necessary
-    backgroundColor: COLORS.bg,
-    position: "relative",
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 5,
-    zIndex: 1,
-  },
-  buttonText: {
-    fontSize: FONTS.small, // Adjust font size as necessary
-    color: "#666",
-  },
-  activeButton: {
-    // Optional: Add styles for active button if needed
-  },
-  activeText: {
-    color: "#fff",
-  },
-  indicator: {
-    position: "absolute",
-    height: "100%",
-    backgroundColor: COLORS.accent, // Change color as necessary
-    // borderRadius: 20,
-    top: 0,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 20,
+      overflow: "hidden",
+      width: "100%", // Adjust as necessary
+      height: 40, // Adjust as necessary
+      backgroundColor: COLORS.bg,
+      position: "relative",
+    },
+    button: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 5,
+      zIndex: 1,
+    },
+    buttonText: {
+      fontSize: FONTS.small, // Adjust font size as necessary
+      color: "#666",
+    },
+    activeButton: {
+      // Optional: Add styles for active button if needed
+    },
+    activeText: {
+      color: "#fff",
+    },
+    indicator: {
+      position: "absolute",
+      height: "100%",
+      backgroundColor: COLORS.accent, // Change color as necessary
+      // borderRadius: 20,
+      top: 0,
+    },
+  });
 
 export default ToggleSwitch;

@@ -1,4 +1,5 @@
-import { COLORS } from "@/constants/theme";
+/* eslint-disable react-native/no-unused-styles */
+import { ColorPalette, COLORS } from "@/constants/theme";
 import {
   Company,
   companyApproveStatus,
@@ -15,6 +16,7 @@ import Label from "../forms/Label";
 import ActionButton from "../buttons/ActionButton";
 import { useAppDispatch } from "@/redux/store";
 import { updateCompanyDetails } from "@/redux/actions/companiesActions";
+import { useTheme } from "@/hooks/useTheme";
 
 interface UpdateCompanyStatusProps {
   visible: boolean;
@@ -29,6 +31,9 @@ const UpdateCompanyStatus: React.FC<UpdateCompanyStatusProps> = ({
   onApprove,
   company,
 }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const dispatch = useAppDispatch();
 
   const [section, setSection] = useState<CompanyEditSection | undefined>();
@@ -126,30 +131,31 @@ const UpdateCompanyStatus: React.FC<UpdateCompanyStatusProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContainer: {
-    height: "60%",
-    backgroundColor: COLORS.bg_surface,
-    borderRadius: 10,
-    margin: 10,
-    padding: 10,
-    elevation: 5,
-    justifyContent: "space-between",
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContainer: {
+      height: "60%",
+      backgroundColor: COLORS.bg_surface,
+      borderRadius: 10,
+      margin: 10,
+      padding: 10,
+      elevation: 5,
+      justifyContent: "space-between",
+    },
+    title: {
+      fontSize: 18,
+      marginBottom: 10,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+  });
 
 export default UpdateCompanyStatus;

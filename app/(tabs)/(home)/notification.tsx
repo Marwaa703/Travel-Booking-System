@@ -1,10 +1,13 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Header from "@/components/core/Header";
 import NotificationCard from "@/components/NotificationCard";
 import { router } from "expo-router";
 import LinkButton from "@/components/LinkButton";
-import { FONTS } from "@/constants/theme";
+import { ColorPalette, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 
 const initialNotifications = new Array(20).fill({
   avatar: {
@@ -15,6 +18,10 @@ const initialNotifications = new Array(20).fill({
 });
 
 const Notification = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const [notifications, setNotifications] = useState(initialNotifications);
 
   return (
@@ -53,25 +60,26 @@ const Notification = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    flex: 1,
-  },
-  linksContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 20,
-  },
-  noNotificationsContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noNotificationsText: {
-    fontSize: FONTS.normal,
-    color: "gray",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: "white",
+      flex: 1,
+    },
+    linksContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      paddingVertical: 20,
+    },
+    noNotificationsContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    noNotificationsText: {
+      fontSize: FONTS.normal,
+      color: "gray",
+    },
+  });
 
 export default Notification;

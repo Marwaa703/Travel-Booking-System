@@ -1,10 +1,12 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import Button from "@/components/Buttons";
 import Header from "@/components/core/Header";
 import Padding from "@/components/containers/Padding";
 import Spacer from "@/components/Spacer";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 
@@ -15,8 +17,12 @@ import { Trip, TripStatus } from "@/types/trip";
 import Toast from "react-native-toast-message";
 import TextNote from "@/components/forms/TextNote";
 import ScreenWraper from "@/components/containers/ScreenWraper";
+import { useTheme } from "@/hooks/useTheme";
 
 const CompanyHome = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const route = useRoute();
   const dispatch = useAppDispatch();
 
@@ -91,32 +97,33 @@ const CompanyHome = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-    // marginBottom: 90,
-  },
-  addButtonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  addButtonWrapper: {
-    width: "100%",
-  },
-  sectionTitle: {
-    fontSize: FONTS.large,
-    color: COLORS.textPrimary,
-  },
-  cardWrapper: {
-    width: "100%",
-  },
-  cardContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+      // marginBottom: 90,
+    },
+    addButtonContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginVertical: 10,
+    },
+    addButtonWrapper: {
+      width: "100%",
+    },
+    sectionTitle: {
+      fontSize: FONTS.large,
+      color: COLORS.textPrimary,
+    },
+    cardWrapper: {
+      width: "100%",
+    },
+    cardContainer: {
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+    },
+  });
 
 export default CompanyHome;

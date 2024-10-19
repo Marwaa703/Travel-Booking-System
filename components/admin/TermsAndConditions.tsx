@@ -1,4 +1,6 @@
-import { COLORS, FONTS } from "@/constants/theme";
+/* eslint-disable react-native/no-unused-styles */
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import React, { useEffect, useState } from "react";
 import {
   Modal,
@@ -14,6 +16,9 @@ interface TermsAndConditionsProps {
 }
 
 const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onAgree }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   const [modalVisible, setModalVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -218,120 +223,121 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onAgree }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    backgroundColor: COLORS.bg,
-  },
-  termsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  checkboxContainer: {
-    marginRight: 10,
-    width: 16,
-    height: 16,
-    borderWidth: 1.5,
-    borderColor: COLORS.primary,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 2,
-  },
-  checkbox: {
-    width: 16,
-    height: 16,
-    backgroundColor: "transparent",
-    borderRadius: 3,
-  },
-  checkboxChecked: {
-    backgroundColor: COLORS.primary,
-  },
-  termsText: {
-    color: COLORS.textPrimary,
-    fontSize: FONTS.small,
-  },
-  fullScreenModal: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: COLORS.bg,
-  },
-  scrollViewContent: {
-    paddingBottom: 20,
-  },
-  header: {
-    fontSize: 18,
-    fontWeight: "500",
-    margin: 20,
-    textAlign: "center",
-    letterSpacing: 2,
-    color: COLORS.textPrimary,
-  },
-  sectionHeader: {
-    fontSize: 18,
-    // fontWeight: "bold",
-    marginVertical: 10,
-    color: COLORS.textPrimary,
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 10,
-    textAlign: "justify",
-    color: COLORS.textSecondary,
-  },
-  boldText: {
-    fontWeight: "bold",
-    color: COLORS.primary,
-  },
-  agreeButton: {
-    backgroundColor: COLORS.primary,
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 10,
-    flex: 1,
-    marginRight: 5,
-    alignItems: "center",
-  },
-  agreeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  conclusionText: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 20,
-    marginTop: 15,
-    textAlign: "center",
-    color: COLORS.primary,
-  },
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      backgroundColor: COLORS.bg,
+    },
+    termsContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginVertical: 10,
+    },
+    checkboxContainer: {
+      marginRight: 10,
+      width: 16,
+      height: 16,
+      borderWidth: 1.5,
+      borderColor: COLORS.primary,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 2,
+    },
+    checkbox: {
+      width: 16,
+      height: 16,
+      backgroundColor: "transparent",
+      borderRadius: 3,
+    },
+    checkboxChecked: {
+      backgroundColor: COLORS.primary,
+    },
+    termsText: {
+      color: COLORS.textPrimary,
+      fontSize: FONTS.small,
+    },
+    fullScreenModal: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: COLORS.bg,
+    },
+    scrollViewContent: {
+      paddingBottom: 20,
+    },
+    header: {
+      fontSize: 18,
+      fontWeight: "500",
+      margin: 20,
+      textAlign: "center",
+      letterSpacing: 2,
+      color: COLORS.textPrimary,
+    },
+    sectionHeader: {
+      fontSize: 18,
+      // fontWeight: "bold",
+      marginVertical: 10,
+      color: COLORS.textPrimary,
+    },
+    text: {
+      fontSize: 16,
+      lineHeight: 24,
+      marginBottom: 10,
+      textAlign: "justify",
+      color: COLORS.textSecondary,
+    },
+    boldText: {
+      fontWeight: "bold",
+      color: COLORS.primary,
+    },
+    agreeButton: {
+      backgroundColor: COLORS.primary,
+      padding: 15,
+      borderRadius: 10,
+      marginTop: 10,
+      flex: 1,
+      marginRight: 5,
+      alignItems: "center",
+    },
+    agreeButtonText: {
+      color: "#fff",
+      fontSize: 16,
+    },
+    conclusionText: {
+      fontSize: 16,
+      lineHeight: 24,
+      marginBottom: 20,
+      marginTop: 15,
+      textAlign: "center",
+      color: COLORS.primary,
+    },
 
-  linkText: {
-    color: COLORS.secondary,
-    textDecorationLine: "underline",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-  },
+    linkText: {
+      color: COLORS.secondary,
+      textDecorationLine: "underline",
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 10,
+    },
 
-  closeButton: {
-    backgroundColor: "grey",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 10,
-    flex: 1,
-    marginLeft: 5,
-    alignItems: "center",
-  },
+    closeButton: {
+      backgroundColor: "grey",
+      padding: 15,
+      borderRadius: 10,
+      marginTop: 10,
+      flex: 1,
+      marginLeft: 5,
+      alignItems: "center",
+    },
 
-  closeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-});
+    closeButtonText: {
+      color: "#fff",
+      fontSize: 16,
+    },
+  });
 
 export default TermsAndConditions;

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -8,7 +9,8 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
-import { COLORS } from "@/constants/theme";
+import { ColorPalette } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import Header from "@/components/core/Header";
 import { getInstructionsByTripId } from "@/api/trips/tripInstruction";
 import { TripInstruction } from "@/types/trip";
@@ -18,8 +20,13 @@ import StarRating from "@/components/StarRating";
 import { updateTrip } from "@/api/trips/trip";
 import { useDispatch } from "react-redux";
 import { moveTripToPrevious } from "@/redux/slices/tripsSlice";
+import Spacer from "@/components/Spacer";
 
 const TripInstructions: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const route = useRoute();
   const { tripId } = route.params as { tripId: string };
   const [chatMessages, setChatMessages] = useState<TripInstruction[]>([]);
@@ -100,7 +107,7 @@ const TripInstructions: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
+        <ActivityIndicator size="large" color={theme.primary} />
         <Text>Loading Instructions...</Text>
       </View>
     );
@@ -162,6 +169,7 @@ const TripInstructions: React.FC = () => {
             )}
           </View>
         )}
+        <Spacer height={80} />
       </View>
     </>
   );
@@ -169,79 +177,80 @@ const TripInstructions: React.FC = () => {
 
 export default TripInstructions;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bg,
-    padding: 10,
-    marginBottom: 90,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorText: {
-    fontSize: 18,
-    color: COLORS.error,
-  },
-  chatContainer: {
-    flexGrow: 1,
-    justifyContent: "flex-end",
-  },
-  messageContainer: {
-    backgroundColor: COLORS.calendarSelected,
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-    alignSelf: "flex-start",
-    maxWidth: "80%",
-  },
-  messageText: {
-    fontSize: 16,
-    color: COLORS.textPrimary,
-  },
-  messageTime: {
-    fontSize: 12,
-    color: COLORS.textSecondary,
-    textAlign: "right",
-    marginTop: 5,
-  },
-  bottomTextContainer: {
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: COLORS.bg,
-  },
-  bottomText: {
-    fontSize: 14,
-    color: COLORS.error,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  endTripText: {
-    textAlign: "center",
-    color: COLORS.success,
-    fontWeight: "bold",
-  },
-  ratingContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  ratingText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: COLORS.textPrimary,
-  },
-  thankYouText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: COLORS.success,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+      padding: 10,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: COLORS.bg,
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    errorText: {
+      fontSize: 18,
+      color: COLORS.error,
+    },
+    chatContainer: {
+      flexGrow: 1,
+      justifyContent: "flex-end",
+    },
+    messageContainer: {
+      backgroundColor: COLORS.bg_surface,
+      padding: 10,
+      borderRadius: 10,
+      marginBottom: 10,
+      alignSelf: "flex-start",
+      maxWidth: "80%",
+    },
+    messageText: {
+      fontSize: 16,
+      color: COLORS.textPrimary,
+    },
+    messageTime: {
+      fontSize: 12,
+      color: COLORS.textSecondary,
+      textAlign: "right",
+      marginTop: 5,
+    },
+    bottomTextContainer: {
+      alignItems: "center",
+      padding: 10,
+      backgroundColor: COLORS.bg,
+    },
+    bottomText: {
+      fontSize: 14,
+      color: COLORS.error,
+      // fontWeight: "bold",
+      textAlign: "center",
+    },
+    endTripText: {
+      textAlign: "center",
+      color: COLORS.success,
+      fontWeight: "bold",
+    },
+    ratingContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    ratingText: {
+      fontSize: 18,
+      // fontWeight: "bold",
+      marginBottom: 10,
+      color: COLORS.textPrimary,
+    },
+    thankYouText: {
+      fontSize: 18,
+      // fontWeight: "bold",
+      color: COLORS.success,
+    },
+  });

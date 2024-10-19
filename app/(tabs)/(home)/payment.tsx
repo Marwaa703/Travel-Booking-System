@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+
 import {
   View,
   StyleSheet,
@@ -9,7 +11,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import Button from "@/components/Buttons";
-import { COLORS, FONTS } from "@/constants/theme";
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
 import { fetchTripDetails, makePayment, bookTrip } from "@/api/payment";
 import { useAppSelector } from "@/redux/store";
 import { User } from "@/types/user";
@@ -26,8 +28,13 @@ import Padding from "@/components/containers/Padding";
 import { ExchangeRatesResponse, getExchangeRates } from "@/api/etherRateApi";
 import Header from "@/components/core/Header";
 import { router } from "expo-router";
+import { useTheme } from "@/hooks/useTheme";
 
 const Payment: React.FC = () => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
+
   const { loading, msg, setLoading, setMsg } = useLoadingState();
   const [rates, setRates] = useState<ExchangeRatesResponse | undefined>(
     undefined,
@@ -161,162 +168,173 @@ const Payment: React.FC = () => {
         leftIcon="arrow-back"
         onLeftIconPress={() => router.navigate(`tripDetails?id=${tripId}`)}
       />
-
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.main}>
         <ScreenWraper>
-          <Padding>
-            <Spacer />
+          <ScrollView contentContainerStyle={styles.container}>
+            <Padding>
+              <Spacer />
 
-            <View style={styles.logoContainer}>
-              <Image
-                source={require("../../../assets/eth_logo.png")}
-                style={styles.ethLogo}
-              />
-            </View>
-            {alert && <CustomAlert message={alert.message} type={alert.type} />}
-            <Spacer height={26} />
-            <View style={styles.section}>
-              <View style={styles.infoSection}>
-                <View style={styles.tripDetailsColumn}>
-                  <View style={styles.row}>
-                    <Ionicons
-                      name="location"
-                      size={18}
-                      color={COLORS.primary}
-                    />
-                    <Text style={styles.tripText}>{tripDetails.name}</Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Ionicons name="time" size={18} color={COLORS.primary} />
-                    <Text style={styles.tripText}>
-                      {<FormatDate dateString={tripDetails.date} />}
-                    </Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Ionicons
-                      name="logo-usd"
-                      size={18}
-                      color={COLORS.primary}
-                    />
-                    <Text style={styles.tripText}>{tripCostUSD} USD</Text>
-                  </View>
-                  <View style={styles.row}>
-                    <Ionicons name="card" size={18} color={COLORS.primary} />
-                    <Text style={styles.tripText}>
-                      {tripCostEther.toFixed(6)} ETH
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.imageColumn}>
-                  <Image source={{ uri: image }} style={styles.tripImage} />
-                </View>
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require("../../../assets/eth_logo.png")}
+                  style={styles.ethLogo}
+                />
               </View>
+              {alert && (
+                <CustomAlert message={alert.message} type={alert.type} />
+              )}
+              <Spacer height={26} />
+              <View style={styles.section}>
+                <View style={styles.infoSection}>
+                  <View style={styles.tripDetailsColumn}>
+                    <View style={styles.row}>
+                      <Ionicons
+                        name="location"
+                        size={18}
+                        color={COLORS.primary}
+                      />
+                      <Text style={styles.tripText}>{tripDetails.name}</Text>
+                    </View>
+                    <View style={styles.row}>
+                      <Ionicons name="time" size={18} color={COLORS.primary} />
+                      <Text style={styles.tripText}>
+                        {<FormatDate dateString={tripDetails.date} />}
+                      </Text>
+                    </View>
+                    <View style={styles.row}>
+                      <Ionicons
+                        name="logo-usd"
+                        size={18}
+                        color={COLORS.primary}
+                      />
+                      <Text style={styles.tripText}>{tripCostUSD} USD</Text>
+                    </View>
+                    <View style={styles.row}>
+                      <Ionicons name="card" size={18} color={COLORS.primary} />
+                      <Text style={styles.tripText}>
+                        {tripCostEther.toFixed(6)} ETH
+                      </Text>
+                    </View>
+                  </View>
 
-              <Spacer height={50} />
-              <View>
-                <View style={styles.row}>
-                  <Ionicons name="analytics" size={18} color={COLORS.primary} />
-                  <Text style={styles.tripText}>
-                    Rate: {rates?.rates.ETH}{" "}
-                    <Text style={{ color: COLORS.primary }}>USD/ETH</Text>
-                  </Text>
+                  <View style={styles.imageColumn}>
+                    <Image source={{ uri: image }} style={styles.tripImage} />
+                  </View>
                 </View>
-                <Spacer />
-                <View style={styles.row}>
-                  <Ionicons
-                    name="timer-outline"
-                    size={18}
-                    color={COLORS.primary}
+
+                <Spacer height={50} />
+                <View>
+                  <View style={styles.row}>
+                    <Ionicons
+                      name="analytics"
+                      size={18}
+                      color={COLORS.primary}
+                    />
+                    <Text style={styles.tripText}>
+                      Rate: {rates?.rates.ETH}{" "}
+                      <Text style={{ color: COLORS.primary }}>USD/ETH</Text>
+                    </Text>
+                  </View>
+                  <Spacer />
+                  <View style={styles.row}>
+                    <Ionicons
+                      name="timer-outline"
+                      size={18}
+                      color={COLORS.primary}
+                    />
+                    <Text style={styles.tripText}>{lastUpdateTime}</Text>
+                  </View>
+                </View>
+                <Spacer height={20} />
+                <View>
+                  <Label
+                    text="Enter your Wallet Address:"
+                    style={{ color: COLORS.secondary }}
                   />
-                  <Text style={styles.tripText}>{lastUpdateTime}</Text>
+                  <Spacer height={8} />
+                  <TextInputField
+                    name={"your wallet address ex: 0xa2..."}
+                    onBlur={undefined}
+                    onChangeText={setUserWalletAddress}
+                    value={userWalletAddress}
+                    icon="wallet"
+                  />
                 </View>
-              </View>
-              <Spacer height={50} />
-              <View>
-                <Label
-                  text="Enter your Wallet Address:"
-                  style={{ color: COLORS.secondary }}
-                />
                 <Spacer height={8} />
-                <TextInputField
-                  name={"your wallet address ex: 0xa2..."}
-                  onBlur={undefined}
-                  onChangeText={setUserWalletAddress}
-                  value={userWalletAddress}
-                  icon="wallet"
+                <Button
+                  title={"Pay"}
+                  onPress={handlePayment}
+                  align="flex-start"
+                  disabled={loading}
+                  width={"100%"}
+                  loading={loading}
+                  loadingMessage={msg}
                 />
+                <Spacer height={50} />
               </View>
-              <Spacer height={8} />
-              <Button
-                title={"Pay"}
-                onPress={handlePayment}
-                align="flex-start"
-                disabled={loading}
-                width={"100%"}
-                loading={loading}
-                loadingMessage={msg}
-              />
-              <Spacer height={50} />
-            </View>
-          </Padding>
+            </Padding>
+          </ScrollView>
         </ScreenWraper>
-      </ScrollView>
+      </View>
     </>
   );
 };
-
+// todo:
 export default Payment;
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: COLORS.opacity,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  ethLogo: {
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
-  section: {
-    backgroundColor: COLORS.opacity,
-    flexGrow: 1,
-    justifyContent: "space-between",
-  },
-  infoSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  tripDetailsColumn: {
-    flex: 1,
-    paddingRight: 20,
-    justifyContent: "space-between",
-  },
-  tripText: {
-    fontSize: FONTS.normal,
-    color: COLORS.textPrimary,
-  },
-  imageColumn: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  tripImage: {
-    width: 120,
-    height: 120,
-    resizeMode: "cover",
-    borderRadius: 10,
-  },
-  row: {
-    flexDirection: "row",
-    columnGap: 6,
-    paddingRight: 6,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    main: { flex: 1 },
+    container: {
+      flex: 1,
+      backgroundColor: COLORS.bg,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    logoContainer: {
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    ethLogo: {
+      width: 50,
+      height: 50,
+      resizeMode: "contain",
+    },
+    section: {
+      // backgroundColor: COLORS.bg_surface,
+      flexGrow: 1,
+      justifyContent: "space-between",
+      padding: 5,
+    },
+    infoSection: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    tripDetailsColumn: {
+      flex: 1,
+      paddingRight: 20,
+      justifyContent: "space-between",
+    },
+    tripText: {
+      fontSize: FONTS.normal,
+      color: COLORS.textPrimary,
+    },
+    imageColumn: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    tripImage: {
+      width: 120,
+      height: 120,
+      resizeMode: "cover",
+      borderRadius: 10,
+    },
+    row: {
+      flexDirection: "row",
+      columnGap: 6,
+      paddingRight: 6,
+    },
+  });

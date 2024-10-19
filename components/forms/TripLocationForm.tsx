@@ -209,6 +209,8 @@
 //   },
 // });
 // export default TripLocationForm;
+/* eslint-disable react-native/no-unused-styles */
+
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import LocationSearch from "../LocationSearch";
@@ -220,12 +222,17 @@ import TextNote from "./TextNote";
 import LocationPicker from "../maps/LocationPicker";
 import Toast from "react-native-toast-message";
 import { imageUrlPattern } from "@/constants/regext";
+import { useTheme } from "@/hooks/useTheme";
+import { ColorPalette } from "@/constants/theme";
 
 interface TripLocationFormProps {
   onNext: (locations: Location[]) => void;
 }
 
 const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
+  // configure styles
+  const theme = useTheme();
+  const styles = stylesObj(theme);
   // const [toastData, setToastData] = useState<ToastShowParams | null>(null); // State for toast messages
   const [activeIcon, setActiveIcon] = useState(false);
   const [placeholder, setPlaceholder] = useState(
@@ -405,55 +412,56 @@ const TripLocationForm: React.FC<TripLocationFormProps> = ({ onNext }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  locationRow: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginBottom: 16,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    columnGap: 4,
-    width: "100%",
-  },
-  addButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#e0e0e0",
-  },
-  addedLocationsContainer: {
-    marginTop: 16,
-    marginBottom: 16,
-  },
-  addedLocationRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    paddingBottom: 8,
-  },
-  locationImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
-    marginRight: 8,
-  },
-  locationName: {
-    flex: 1,
-    marginLeft: 8,
-    maxWidth: 100,
-  },
-  deleteButton: {
-    marginLeft: 8,
-  },
-});
+const stylesObj = (COLORS: ColorPalette) =>
+  StyleSheet.create({
+    locationRow: {
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      marginBottom: 16,
+    },
+    row: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      columnGap: 4,
+      width: "100%",
+    },
+    addButton: {
+      justifyContent: "center",
+      alignItems: "center",
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: "#e0e0e0",
+    },
+    addedLocationsContainer: {
+      marginTop: 16,
+      marginBottom: 16,
+    },
+    addedLocationRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ccc",
+      paddingBottom: 8,
+    },
+    locationImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 5,
+      marginRight: 8,
+    },
+    locationName: {
+      flex: 1,
+      marginLeft: 8,
+      maxWidth: 100,
+    },
+    deleteButton: {
+      marginLeft: 8,
+    },
+  });
 
 export default TripLocationForm;
