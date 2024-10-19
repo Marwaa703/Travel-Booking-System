@@ -31,7 +31,7 @@ const Hero: React.FC<HeroProps> = ({ travelerImage }) => {
         <View style={styles.content}>
           <Text style={styles.hero}>Explore the Beautiful World!</Text>
           <Text style={styles.subtitle}>
-            small catchy text has ss sssss sere
+            Pack your Bags, We've got the rest!
           </Text>
         </View>
         <Image style={[styles.traveller]} source={travelerImage} />

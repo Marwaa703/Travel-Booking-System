@@ -5,6 +5,7 @@ import { ColorPalette, COLORS } from "@/constants/theme";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useTheme } from "@/hooks/useTheme";
+import Spacer from "../Spacer";
 
 interface HeaderProps {
   leftIcon?: string;

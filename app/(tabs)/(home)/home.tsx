@@ -119,7 +119,7 @@ const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.bg }}>
       {/* <Header onLeftIconPress={() => {}} leftIcon="" title="" /> */}
-      <Spacer height={24} />
+      <Spacer height={50} />
       <ScreenWraper>
         <ScrollView
           showsVerticalScrollIndicator={false}
