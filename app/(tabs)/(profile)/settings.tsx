@@ -45,7 +45,7 @@ const Settings = () => {
                 <ToggleSwitch
                   onToggle={(value) => toggleSwitch(value)}
                   options={["dark", "light"]}
-                  selectedOption="light"
+                  selectedOption={themeColor}
                 />
               </View>
             </View>

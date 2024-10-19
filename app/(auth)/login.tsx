@@ -15,12 +15,13 @@ import { UserTypes } from "@/types/user";
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/hooks/useTheme"; // Import useTheme
+import { useRouter } from "expo-router";
 
 const Login = () => {
   // configure styles
   const theme = useTheme();
   const styles = stylesObj(theme);
-
+  const router = useRouter();
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const role = auth?.role;
@@ -56,7 +57,12 @@ const Login = () => {
 
   return (
     <>
-      <Header title="Sign in Now" rightIcon="" leftIcon="" />
+      <Header
+        title="Sign in Now"
+        rightIcon=""
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <Padding>
         <View style={styles.container}>
           {/* header */}

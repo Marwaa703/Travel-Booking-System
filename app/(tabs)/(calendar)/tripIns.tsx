@@ -20,6 +20,7 @@ import StarRating from "@/components/StarRating";
 import { updateTrip } from "@/api/trips/trip";
 import { useDispatch } from "react-redux";
 import { moveTripToPrevious } from "@/redux/slices/tripsSlice";
+import Spacer from "@/components/Spacer";
 
 const TripInstructions: React.FC = () => {
   // configure styles
@@ -169,6 +170,7 @@ const TripInstructions: React.FC = () => {
             )}
           </View>
         )}
+        <Spacer height={80} />
       </View>
     </>
   );
@@ -182,12 +184,12 @@ const stylesObj = (COLORS: ColorPalette) =>
       flex: 1,
       backgroundColor: COLORS.bg,
       padding: 10,
-      marginBottom: 90,
     },
     loadingContainer: {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+      backgroundColor: COLORS.bg,
     },
     errorContainer: {
       flex: 1,
@@ -203,7 +205,7 @@ const stylesObj = (COLORS: ColorPalette) =>
       justifyContent: "flex-end",
     },
     messageContainer: {
-      backgroundColor: COLORS.calendarSelected,
+      backgroundColor: COLORS.bg_surface,
       padding: 10,
       borderRadius: 10,
       marginBottom: 10,
@@ -228,7 +230,7 @@ const stylesObj = (COLORS: ColorPalette) =>
     bottomText: {
       fontSize: 14,
       color: COLORS.error,
-      fontWeight: "bold",
+      // fontWeight: "bold",
       textAlign: "center",
     },
     endTripText: {
@@ -243,13 +245,13 @@ const stylesObj = (COLORS: ColorPalette) =>
     },
     ratingText: {
       fontSize: 18,
-      fontWeight: "bold",
+      // fontWeight: "bold",
       marginBottom: 10,
       color: COLORS.textPrimary,
     },
     thankYouText: {
       fontSize: 18,
-      fontWeight: "bold",
+      // fontWeight: "bold",
       color: COLORS.success,
     },
   });

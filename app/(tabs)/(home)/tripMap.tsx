@@ -63,7 +63,7 @@ const Map: React.FC = () => {
           strokeColor="dodgerblue"
           strokeWidth={2}
         />
-        {adjustedLocations.map((loc, index) => {
+        {/* {adjustedLocations.map((loc, index) => {
           if (index < adjustedLocations.length - 1) {
             const nextLocation = adjustedLocations[index + 1];
             const midpoint = {
@@ -99,7 +99,7 @@ const Map: React.FC = () => {
             );
           }
           return null;
-        })}
+        })} */}
       </MapView>
     </View>
   );

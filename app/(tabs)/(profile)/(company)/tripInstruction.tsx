@@ -8,14 +8,15 @@ import {
   addInstruction,
   getInstructionsByTripId,
 } from "@/api/trips/tripInstruction";
-import { useRoute, useTheme } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TripInstruction } from "@/types/trip";
 import TextInputField from "@/components/forms/TextInputField";
 import { router } from "expo-router";
-import { ColorPalette, COLORS } from "@/constants/theme";
+import { ColorPalette } from "@/constants/theme";
 import Label from "@/components/forms/Label";
 import Spacer from "@/components/Spacer";
+import { useTheme } from "@/hooks/useTheme";
 
 const TripEdit: React.FC = () => {
   // configure styles
