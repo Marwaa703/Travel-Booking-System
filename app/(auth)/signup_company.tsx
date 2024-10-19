@@ -3,7 +3,8 @@ import Padding from "@/components/containers/Padding";
 import Header from "@/components/core/Header";
 import MultiStepRegisterCompanyForm from "@/components/forms/MultiStepRegisterCompanyForm";
 import Spacer from "@/components/Spacer";
-import { FONTS, ColorPalette } from "@/constants/theme"; // Import ColorPalette
+import { ColorPalette, COLORS, FONTS } from "@/constants/theme";
+import { router } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useTheme } from "@/hooks/useTheme"; // Import useTheme
@@ -15,7 +16,12 @@ const SignupCompany = () => {
 
   return (
     <ScrollView style={{ backgroundColor: theme.bg }}>
-      <Header title="Register your company now" rightIcon="" leftIcon="" />
+      <Header
+        title="Register your company now"
+        rightIcon=""
+        leftIcon="arrow-back"
+        onLeftIconPress={() => router.back()}
+      />
       <Padding>
         <View style={styles.container}>
           {/* header */}
