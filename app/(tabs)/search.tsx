@@ -130,7 +130,7 @@ const Search: React.FC = () => {
                   id={item.id}
                   image={firstImageUrl}
                   title={item.name}
-                  subtitle={item.description}
+                  subtitle={"Egypt"}
                   rating={item.rate}
                 />
               </View>
